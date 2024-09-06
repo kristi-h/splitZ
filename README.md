@@ -36,7 +36,7 @@ coding!
 
 - Kris #1: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
 - Maya Power #2: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
-- Carlos #3: [GitHub](https://github.com/ccespedes) / [LinkedIn](https://linkedin.com/in/liaccountname)
+- Carlos #3: [GitHub](https://github.com/ccespedes) / [LinkedIn](https://linkedin.com/in/account)
 - Abel #4: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
 - Matthew #5: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
 - Alex #6: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
