@@ -1,10 +1,12 @@
 # voyage-tasks
 
 Your project's `readme` is as important to success as your code. For
+Your project's `readme` is as important to success as your code. For
 this reason you should put as much care into its creation and maintenance
 as you would any other component of the application.
 
 If you are unsure of what should go into the `readme` let this article,
+written by an experienced Chingu, be your starting point -
 written by an experienced Chingu, be your starting point -
 [Keys to a well written README](https://tinyurl.com/yk3wubft).
 
@@ -32,20 +34,15 @@ Meeting Agenda templates (located in the `/docs` directory in this repo):
 Everyone on your team should add their name along with a link to their GitHub
 & optionally their LinkedIn profiles below. Do this in Sprint #1 to validate
 your repo access and to practice PR'ing with your team _before_ you start
+your repo access and to practice PR'ing with your team _before_ you start
 coding!
 
 - Kris #1: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
-<<<<<<< HEAD
-- Maya Power #2: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
-- Carlos #3: [GitHub](https://github.com/ccespedes) / [LinkedIn](https://linkedin.com/in/liaccountname)
-- Abel #4: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
-=======
 - Maya Power #2: [GitHub](https://github.com/maya17power) / [LinkedOut](https://maya17power.github.io/pun_generator/)
-- Carlos #3: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
+- Carlos #3: [GitHub](https://github.com/ccespedes) / [LinkedIn](https://linkedin.com/in/account)
 - Abel #4: [GitHub](https://github.com/belunatic) / [LinkedIn](https://www.linkedin.com/in/abel-sila-24b4a97a/)
->>>>>>> 6010dc60e51dff35abd3059a3f4a67a86f213d79
 - Matthew #5: [GitHub](https://github.com/MatthewNeie) / [LinkedIn](https://linkedin.com/in/matthew-neie)
 - Alex #6: [GitHub](https://github.com/singhalex) / [LinkedIn](https://www.linkedin.com/in/kaur-singh-748000254/)
-- Bolaji #7: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
+- Bolaji #7: [GitHub](https://github.com/Anuoluwatobi) / [LinkedIn](https://linkedin.com/in/liaccountname)
 - Smiti #8: [GitHub](https://github.com/SM171906) / [LinkedIn](https://www.linkedin.com/in/smitimishra/)
 - Abby #9: [GitHub](https://github.com/abbynyhof) / [LinkedIn](https://www.linkedin.com/in/abbynyhof/)
