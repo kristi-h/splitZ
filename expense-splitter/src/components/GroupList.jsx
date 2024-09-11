@@ -1,28 +1,33 @@
 import { useState } from 'react'
+import Button from './Button'
 
 export default function GroupList({ groupData }) {
-  const [displayDetails, setDisplayDetails] = useState(false)
-  const handleDisplayDetails = () => setDisplayDetails(!displayDetails)
+  const [displayDetails, setDisplayDetails] = useState('')
+
+  const handleDisplayDetails = (id) => {
+    console.log(id)
+    if (displayDetails === id) {
+      setDisplayDetails('')
+    } else {
+      setDisplayDetails(id)
+    }
+  }
 
   const groupList = groupData.map((group) => (
     <div
-      onClick={handleDisplayDetails}
+      onClick={() => handleDisplayDetails(group.id)}
       key={group.id}
-      className="flex flex-col bg-slate-100 rounded-md py-4 px-2 mb-1 cursor-pointer"
+      className="flex flex-col bg-slate-100 rounded-md py-4 px-4 mb-1 cursor-pointer"
     >
       <div className="flex justify-between">
         <div>{group.name}</div>
         <div className="flex gap-2">
-          <button className="bg-slate-500 text-slate-100 px-2 rounded-sm hover:bg-slate-600">
-            edit
-          </button>
-          <button className="bg-slate-500 text-slate-100 px-2 rounded-sm hover:bg-slate-600">
-            delete
-          </button>
+          <Button variant={'small'}>Edit</Button>
+          <Button variant={'small'}>Delete</Button>
         </div>
       </div>
       <div>
-        {displayDetails ? (
+        {displayDetails === group.id ? (
           <>
             <p className="text-sm font-light">
               Description: {group.description}
