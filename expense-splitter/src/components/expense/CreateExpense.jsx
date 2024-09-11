@@ -2,19 +2,18 @@ import {useState} from 'react'
 import { nanoid } from 'nanoid'
 import { useForm } from 'react-hook-form'
 
-export default function Expense(){
+export default function CreateExpense({expense, setExpense}){
     const {
         handleSubmit,
         register,
         formState: { errors },
       } = useForm()
 
-    const [expense, setExpense] = useState([])
-    console.log(expense)
-
     const onSubmit = (values) => {
         setExpense(prev => [...prev, { ...values, id: nanoid(), date: new Date() }])
       }
+
+    console.log(expense)
 
     return(
         <>
