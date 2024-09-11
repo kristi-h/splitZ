@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "nanoid": "^5.0.7",
-    "react-hook-form": "^7.53.0"
-  }
-}
