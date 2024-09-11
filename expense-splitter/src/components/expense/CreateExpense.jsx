@@ -1,4 +1,3 @@
-import {useState} from 'react'
 import { nanoid } from 'nanoid'
 import { useForm } from 'react-hook-form'
 import Button from '../Button'

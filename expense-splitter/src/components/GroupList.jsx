@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import Button from './Button'
+import ExpenseList from './expense/ExpenseList'
 
-export default function GroupList({ groupData }) {
+export default function GroupList({ groupData, expense }) {
   const [displayDetails, setDisplayDetails] = useState('')
 
   const handleDisplayDetails = (id) => {
@@ -12,6 +13,7 @@ export default function GroupList({ groupData }) {
       setDisplayDetails(id)
     }
   }
+  console.log(expense)
 
   const groupList = groupData.map((group) => (
     <div
@@ -31,13 +33,17 @@ export default function GroupList({ groupData }) {
           <div className="text-sm font-light font-roboto">
             <p>Description: {group.description}</p>
             <p> Budget: {group.budget}</p>
+            <ExpenseList expense={expense}/>
           </div>
         ) : (
           ''
         )}
+       
       </div>
     </div>
   ))
-
-  return <div className="mb-4">{groupList}</div>
+         return <div className="mb-4">
+          {groupList}
+          {/* <ExpenseList expense={expense}/> */}
+         </div>
 }

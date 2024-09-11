@@ -1,9 +1,10 @@
 import { useState } from 'react'
 
 export default function ExpenseList({expense}){
-    const expenseItems = expense.map(item => (
+    // console.log(expense)
+    const expenseItems = expense?.map(item => (
         <div key={item.id} className='flex flex-col bg-slate-100 rounded-md py-4 px-2 mb-1 cursor-pointer'>
-    
+
             <div className="flex justify-between">
             <div>{item.name}</div>
             <div>{item.amount}</div>
