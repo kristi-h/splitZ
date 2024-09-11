@@ -2,12 +2,14 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
+// Define schema for optional email
+const optionalEmail = z.union([z.string().email(), z.literal("")]);
 // Define validation schema and error messages
 const schema = z.object({
   name: z
     .string({ required_error: "Name is required" })
     .min(2, { message: "Must be at least 2 characters" }),
-  email: z.string().email(),
+  email: optionalEmail,
 });
 
 const CreateParticipant = () => {
@@ -39,12 +41,14 @@ const CreateParticipant = () => {
         {...register("name")}
       />
       {/* Render errors if validation does not pass */}
-      {errors.name && <span>{errors.name.message}</span>}
+      {errors.name && (
+        <span className="text-red-500">{errors.name.message}</span>
+      )}
 
       <label htmlFor="email">Email: </label>
       <input
         id="email"
-        placeholder="example@email.com"
+        placeholder="Optional"
         // Associate email imput with useForm
         {...register("email")}
       />
