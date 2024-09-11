@@ -10,7 +10,7 @@ const schema = z.object({
   email: z.string().email(),
 });
 
-const ParticipantCreationForm = () => {
+const CreateParticipant = () => {
   // Destructire useForm hook
   const {
     register,
@@ -34,6 +34,7 @@ const ParticipantCreationForm = () => {
       <label htmlFor="name">Name: </label>
       <input
         id="name"
+        placeholder="Min 2 characters"
         // Associate name input with useForm
         {...register("name")}
       />
@@ -43,6 +44,7 @@ const ParticipantCreationForm = () => {
       <label htmlFor="email">Email: </label>
       <input
         id="email"
+        placeholder="example@email.com"
         // Associate email imput with useForm
         {...register("email")}
       />
@@ -56,4 +58,4 @@ const ParticipantCreationForm = () => {
   );
 };
 
-export default ParticipantCreationForm;
+export default CreateParticipant;
