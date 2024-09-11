@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { nanoid } from "nanoid";
 
 // Define schema for optional email
 const optionalEmail = z.union([z.string().trim().email(), z.literal("")]);
@@ -16,6 +17,7 @@ const schema = z.object({
 const CreateParticipant = () => {
   // Destructire useForm hook
   const {
+    reset,
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -26,9 +28,8 @@ const CreateParticipant = () => {
 
   // Handle form data on submit
   const onSubmit = async (data) => {
-    // TODO - Store data in localstorage db
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     console.log(data);
+    reset();
   };
 
   return (
@@ -46,7 +47,7 @@ const CreateParticipant = () => {
         />
         {/* Render errors if validation does not pass */}
         {errors.name && (
-          <span className="text-red-500">{errors.name.message}</span>
+          <span className="text-red-500 ml-2">{errors.name.message}</span>
         )}
       </div>
 
@@ -62,7 +63,7 @@ const CreateParticipant = () => {
         />
         {/* Render errors if validation does not pass */}
         {errors.email && (
-          <span className="text-red-500">{errors.email.message}</span>
+          <span className="text-red-500 ml-2">{errors.email.message}</span>
         )}
       </div>
       {/* Disable button if waiting on async funciton */}
