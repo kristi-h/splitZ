@@ -6,21 +6,21 @@ import GroupList from './GroupList'
 export default function Group() {
   const initalGroup = [
     {
-      name: 'Carlos',
-      description: 'Shellder',
-      budget: '22',
+      name: 'Beach Lunch',
+      description: 'Saturday lunch by the beach',
+      budget: '85',
       id: 't0unxnqoAwLdxsjOuxc5A',
     },
     {
-      name: 'Abel',
-      description: 'Loves Bootstrap!',
+      name: 'Bar Night',
+      description: 'Night at the bar with co-workers',
       budget: '300',
       id: 'NoWgbblj8apsEHZ0IVMC4',
     },
     {
-      name: 'Kriss',
-      description: 'Loves COFFEE!',
-      budget: '10',
+      name: 'Urth Cafe Brunch',
+      description: 'Brunch with the baseball team',
+      budget: '120',
       id: 'P_PNnrbjurvmasxRtXEov',
     },
   ]
