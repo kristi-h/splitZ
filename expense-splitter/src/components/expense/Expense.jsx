@@ -9,22 +9,12 @@ export default function Expense(){
         formState: { errors },
       } = useForm()
 
-    const [expense, setExpense] = useState(
-        {
-        name: '',
-        description: '',
-        category: '',
-        amount: 0,
-        participant: '',
-        date: new Date,
-        // add receipt and contribution weight later
-        }
-    )
+    const [expense, setExpense] = useState([])
+    console.log(expense)
 
     const onSubmit = (values) => {
-        setExpense(prev => [...prev, { ...values, id: nanoid() }])
+        setExpense(prev => [...prev, { ...values, id: nanoid(), date: new Date() }])
       }
-      console.log(expense)
 
     return(
         <>
@@ -48,14 +38,29 @@ export default function Expense(){
           {/* {errors.description && errors.description.message} */}
         </div>
 
-        <div className="mb-2">
-          <label className="mr-2">Category: </label>
-          <input
-            placeholder="Select a category"
-            {...register('category', { required: 'Required' })}
-          />
-          {/* {errors.description && errors.description.message} */}
-        </div>
+        {/* <div className="mb-2">
+            <label htmlFor="category" className="mr-2">
+                Category:
+            </label>
+
+            <select 
+                name="category" 
+                {...register(category, {
+                required: "select a category"
+                })}>
+                <option value=""></option>
+                <option value="entertainment">Entertainment</option>
+                <option value="gift">Gift</option>
+                <option value="groceries">Groceries</option>
+                <option value="restaurant">Restaurant</option>
+                <option value="shopping">Shopping</option>
+                <option value="trip">Trip</option>
+                <option value="utilities">Utilities</option>
+                <option value="other">Other</option>
+            </select>
+
+            {errors.func && <p style={{color:'red'}}> {errors.func.message}</p> }
+        </div> */}
 
 
         <div className="mb-2">
@@ -82,14 +87,14 @@ export default function Expense(){
           {/* {errors.description && errors.description.message} */}
         </div>
 
-        <div className="mb-2">
+        {/* <div className="mb-2">
           <label className="mr-2">Date:</label>
           <input
             placeholder="Date created"
             {...register('date', { required: 'Required' })}
           />
-          {/* {errors.description && errors.description.message} */}
-        </div>
+          {errors.description && errors.description.message}
+        </div> */}
 
 
         <button type="submit">Submit</button>
