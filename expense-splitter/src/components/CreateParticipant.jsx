@@ -28,7 +28,7 @@ const CreateParticipant = () => {
 
   // Handle form data on submit
   const onSubmit = async (data) => {
-    console.log(data);
+    const participant = { id: nanoid(), ...data };
     reset();
   };
 
