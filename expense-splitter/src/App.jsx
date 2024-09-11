@@ -1,4 +1,4 @@
-import Expense from "./components/Expense"
+import Expense from "./components/expense/Expense"
 
 function App() {
   return (
