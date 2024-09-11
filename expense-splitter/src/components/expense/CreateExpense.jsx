@@ -1,6 +1,7 @@
 import {useState} from 'react'
 import { nanoid } from 'nanoid'
 import { useForm } from 'react-hook-form'
+import Button from '../Button'
 
 export default function CreateExpense({expense, setExpense}){
     const {
@@ -96,7 +97,7 @@ export default function CreateExpense({expense, setExpense}){
         </div> */}
 
 
-        <button type="submit">Submit</button>
+        <Button>Submit</Button>
       </form>
     </>
     )
