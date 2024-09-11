@@ -20,7 +20,7 @@ export default function GroupList({ groupData }) {
       className="flex flex-col bg-slate-100 rounded-md py-4 px-4 mb-1 cursor-pointer"
     >
       <div className="flex justify-between">
-        <div>{group.name}</div>
+        <div className="text-lg">{group.name}</div>
         <div className="flex gap-2">
           <Button variant={'small'}>Edit</Button>
           <Button variant={'small'}>Delete</Button>
@@ -28,12 +28,10 @@ export default function GroupList({ groupData }) {
       </div>
       <div>
         {displayDetails === group.id ? (
-          <>
-            <p className="text-sm font-light">
-              Description: {group.description}
-            </p>
-            <p className="text-sm font-light"> Budget: {group.budget}</p>
-          </>
+          <div className="text-sm font-light font-roboto">
+            <p>Description: {group.description}</p>
+            <p> Budget: {group.budget}</p>
+          </div>
         ) : (
           ''
         )}

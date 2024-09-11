@@ -24,7 +24,7 @@ export default function CreateGroup({ groupData, setGroupData }) {
             placeholder="Name"
             {...register('name', { required: 'name is required' })}
           />
-          <div className="text-xs font-medium text-red-500">
+          <div className="text-xs font-light text-red-500">
             {errors.name && errors.name.message}
           </div>
         </div>
@@ -37,7 +37,7 @@ export default function CreateGroup({ groupData, setGroupData }) {
               required: 'description is required',
             })}
           />
-          <div className="text-xs font-medium text-red-500">
+          <div className="text-xs font-light text-red-500">
             {errors.description && errors.description.message}
           </div>
         </div>
@@ -50,11 +50,11 @@ export default function CreateGroup({ groupData, setGroupData }) {
               required: 'budget is required',
               pattern: {
                 value: /^[0-9]*$/i,
-                message: 'invalid type, please enter a number',
+                message: 'invalid type, only numbers allowed',
               },
             })}
           />
-          <div className="text-xs font-medium text-red-500">
+          <div className="text-xs font-light text-red-500">
             {errors.budget && errors.budget.message}
           </div>
         </div>
