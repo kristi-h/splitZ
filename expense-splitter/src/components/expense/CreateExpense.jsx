@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid'
 import { useForm } from 'react-hook-form'
 import Button from '../ui/Button'
 import { UseDataContext } from '../context/SiteContext'
@@ -16,28 +15,32 @@ export default function CreateExpense() {
     handleSetExpense(values)
   }
 
-  console.log(expense)
+  // console.log(expense)
 
   return (
     <div className="mb-5">
-      <h1 className="text-2xl mb-2">Create an Expense </h1>
+      <h1>Create an Expense </h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-2">
           <label className="mr-2">Name: </label>
           <input
             placeholder="Name of expense"
-            {...register('name', { required: 'Required' })}
+            {...register('name', { required: 'name is equired' })}
           />
-          {/* {errors.name && errors.name.message} */}
+          <div className="error-text">{errors.name && errors.name.message}</div>
         </div>
 
         <div className="mb-2">
           <label className="mr-2">Description: </label>
           <input
             placeholder="Describe the expense"
-            {...register('description', { required: 'Required' })}
+            {...register('description', {
+              required: 'description is required',
+            })}
           />
-          {/* {errors.description && errors.description.message} */}
+          <div className="error-text">
+            {errors.description && errors.description.message}
+          </div>
         </div>
 
         <div className="mb-2">

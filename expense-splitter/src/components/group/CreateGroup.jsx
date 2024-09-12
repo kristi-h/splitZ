@@ -20,7 +20,7 @@ export default function CreateGroup({
 
   return (
     <div className="mb-5">
-      <h1 className="text-2xl mb-2">Create a group</h1>
+      <h1>Create a group</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-2">
           <label className="mr-2">Name</label>
@@ -28,9 +28,7 @@ export default function CreateGroup({
             placeholder="Name"
             {...register('name', { required: 'name is required' })}
           />
-          <div className="text-xs font-light text-red-500">
-            {errors.name && errors.name.message}
-          </div>
+          <div className="error-text">{errors.name && errors.name.message}</div>
         </div>
 
         <div className="mb-2">
@@ -41,7 +39,7 @@ export default function CreateGroup({
               required: 'description is required',
             })}
           />
-          <div className="text-xs font-light text-red-500">
+          <div className="error-text">
             {errors.description && errors.description.message}
           </div>
         </div>
@@ -58,7 +56,7 @@ export default function CreateGroup({
               },
             })}
           />
-          <div className="text-xs font-light text-red-500">
+          <div className="error-text">
             {errors.budget && errors.budget.message}
           </div>
         </div>
