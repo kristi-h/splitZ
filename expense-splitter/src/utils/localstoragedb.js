@@ -15,7 +15,7 @@ const db = new localStorageDB("database", localStorage);
 if (db.isNew()) {
   db.createTable("friends", friendsSchema);
   db.createTable("expenses", expensesSchema);
-  db.createTable("group", groupSchema);
+  db.createTable("groups", groupSchema);
 
   //Populate the tables
   dummyFriends.forEach((friend) => {
@@ -31,3 +31,5 @@ if (db.isNew()) {
   // Write db to localstorage
   db.commit();
 }
+
+export default db;
