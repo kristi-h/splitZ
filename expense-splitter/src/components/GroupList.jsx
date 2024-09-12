@@ -1,9 +1,11 @@
-import { useState } from 'react'
+import {useState} from 'react'
 import Button from './Button'
 import ExpenseList from './expense/ExpenseList'
+ import {UseDataContext} from './context/SiteContext'
 
-export default function GroupList({ groupData, expense }) {
+export default function GroupList({groupData}) {
   const [displayDetails, setDisplayDetails] = useState('')
+  const { expense } = UseDataContext()
 
   const handleDisplayDetails = (id) => {
     console.log(id)
