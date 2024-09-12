@@ -3,6 +3,7 @@ import Button from "./Button";
 import CreateGroup from "./CreateGroup";
 import GroupList from "./GroupList";
 
+
 export default function Group() {
 	const initalGroup = [
 		{
