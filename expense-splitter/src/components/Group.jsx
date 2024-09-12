@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import CreateGroup from './CreateGroup'
 import GroupList from './GroupList'
 
-export default function Group() {
+export default function Group({expense}) {
   const initalGroup = [
     {
       name: 'Beach Lunch',
@@ -28,7 +28,7 @@ export default function Group() {
 
   return (
     <div>
-      <GroupList groupData={groupData} />
+      <GroupList groupData={groupData} expense={expense} />
       <CreateGroup groupData={groupData} setGroupData={setGroupData} />
     </div>
   )
