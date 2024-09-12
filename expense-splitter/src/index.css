@@ -6,7 +6,8 @@
   body {
     /* @apply bg-gray-900; */
   }
-  input {
+  input,
+  select {
     @apply bg-gray-200 rounded-md px-2 py-1 font-light text-sm;
   }
 }

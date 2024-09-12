@@ -1,6 +1,5 @@
-import { useState } from 'react'
 import Expense from './components/expense/Expense'
-import Group from './components/Group'
+import Group from './components/group/Group'
 import { DataProvider } from './components/context/SiteContext'
 
 function App() {

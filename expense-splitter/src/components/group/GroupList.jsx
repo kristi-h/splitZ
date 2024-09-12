@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import Button from './Button'
-import { UseDataContext } from './context/SiteContext'
+import Button from '../ui/Button'
+import { UseDataContext } from '../context/SiteContext'
 
 export default function GroupList({ groupData, setGroupData }) {
   const [displayDetails, setDisplayDetails] = useState('')
