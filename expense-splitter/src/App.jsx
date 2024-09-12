@@ -1,5 +1,6 @@
 import Expense from './components/expense/Expense'
 import Group from './components/group/Group'
+import Footer from './components/Footer'
 import { DataProvider } from './components/context/SiteContext'
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
         <Group />
         <Expense />
       </div>
+      <Footer />
     </DataProvider>
   )
 }
