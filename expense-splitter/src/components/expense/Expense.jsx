@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import CreateExpense from './CreateExpense'
 import Button from '../ui/Button'
+import ExpenseList from './ExpenseList'
 
 
-export default function Expense({expense, setExpense}){
+
+export default function Expense(){
    
     const [expenseForm, setExpenseForm] = useState(false)
 
@@ -19,10 +21,11 @@ export default function Expense({expense, setExpense}){
             </Button>
             </span>
             {expenseForm ? (
-                 <CreateExpense expense={expense} setExpense={setExpense}/>
+                 <CreateExpense />
             ) : (
                 ''
             )}
+            <ExpenseList />
            
         </div>
 

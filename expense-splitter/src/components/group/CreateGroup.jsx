@@ -1,10 +1,9 @@
 import { nanoid } from 'nanoid'
 import { useForm } from 'react-hook-form'
 import Button from '../ui/Button'
+import { UseDataContext } from '../context/SiteContext'
 
 export default function CreateGroup({
-  groupData,
-  setGroupData,
   DisplayCreateGroupForm,
 }) {
   const {
@@ -12,6 +11,8 @@ export default function CreateGroup({
     register,
     formState: { errors },
   } = useForm()
+
+  const { groupData, setGroupData } = UseDataContext()
 
   const onSubmit = (values) => {
     setGroupData((prev) => [...prev, { ...values, id: nanoid() }])

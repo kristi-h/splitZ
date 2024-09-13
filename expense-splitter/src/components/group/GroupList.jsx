@@ -2,12 +2,12 @@ import { useState } from 'react'
 import Button from '../ui/Button'
 import { UseDataContext } from '../context/SiteContext'
 
-export default function GroupList({ groupData, setGroupData }) {
+export default function GroupList() {
   const [displayDetails, setDisplayDetails] = useState('')
-  const { expense } = UseDataContext()
+  const { groupData, setGroupData, expense } = UseDataContext()
 
   const handleDisplayDetails = (id) => {
-    console.log(id)
+    // console.log(id)
     if (displayDetails === id) {
       setDisplayDetails('')
     } else {
@@ -16,10 +16,11 @@ export default function GroupList({ groupData, setGroupData }) {
   }
 
   const handleDelete = (id) => {
-    console.log('hello')
     const updatedGroupData = groupData.filter((item) => item.id !== id)
     setGroupData(updatedGroupData)
   }
+  
+  console.log("groupData", groupData)
 
   const groupList = groupData.map((group) => (
     <div
