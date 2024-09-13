@@ -4,7 +4,7 @@ import Button from '../ui/Button'
 import { UseDataContext } from '../context/SiteContext'
 import MultiSelectDropdown from '../ui/MultiSelectDropdown'
 
-export default function CreateGroup({ DisplayCreateGroupForm }) {
+export default function CreateGroup({ displayCreateGroupForm }) {
   const { friends, setGroupData } = UseDataContext()
   //form properties
   const {
@@ -67,12 +67,12 @@ export default function CreateGroup({ DisplayCreateGroupForm }) {
             <label htmlFor="friends" className="mr-2">
               Friends
             </label>
-            <MultiSelectDropdown options={friends} control={control} />
+            <MultiSelectDropdown friends={friends} control={control} />
           </div>
         </div>
 
         <Button>Submit</Button>
-        <Button onClick={DisplayCreateGroupForm} className="ml-4">
+        <Button onClick={displayCreateGroupForm} className="ml-4">
           Cancel
         </Button>
       </form>

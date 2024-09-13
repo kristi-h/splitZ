@@ -2,14 +2,11 @@ import React, { useState } from 'react'
 import Button from '../ui/Button'
 import CreateGroup from './CreateGroup'
 import GroupList from './GroupList'
-import { UseDataContext } from '../context/SiteContext'
 
 export default function Group() {
-  
-  const { groupData, setGroupData } = UseDataContext()
   const [showCreateGroupForm, setShowCreateGroupForm] = useState(false)
 
-  const DisplayCreateGroupForm = () => {
+  const displayCreateGroupForm = () => {
     setShowCreateGroupForm(!showCreateGroupForm)
   }
 
@@ -18,7 +15,7 @@ export default function Group() {
       <div className="flex flex-row justify-between p-4">
         <h1 className="text-3xl">Groups</h1>
         <span>
-          <Button variant={'small'} onClick={DisplayCreateGroupForm}>
+          <Button variant={'small'} onClick={displayCreateGroupForm}>
             Create Group +
           </Button>
         </span>
@@ -26,9 +23,7 @@ export default function Group() {
       <div>
         <GroupList />
         {showCreateGroupForm ? (
-          <CreateGroup
-            DisplayCreateGroupForm={DisplayCreateGroupForm}
-          />
+          <CreateGroup displayCreateGroupForm={displayCreateGroupForm} />
         ) : (
           ''
         )}
