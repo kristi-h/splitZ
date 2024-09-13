@@ -1,3 +1,4 @@
+//-- Feel free to edit the dummy data to fit your need --//
 export const friendsSchema = ["id", "name", "email"];
 export const dummyFriends = [
   {

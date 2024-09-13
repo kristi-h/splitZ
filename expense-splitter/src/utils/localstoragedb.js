@@ -8,6 +8,8 @@ import {
   groupSchema,
 } from "./dummyData";
 
+// -- VIEW DOCS: https://github.com/knadh/localStorageDB --//
+
 // Create db in local storage if none exists
 const db = new localStorageDB("database", localStorage);
 
