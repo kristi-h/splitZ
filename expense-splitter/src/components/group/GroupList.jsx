@@ -15,6 +15,7 @@ export default function GroupList() {
 		}
 	};
 
+	//delete a group
 	const handleDelete = (id) => {
 		const updatedGroupData = groupData.filter((item) => item.id !== id);
 		setGroupData(updatedGroupData);
