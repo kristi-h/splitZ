@@ -67,7 +67,7 @@ export default function CreateGroup({ displayCreateGroupForm }) {
             <label htmlFor="friends" className="mr-2">
               Friends
             </label>
-            <MultiSelectDropdown options={friends} control={control} />
+            <MultiSelectDropdown friends={friends} control={control} />
           </div>
         </div>
 
