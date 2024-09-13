@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { nanoid } from 'nanoid'
 import { createContext, useContext } from 'react'
 import db from '../../utils/localstoragedb'
@@ -9,7 +9,6 @@ export const UseDataContext = () => useContext(SiteContext)
 
 export const DataProvider = ({ children }) => {
   // initialize data from localStorageDB
-  const data = db
   const initialFriends = db.queryAll('friends')
   const initalGroup = db.queryAll('groups')
 
