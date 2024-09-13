@@ -2,11 +2,8 @@ import React, { useState } from "react";
 import Button from "../ui/Button";
 import CreateGroup from "./CreateGroup";
 import GroupList from "./GroupList";
-import { UseDataContext } from "../context/SiteContext";
-import EditGroup from "./EditGroup";
 
 export default function Group() {
-  const { groupData, setGroupData } = UseDataContext();
   const [showCreateGroupForm, setShowCreateGroupForm] = useState(false);
 
   const DisplayCreateGroupForm = () => {
@@ -30,7 +27,6 @@ export default function Group() {
         ) : (
           ""
         )}
-        <EditGroup />
       </div>
     </>
   );

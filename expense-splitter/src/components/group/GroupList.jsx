@@ -1,10 +1,14 @@
 import { useState } from "react";
 import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
+import EditGroup from "./EditGroup";
 
 export default function GroupList() {
   const [displayDetails, setDisplayDetails] = useState("");
-  const { groupData, setGroupData, expense, friends } = UseDataContext();
+  const [editGroup, setEditGroup] = useState(false);
+  //get group edit info
+  const [editGroupData, setEditGroupData] = useState({});
+  const { groupData, setGroupData, friends } = UseDataContext();
 
   const handleDisplayDetails = (id) => {
     // console.log(id)
@@ -14,6 +18,14 @@ export default function GroupList() {
       setDisplayDetails(id);
     }
   };
+
+  const handleEditGroup = (currentGroupData) => {
+    setEditGroup(true);
+    setEditGroupData(currentGroupData);
+    // console.log(id);
+  };
+
+  // const editGroupEl = editGroup &&
 
   //delete a group
   const handleDelete = (id) => {
@@ -34,8 +46,6 @@ export default function GroupList() {
     ));
   };
 
-  console.log("groupData", groupData);
-
   const groupList = groupData.map((group) => (
     <div
       onClick={() => handleDisplayDetails(group.id)}
@@ -45,7 +55,9 @@ export default function GroupList() {
       <div className="flex justify-between">
         <div className="text-lg">{group.name}</div>
         <div className="flex gap-2">
-          <Button variant={"small"}>Edit</Button>
+          <Button variant={"small"} onClick={() => handleEditGroup(group)}>
+            Edit
+          </Button>
           <Button variant={"small"} onClick={() => handleDelete(group.id)}>
             Delete
           </Button>
@@ -69,5 +81,10 @@ export default function GroupList() {
     </div>
   ));
 
-  return <div className="mb-4">{groupList}</div>;
+  return (
+    <div>
+      <div className="mb-4">{groupList}</div>
+      {editGroup && <EditGroup currentGroupData={editGroupData} />}
+    </div>
+  );
 }

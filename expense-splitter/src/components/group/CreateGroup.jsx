@@ -16,10 +16,11 @@ export default function CreateGroup({ displayCreateGroupForm }) {
 
   //onSubmit
   const onSubmit = (values) => {
-    console.log(values);
+    console.log("This is form submit", values);
     setGroupData((prev) => [...prev, { ...values, id: nanoid() }]);
+    //close form after submit
+    displayCreateGroupForm;
   };
-  // console.log(groupData)
 
   return (
     <div className="mb-5">
