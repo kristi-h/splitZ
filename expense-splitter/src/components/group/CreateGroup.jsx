@@ -1,24 +1,24 @@
-import { nanoid } from "nanoid";
-import { useForm } from "react-hook-form";
-import Button from "../ui/Button";
-import { UseDataContext } from "../context/SiteContext";
-import MultiSelectDropdown from "../ui/MultiSelectDropdown";
+import { nanoid } from 'nanoid'
+import { useForm } from 'react-hook-form'
+import Button from '../ui/Button'
+import { UseDataContext } from '../context/SiteContext'
+import MultiSelectDropdown from '../ui/MultiSelectDropdown'
 
 export default function CreateGroup({ DisplayCreateGroupForm }) {
-  const { friends, setGroupData } = UseDataContext();
+  const { friends, setGroupData } = UseDataContext()
   //form properties
   const {
     handleSubmit,
     register,
     control,
     formState: { errors },
-  } = useForm();
+  } = useForm()
 
   //onSubmit
   const onSubmit = (values) => {
-    console.log(values);
-    setGroupData((prev) => [...prev, { ...values, id: nanoid() }]);
-  };
+    console.log(values)
+    setGroupData((prev) => [...prev, { ...values, id: nanoid() }])
+  }
   // console.log(groupData)
 
   return (
@@ -29,7 +29,7 @@ export default function CreateGroup({ DisplayCreateGroupForm }) {
           <label className="mr-2">Name</label>
           <input
             placeholder="Name"
-            {...register("name", { required: "name is required" })}
+            {...register('name', { required: 'name is required' })}
           />
           <div className="error-text">{errors.name && errors.name.message}</div>
         </div>
@@ -38,8 +38,8 @@ export default function CreateGroup({ DisplayCreateGroupForm }) {
           <label className="mr-2">Description</label>
           <input
             placeholder="What is this group about"
-            {...register("description", {
-              required: "description is required",
+            {...register('description', {
+              required: 'description is required',
             })}
           />
           <div className="error-text">
@@ -51,11 +51,11 @@ export default function CreateGroup({ DisplayCreateGroupForm }) {
           <label className="mr-2">Budget</label>
           <input
             placeholder="Enter a value"
-            {...register("budget", {
-              required: "budget is required",
+            {...register('budget', {
+              required: 'budget is required',
               pattern: {
                 value: /^[0-9]*$/i,
-                message: "invalid type, only numbers allowed",
+                message: 'invalid type, only numbers allowed',
               },
             })}
           />
@@ -77,5 +77,5 @@ export default function CreateGroup({ DisplayCreateGroupForm }) {
         </Button>
       </form>
     </div>
-  );
+  )
 }
