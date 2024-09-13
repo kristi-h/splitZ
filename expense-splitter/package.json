@@ -40,7 +40,6 @@
     "vite": "^5.4.1"
   },
   "prettier": {
-    "_comment": "Enables tailwind plugin in prettier",
     "plugins": [
       "prettier-plugin-tailwindcss"
     ]

@@ -47,7 +47,7 @@ const CreateParticipant = () => {
         />
         {/* Render errors if validation does not pass */}
         {errors.name && (
-          <span className="text-red-500 ml-2">{errors.name.message}</span>
+          <span className="ml-2 text-red-500">{errors.name.message}</span>
         )}
       </div>
 
@@ -63,12 +63,12 @@ const CreateParticipant = () => {
         />
         {/* Render errors if validation does not pass */}
         {errors.email && (
-          <span className="text-red-500 ml-2">{errors.email.message}</span>
+          <span className="ml-2 text-red-500">{errors.email.message}</span>
         )}
       </div>
       {/* Disable button if waiting on async funciton */}
       <button
-        className="bg-slate-700 text-white p-2"
+        className="bg-slate-700 p-2 text-white"
         disabled={isSubmitting}
         type="submit"
       >

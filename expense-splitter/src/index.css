@@ -7,11 +7,11 @@
     /* @apply bg-gray-900; */
   }
   h1 {
-    @apply text-2xl mb-2;
+    @apply mb-2 text-2xl;
   }
   input,
   select {
-    @apply bg-gray-200 rounded-md px-2 py-1 font-light text-sm;
+    @apply rounded-md bg-gray-200 px-2 py-1 text-sm font-light;
   }
   .error-text {
     @apply text-xs font-light text-red-500;
