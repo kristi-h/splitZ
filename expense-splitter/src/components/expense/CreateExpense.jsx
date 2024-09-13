@@ -9,7 +9,7 @@ export default function CreateExpense() {
     formState: { errors },
   } = useForm()
 
-  const { expense, handleSetExpense } = UseDataContext()
+  const { groupData, expense, handleSetExpense } = UseDataContext()
 
   const onSubmit = (values) => {
     handleSetExpense(values)
@@ -94,28 +94,16 @@ export default function CreateExpense() {
               required: 'select a group',
             })}
           >
-            <option value=""></option>
-            <option value="Beach Lunch">Beach Lunch</option>
-            <option value="gift">Bar Night</option>
-            <option value="groceries">Groceries</option>
-            <option value="restaurant">Restaurant</option>
-            <option value="shopping">Shopping</option>
-            <option value="trip">Trip</option>
-            <option value="utilities">Utilities</option>
-            <option value="other">Other</option>
+            {groupData.map(group=> (
+               <option key={group.id} value="{group.id}">{group.name}</option>
+            ))}
+           
           </select>
 
           {/* {errors.func && <p style={{color:'red'}}> {errors.func.message}</p> } */}
         </div>
 
-        {/* <div className="mb-2">
-          <label className="mr-2">Date:</label>
-          <input
-            placeholder="Date created"
-            {...register('date', { required: 'Required' })}
-          />
-          {errors.description && errors.description.message}
-        </div> */}
+       
 
         <Button>Submit</Button>
       </form>
