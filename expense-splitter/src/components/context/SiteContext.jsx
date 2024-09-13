@@ -30,15 +30,30 @@ export const DataProvider = ({children}) => {
 
     const [expense, setExpense] = useState([])
     const [groupData, setGroupData] = useState(initalGroup)
-      console.log('groupData', groupData)
+    const [friends, setFriends] = useState([
+		{
+			id: 1,
+			name: "Abel",
+			email: "abel@hotlikehell.com",
+		},
+		{
+			id: 2,
+			name: "Kristin",
+			email: "kristin@hotlikehell.com",
+		},
+		{
+			id: 3,
+			name: "Carlos",
+			email: "carlos@hotlikehell.com",
+		},
+	]);
     const handleSetExpense = (values) => {
         setExpense(prev => [...prev, { ...values, id: nanoid(), date: new Date() }])
     }
     console.log(expense)
 
-
     return (
-        <SiteContext.Provider value={{ groupData, setGroupData, expense, setExpense, handleSetExpense }}>
+        <SiteContext.Provider value={{ groupData, setGroupData, friends, expense, setExpense, handleSetExpense }}>
             {children}
         </SiteContext.Provider>
     )
