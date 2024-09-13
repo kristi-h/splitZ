@@ -106,7 +106,8 @@ export default function CreateExpense() {
        <div className="mb-2">
             <label className="mr-2">Weight: </label>
             <input
-              placeholder="Optional: add a different weight contribution"
+              defaultValue="0"
+              placeholder=""
               {...register('weight', {
                 pattern: {
                   value: /^[0-9]*$/i,
