@@ -13,8 +13,7 @@ export default function MultiSelectDropdown({ options, control }) {
 		<div className="relative">
 			<div
 				className="border p-2 cursor-pointer border p-2 cursor-pointer text-sm font-light bg-gray-200 rounded-md"
-				onClick={toggleDropdown}
-				onFocusOut={toggleDropdown}>
+				onClick={toggleDropdown}>
 				Select Friends
 			</div>
 			{isOpen && (

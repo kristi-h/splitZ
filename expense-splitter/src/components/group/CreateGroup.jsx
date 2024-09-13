@@ -4,12 +4,8 @@ import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
 import MultiSelectDropdown from "../ui/MultiSelectDropdown";
 
-export default function CreateGroup({
-	groupData,
-	setGroupData,
-	DisplayCreateGroupForm,
-}) {
-	const { friends } = UseDataContext();
+export default function CreateGroup({ DisplayCreateGroupForm }) {
+	const { friends, setGroupData } = UseDataContext();
 	//form properties
 	const {
 		handleSubmit,
