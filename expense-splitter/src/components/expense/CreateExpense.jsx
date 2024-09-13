@@ -103,7 +103,34 @@ export default function CreateExpense() {
           {/* {errors.func && <p style={{color:'red'}}> {errors.func.message}</p> } */}
         </div>
 
-       
+       <div className="mb-2">
+            <label className="mr-2">Weight: </label>
+            <input
+              placeholder="Optional: add a different weight contribution"
+              {...register('weight', {
+                pattern: {
+                  value: /^[0-9]*$/i,
+                  message: 'invalid type, please enter a number between 1-100%',
+                },
+              })}
+            />
+            <div>{errors.budget && errors.budget.message}</div>
+          </div>
+        
+        
+        <div className="mb-2">
+          <label className="mr-2">Add Receipt: </label>
+          <input
+            placeholder="Upload your receipt"
+            {...register('receipt', {
+              required: 'receipt is required',
+            })}
+          />
+          <div className="error-text">
+            {errors.description && errors.description.message}
+          </div>
+        </div>
+
 
         <Button>Submit</Button>
       </form>
