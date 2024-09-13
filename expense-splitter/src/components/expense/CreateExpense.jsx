@@ -1,19 +1,19 @@
-import { useForm } from "react-hook-form";
-import Button from "../ui/Button";
-import { UseDataContext } from "../context/SiteContext";
+import { useForm } from 'react-hook-form'
+import Button from '../ui/Button'
+import { UseDataContext } from '../context/SiteContext'
 
 export default function CreateExpense() {
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm();
+  } = useForm()
 
-  const { groupData, expense, handleSetExpense } = UseDataContext();
+  const { groupData, expense, handleSetExpense } = UseDataContext()
 
   const onSubmit = (values) => {
-    handleSetExpense(values);
-  };
+    handleSetExpense(values)
+  }
 
   // console.log(expense)
 
@@ -25,7 +25,7 @@ export default function CreateExpense() {
           <label className="mr-2">Name: </label>
           <input
             placeholder="Name of expense"
-            {...register("name", { required: "name is equired" })}
+            {...register('name', { required: 'name is equired' })}
           />
           <div className="error-text">{errors.name && errors.name.message}</div>
         </div>
@@ -34,8 +34,8 @@ export default function CreateExpense() {
           <label className="mr-2">Description: </label>
           <input
             placeholder="Describe the expense"
-            {...register("description", {
-              required: "description is required",
+            {...register('description', {
+              required: 'description is required',
             })}
           />
           <div className="error-text">
@@ -50,8 +50,8 @@ export default function CreateExpense() {
 
           <select
             name="category"
-            {...register("category", {
-              required: "select a category",
+            {...register('category', {
+              required: 'select a category',
             })}
           >
             <option value=""></option>
@@ -72,11 +72,11 @@ export default function CreateExpense() {
           <label className="mr-2">Amount: </label>
           <input
             placeholder="Enter a value"
-            {...register("amount", {
-              required: "Required",
+            {...register('amount', {
+              required: 'Required',
               pattern: {
                 value: /^[0-9]*$/i,
-                message: "invalid type, please enter a number",
+                message: 'invalid type, please enter a number',
               },
             })}
           />
@@ -90,22 +90,23 @@ export default function CreateExpense() {
 
           <select
             name="group"
-            {...register("group", {
-              required: "select a group",
+            {...register('group', {
+              required: 'select a group',
             })}
           >
-            {groupData.map((group) => (
-              <option key={group.id} value="{group.id}">
-                {group.name}
-              </option>
+            {groupData.map(group=> (
+               <option key={group.id} value="{group.id}">{group.name}</option>
             ))}
+           
           </select>
 
           {/* {errors.func && <p style={{color:'red'}}> {errors.func.message}</p> } */}
         </div>
 
+       
+
         <Button>Submit</Button>
       </form>
     </div>
-  );
+  )
 }
