@@ -5,7 +5,10 @@ export default function Button({ children, variant, onClick, className }) {
       : 'bg-slate-500 text-slate-200 py-1 px-5 rounded-md hover:bg-slate-700'
 
   return (
-    <button className={`${buttonStyles} ${className}`} onClick={onClick}>
+    <button
+      className={`${buttonStyles} ${className} transition-colors`}
+      onClick={onClick}
+    >
       {children}
     </button>
   )
