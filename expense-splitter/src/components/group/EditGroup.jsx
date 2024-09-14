@@ -10,6 +10,7 @@ export default function EditGroup({
 }) {
   const { friends, setGroupData } = UseDataContext();
   //form properties
+  const editFriends = currentGroupData.friendIDs;
   const {
     handleSubmit,
     register,
@@ -20,10 +21,10 @@ export default function EditGroup({
       name: currentGroupData.name,
       description: currentGroupData.description,
       budget: currentGroupData.budget,
+      friendIDs: editFriends,
     },
   });
 
-  const newFriends = currentGroupData.friendIDs;
 
   //onSubmit
   const onSubmit = (values) => {
@@ -81,7 +82,7 @@ export default function EditGroup({
             <MultiSelectDropdown
               friends={friends}
               control={control}
-              editFriends={newFriends}
+              editFriends={editFriends}
             />
           </div>
         </div>
