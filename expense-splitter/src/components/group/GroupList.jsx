@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
 import EditGroup from "./EditGroup";
@@ -24,6 +24,10 @@ export default function GroupList() {
     setEditGroupData(currentGroupData);
     // console.log(id);
   };
+
+  // useEffect(() => {
+  //   console.log('rerender edit...')
+  // }, [editGroup])
 
   // const editGroupEl = editGroup &&
 
