@@ -19,7 +19,7 @@ export default function CreateGroup({ displayCreateGroupForm }) {
     console.log("This is form submit", values);
     setGroupData((prev) => [...prev, { ...values, id: nanoid() }]);
     //close form after submit
-    displayCreateGroupForm;
+    displayCreateGroupForm();
   };
 
   return (

@@ -30,7 +30,6 @@ export default function EditGroup({
     console.log(values);
     setGroupData((prev) => [...prev, { ...values, id: nanoid() }]);
   };
-  console.log("This is the current data", currentGroupData);
 
   return (
     <div className="mb-5">
