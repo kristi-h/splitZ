@@ -1,34 +1,47 @@
+import { useEffect } from "react";
 import { nanoid } from "nanoid";
 import { useForm } from "react-hook-form";
 import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
 import MultiSelectDropdown from "../ui/MultiSelectDropdown";
 
-export default function EditGroup({
-  currentGroupData,
-  DisplayCreateGroupForm,
-}) {
+export default function EditGroup({ currentGroupData, displayEditGroupForm }) {
   const { friends, setGroupData } = UseDataContext();
   //form properties
+  const editFriends = currentGroupData.friendIDs;
   const {
     handleSubmit,
     register,
     control,
+    reset,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      name: currentGroupData.name,
-      description: currentGroupData.description,
-      budget: currentGroupData.budget,
-    },
-  });
+  } = useForm();
 
-  const newFriends = currentGroupData.friendIDs;
+  // if another group is selected for edit, reset the form
+  useEffect(() => {
+    if (currentGroupData) {
+      reset({
+        name: currentGroupData.name || "",
+        description: currentGroupData.description || "",
+        budget: currentGroupData.budget || "",
+        friendIDs: currentGroupData.friendIDs || "",
+      });
+    }
+  }, [currentGroupData]);
 
   //onSubmit
   const onSubmit = (values) => {
-    console.log(values);
-    setGroupData((prev) => [...prev, { ...values, id: nanoid() }]);
+    //check see if current edit Object id match the id of the group object
+    //then replace that object with current edit data
+    //else return group object
+    setGroupData((prevState) =>
+      prevState.map((currentStateObject) =>
+        currentStateObject.id === currentGroupData.id
+          ? { ...currentStateObject, ...values }
+          : currentStateObject,
+      ),
+    );
+    displayEditGroupForm();
   };
 
   return (
@@ -81,13 +94,13 @@ export default function EditGroup({
             <MultiSelectDropdown
               friends={friends}
               control={control}
-              editFriends={newFriends}
+              editFriends={editFriends}
             />
           </div>
         </div>
 
         <Button>Submit</Button>
-        <Button onClick={DisplayCreateGroupForm} className="ml-4">
+        <Button onClick={displayEditGroupForm} className="ml-4">
           Cancel
         </Button>
       </form>

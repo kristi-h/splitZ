@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
 import EditGroup from "./EditGroup";
@@ -11,7 +11,6 @@ export default function GroupList() {
   const { groupData, setGroupData, friends } = UseDataContext();
 
   const handleDisplayDetails = (id) => {
-    // console.log(id)
     if (displayDetails === id) {
       setDisplayDetails("");
     } else {
@@ -20,12 +19,13 @@ export default function GroupList() {
   };
 
   const handleEditGroup = (currentGroupData) => {
-    setEditGroup(true);
-    setEditGroupData(currentGroupData);
-    // console.log(id);
+    if (editGroup) {
+      setEditGroup(false);
+    } else {
+      setEditGroup(true);
+      setEditGroupData(currentGroupData);
+    }
   };
-
-  // const editGroupEl = editGroup &&
 
   //delete a group
   const handleDelete = (id) => {
@@ -84,7 +84,12 @@ export default function GroupList() {
   return (
     <div>
       <div className="mb-4">{groupList}</div>
-      {editGroup && <EditGroup currentGroupData={editGroupData} />}
+      {editGroup && (
+        <EditGroup
+          currentGroupData={editGroupData}
+          displayEditGroupForm={handleEditGroup}
+        />
+      )}
     </div>
   );
 }
