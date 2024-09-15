@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
 import EditGroup from "./EditGroup";
@@ -20,16 +20,13 @@ export default function GroupList() {
   };
 
   const handleEditGroup = (currentGroupData) => {
-    setEditGroup(true);
-    setEditGroupData(currentGroupData);
-    // console.log(id);
+    if (editGroup) {
+      setEditGroup(false);
+    } else {
+      setEditGroup(true);
+      setEditGroupData(currentGroupData);
+    }
   };
-
-  // useEffect(() => {
-  //   console.log('rerender edit...')
-  // }, [editGroup])
-
-  // const editGroupEl = editGroup &&
 
   //delete a group
   const handleDelete = (id) => {
@@ -54,32 +51,44 @@ export default function GroupList() {
     <div
       onClick={() => handleDisplayDetails(group.id)}
       key={group.id}
-      className="mb-1 flex cursor-pointer flex-col rounded-md bg-slate-100 px-4 py-4"
+      className="mb-1 flex cursor-pointer flex-col rounded-lg bg-slate-100 px-4 py-4"
     >
-      <div className="flex justify-between">
-        <div className="text-lg">{group.name}</div>
-        <div className="flex gap-2">
-          <Button variant={"small"} onClick={() => handleEditGroup(group)}>
-            Edit
-          </Button>
-          <Button variant={"small"} onClick={() => handleDelete(group.id)}>
-            Delete
-          </Button>
-        </div>
+      <div className="flex justify-between items-center">
+        <h2 className="">{group.name}</h2>
+        <i class="fa-solid fa-chevron-up text-3xl text-accent"></i>
       </div>
       <div>
-        {displayDetails === group.id ? (
-          <div className="font-roboto text-sm font-light">
-            <p>Description: {group.description}</p>
-            <p> Budget: {group.budget}</p>
+        {displayDetails === group.id && (
+          <>
+          <div className="font-roboto text-sm font-light mt-2 mb-4">
+            <p>{group.description}</p>
+            <p> Budget remaining this month: $25 / ${group.budget}</p>
             <h3 className="text-decoration-line mt-2 text-base font-bold">
-              Friends:
+              In this group:
             </h3>
             {/* call a function to display friends list */}
             {retrieveFriendsName(friends, group.friendIDs)}
           </div>
-        ) : (
-          ""
+          <div className="flex justify-between">
+          
+          <div className="flex gap-2">
+            <Button 
+              variant={"small"} 
+              onClick={() => handleEditGroup(group)}
+              className={'bg-accent'}
+              >
+              Edit
+            </Button>
+            <Button 
+              variant={"small"} 
+              onClick={() => handleDelete(group.id)}
+              className={'bg-accent'}
+              >
+              Delete
+            </Button>
+          </div>
+        </div>
+          </>
         )}
       </div>
     </div>
@@ -88,7 +97,10 @@ export default function GroupList() {
   return (
     <div>
       <div className="mb-4">{groupList}</div>
-      {editGroup && <EditGroup currentGroupData={editGroupData} />}
+      {editGroup && 
+        <EditGroup 
+          currentGroupData={editGroupData} 
+          displayEditGroupForm={handleEditGroup} />}
     </div>
   );
 }

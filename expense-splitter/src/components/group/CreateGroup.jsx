@@ -24,21 +24,21 @@ export default function CreateGroup({ displayCreateGroupForm }) {
 
   return (
     <div className="mb-5">
-      <h1>Create a group</h1>
+      <h1 className="text-center">Create a Group</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-2">
-          <label className="mr-2">Name</label>
+        <div className="flex flex-col mb-5">
+          <label className="mb-1">Group Name</label>
           <input
-            placeholder="Name"
+            placeholder="Name your group"
             {...register("name", { required: "name is required" })}
           />
           <div className="error-text">{errors.name && errors.name.message}</div>
         </div>
 
-        <div className="mb-2">
-          <label className="mr-2">Description</label>
+        <div className="flex flex-col mb-5">
+          <label className="mb-1">Group Description</label>
           <input
-            placeholder="What is this group about"
+            placeholder="Tell us a little bit about your group"
             {...register("description", {
               required: "description is required",
             })}
@@ -48,8 +48,8 @@ export default function CreateGroup({ displayCreateGroupForm }) {
           </div>
         </div>
 
-        <div className="mb-4">
-          <label className="mr-2">Budget</label>
+        <div className="flex flex-col mb-5">
+          <label className="mb-1">Budget</label>
           <input
             placeholder="Enter a value"
             {...register("budget", {
@@ -63,14 +63,14 @@ export default function CreateGroup({ displayCreateGroupForm }) {
           <div className="error-text">
             {errors.budget && errors.budget.message}
           </div>
+        </div>
 
-          <div className="my-2 flex flex-row items-center">
+        <div className="flex flex-col mb-5">
             <label htmlFor="friends" className="mr-2">
               Friends
             </label>
             <MultiSelectDropdown friends={friends} control={control} />
           </div>
-        </div>
 
         <Button>Submit</Button>
         <Button onClick={displayCreateGroupForm} className="ml-4">

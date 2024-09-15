@@ -3,13 +3,15 @@ import Group from './components/group/Group'
 import Footer from './components/layout/Footer'
 import { DataProvider } from './components/context/SiteContext'
 import Header from './components/layout/Header'
+import Modal from './components/ui/Modal'
 
 function App() {
   return (
     <DataProvider>
+      {/* <Modal /> */}
       <div className='flex flex-col h-[100vh]'>
         <Header />
-        <div className="font-semibold p-4">
+        <div className="font-semibold px-4 py-6">
           <Group />
           <Expense />
         </div>
