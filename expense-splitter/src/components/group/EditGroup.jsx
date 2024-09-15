@@ -4,7 +4,10 @@ import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
 import MultiSelectDropdown from "../ui/MultiSelectDropdown";
 
-export default function CreateGroup({ displayCreateGroupForm }) {
+export default function EditGroup({
+  currentGroupData,
+  DisplayCreateGroupForm,
+}) {
   const { friends, setGroupData } = UseDataContext();
   //form properties
   const {
@@ -12,25 +15,32 @@ export default function CreateGroup({ displayCreateGroupForm }) {
     register,
     control,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      name: currentGroupData.name,
+      description: currentGroupData.description,
+      budget: currentGroupData.budget,
+    },
+  });
+
+  const newFriends = currentGroupData.friendIDs;
 
   //onSubmit
   const onSubmit = (values) => {
-    console.log("This is form submit", values);
+    console.log(values);
     setGroupData((prev) => [...prev, { ...values, id: nanoid() }]);
-    //close form after submit
-    displayCreateGroupForm();
   };
 
   return (
     <div className="mb-5">
-      <h1>Create a group</h1>
+      <h1>Edit a group</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-2">
           <label className="mr-2">Name</label>
           <input
             placeholder="Name"
             {...register("name", { required: "name is required" })}
+            // value={currentGroupData.name}
           />
           <div className="error-text">{errors.name && errors.name.message}</div>
         </div>
@@ -68,12 +78,16 @@ export default function CreateGroup({ displayCreateGroupForm }) {
             <label htmlFor="friends" className="mr-2">
               Friends
             </label>
-            <MultiSelectDropdown friends={friends} control={control} />
+            <MultiSelectDropdown
+              friends={friends}
+              control={control}
+              editFriends={newFriends}
+            />
           </div>
         </div>
 
         <Button>Submit</Button>
-        <Button onClick={displayCreateGroupForm} className="ml-4">
+        <Button onClick={DisplayCreateGroupForm} className="ml-4">
           Cancel
         </Button>
       </form>

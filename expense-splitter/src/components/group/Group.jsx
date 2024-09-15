@@ -1,21 +1,21 @@
-import React, { useState } from 'react'
-import Button from '../ui/Button'
-import CreateGroup from './CreateGroup'
-import GroupList from './GroupList'
+import React, { useState } from "react";
+import Button from "../ui/Button";
+import CreateGroup from "./CreateGroup";
+import GroupList from "./GroupList";
 
 export default function Group() {
-  const [showCreateGroupForm, setShowCreateGroupForm] = useState(false)
+  const [showCreateGroupForm, setShowCreateGroupForm] = useState(false);
 
   const displayCreateGroupForm = () => {
-    setShowCreateGroupForm(!showCreateGroupForm)
-  }
+    setShowCreateGroupForm(!showCreateGroupForm);
+  };
 
   return (
     <>
       <div className="flex flex-row justify-between p-4">
         <h1 className="text-3xl">Groups</h1>
         <span>
-          <Button variant={'small'} onClick={displayCreateGroupForm}>
+          <Button variant={"small"} onClick={displayCreateGroupForm}>
             Create Group +
           </Button>
         </span>
@@ -25,9 +25,9 @@ export default function Group() {
         {showCreateGroupForm ? (
           <CreateGroup displayCreateGroupForm={displayCreateGroupForm} />
         ) : (
-          ''
+          ""
         )}
       </div>
     </>
-  )
+  );
 }
