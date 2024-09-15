@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { nanoid } from "nanoid";
 import { useForm } from "react-hook-form";
 import Button from "../ui/Button";
@@ -6,7 +7,7 @@ import MultiSelectDropdown from "../ui/MultiSelectDropdown";
 
 export default function EditGroup({
   currentGroupData,
-  DisplayCreateGroupForm,
+  displayCreateGroupForm,
 }) {
   const { friends, setGroupData } = UseDataContext();
   //form properties
@@ -15,15 +16,21 @@ export default function EditGroup({
     handleSubmit,
     register,
     control,
+    reset,
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      name: currentGroupData.name,
-      description: currentGroupData.description,
-      budget: currentGroupData.budget,
-      friendIDs: editFriends,
-    },
-  });
+  } = useForm();
+
+  // if another group is selected for edit, reset the form
+  useEffect(() => {
+    if(currentGroupData){
+      reset({
+        name: currentGroupData.name || '',
+        description: currentGroupData.description || '',
+        budget: currentGroupData.budget || '',
+        friendIDs: currentGroupData.friendIDs || '',
+      })
+    }
+  }, [currentGroupData])
 
 
   //onSubmit
@@ -88,7 +95,7 @@ export default function EditGroup({
         </div>
 
         <Button>Submit</Button>
-        <Button onClick={DisplayCreateGroupForm} className="ml-4">
+        <Button onClick={displayCreateGroupForm} className="ml-4">
           Cancel
         </Button>
       </form>
