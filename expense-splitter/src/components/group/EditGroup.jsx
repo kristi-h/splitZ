@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { nanoid } from "nanoid";
 import { useForm } from "react-hook-form";
 import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
