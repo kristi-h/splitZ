@@ -1,11 +1,15 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { storage } from "../../utils/firebase";
+import { ref, uploadBytes } from "firebase/storage";
 
 // Define validation schema
 const schema = z.object({
   upload: z.object({
     0: z.object({
+      arrayBuffer: z.any(),
+      lastModifiedDate: z.date(),
       name: z.string(),
       size: z.number().refine(
         (size) => {
@@ -30,15 +34,22 @@ const FileUpload = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm({
     resolver: zodResolver(schema),
   });
 
-  // Console log form data
   const onUpload = async (data) => {
-    console.log("THIS IS THE FILE INFO");
-    console.log(data.upload[0]);
+    // console.log("THIS IS THE FILE INFO");
+    // console.log(typeof data.upload[0].lastModifiedDate);
+
+    // Define where to store with filepath
+    const uploadRef = ref(storage, data.upload[0].name);
+    // Upload to storage
+    await uploadBytes(uploadRef, data.upload[0]);
+    alert("File Uploaded");
+    reset();
   };
 
   return (
