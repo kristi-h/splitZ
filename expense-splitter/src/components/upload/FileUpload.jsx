@@ -4,32 +4,23 @@ import * as z from "zod";
 import { storage } from "../../utils/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useState } from "react";
-import { nanoid } from "nanoid";
+
+const MAX_FILE_SIZE = 6000000; //6MB
+const ACCEPTED_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 
 // Define validation schema
-const schema = z.object({
-  upload: z.object({
-    0: z.object({
-      arrayBuffer: z.any(),
-      lastModifiedDate: z.date(),
-      name: z.string(),
-      size: z.number().refine(
-        (size) => {
-          return size < 6000000; // 6MB
-        },
-        { message: "File size exceeds 6MB" },
-      ),
-      type: z.string().refine(
-        (val) =>
-          // File types to accept
-          val === "image/jpeg" ||
-          val === "image/png" ||
-          val === "application/pdf",
-        { message: "File type not supported" },
-      ),
-    }),
-  }),
-});
+const schema = z
+  .object({
+    upload: z
+      .any()
+      .refine((file) => file[0].size < MAX_FILE_SIZE, {
+        message: "File size exceeded",
+      })
+      .refine((file) => ACCEPTED_TYPES.includes(file[0].type), {
+        message: "File type not supported",
+      }),
+  })
+  .passthrough();
 
 // Grab objects from useForm hook
 const FileUpload = () => {
@@ -42,21 +33,19 @@ const FileUpload = () => {
     reset,
     formState: { errors, isSubmitting },
   } = useForm({
-    // resolver: zodResolver(schema),
+    resolver: zodResolver(schema),
   });
 
   const onUpload = async (data) => {
-    // console.log("THIS IS THE FILE INFO");
-    // console.log(typeof data.upload[0].lastModifiedDate);
-
     // Define where to store with filepath
     // TODO - Add unique identifier to filename //
-    const uploadRef = ref(storage, `${data.upload[0].name} - ${nanoid()}`);
+    const uploadRef = ref(storage, data.upload[0].name);
     // Upload to storage
     const snapshot = await uploadBytes(uploadRef, data.upload[0]);
     // Get url
     const url = await getDownloadURL(snapshot.ref);
     setImageUrl(url);
+
     reset();
   };
 
@@ -80,13 +69,9 @@ const FileUpload = () => {
         <button type="submit" disabled={isSubmitting}>
           {isSubmitting ? "Uploading..." : "Upload"}
         </button>
-        {/* Render size error */}
-        {errors.upload?.[0].size && (
-          <span className="text-red-500">{errors.upload[0].size.message}</span>
-        )}
-        {/* Render type error */}
-        {errors.upload?.[0].type && (
-          <span className="text-red-500">{errors.upload[0].type.message}</span>
+        {/* Render errors */}
+        {errors.upload?.message && (
+          <span className="text-red-500">{errors.upload.message}</span>
         )}
       </form>
       {/* Display uploaded img NOT WORKING! */}
