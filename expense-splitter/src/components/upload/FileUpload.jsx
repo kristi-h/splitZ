@@ -4,6 +4,7 @@ import * as z from "zod";
 import { storage } from "../../utils/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useState } from "react";
+import { nanoid } from "nanoid";
 
 const MAX_FILE_SIZE = 6000000; //6MB
 const ACCEPTED_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
@@ -31,15 +32,15 @@ const FileUpload = () => {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isValid },
   } = useForm({
     resolver: zodResolver(schema),
+    mode: "onChange",
   });
 
   const onUpload = async (data) => {
     // Define where to store with filepath
-    // TODO - Add unique identifier to filename //
-    const uploadRef = ref(storage, data.upload[0].name);
+    const uploadRef = ref(storage, `${nanoid()}-${data.upload[0].name}`);
     // Upload to storage
     const snapshot = await uploadBytes(uploadRef, data.upload[0]);
     // Get url
@@ -66,7 +67,7 @@ const FileUpload = () => {
           {...register("upload")}
         />
         {/* Conditionally render button based on isSubmitting */}
-        <button type="submit" disabled={isSubmitting}>
+        <button type="submit" disabled={isSubmitting || !isValid}>
           {isSubmitting ? "Uploading..." : "Upload"}
         </button>
         {/* Render errors */}
