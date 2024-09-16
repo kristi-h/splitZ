@@ -4,6 +4,7 @@ import * as z from "zod";
 import { storage } from "../../utils/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useState } from "react";
+import { nanoid } from "nanoid";
 
 // Define validation schema
 const schema = z.object({
@@ -41,7 +42,7 @@ const FileUpload = () => {
     reset,
     formState: { errors, isSubmitting },
   } = useForm({
-    resolver: zodResolver(schema),
+    // resolver: zodResolver(schema),
   });
 
   const onUpload = async (data) => {
@@ -50,7 +51,7 @@ const FileUpload = () => {
 
     // Define where to store with filepath
     // TODO - Add unique identifier to filename //
-    const uploadRef = ref(storage, data.upload[0].name);
+    const uploadRef = ref(storage, `${data.upload[0].name} - ${nanoid()}`);
     // Upload to storage
     const snapshot = await uploadBytes(uploadRef, data.upload[0]);
     // Get url
