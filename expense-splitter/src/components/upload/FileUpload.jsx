@@ -14,10 +14,10 @@ const schema = z
   .object({
     upload: z
       .any()
-      .refine((file) => file[0].size < MAX_FILE_SIZE, {
+      .refine((file) => file[0]?.size < MAX_FILE_SIZE, {
         message: "File size exceeded",
       })
-      .refine((file) => ACCEPTED_TYPES.includes(file[0].type), {
+      .refine((file) => ACCEPTED_TYPES.includes(file[0]?.type), {
         message: "File type not supported",
       }),
   })
