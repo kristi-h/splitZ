@@ -75,7 +75,7 @@ const FileUpload = () => {
           <span className="text-red-500">{errors.upload.message}</span>
         )}
       </form>
-      {/* Display uploaded img NOT WORKING! */}
+      {/* Display uploaded img */}
       <img src={imageUrl} alt="" />
       {imageUrl && <a href={imageUrl}>Download</a>}
     </>
