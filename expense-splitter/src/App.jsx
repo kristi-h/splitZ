@@ -11,11 +11,13 @@ function App() {
       {/* <Modal /> */}
       <div className='flex flex-col h-[100vh]'>
         <Header />
-        <div className="font-semibold px-4 py-6">
+        <div className='flex flex-col h-full overflow-y-auto'>
+          <section className="font-semibold px-4 py-6">
           <Group />
           <Expense />
+          </section>
+          <Footer/>
         </div>
-        <Footer/>
       </div>
     </DataProvider>
   )
