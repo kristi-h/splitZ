@@ -8,7 +8,7 @@ import Modal from './components/ui/Modal'
 function App() {
   return (
     <DataProvider>
-      {/* <Modal /> */}
+      <Modal />
       <div className='flex flex-col h-[100vh]'>
         <Header />
         <div className='flex flex-col h-full overflow-y-auto'>

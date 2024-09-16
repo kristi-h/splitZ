@@ -23,7 +23,7 @@ export default function MultiSelectDropdown({ friends, control, editFriends }) {
         onClick={toggleDropdown}
       >
         <div>Select Friends</div>
-        <i class="fa-solid fa-chevron-down text-3xl text-accent"></i>
+        <i className="fa-solid fa-chevron-down text-3xl text-accent"></i>
       </div>
       {isOpen && (
           <div className="w-full z-10 mt-1 max-h-60 cursor-pointer rounded-md border bg-white">

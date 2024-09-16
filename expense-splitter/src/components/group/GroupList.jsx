@@ -54,7 +54,7 @@ export default function GroupList() {
     >
       <div className="flex justify-between items-center">
         <h2 className="">{group.name}</h2>
-        <i class="fa-solid fa-chevron-up text-3xl text-accent"></i>
+        <i className="fa-solid fa-chevron-up text-3xl text-accent"></i>
       </div>
       <div>
         {displayDetails === group.id && (

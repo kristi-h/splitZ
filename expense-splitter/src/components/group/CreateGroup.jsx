@@ -4,8 +4,8 @@ import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
 import MultiSelectDropdown from "../ui/MultiSelectDropdown";
 
-export default function CreateGroup({ displayCreateGroupForm }) {
-  const { friends, setGroupData } = UseDataContext();
+export default function CreateGroup() {
+  const { friends, setGroupData, handleCreateGroupForm, handleSetShowModal } = UseDataContext();
   //form properties
   const {
     handleSubmit,
@@ -19,8 +19,10 @@ export default function CreateGroup({ displayCreateGroupForm }) {
     console.log("This is form submit", values);
     setGroupData((prev) => [...prev, { ...values, id: nanoid() }]);
     //close form after submit
-    displayCreateGroupForm();
+    handleCreateGroupForm();
+    handleSetShowModal();
   };
+
 
   return (
     <div className="mb-5">
@@ -72,10 +74,12 @@ export default function CreateGroup({ displayCreateGroupForm }) {
             <MultiSelectDropdown friends={friends} control={control} />
           </div>
 
-        <Button>Submit</Button>
-        <Button onClick={displayCreateGroupForm} className="ml-4">
-          Cancel
-        </Button>
+        <div className="flex">
+          <Button className="w-full md:w-auto">Submit</Button>
+          <Button onClick={handleSetShowModal} className="ml-4 w-full md:w-auto">
+            Cancel
+          </Button>
+        </div>
       </form>
     </div>
   );

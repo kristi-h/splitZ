@@ -15,6 +15,16 @@ export const DataProvider = ({ children }) => {
   const [expense, setExpense] = useState([]);
   const [groupData, setGroupData] = useState(initalGroup);
   const [friends, setFriends] = useState(initialFriends);
+  const [showCreateGroupForm, setShowCreateGroupForm] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleSetShowModal = () => {
+    setShowModal(!showModal)
+  };
+
+  const handleCreateGroupForm = () => {
+    setShowCreateGroupForm(!showCreateGroupForm);
+  };
 
   const handleSetExpense = (values) => {
     setExpense((prev) => [
@@ -22,7 +32,6 @@ export const DataProvider = ({ children }) => {
       { ...values, id: nanoid(), date: new Date() },
     ]);
   };
-  //   console.log(expense)
 
   return (
     <SiteContext.Provider
@@ -33,6 +42,10 @@ export const DataProvider = ({ children }) => {
         expense,
         setExpense,
         handleSetExpense,
+        showCreateGroupForm,
+        handleCreateGroupForm,
+        showModal,
+        handleSetShowModal,
       }}
     >
       {children}
