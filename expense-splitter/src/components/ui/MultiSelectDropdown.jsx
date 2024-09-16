@@ -19,13 +19,14 @@ export default function MultiSelectDropdown({ friends, control, editFriends }) {
   return (
     <div ref={ref}>
       <div
-        className="cursor-pointer rounded-md border bg-gray-200 p-1 text-sm font-light"
+        className="flex justify-between items-center cursor-pointer bg-accent/10 rounded-lg px-4 py-2 font-roboto font-light text-sm"
         onClick={toggleDropdown}
       >
-        Select Friends
+        <div>Select Friends</div>
+        <i className="fa-solid fa-chevron-down text-3xl text-accent"></i>
       </div>
       {isOpen && (
-        <div className="absolute z-10 mt-1 max-h-60 cursor-pointer overflow-y-auto rounded-md border bg-white">
+          <div className="w-full z-10 mt-1 max-h-60 cursor-pointer rounded-md border bg-white">
           {friends.map((friend) => (
             <label key={friend.id} className="flex items-center p-2">
               <Controller
