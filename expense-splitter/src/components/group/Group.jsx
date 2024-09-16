@@ -4,21 +4,16 @@ import GroupList from "./GroupList";
 import { UseDataContext } from "../context/SiteContext"
 
 export default function Group() {
-  const {handleCreateGroupForm, showCreateGroupForm, handleSetShowModal} = UseDataContext()
-  // const [showCreateGroupForm, setShowCreateGroupForm] = useState(false);
+  const {handleSetShowModal, showModal} = UseDataContext()
 
-  // const handleCreateGroupForm = () => {
-  //   setShowCreateGroupForm(!showCreateGroupForm);
-  // };
 
   return (
-    <div>
+    // if modal is not showing then display the following
+    !showModal && (
+      <div>
       <h1 className="text-center">Groups</h1>
       <div>
         <GroupList />
-        {/* {showCreateGroupForm && (
-          <CreateGroup handleCreateGroupForm={handleCreateGroupForm} />
-        )} */}
       </div>
       <div className="absolute over left-1/2 bottom-6 -translate-x-1/2 z-10">
         <Button 
@@ -28,5 +23,6 @@ export default function Group() {
         >Create Group</Button>
       </div>
     </div>
+    )
   );
 }
