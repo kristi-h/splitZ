@@ -32,8 +32,6 @@ export const DataProvider = ({ children }) => {
     }));
   };
 
-  console.log(modal);
-
   const handleCreateGroupForm = () => {
     setShowCreateGroupForm(!showCreateGroupForm);
   };
