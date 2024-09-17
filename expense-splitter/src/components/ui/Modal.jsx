@@ -1,11 +1,13 @@
 import EditGroup from '../group/EditGroup'
 import CreateGroup from '../group/CreateGroup'
 import { UseDataContext } from '../context/SiteContext'
+import CreateExpense from '../expense/CreateExpense'
 
 // map component names to actual components
 const components = {
   CreateGroup,
-  EditGroup
+  EditGroup,
+  CreateExpense,
 }
 
 export default function Modal() {

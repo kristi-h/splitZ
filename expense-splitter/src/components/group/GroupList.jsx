@@ -96,13 +96,7 @@ export default function GroupList() {
 
   return (
     <div>
-      <div className="mb-4">{groupList}</div>
-      {/* {editGroup && (
-        <EditGroup
-          currentGroupData={editGroupData}
-          displayEditGroupForm={handleEditGroup}
-        />
-      )} */}
+      <div className="flex flex-col-reverse mb-4">{groupList}</div>
     </div>
   );
 }

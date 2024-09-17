@@ -5,6 +5,8 @@ import { DataProvider } from './components/context/SiteContext'
 import Header from './components/layout/Header'
 import Modal from './components/ui/Modal'
 import CreateParticipant from './components/CreateParticipant'
+import CreateExpense from './components/expense/CreateExpense'
+import ReceiptUpload from './components/upload/ReceiptUpload'
 
 function App() {
   return (
@@ -15,7 +17,9 @@ function App() {
           <Modal />
           <section className="font-semibold px-4 py-6">
             <Group />
+            <ReceiptUpload />
             {/* <Expense /> */}
+            {/* <CreateExpense /> */}
             {/* <CreateParticipant /> */}
           </section>
           <Footer/>
