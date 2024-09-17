@@ -1,16 +1,23 @@
-// import EditGroup from '../group/EditGroup'
+import EditGroup from '../group/EditGroup'
 import CreateGroup from '../group/CreateGroup'
 import { UseDataContext } from '../context/SiteContext'
 
+// map component names to actual components
+const components = {
+  CreateGroup,
+  EditGroup
+}
+
 export default function Modal() {
-  const {showModal} = UseDataContext();
+  const { modal } = UseDataContext();
+  const Component = components[modal.type];
 
   return (
-    showModal && (
+    modal.show && (
       // <div className="absolute top-[200px] h-full flex bg-black/50 w-full z-20">
       <div className="h-full flex bg-black/50 w-full z-20">
         <div className="w-full bg-white p-6">
-          <CreateGroup />
+        {Component ? <Component /> : null}
         </div>
     </div>
     )

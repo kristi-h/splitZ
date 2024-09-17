@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Controller } from "react-hook-form";
 import useOutsideClick from "../../hooks/useOutsideClick";
 
@@ -13,7 +13,6 @@ export default function MultiSelectDropdown({ friends, control, editFriends }) {
     setIsOpen(false);
   };
 
-  useEffect(() => {}, [isOpen]);
   const ref = useOutsideClick(handleClickOutside);
 
   return (

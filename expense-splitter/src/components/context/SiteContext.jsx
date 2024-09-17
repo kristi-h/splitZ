@@ -16,11 +16,22 @@ export const DataProvider = ({ children }) => {
   const [groupData, setGroupData] = useState(initalGroup);
   const [friends, setFriends] = useState(initialFriends);
   const [showCreateGroupForm, setShowCreateGroupForm] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [modal, setModal] = useState({
+    show: false,
+    type: '',
+    id: ''
+  })
 
-  const handleSetShowModal = () => {
-    setShowModal(!showModal)
+  const handleSetModal = (type, id) => {
+    setModal(prev => ({
+      ...prev, 
+      show: !prev.show,
+      type,
+      id
+    }) )
   };
+
+  console.log(modal)
 
   const handleCreateGroupForm = () => {
     setShowCreateGroupForm(!showCreateGroupForm);
@@ -44,8 +55,9 @@ export const DataProvider = ({ children }) => {
         handleSetExpense,
         showCreateGroupForm,
         handleCreateGroupForm,
-        showModal,
-        handleSetShowModal,
+        modal,
+        setModal,
+        handleSetModal,
       }}
     >
       {children}
