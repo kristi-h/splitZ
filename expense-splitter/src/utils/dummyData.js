@@ -89,7 +89,7 @@ export const dummyGroups = [
     id: "c35a55d7-1b2d-4185-98b4-f536f5ea25f6",
     name: "Day Trippers",
     description: "Explorer group",
-    budget: "",
+    budget: "1000",
     friendIDs: ["d5923f14-bc79-44ea-8388-d354c72c2253"],
     expenseIDs: [
       "2c0ce368-7a0c-4b72-ad30-8c03a8d7318a",
