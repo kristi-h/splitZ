@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { createContext, useContext } from "react";
 import db from "../../utils/localstoragedb";
-import { nanoid } from "nanoid"
+import { nanoid } from "nanoid";
 
 const SiteContext = createContext(null);
 
@@ -11,7 +11,7 @@ export const DataProvider = ({ children }) => {
   // initialize data from localStorageDB
   const initialFriends = db.queryAll("friends");
   const initalGroup = db.queryAll("groups");
-  const initialExpenses = db.queryAll("expenses")
+  const initialExpenses = db.queryAll("expenses");
 
   const [expense, setExpense] = useState(initialExpenses);
   const [groupData, setGroupData] = useState(initalGroup);
@@ -19,20 +19,20 @@ export const DataProvider = ({ children }) => {
   const [showCreateGroupForm, setShowCreateGroupForm] = useState(false);
   const [modal, setModal] = useState({
     show: false,
-    type: '',
-    id: ''
-  })
+    type: "",
+    id: "",
+  });
 
   const handleSetModal = (type, id) => {
-    setModal(prev => ({
-      ...prev, 
+    setModal((prev) => ({
+      ...prev,
       show: !prev.show,
       type,
-      id
-    }) )
+      id,
+    }));
   };
 
-  console.log(modal)
+  console.log(modal);
 
   const handleCreateGroupForm = () => {
     setShowCreateGroupForm(!showCreateGroupForm);
@@ -51,6 +51,7 @@ export const DataProvider = ({ children }) => {
         groupData,
         setGroupData,
         friends,
+        setFriends,
         expense,
         setExpense,
         handleSetExpense,

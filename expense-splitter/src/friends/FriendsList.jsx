@@ -2,7 +2,13 @@ import { UseDataContext } from "../components/context/SiteContext";
 import Button from "../components/ui/Button";
 
 const FriendsList = () => {
-  const { friends } = UseDataContext();
+  const { friends, setFriends } = UseDataContext();
+
+  // Delete friend if matches id
+  const handleDeleteFriend = (id) => {
+    setFriends(friends.filter((friend) => friend.id !== id));
+  };
+
   return (
     <>
       <h1 className="text-center">FRIENDS</h1>
@@ -21,7 +27,12 @@ const FriendsList = () => {
 
           <div className="ml-auto flex gap-2">
             <Button className="w-20">Edit</Button>
-            <Button className="w-20">Delete</Button>
+            <Button
+              className="w-20"
+              onClick={() => handleDeleteFriend(friend.id)}
+            >
+              Delete
+            </Button>
           </div>
         </div>
       ))}
