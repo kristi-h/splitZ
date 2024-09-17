@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { nanoid } from "nanoid";
 import { createContext, useContext } from "react";
 import db from "../../utils/localstoragedb";
 
