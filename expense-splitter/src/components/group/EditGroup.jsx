@@ -4,10 +4,15 @@ import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
 import MultiSelectDropdown from "../ui/MultiSelectDropdown";
 
-export default function EditGroup({ currentGroupData, displayEditGroupForm }) {
-  const { friends, setGroupData } = UseDataContext();
+// export default function EditGroup({ currentGroupData, displayEditGroupForm }) {
+export default function EditGroup() {
+  const { friends, setGroupData, groupData, modal, handleSetModal } = UseDataContext();
+  
   //form properties
+  const currentGroupData = groupData.find(group => group.id === modal.id)
+  console.log(currentGroupData)
   const editFriends = currentGroupData.friendIDs;
+
   const {
     handleSubmit,
     register,
@@ -40,7 +45,7 @@ export default function EditGroup({ currentGroupData, displayEditGroupForm }) {
           : currentStateObject,
       ),
     );
-    displayEditGroupForm();
+    handleSetModal();
   };
 
   return (
@@ -71,7 +76,7 @@ export default function EditGroup({ currentGroupData, displayEditGroupForm }) {
       </div>
 
       <div className="flex flex-col mb-5">
-        <label className="mr-2">Budget</label>
+        <label className="mb-1">Budget</label>
         <input
           placeholder="Enter a value"
           {...register("budget", {
@@ -97,11 +102,13 @@ export default function EditGroup({ currentGroupData, displayEditGroupForm }) {
           editFriends={editFriends}
         />
       </div>
-
-        <Button>Submit</Button>
-        <Button onClick={displayEditGroupForm} className="ml-4">
+      
+      <div className="flex">
+        <Button className="w-full md:w-auto">Submit</Button>
+        <Button onClick={handleSetModal} className="ml-4 w-full md:w-auto">
           Cancel
         </Button>
+      </div>
       </form>
     </div>
   );

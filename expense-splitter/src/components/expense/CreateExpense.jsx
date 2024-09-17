@@ -4,36 +4,38 @@ import { UseDataContext } from "../context/SiteContext";
 import { nanoid } from "nanoid";
 
 export default function CreateExpense() {
+  const { groupData, expense, handleSetExpense, handleSetModal } = UseDataContext();
+
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm();
 
-  const { groupData, expense, handleSetExpense } = UseDataContext();
   const id = nanoid();
 
   const onSubmit = (values) => {
     handleSetExpense({ ...values, id });
+    handleSetModal();
   };
 
   // console.log(expense)
 
   return (
     <div className="mb-5">
-      <h1>Create an Expense </h1>
+      <h1 className="text-center">Create an Expense </h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-2">
-          <label className="mr-2">Name: </label>
+      <div className="flex flex-col mb-5">
+          <label className="mb-1">Name: </label>
           <input
             placeholder="Name of expense"
             {...register("name", { required: "name is equired" })}
           />
           <div className="error-text">{errors.name && errors.name.message}</div>
-        </div>
+      </div>
 
-        <div className="mb-2">
-          <label className="mr-2">Description: </label>
+        <div className="flex flex-col mb-5">
+          <label className="mb-1">Description: </label>
           <input
             placeholder="Describe the expense"
             {...register("description", {
@@ -45,11 +47,10 @@ export default function CreateExpense() {
           </div>
         </div>
 
-        <div className="mb-2">
-          <label htmlFor="category" className="mr-2">
+        <div className="flex flex-col mb-5">
+          <label htmlFor="category" className="mb-1">
             Category:
           </label>
-
           <select
             name="category"
             {...register("category", {
@@ -70,23 +71,23 @@ export default function CreateExpense() {
           {/* {errors.func && <p style={{color:'red'}}> {errors.func.message}</p> } */}
         </div>
 
-        <div className="mb-2">
-          <label className="mr-2">Amount: </label>
-          <input
-            placeholder="Enter a value"
-            {...register("amount", {
-              required: "Required",
-              pattern: {
-                value: /^[0-9]*$/i,
-                message: "invalid type, please enter a number",
-              },
-            })}
-          />
-          <div>{errors.budget && errors.budget.message}</div>
+        <div className="flex flex-col mb-5">
+            <label className="mb-1">Amount: </label>
+            <input
+              placeholder="Enter a value"
+              {...register("amount", {
+                required: "Required",
+                pattern: {
+                  value: /^[0-9]*$/i,
+                  message: "invalid type, please enter a number",
+                },
+              })}
+            />
+            <div>{errors.budget && errors.budget.message}</div>
         </div>
 
-        <div className="mb-2">
-          <label htmlFor="group" className="mr-2">
+        <div className="flex flex-col mb-5">
+          <label htmlFor="group" className="mb-2">
             Group Name:
           </label>
 
@@ -106,7 +107,12 @@ export default function CreateExpense() {
           {/* {errors.func && <p style={{color:'red'}}> {errors.func.message}</p> } */}
         </div>
 
-        <Button>Submit</Button>
+        <div className="flex">
+          <Button className="w-full md:w-auto">Submit</Button>
+          <Button onClick={handleSetModal} className="ml-4 w-full md:w-auto">
+            Cancel
+          </Button>
+        </div>
       </form>
     </div>
   );
