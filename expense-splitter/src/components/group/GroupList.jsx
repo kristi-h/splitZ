@@ -10,6 +10,9 @@ export default function GroupList() {
   const [editGroupData, setEditGroupData] = useState({});
   const { groupData, setGroupData, friends, handleSetModal } = UseDataContext();
 
+  //change arrow icon when info displays
+  const [ icon, setIcon ] = useState("up");
+
   const handleDisplayDetails = (id) => {
     if (displayDetails === id) {
       setDisplayDetails("");
@@ -48,13 +51,14 @@ export default function GroupList() {
 
   const groupList = groupData.map((group) => (
     <div
-      onClick={() => handleDisplayDetails(group.id)}
+      onClick={() => {handleDisplayDetails(group.id); if(icon === "up") {setIcon("down")} else {setIcon("up")}}}
       key={group.id}
       className="mb-1 flex cursor-pointer flex-col rounded-lg bg-slate-100 px-4 py-4"
     >
       <div className="flex justify-between items-center">
         <h2 className="">{group.name}</h2>
-        <i className="fa-solid fa-chevron-up text-3xl text-accent"></i>
+        { icon === "up" ? <i className="fa-solid fa-chevron-up text-3xl text-accent"></i> : null }
+        { icon === "down" ? <i className="fa-solid fa-chevron-down text-3xl text-accent"></i> : null }
       </div>
       <div>
         {displayDetails === group.id && (

@@ -10,15 +10,15 @@ const Footer = () => {
             <div className="mr-10 mt-2 mb-2">
                 <p>Kris
                     <a className="ml-1" href="https://github.com/kristi-h"><GitHubIcon /></a> /
-                    <a href=""><LinkedInIcon /></a>
+                    {/* <a href=""><LinkedInIcon /></a> */}
                 </p>
                 <p>Maya
                     <a className="ml-1" href="https://github.com/maya17power"><GitHubIcon /></a> /
-                    <a href=""><LinkedInIcon /></a>
+                    {/* <a href=""><LinkedInIcon /></a> */}
                 </p>
                 <p>Carlos
                     <a className="ml-1" href="https://github.com/ccespedes"><GitHubIcon /></a> /
-                    <a href=""><LinkedInIcon /></a>
+                    {/* <a href=""><LinkedInIcon /></a> */}
                 </p>
                 <p>Abel
                     <a className="ml-1" href="https://github.com/belunatic"><GitHubIcon /></a> /
@@ -36,7 +36,7 @@ const Footer = () => {
                 </p>
                 <p>Bolaji
                     <a className="ml-1" href="https://github.com/Anuoluwatobi"><GitHubIcon /></a> /
-                    <a href=""><LinkedInIcon /></a>
+                    {/* <a href=""><LinkedInIcon /></a> */}
                 </p>
                 <p>Smiti
                     <a className="ml-1" href="https://github.com/SM171906"><GitHubIcon /></a> /
