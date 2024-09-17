@@ -4,14 +4,20 @@
 
 @layer base {
   body {
-    /* @apply bg-gray-900; */
+    @apply bg-gray-50;
   }
   h1 {
-    @apply text-2xl mb-2;
+    @apply text-[32px] font-medium mb-4;
   }
+  h2,
+  label {
+    @apply text-lg font-semibold;
+  }
+  p {
+    @apply text-[16px] font-light;}
   input,
   select {
-    @apply bg-gray-200 rounded-md px-2 py-1 font-light text-sm;
+    @apply bg-accent/10 rounded-lg p-4 font-roboto font-light text-sm placeholder:text-accent;
   }
   .error-text {
     @apply text-xs font-light text-red-500;

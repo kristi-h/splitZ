@@ -1,47 +1,48 @@
-import { useEffect, useState } from 'react'
-import { Controller } from 'react-hook-form'
-import useOutsideClick from '../../hooks/useOutsideClick'
+import { useEffect, useState } from "react";
+import { Controller } from "react-hook-form";
+import useOutsideClick from "../../hooks/useOutsideClick";
 
-export default function MultiSelectDropdown({ friends, control }) {
-  const [isOpen, setIsOpen] = useState(false)
+export default function MultiSelectDropdown({ friends, control, editFriends }) {
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
-    setIsOpen(!isOpen)
-  }
+    setIsOpen(!isOpen);
+  };
 
   const handleClickOutside = () => {
-    setIsOpen(false)
-  }
+    setIsOpen(false);
+  };
 
-  useEffect(() => {}, [isOpen])
-  const ref = useOutsideClick(handleClickOutside)
+  useEffect(() => {}, [isOpen]);
+  const ref = useOutsideClick(handleClickOutside);
 
   return (
     <div ref={ref}>
       <div
-        className="border p-1 cursor-pointer text-sm font-light bg-gray-200 rounded-md"
+        className="flex justify-between items-center cursor-pointer bg-accent/10 rounded-lg px-4 py-2 font-roboto font-light text-sm"
         onClick={toggleDropdown}
       >
-        Select Friends
+        <div>Select Friends</div>
+        <i className="fa-solid fa-chevron-down text-3xl text-accent"></i>
       </div>
       {isOpen && (
-        <div className="absolute mt-1 border bg-white z-10 max-h-60 overflow-y-auto rounded-md cursor-pointer">
+          <div className="w-full z-10 mt-1 max-h-60 cursor-pointer rounded-md border bg-white">
           {friends.map((friend) => (
             <label key={friend.id} className="flex items-center p-2">
               <Controller
-                name="friends"
+                name="friendIDs"
                 control={control}
                 render={({ field }) => (
                   <input
                     type="checkbox"
                     value={friend.id}
                     onChange={(e) => {
-                      const isChecked = e.target.checked
-                      const valueArray = field.value || []
+                      const isChecked = e.target.checked;
+                      const valueArray = field.value || [];
                       const newValue = isChecked
                         ? [...valueArray, friend.id]
-                        : valueArray.filter((id) => id !== friend.id)
-                      field.onChange(newValue)
+                        : valueArray.filter((id) => id !== friend.id);
+                      field.onChange(newValue);
                     }}
                     checked={field.value?.includes(friend.id) || false}
                   />
@@ -53,5 +54,5 @@ export default function MultiSelectDropdown({ friends, control }) {
         </div>
       )}
     </div>
-  )
+  );
 }
