@@ -24,7 +24,7 @@ const schema = z
   .passthrough();
 
 // Grab objects from useForm hook
-const FileUpload = () => {
+const ReceiptUpload = () => {
   // Store url of uploaded image
   const [imageUrl, setImageUrl] = useState("");
 
@@ -82,4 +82,4 @@ const FileUpload = () => {
   );
 };
 
-export default FileUpload;
+export default ReceiptUpload;
