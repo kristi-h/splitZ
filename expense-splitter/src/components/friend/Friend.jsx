@@ -1,9 +1,7 @@
 import Button from "../ui/Button";
-import GroupList from "./GroupList";
 import { UseDataContext } from "../context/SiteContext"
-import ReceiptUpload from "../upload/ReceiptUpload"
 
-export default function Group() {
+export default function Friend() {
   const {handleSetModal, modal} = UseDataContext()
   console.log(modal)
 
@@ -11,16 +9,15 @@ export default function Group() {
     // if modal is not showing then display the following
     !modal.show && (
       <div>
-        <h1 className="text-center">Groups</h1>
+        <h1 className="text-center">Friends</h1>
         <div>
-          <GroupList />
-          <ReceiptUpload />
+          Friends List here
         </div>
         <div className="absolute over left-1/2 bottom-6 -translate-x-1/2 z-10">
           <Button 
-            onClick={() => handleSetModal('CreateGroup')} 
+            onClick={() => handleSetModal('CreateFriend')} 
             className={'bg-primary'}
-          >Create Group</Button>
+          >Create Friend</Button>
         </div>
       </div>
     )

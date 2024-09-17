@@ -5,9 +5,10 @@ import Footer from './components/layout/Footer'
 import { DataProvider } from './components/context/SiteContext'
 import Header from './components/layout/Header'
 import Modal from './components/ui/Modal'
-import CreateParticipant from './components/CreateParticipant'
 import CreateExpense from './components/expense/CreateExpense'
 import ReceiptUpload from './components/upload/ReceiptUpload'
+import Friend from './components/friend/Friend'
+import Home from './components/Home'
 
 function App() {
   return (
@@ -17,16 +18,14 @@ function App() {
           <Header />
           <div className='flex flex-col h-full overflow-y-auto'>
               <Modal />
-              <section className="font-semibold px-4 py-6">
+              <section className="font-semibold px-4 py-6 max-w-4xl mx-auto w-full">
+              {/* <section className="font-semibold m-auto w-full px-4 max-w-4xl py-6"> */}
                 <Routes>
-                  <Route path="/home" />
+                  <Route path="/" element={<Home />}/>
                   <Route path="/groups" element={<Group />} />
-                  <Route path="/friends" />
+                  <Route path="/friends" element={<Friend />} />
                   <Route path="/expenses" element={<Expense />} />
                   <Route path="/receipts" element={<ReceiptUpload />} />
-                    {/* <Expense /> */}
-                    {/* <CreateExpense /> */}
-                    {/* <CreateParticipant /> */}
                 </Routes>
               </section>
               <Footer/>

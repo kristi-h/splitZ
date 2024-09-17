@@ -9,8 +9,8 @@ export default function EditGroup() {
   const { friends, setGroupData, groupData, modal, handleSetModal } = UseDataContext();
   
   //form properties
-  const currentGroupData = groupData.find(group => group.id === modal.id)
-  console.log(currentGroupData)
+  // pull group info from modal context to populate form
+  const currentGroupData = groupData.find(group => group.id === modal.id);
   const editFriends = currentGroupData.friendIDs;
 
   const {

@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
 import { nanoid } from "nanoid";
+import ReceiptUpload from "../upload/ReceiptUpload"
 
 export default function CreateExpense() {
   const { groupData, expense, handleSetExpense, handleSetModal } = UseDataContext();
@@ -106,6 +107,8 @@ export default function CreateExpense() {
 
           {/* {errors.func && <p style={{color:'red'}}> {errors.func.message}</p> } */}
         </div>
+
+        <ReceiptUpload />
 
         <div className="flex">
           <Button className="w-full md:w-auto">Submit</Button>
