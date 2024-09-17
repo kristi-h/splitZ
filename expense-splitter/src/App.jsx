@@ -21,7 +21,7 @@ function App() {
               <Routes>
                 <Route path="/home" />
                 <Route path="/groups" element={<Group />} />
-                <Route path="/friends" element={<FriendsList />} />
+                <Route path="/friends" element={FriendsList} />
                 <Route path="/expenses" element={<Expense />} />
                 <Route path="/receipts" element={<ReceiptUpload />} />
                 {/* <Expense /> */}
