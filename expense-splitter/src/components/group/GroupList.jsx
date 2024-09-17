@@ -56,10 +56,31 @@ export default function GroupList() {
     }
   };
 
-  const expenseAmount = (expenseObject, groupExpenseArray, groupBudget) => {
-    const retrieveGroupeExpenses = expenseObject.filter((expenseObjectId) =>
-      groupExpenseArray.includes(expenseObjectId.id),
+  //calculate the expense amount
+  //input: Expense Object, Group Expense Array, Group Budget
+  //output : Array with Expenses amount and flag to determine over/under
+  const expenseAmount = (
+    expenseObject,
+    groupExpenseArray,
+    currentGroupBudget,
+  ) => {
+    //filter to get the current group expenses
+    const retrieveGroupExpenses = expenseObject.filter((object) =>
+      groupExpenseArray.includes(object.id),
     );
+    //calculate the expense Amount
+    const expenseAmount = retrieveGroupExpenses.reduce(
+      (acc, currentValue) => acc + Number(currentValue.amount),
+      0,
+    );
+    //determine over / under
+    const flag =
+      currentGroupBudget - expenseAmount < 0
+        ? "text-red-600"
+        : "text-green-600";
+
+    //return an array
+    return [expenseAmount.toFixed(2), flag];
   };
 
   const groupList = groupData.map((group) => (
@@ -89,7 +110,17 @@ export default function GroupList() {
           <>
             <div className="mb-4 mt-2 font-roboto text-sm font-light">
               <p>{group.description}</p>
-              <p> Budget remaining this month: $25 / ${group.budget}</p>
+              <p>
+                Budget remaining this month:{" "}
+                <span
+                  className={
+                    expenseAmount(expense, group.expenseIDs, group.budget)[1]
+                  }
+                >
+                  ${expenseAmount(expense, group.expenseIDs, group.budget)[0]} /
+                  ${group.budget}
+                </span>
+              </p>
               {/* call a function to display friends list */}
               {retrieveList(friends, group.friendIDs, "friends")}
               {/* call a function to display expense list */}
