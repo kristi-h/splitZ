@@ -1,45 +1,47 @@
-import { nanoid } from 'nanoid'
-import { useForm } from 'react-hook-form'
-import Button from '../ui/Button'
-import { UseDataContext } from '../context/SiteContext'
-import MultiSelectDropdown from '../ui/MultiSelectDropdown'
+import { nanoid } from "nanoid";
+import { useForm } from "react-hook-form";
+import Button from "../ui/Button";
+import { UseDataContext } from "../context/SiteContext";
+import MultiSelectDropdown from "../ui/MultiSelectDropdown";
 
-export default function CreateGroup({ displayCreateGroupForm }) {
-  const { friends, setGroupData } = UseDataContext()
+export default function CreateGroup() {
+  const { friends, setGroupData, handleSetModal } = UseDataContext();
   //form properties
   const {
     handleSubmit,
     register,
     control,
     formState: { errors },
-  } = useForm()
+  } = useForm();
 
   //onSubmit
   const onSubmit = (values) => {
-    console.log(values)
-    setGroupData((prev) => [...prev, { ...values, id: nanoid() }])
-  }
-  // console.log(groupData)
+    console.log("This is form submit", values);
+    setGroupData((prev) => [...prev, { ...values, id: nanoid() }]);
+    //close form after submit
+    handleSetModal();
+  };
+
 
   return (
     <div className="mb-5">
-      <h1>Create a group</h1>
+      <h1 className="text-center">Create a Group</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-2">
-          <label className="mr-2">Name</label>
+        <div className="flex flex-col mb-5">
+          <label className="mb-1">Group Name</label>
           <input
-            placeholder="Name"
-            {...register('name', { required: 'name is required' })}
+            placeholder="Name your group"
+            {...register("name", { required: "name is required" })}
           />
           <div className="error-text">{errors.name && errors.name.message}</div>
         </div>
 
-        <div className="mb-2">
-          <label className="mr-2">Description</label>
+        <div className="flex flex-col mb-5">
+          <label className="mb-1">Group Description</label>
           <input
-            placeholder="What is this group about"
-            {...register('description', {
-              required: 'description is required',
+            placeholder="Tell us a little bit about your group"
+            {...register("description", {
+              required: "description is required",
             })}
           />
           <div className="error-text">
@@ -47,35 +49,37 @@ export default function CreateGroup({ displayCreateGroupForm }) {
           </div>
         </div>
 
-        <div className="mb-4">
-          <label className="mr-2">Budget</label>
+        <div className="flex flex-col mb-5">
+          <label className="mb-1">Budget</label>
           <input
             placeholder="Enter a value"
-            {...register('budget', {
-              required: 'budget is required',
+            {...register("budget", {
+              required: "budget is required",
               pattern: {
                 value: /^[0-9]*$/i,
-                message: 'invalid type, only numbers allowed',
+                message: "invalid type, only numbers allowed",
               },
             })}
           />
           <div className="error-text">
             {errors.budget && errors.budget.message}
           </div>
+        </div>
 
-          <div className="my-2 flex flex-row items-center">
+        <div className="flex flex-col mb-5">
             <label htmlFor="friends" className="mr-2">
               Friends
             </label>
             <MultiSelectDropdown friends={friends} control={control} />
           </div>
-        </div>
 
-        <Button>Submit</Button>
-        <Button onClick={displayCreateGroupForm} className="ml-4">
-          Cancel
-        </Button>
+        <div className="flex">
+          <Button className="w-full md:w-auto">Submit</Button>
+          <Button onClick={handleSetModal} className="ml-4 w-full md:w-auto">
+            Cancel
+          </Button>
+        </div>
       </form>
     </div>
-  )
+  );
 }
