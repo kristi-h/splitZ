@@ -64,93 +64,101 @@ export default function GroupList() {
     groupExpenseArray,
     currentGroupBudget,
   ) => {
+    if (!groupExpenseArray) {
+      return [currentGroupBudget, "", true];
+    }
     //filter to get the current group expenses
     const retrieveGroupExpenses = expenseObject.filter((object) =>
       groupExpenseArray.includes(object.id),
     );
+    //if group has no expense then it a new group
+    const newGroup = retrieveGroupExpenses ? false : true;
     //calculate the expense Amount
     const expenseAmount = retrieveGroupExpenses.reduce(
-      (acc, currentValue) => acc + Number(currentValue.amount),
-      0,
+      (acc, currentValue) => acc - Number(currentValue.amount),
+      Number(currentGroupBudget),
     );
     //determine over / under
-    const flag =
-      currentGroupBudget - expenseAmount < 0
-        ? "text-red-600"
-        : "text-green-600";
+    const flag = expenseAmount < 0 ? "text-red-600" : "text-green-600";
 
+    console.log(expenseAmount.toFixed(2), flag, newGroup);
     //return an array
-    return [expenseAmount.toFixed(2), flag];
+    return [expenseAmount.toFixed(2), flag, newGroup];
   };
 
-  const groupList = groupData.map((group) => (
-    <div
-      onClick={() => {
-        handleDisplayDetails(group.id);
-        if (icon === "up") {
-          setIcon("down");
-        } else {
-          setIcon("up");
-        }
-      }}
-      key={group.id}
-      className="mb-1 flex cursor-pointer flex-col rounded-lg bg-slate-100 px-4 py-4"
-    >
-      <div className="flex items-center justify-between">
-        <h2 className="">{group.name}</h2>
-        {icon === "up" ? (
-          <i className="fa-solid fa-chevron-up text-3xl text-accent"></i>
-        ) : null}
-        {icon === "down" ? (
-          <i className="fa-solid fa-chevron-down text-3xl text-accent"></i>
-        ) : null}
-      </div>
-      <div>
-        {displayDetails === group.id && (
-          <>
-            <div className="mb-4 mt-2 font-roboto text-sm font-light">
-              <p>{group.description}</p>
-              <p>
-                Budget remaining this month:{" "}
-                <span
-                  className={
-                    expenseAmount(expense, group.expenseIDs, group.budget)[1]
-                  }
-                >
-                  ${expenseAmount(expense, group.expenseIDs, group.budget)[0]} /
-                  ${group.budget}
-                </span>
-              </p>
-              {/* call a function to display friends list */}
-              {retrieveList(friends, group.friendIDs, "friends")}
-              {/* call a function to display expense list */}
-              {retrieveList(expense, group.expenseIDs, "expense")}
-            </div>
-            <div className="flex justify-between">
-              <div className="flex gap-2">
-                <Button
-                  variant={"small"}
-                  // onClick={() => handleEditGroup(group)}
-                  onClick={() => handleSetModal("EditGroup", group.id)}
-                  className={"bg-accent"}
-                >
-                  Edit
-                </Button>
-                <Button
-                  variant={"small"}
-                  onClick={() => handleDelete(group.id)}
-                  className={"bg-accent"}
-                >
-                  Delete
-                </Button>
+  const groupList = groupData.map((group) => {
+    //expense calculator
+    const [expenseTotal, flag, newGroup] = expenseAmount(
+      expense,
+      group.expenseIDs,
+      group.budget,
+    );
+    return (
+      <div
+        onClick={() => {
+          handleDisplayDetails(group.id);
+          if (icon === "up") {
+            setIcon("down");
+          } else {
+            setIcon("up");
+          }
+        }}
+        key={group.id}
+        className="mb-1 flex cursor-pointer flex-col rounded-lg bg-slate-100 px-4 py-4"
+      >
+        <div className="flex items-center justify-between">
+          <h2 className="">{group.name}</h2>
+          {icon === "up" ? (
+            <i className="fa-solid fa-chevron-up text-3xl text-accent"></i>
+          ) : null}
+          {icon === "down" ? (
+            <i className="fa-solid fa-chevron-down text-3xl text-accent"></i>
+          ) : null}
+        </div>
+        <div>
+          {displayDetails === group.id && (
+            <>
+              <div className="mb-4 mt-2 font-roboto text-sm font-light">
+                <p>{group.description}</p>
+                <p>
+                  Budget:
+                  <span className={newGroup ? "" : flag}>
+                    {newGroup
+                      ? ` \$${group.budget}`
+                      : ` \$${expenseTotal} / \$${group.budget}`}
+                  </span>
+                </p>
+                {/* call a function to display friends list */}
+                {retrieveList(friends, group.friendIDs, "friends")}
+                {/* check for group expense, if exists call a function to display expense list */}
+                {group.expenseIDs &&
+                  retrieveList(expense, group.expenseIDs, "expense")}
               </div>
-            </div>
-          </>
-        )}
+              <div className="flex justify-between">
+                <div className="flex gap-2">
+                  <Button
+                    variant={"small"}
+                    // onClick={() => handleEditGroup(group)}
+                    onClick={() => handleSetModal("EditGroup", group.id)}
+                    className={"bg-accent"}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    variant={"small"}
+                    onClick={() => handleDelete(group.id)}
+                    className={"bg-accent"}
+                  >
+                    Delete
+                  </Button>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
       </div>
-    </div>
-  ));
-
+    );
+  });
   return (
     <div>
       <div className="mb-4 flex flex-col-reverse">{groupList}</div>
