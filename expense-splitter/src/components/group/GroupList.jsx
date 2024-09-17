@@ -7,9 +7,6 @@ import GroupExpenseList from "./groupListComponent/GroupExpenseList";
 
 export default function GroupList() {
   const [displayDetails, setDisplayDetails] = useState("");
-  const [editGroup, setEditGroup] = useState(false);
-  //get group edit info
-  const [editGroupData, setEditGroupData] = useState({});
   const { groupData, setGroupData, friends, expense, handleSetModal } =
     UseDataContext();
 
@@ -21,15 +18,6 @@ export default function GroupList() {
       setDisplayDetails("");
     } else {
       setDisplayDetails(id);
-    }
-  };
-
-  const handleEditGroup = (currentGroupData) => {
-    if (editGroup) {
-      setEditGroup(false);
-    } else {
-      setEditGroup(true);
-      setEditGroupData(currentGroupData);
     }
   };
 
