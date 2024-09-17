@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Controller } from "react-hook-form";
 import useOutsideClick from "../../hooks/useOutsideClick";
 
@@ -13,7 +13,6 @@ export default function MultiSelectDropdown({ friends, control, editFriends }) {
     setIsOpen(false);
   };
 
-  useEffect(() => {}, [isOpen]);
   const ref = useOutsideClick(handleClickOutside);
 
   return (
@@ -22,7 +21,7 @@ export default function MultiSelectDropdown({ friends, control, editFriends }) {
         className="flex justify-between items-center cursor-pointer bg-accent/10 rounded-lg px-4 py-2 font-roboto font-light text-sm"
         onClick={toggleDropdown}
       >
-        <div>Select Friends</div>
+        <div className="text-accent">Select Friends</div>
         <i className="fa-solid fa-chevron-down text-3xl text-accent"></i>
       </div>
       {isOpen && (

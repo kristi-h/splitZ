@@ -8,7 +8,7 @@ export default function GroupList() {
   const [editGroup, setEditGroup] = useState(false);
   //get group edit info
   const [editGroupData, setEditGroupData] = useState({});
-  const { groupData, setGroupData, friends } = UseDataContext();
+  const { groupData, setGroupData, friends, handleSetModal } = UseDataContext();
 
   const handleDisplayDetails = (id) => {
     if (displayDetails === id) {
@@ -73,7 +73,8 @@ export default function GroupList() {
           <div className="flex gap-2">
             <Button 
               variant={"small"} 
-              onClick={() => handleEditGroup(group)}
+              // onClick={() => handleEditGroup(group)}
+              onClick={() => handleSetModal('EditGroup', group.id)}
               className={'bg-accent'}
               >
               Edit
@@ -95,13 +96,7 @@ export default function GroupList() {
 
   return (
     <div>
-      <div className="mb-4">{groupList}</div>
-      {editGroup && (
-        <EditGroup
-          currentGroupData={editGroupData}
-          displayEditGroupForm={handleEditGroup}
-        />
-      )}
+      <div className="flex flex-col-reverse mb-4">{groupList}</div>
     </div>
   );
 }
