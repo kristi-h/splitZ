@@ -95,9 +95,10 @@ export default function CreateExpense() {
           <select
             name="group"
             {...register("group", {
-              required: "select a group",
+              required: "select a group to apply this expense",
             })}
           >
+            <option value=""></option>
             {groupData.map((group) => (
               <option key={group.id} value="{group.id}">
                 {group.name}
@@ -105,7 +106,7 @@ export default function CreateExpense() {
             ))}
           </select>
 
-          {errors.func && <p style={{color:'red'}}> {errors.func.message}</p> }
+          {errors.group && <p style={{color:'red'}}> {errors.group.message}</p> }
         </div>
 
 
