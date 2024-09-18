@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
 import { nanoid } from "nanoid";
+import  ReceiptUpload from "../upload/ReceiptUpload";
 
 export default function CreateExpense() {
   const { groupData, expense, handleSetExpense, handleSetModal } = UseDataContext();
@@ -29,7 +30,7 @@ export default function CreateExpense() {
           <label className="mb-1">Name: </label>
           <input
             placeholder="Name of expense"
-            {...register("name", { required: "name is equired" })}
+            {...register("name", { required: "name is required" })}
           />
           <div className="error-text">{errors.name && errors.name.message}</div>
       </div>
@@ -68,7 +69,7 @@ export default function CreateExpense() {
             <option value="other">Other</option>
           </select>
 
-          {/* {errors.func && <p style={{color:'red'}}> {errors.func.message}</p> } */}
+          {errors.category && <p style={{color:'red'}}> {errors.category.message}</p> }
         </div>
 
         <div className="flex flex-col mb-5">
@@ -76,14 +77,14 @@ export default function CreateExpense() {
             <input
               placeholder="Enter a value"
               {...register("amount", {
-                required: "Required",
+                required: "amount required",
                 pattern: {
                   value: /^[0-9]*$/i,
-                  message: "invalid type, please enter a number",
+                  message: "invalid type, please enter a number from 0-100",
                 },
               })}
             />
-            <div>{errors.budget && errors.budget.message}</div>
+            {errors.amount && <p style={{color:'red'}}> {errors.amount.message} </p> }
         </div>
 
         <div className="flex flex-col mb-5">
@@ -104,7 +105,7 @@ export default function CreateExpense() {
             ))}
           </select>
 
-          {/* {errors.func && <p style={{color:'red'}}> {errors.func.message}</p> } */}
+          {errors.func && <p style={{color:'red'}}> {errors.func.message}</p> }
         </div>
 
 
@@ -124,18 +125,7 @@ export default function CreateExpense() {
           </div>
         
         
-        <div className="mb-2">
-          <label className="mr-2">Add Receipt: </label>
-          <input
-            placeholder="Upload your receipt"
-            {...register('receipt', {
-              required: 'receipt is required',
-            })}
-          />
-          <div className="error-text">
-            {errors.description && errors.description.message}
-          </div>
-        </div>
+        <ReceiptUpload />
 
         <div className="flex">
           <Button className="w-full md:w-auto">Submit</Button>
