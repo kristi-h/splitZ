@@ -25,7 +25,6 @@ export const DataProvider = ({ children }) => {
 
   const handleSetModal = (type, id) => {
     setModal((prev) => ({
-      ...prev,
       show: !prev.show,
       type,
       id,
