@@ -6,18 +6,17 @@ export default function Expense(){
     const {handleSetModal, modal} = UseDataContext();
 
     return(
-        !modal.show && ( <div>
+        !modal.show && ( 
+        <>
             <h1 className="text-center">Expenses</h1>
             <div>
             <ExpenseList />
             </div>
-            <div className="absolute over left-1/2 bottom-6 -translate-x-1/2 z-10">
-                <Button 
-                    onClick={() => handleSetModal('CreateExpense')} 
-                    className={'bg-primary'}
-                >Create Expense</Button>
-            </div>
-        </div>
+            <Button 
+                className="over absolute bottom-6 left-1/2 z-10 h-14 w-[200px] -translate-x-1/2 rounded-md bg-primary"
+                onClick={() => handleSetModal('CreateExpense')} 
+            >Create Expense</Button>
+        </>
         )
     );
 }

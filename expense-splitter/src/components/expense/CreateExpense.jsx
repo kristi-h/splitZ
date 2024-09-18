@@ -108,8 +108,6 @@ export default function CreateExpense() {
           {/* {errors.func && <p style={{color:'red'}}> {errors.func.message}</p> } */}
         </div>
 
-        <ReceiptUpload />
-
         <div className="flex">
           <Button className="w-full md:w-auto">Submit</Button>
           <Button onClick={handleSetModal} className="ml-4 w-full md:w-auto">
