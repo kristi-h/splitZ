@@ -5,50 +5,62 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 const Footer = () => {
   return (
     <div className="bg-sky-100 mt-auto opacity-20">
-      <h2 className="bg-blue-300 text-center">Application Creators</h2>
+      <h2 className="bg-blue-300 text-center">------------------------------------</h2>
         <div className="flex text-center justify-center">
-            <div className="mr-10 mt-2 mb-2">
-                <p>Kris
+            <div className="mt-2 mb-2">
+                <p className="mt-1 font-bold">Kris
                     <a className="ml-1" href="https://github.com/kristi-h"><GitHubIcon /></a> /
                     {/* <a href=""><LinkedInIcon /></a> */}
                 </p>
-                <p>Maya
+                <p className="mb-1 text-sm">Role</p>
+                <p className="font-bold">Maya
                     <a className="ml-1" href="https://github.com/maya17power"><GitHubIcon /></a> /
                     {/* <a href=""><LinkedInIcon /></a> */}
                 </p>
-                <p>Carlos
+                <p className="mb-1 text-sm">Role</p>
+                <p className="font-bold">Carlos
                     <a className="ml-1" href="https://github.com/ccespedes"><GitHubIcon /></a> /
                     {/* <a href=""><LinkedInIcon /></a> */}
                 </p>
-                <p>Abel
+                <p className="mb-1 text-sm">Role</p>
+            </div>
+            <div className="ml-10 mt-2 mb-2">
+                <p className="font-bold">Abel
                     <a className="ml-1" href="https://github.com/belunatic"><GitHubIcon /></a> /
                     <a href="https://www.linkedin.com/in/abel-sila-24b4a97a/"><LinkedInIcon /></a>
                 </p>
-                <p>Matthew
+                <p className="mb-1 text-sm">Role</p>
+                <p className="font-bold">Matthew Neie
                     <a className="ml-1" href="https://github.com/MatthewNeie"><GitHubIcon /></a> /
                     <a href="https://www.linkedin.com/in/matthew-neie"><LinkedInIcon /></a>
                 </p>
-            </div>
-            <div className="ml-10 mt-2 mb-2">
-                <p>Alex
+                <p className="mb-1 text-sm">Web Developer</p>
+                <p className="font-bold">Alex
                     <a className="ml-1" href="https://github.com/singhalex"><GitHubIcon /></a> /
                     <a href="https://www.linkedin.com/in/kaur-singh-748000254/"><LinkedInIcon /></a>
                 </p>
-                <p>Bolaji
+                <p className="mb-1 text-sm">Role</p>
+            </div>
+            <div className="ml-10 mt-2 mb-2">
+                <p className="font-bold">Bolaji
                     <a className="ml-1" href="https://github.com/Anuoluwatobi"><GitHubIcon /></a> /
                     {/* <a href=""><LinkedInIcon /></a> */}
                 </p>
-                <p>Smiti
+                <p className="mb-1 text-sm">Role</p>
+                <p className="font-bold">Smiti
                     <a className="ml-1" href="https://github.com/SM171906"><GitHubIcon /></a> /
                     <a href="https://www.linkedin.com/in/smitimishra/"><LinkedInIcon /></a>
                 </p>
-                <p>Abby
+                <p className="mb-1 text-sm">Role</p>
+                <p className="font-bold">Abby
                     <a className="ml-1" href="https://github.com/abbynyhof"><GitHubIcon /></a> /
                     <a href="https://www.linkedin.com/in/abbynyhof/"><LinkedInIcon /></a>
                 </p>
+                <p className="mb-1 text-sm">Role</p>
             </div>
         </div>
-        <p className="text-center">Chingu Voyages</p>
+        <p className="text-center">see GitHub repository <a href="https://github.com/chingu-voyages/v51-tier2-team-28">here</a></p>
+        <p className="text-center italic">Chingu Voyages</p>
     </div>
   )
 }
