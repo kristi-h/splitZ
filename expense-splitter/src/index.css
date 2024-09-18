@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply bg-gray-50;
+    /* @apply bg-gray-50; */
   }
   h1 {
     @apply text-[32px] font-medium mb-4;
