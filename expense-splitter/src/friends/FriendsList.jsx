@@ -29,7 +29,15 @@ const FriendsList = () => {
           </div>
 
           <div className="ml-auto flex gap-2">
-            <Button className="w-20">Edit</Button>
+            <Button
+              className="w-20"
+              onClick={() => {
+                // TODO - Implement Friend Edit Funcitonality
+                console.log(`Editing this friend: ${friend.id}`);
+              }}
+            >
+              Edit
+            </Button>
             <Button
               className="w-20"
               onClick={() => handleDeleteFriend(friend.id)}
