@@ -15,7 +15,6 @@ const FriendsList = () => {
 
   return (
     <>
-      <h1 className="text-center">FRIENDS</h1>
       {friends.map((friend) => (
         <div
           key={friend.id}
