@@ -2,7 +2,7 @@ import { UseDataContext } from "../context/SiteContext";
 import db from "../../utils/localstoragedb";
 
 export default function ExpenseList() {
-  const { groupData, setGroupData, expenses, setExpenses } = UseDataContext();
+  const { expenses, setExpenses, handleSetModal } = UseDataContext();
   // console.log('expenses', expenses)
 
   // Filter out id match, delete from local storage
@@ -23,7 +23,10 @@ export default function ExpenseList() {
         <div>{expense.name}</div>
         <div>{expense.amount}</div>
         <div className="flex gap-2">
-          <button className="rounded-sm bg-slate-500 px-2 text-slate-100 hover:bg-slate-600">
+          <button
+            onClick={() => handleSetModal("EditExpense", expense.id)}
+            className="rounded-sm bg-slate-500 px-2 text-slate-100 hover:bg-slate-600"
+          >
             edit
           </button>
           <button
