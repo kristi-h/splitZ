@@ -1,9 +1,15 @@
 import { UseDataContext } from '../context/SiteContext'
 
 export default function ExpenseList(){
-    const { groupData, setGroupData, expense } = UseDataContext()
+    const { groupData, setGroupData, expense, handleSetExpense(id) } = UseDataContext()
     console.log('expense', expense)
     
+    // Filter out id match, delete from local storage
+    const handleDeleteExpense = (id) => {
+        setExpense(expense.filter(exp=> exp.id !== id));
+        db.deleteRows("expense", { id });
+        db.commit();
+    }
     const expenseItems = expense.map(item => (
         <div key={item.id} className='flex flex-col bg-slate-100 rounded-md py-4 px-2 mb-1 cursor-pointer'>
             <div className="flex justify-between">
@@ -13,7 +19,10 @@ export default function ExpenseList(){
                 <button className="bg-slate-500 text-slate-100 px-2 rounded-sm hover:bg-slate-600">
                     edit
                 </button>
-                <button className="bg-slate-500 text-slate-100 px-2 rounded-sm hover:bg-slate-600">
+                <button 
+                    className="bg-slate-500 text-slate-100 px-2 rounded-sm hover:bg-slate-600"
+                    onClick={()=> {handleDeleteExpense(expense.id)}}
+                    >
                     delete
                 </button>
                 </div>
