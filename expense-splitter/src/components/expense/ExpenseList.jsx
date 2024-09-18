@@ -1,39 +1,44 @@
-import { UseDataContext } from '../context/SiteContext'
+import { UseDataContext } from "../context/SiteContext";
+import db from "../../utils/localstoragedb";
 
-export default function ExpenseList(){
-    const { groupData, setGroupData, expense, handleSetExpense(id) } = UseDataContext()
-    console.log('expense', expense)
-    
-    // Filter out id match, delete from local storage
-    const handleDeleteExpense = (id) => {
-        setExpense(expense.filter(exp=> exp.id !== id));
-        db.deleteRows("expense", { id });
-        db.commit();
-    }
-    const expenseItems = expense.map(item => (
-        <div key={item.id} className='flex flex-col bg-slate-100 rounded-md py-4 px-2 mb-1 cursor-pointer'>
-            <div className="flex justify-between">
-                <div>{item.name}</div>
-                <div>{item.amount}</div>
-                <div className="flex gap-2">
-                <button className="bg-slate-500 text-slate-100 px-2 rounded-sm hover:bg-slate-600">
-                    edit
-                </button>
-                <button 
-                    className="bg-slate-500 text-slate-100 px-2 rounded-sm hover:bg-slate-600"
-                    onClick={()=> {handleDeleteExpense(expense.id)}}
-                    >
-                    delete
-                </button>
-                </div>
-            </div>
+export default function ExpenseList() {
+  const { groupData, setGroupData, expenses, setExpenses } = UseDataContext();
+  // console.log('expenses', expenses)
+
+  // Filter out id match, delete from local storage
+  const handleDeleteExpense = (id) => {
+    const updatedExpense = expenses.filter((exp) => exp.id !== id);
+    setExpenses(updatedExpense);
+    console.log("expenses", updatedExpense);
+    db.deleteRows("expenses", { id });
+    db.commit();
+  };
+
+  const expenseItems = expenses.map((expense) => (
+    <div
+      key={expense.id}
+      className="mb-1 flex cursor-pointer flex-col rounded-md bg-slate-100 px-2 py-4"
+    >
+      <div className="flex justify-between">
+        <div>{expense.name}</div>
+        <div>{expense.amount}</div>
+        <div className="flex gap-2">
+          <button className="rounded-sm bg-slate-500 px-2 text-slate-100 hover:bg-slate-600">
+            edit
+          </button>
+          <button
+            className="rounded-sm bg-slate-500 px-2 text-slate-100 hover:bg-slate-600"
+            onClick={() => {
+              handleDeleteExpense(expense.id);
+            }}
+          >
+            delete
+          </button>
         </div>
-    ))
-//    console.log('expense'. expense)
-    
-    return(
-        <div className="flex flex-col-reverse mb-4">
-            {expenseItems}
-        </div>
-    )
+      </div>
+    </div>
+  ));
+  //    console.log('expenses'. expenses)
+
+  return <div className="mb-4 flex flex-col-reverse">{expenseItems}</div>;
 }

@@ -13,7 +13,7 @@ export const DataProvider = ({ children }) => {
   const initalGroup = db.queryAll("groups");
   const initialExpenses = db.queryAll("expenses");
 
-  const [expense, setExpense] = useState(initialExpenses);
+  const [expenses, setExpenses] = useState(initialExpenses);
   const [groupData, setGroupData] = useState(initalGroup);
   const [friends, setFriends] = useState(initialFriends);
   const [showCreateGroupForm, setShowCreateGroupForm] = useState(false);
@@ -36,13 +36,6 @@ export const DataProvider = ({ children }) => {
     setShowCreateGroupForm(!showCreateGroupForm);
   };
 
-  const handleSetExpense = (values) => {
-    setExpense((prev) => [
-      ...prev,
-      { ...values, id: nanoid(), date: new Date() },
-    ]);
-  };
-
   return (
     <SiteContext.Provider
       value={{
@@ -50,9 +43,8 @@ export const DataProvider = ({ children }) => {
         setGroupData,
         friends,
         setFriends,
-        expense,
-        setExpense,
-        handleSetExpense,
+        expenses,
+        setExpenses,
         showCreateGroupForm,
         handleCreateGroupForm,
         modal,
