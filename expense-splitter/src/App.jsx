@@ -8,6 +8,7 @@ import Modal from "./components/ui/Modal";
 import CreateExpense from "./components/expense/CreateExpense";
 import ReceiptUpload from "./components/upload/ReceiptUpload";
 import Friend from "./components/friend/Friend";
+import Home from "./components/Home"
 
 function App() {
   return (

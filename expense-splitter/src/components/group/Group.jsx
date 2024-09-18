@@ -13,7 +13,6 @@ export default function Group() {
         <h1 className="text-center">Groups</h1>
         <div>
           <GroupList />
-          <ReceiptUpload />
         </div>
         <div className="over absolute bottom-6 left-1/2 z-10 -translate-x-1/2">
           <Button
