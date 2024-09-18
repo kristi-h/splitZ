@@ -54,6 +54,7 @@ const CreateFriend = () => {
       </label>
       <input
         id="name"
+        autoComplete="name"
         placeholder="Min 2 characters"
         // Associate name input with useForm
         {...register("name")}
@@ -70,16 +71,25 @@ const CreateFriend = () => {
       </label>
       <input
         id="email"
+        autoComplete="email"
         placeholder="Optional"
         // Associate email imput with useForm
         {...register("email")}
       />
       {/* Disable button if waiting on async funciton */}
       <div className="mt-3 flex gap-8">
-        <Button type="button" onClick={handleSetModal} className="w-full md:w-auto">
+        <Button
+          type="button"
+          onClick={handleSetModal}
+          className="w-full md:w-auto"
+        >
           Cancel
         </Button>
-        <Button type="submit" disabled={isSubmitting} className="w-full md:w-auto bg-primary">
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full bg-primary md:w-auto"
+        >
           {isSubmitting ? "Submitting..." : "Submit"}
         </Button>
       </div>
