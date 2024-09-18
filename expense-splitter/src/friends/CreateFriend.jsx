@@ -2,6 +2,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { nanoid } from "nanoid";
+import Button from "../components/ui/Button";
+import { UseDataContext } from "../components/context/SiteContext";
 
 // Define schema for optional email
 const optionalEmail = z.union([z.string().trim().email(), z.literal("")]);
@@ -14,10 +16,12 @@ const schema = z.object({
   email: optionalEmail,
 });
 
+// Grab data from context
 const CreateFriend = () => {
-  // Destructire useForm hook
+  const { handleSetModal } = UseDataContext();
+
+  // Destructure useForm hook
   const {
-    reset,
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -28,52 +32,54 @@ const CreateFriend = () => {
 
   // Handle form data on submit
   const onSubmit = async (data) => {
+    console.log("Submit friend");
     const friend = { id: nanoid(), ...data };
-    reset();
+    handleSetModal();
   };
 
   return (
     // Pass onSubmit function to useForm submit handler
     <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label className="mr-2" htmlFor="name">
-          Name:
-        </label>
-        <input
-          id="name"
-          placeholder="Min 2 characters"
-          // Associate name input with useForm
-          {...register("name")}
-        />
-        {/* Render errors if validation does not pass */}
+      <label htmlFor="name">
+        Name
+        {/* Render errors if name validation does not pass */}
         {errors.name && (
-          <span className="ml-2 text-red-500">{errors.name.message}</span>
+          <span className="ml-2 text-sm text-red-400">
+            {errors.name.message}
+          </span>
         )}
-      </div>
+      </label>
+      <input
+        id="name"
+        placeholder="Min 2 characters"
+        // Associate name input with useForm
+        {...register("name")}
+      />
 
-      <div>
-        <label className="mr-2" htmlFor="email">
-          Email:
-        </label>
-        <input
-          id="email"
-          placeholder="Optional"
-          // Associate email imput with useForm
-          {...register("email")}
-        />
-        {/* Render errors if validation does not pass */}
+      <label htmlFor="email">
+        Email
+        {/* Render errors if email validation does not pass */}
         {errors.email && (
-          <span className="ml-2 text-red-500">{errors.email.message}</span>
+          <span className="ml-2 text-sm text-red-400">
+            {errors.email.message}
+          </span>
         )}
-      </div>
+      </label>
+      <input
+        id="email"
+        placeholder="Optional"
+        // Associate email imput with useForm
+        {...register("email")}
+      />
       {/* Disable button if waiting on async funciton */}
-      <button
-        className="bg-slate-700 p-2 text-white"
-        disabled={isSubmitting}
-        type="submit"
-      >
-        {isSubmitting ? "Submitting..." : "Submit"}
-      </button>
+      <div className="mt-3 flex gap-4">
+        <Button type="submit" disabled={isSubmitting} className="w-full">
+          {isSubmitting ? "Submitting..." : "Submit"}
+        </Button>
+        <Button type="button" onClick={handleSetModal} className="w-full">
+          Cancel
+        </Button>
+      </div>
     </form>
   );
 };
