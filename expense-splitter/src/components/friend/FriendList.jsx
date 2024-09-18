@@ -18,7 +18,7 @@ const FriendList = () => {
       {friends.map((friend) => (
         <div
           key={friend.id}
-          className="mb-1 flex items-center rounded-md bg-slate-100 px-2 py-4"
+          className="mb-1 flex items-center rounded-lg bg-slate-100 px-4 py-4"
         >
           <i className="fa-solid fa-user mr-4 text-2xl"></i>
           <div className="flex flex-col">
@@ -30,7 +30,8 @@ const FriendList = () => {
 
           <div className="ml-auto flex gap-2">
             <Button
-              className="w-20"
+              variant={'small'}
+              className="font-normal"
               onClick={() => {
                 // TODO - Implement Friend Edit Funcitonality
                 console.log(`Editing this friend: ${friend.id}`);
@@ -39,7 +40,8 @@ const FriendList = () => {
               Edit
             </Button>
             <Button
-              className="w-20"
+              variant={'small'}
+              className="font-normal"
               onClick={() => handleDeleteFriend(friend.id)}
             >
               Delete
