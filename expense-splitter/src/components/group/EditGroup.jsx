@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
 import MultiSelectDropdown from "../ui/MultiSelectDropdown";
+import db from "../../utils/localstoragedb";
 
 export default function EditGroup() {
   const { friends, setGroupData, groupData, modal, handleSetModal } =
@@ -38,13 +39,19 @@ export default function EditGroup() {
     //check see if current edit Object id match the id of the group object
     //then replace that object with current edit data
     //else return group object
-    setGroupData((prevState) =>
-      prevState.map((currentStateObject) =>
-        currentStateObject.id === currentGroupData.id
-          ? { ...currentStateObject, ...values }
-          : currentStateObject,
-      ),
-    );
+    // setGroupData((prevState) =>
+    //   prevState.map((currentStateObject) =>
+    //     currentStateObject.id === currentGroupData.id
+    //       ? { ...currentStateObject, ...values }
+    //       : currentStateObject,
+    //   ),
+    // );
+    //updating the group data in groups database
+    db.insertOrUpdate("groups", { ID: currentGroupData.ID }, { ...values });
+    db.commit();
+    //call setState to render the component
+    setGroupData(db.queryAll("groups"));
+    //close the modal
     handleSetModal();
   };
 

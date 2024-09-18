@@ -1,9 +1,9 @@
 import { useState } from "react";
 import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
-import EditGroup from "./EditGroup";
 import GroupFriendList from "./groupListComponent/GroupFriendList";
 import GroupExpenseList from "./groupListComponent/GroupExpenseList";
+import db from "../../utils/localstoragedb";
 
 export default function GroupList() {
   const [displayDetails, setDisplayDetails] = useState("");
@@ -22,9 +22,11 @@ export default function GroupList() {
   };
 
   //delete a group
-  const handleDelete = (id) => {
-    const updatedGroupData = groupData.filter((item) => item.id !== id);
-    setGroupData(updatedGroupData);
+  const handleDelete = (ID) => {
+    db.deleteRows("groups", { ID: ID });
+    db.commit();
+    //call setState to render the component
+    setGroupData(db.queryAll("groups"));
   };
 
   //retrieve Friends/Expense List
@@ -68,8 +70,6 @@ export default function GroupList() {
     );
     //determine over / under
     const flag = expenseAmount < 0 ? "text-red-600" : "text-green-600";
-
-    console.log(expenseAmount.toFixed(2), flag, newGroup);
     //return an array
     return [expenseAmount.toFixed(2), flag, newGroup];
   };
@@ -134,7 +134,7 @@ export default function GroupList() {
                   </Button>
                   <Button
                     variant={"small"}
-                    onClick={() => handleDelete(group.id)}
+                    onClick={() => handleDelete(group.ID)}
                     className={"bg-accent"}
                   >
                     Delete
