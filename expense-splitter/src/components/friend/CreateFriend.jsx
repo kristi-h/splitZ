@@ -2,9 +2,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { nanoid } from "nanoid";
-import Button from "../components/ui/Button";
-import { UseDataContext } from "../components/context/SiteContext";
-import db from "../utils/localstoragedb";
+import Button from "../ui/Button";
+import { UseDataContext } from "../context/SiteContext";
+import db from "../../utils/localstoragedb";
 
 // Define schema for optional email
 const optionalEmail = z.union([z.string().trim().email(), z.literal("")]);

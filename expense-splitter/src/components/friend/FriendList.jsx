@@ -1,15 +1,15 @@
-import { UseDataContext } from "../components/context/SiteContext";
-import Button from "../components/ui/Button";
-import db from "../utils/localstoragedb";
+import { UseDataContext } from "../context/SiteContext";
+import Button from "../ui/Button";
+import db from "../../utils/localstoragedb";
 
-const FriendsList = () => {
+const FriendList = () => {
   const { friends, setFriends } = UseDataContext();
 
   // Delete friend if matches id
   const handleDeleteFriend = (id) => {
     setFriends(friends.filter((friend) => friend.id !== id));
     // Delete friend from local storage
-    db.deleteRows("friends", { id: id });
+    db.deleteRows("friends", { id });
     db.commit();
   };
 
@@ -51,4 +51,4 @@ const FriendsList = () => {
   );
 };
 
-export default FriendsList;
+export default FriendList;

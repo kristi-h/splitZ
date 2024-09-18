@@ -7,7 +7,7 @@ import Header from "./components/layout/Header";
 import Modal from "./components/ui/Modal";
 import CreateExpense from "./components/expense/CreateExpense";
 import ReceiptUpload from "./components/upload/ReceiptUpload";
-import FriendsView from "./friends/FriendsView";
+import Friend from "./components/friend/Friend";
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
               <Routes>
                 <Route path="/home" />
                 <Route path="/groups" element={<Group />} />
-                <Route path="/friends" element={<FriendsView />} />
+                <Route path="/friends" element={<Friend />} />
                 <Route path="/expenses" element={<Expense />} />
                 <Route path="/receipts" element={<ReceiptUpload />} />
                 {/* <Expense /> */}
