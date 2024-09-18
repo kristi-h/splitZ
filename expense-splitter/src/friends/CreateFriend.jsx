@@ -4,6 +4,7 @@ import * as z from "zod";
 import { nanoid } from "nanoid";
 import Button from "../components/ui/Button";
 import { UseDataContext } from "../components/context/SiteContext";
+import db from "../utils/localstoragedb";
 
 // Define schema for optional email
 const optionalEmail = z.union([z.string().trim().email(), z.literal("")]);
@@ -18,7 +19,7 @@ const schema = z.object({
 
 // Grab data from context
 const CreateFriend = () => {
-  const { handleSetModal } = UseDataContext();
+  const { handleSetModal, friends, setFriends } = UseDataContext();
 
   // Destructure useForm hook
   const {
@@ -30,10 +31,12 @@ const CreateFriend = () => {
     resolver: zodResolver(schema),
   });
 
-  // Handle form data on submit
-  const onSubmit = async (data) => {
-    console.log("Submit friend");
-    const friend = { id: nanoid(), ...data };
+  // Add friend to state and save to local storage
+  const onSubmit = (data) => {
+    const newFriend = { ...data, id: nanoid() };
+    setFriends([...friends, newFriend]);
+    db.insert("friends", newFriend);
+    db.commit();
     handleSetModal();
   };
 
