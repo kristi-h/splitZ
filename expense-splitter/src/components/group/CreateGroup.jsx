@@ -61,7 +61,7 @@ export default function CreateGroup() {
             {...register("budget", {
               required: "budget is required",
               pattern: {
-                value: /^[0-9]*$/i,
+                value: /^[0-9]*\.[0-9]{2}$/i,
                 message: "invalid type, only numbers allowed",
               },
             })}
