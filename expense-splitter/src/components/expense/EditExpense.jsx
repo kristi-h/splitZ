@@ -105,7 +105,7 @@ export default function CreateExpense() {
             {...register("amount", {
               required: "amount required",
               pattern: {
-                value: /^[0-9]*$/i,
+                value: /^(\d{0,9})*|\.[0-9]{2}$/i,
                 message: "invalid type, please enter a number from 0-100",
               },
             })}
