@@ -18,27 +18,25 @@ const schema = z.object({
   email: optionalEmail,
 });
 
-// Grab data from context
 const CreateFriend = ({ id }) => {
+  // Grab data from context
   const { handleSetModal, friends, setFriends } = UseDataContext();
+  // Retrieve friend from state
+  const currentFriend = friends.find((friend) => friend.id === id);
 
   // Destructure useForm hook
   const {
     register,
-    setValue,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm({
+    defaultValues: {
+      name: currentFriend?.name,
+      email: currentFriend?.email,
+    },
     // Used to check form data against validation schema
     resolver: zodResolver(schema),
   });
-
-  // Set input values to current user if editing
-  const currentFriend = friends.find((friend) => friend.id === id);
-  if (currentFriend) {
-    setValue("name", currentFriend.name);
-    setValue("email", currentFriend.email);
-  }
 
   // Add friend to state and save to local storage
   const onSubmit = (data) => {
