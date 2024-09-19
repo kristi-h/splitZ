@@ -75,12 +75,12 @@ const CreateFriend = () => {
         {...register("email")}
       />
       {/* Disable button if waiting on async funciton */}
-      <div className="mt-3 flex gap-4">
-        <Button type="submit" disabled={isSubmitting} className="w-full">
-          {isSubmitting ? "Submitting..." : "Submit"}
-        </Button>
-        <Button type="button" onClick={handleSetModal} className="w-full">
+      <div className="mt-3 flex gap-8">
+        <Button type="button" onClick={handleSetModal} className="w-full md:w-auto">
           Cancel
+        </Button>
+        <Button type="submit" disabled={isSubmitting} className="w-full md:w-auto bg-primary">
+          {isSubmitting ? "Submitting..." : "Submit"}
         </Button>
       </div>
     </form>
