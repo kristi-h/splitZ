@@ -22,8 +22,8 @@ export default function GroupList() {
   };
 
   //delete a group
-  const handleDelete = (ID) => {
-    db.deleteRows("groups", { ID: ID });
+  const handleDelete = (id) => {
+    db.deleteRows("groups", { ID: id });
     db.commit();
     //call setState to render the component
     setGroupData(db.queryAll("groups"));
@@ -84,14 +84,15 @@ export default function GroupList() {
     return (
       <div
         onClick={() => {
-          handleDisplayDetails(group.id);
+          console.log(" these are id: ", group.ID, group.id);
+          handleDisplayDetails(group.ID);
           if (icon === "up") {
             setIcon("down");
           } else {
             setIcon("up");
           }
         }}
-        key={group.id}
+        key={group.ID}
         className="mb-1 flex cursor-pointer flex-col rounded-lg bg-slate-100 px-4 py-4"
       >
         <div className="flex items-center justify-between">
@@ -104,7 +105,7 @@ export default function GroupList() {
           ) : null}
         </div>
         <div>
-          {displayDetails === group.id && (
+          {displayDetails === group.ID && (
             <>
               <div className="mb-4 mt-2 font-roboto text-sm font-light">
                 <p>{group.description}</p>
@@ -127,7 +128,7 @@ export default function GroupList() {
                   <Button
                     variant={"small"}
                     // onClick={() => handleEditGroup(group)}
-                    onClick={() => handleSetModal("EditGroup", group.id)}
+                    onClick={() => handleSetModal("EditGroup", group.ID)}
                     className={"bg-accent"}
                   >
                     Edit

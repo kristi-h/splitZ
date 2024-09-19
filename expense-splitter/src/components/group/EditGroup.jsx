@@ -10,7 +10,7 @@ export default function EditGroup() {
     UseDataContext();
 
   //form properties
-  const currentGroupData = groupData.find((group) => group.id === modal.id);
+  const currentGroupData = groupData.find((group) => group.ID === modal.id);
   console.log(currentGroupData);
   const editFriends = currentGroupData.friendIDs;
 
