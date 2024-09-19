@@ -147,11 +147,13 @@ export default function CreateExpense() {
             {...register("weight", {
               pattern: {
                 value: /^[0-9]{1,2}$/i,
-                message: "invalid type, please enter a number between 1-100%",
+                message: "invalid type, please enter a number between 1-99%",
               },
             })}
           />
-          <div>{errors.budget && errors.budget.message}</div>
+          {errors.weight && (
+            <p style={{ color: "red" }}> {errors.weight.message} </p>
+          )}
         </div>
 
         <div className="flex">
