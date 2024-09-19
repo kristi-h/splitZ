@@ -77,6 +77,7 @@ const CreateFriend = ({ id }) => {
         id="name"
         autoComplete="name"
         placeholder="Min 2 characters"
+        className={`border ${errors.name ? "border-red-500 outline-red-500" : "border-transparent"} `}
         // Associate name input with useForm
         {...register("name")}
       />
@@ -94,6 +95,7 @@ const CreateFriend = ({ id }) => {
         id="email"
         autoComplete="email"
         placeholder="Optional"
+        className={`border ${errors.email ? "border-red-500 outline-red-500" : "border-transparent"} `}
         // Associate email imput with useForm
         {...register("email")}
       />
