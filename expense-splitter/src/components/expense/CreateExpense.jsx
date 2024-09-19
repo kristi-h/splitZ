@@ -136,7 +136,6 @@ export default function CreateExpense() {
         </div>
 
         <div className="flex gap-8">
-          <Button className="w-full md:w-auto">Submit</Button>
           <Button onClick={handleSetModal} className="w-full md:w-auto">
             Cancel
           </Button>
