@@ -2,9 +2,7 @@ import { useForm } from "react-hook-form";
 import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
 import { nanoid } from "nanoid";
-import ReceiptUpload from "../upload/ReceiptUpload";
 import db from "../../utils/localstoragedb";
-
 
 export default function CreateExpense() {
   const { groupData, expenses, setExpenses, handleSetModal } = UseDataContext();
@@ -28,8 +26,6 @@ export default function CreateExpense() {
     db.insert("expenses", newExpense);
     db.commit();
   };
-
-  // console.log(expenses)
 
   return (
     <div className="mb-5">
@@ -139,16 +135,12 @@ export default function CreateExpense() {
           <div>{errors.budget && errors.budget.message}</div>
         </div>
 
-        <ReceiptUpload />
-
         <div className="flex gap-8">
           <Button className="w-full md:w-auto">Submit</Button>
           <Button onClick={handleSetModal} className="w-full md:w-auto">
             Cancel
           </Button>
-          <Button className="w-full md:w-auto bg-primary">Submit</Button>
-
- 
+          <Button className="w-full bg-primary md:w-auto">Submit</Button>
         </div>
       </form>
     </div>

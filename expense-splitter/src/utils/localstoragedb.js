@@ -23,7 +23,7 @@ if (db.isNew()) {
   dummyFriends.forEach((friend) => {
     db.insert("friends", friend);
   });
-  dummyExpenses.forEach((expense) => {
+  dummyExpenses.forEach((expenses) => {
     db.insert("expenses", expenses);
   });
   dummyGroups.forEach((group) => {

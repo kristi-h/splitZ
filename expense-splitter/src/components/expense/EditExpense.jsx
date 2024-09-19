@@ -15,7 +15,7 @@ export default function CreateExpense() {
     formState: { errors },
   } = useForm();
 
-  const currentExpense = expenses.find((expense) => expense.id === modal.id);
+  const currentExpense = expenses.find((expense) => expense.ID === modal.id);
 
   React.useEffect(() => {
     if (currentExpense) {
@@ -24,25 +24,26 @@ export default function CreateExpense() {
         description: currentExpense.description || "",
         category: currentExpense.category || "",
         amount: currentExpense.amount || "",
-        group: currentExpense.group || "",
+        groupId: currentExpense.groupId || "",
         weight: currentExpense.weight || "",
       });
     }
-  }, []);
-
-  console.log("currentExpense", currentExpense);
+  }, [currentExpense]);
 
   const onSubmit = (values) => {
-    editExpense({ ...values });
+    // editExpense({ ...values });
+    db.insertOrUpdate("expenses", { ID: currentExpense.ID }, { ...values });
+    db.commit();
+    setExpenses(db.queryAll("expenses"));
+    console.log("These are the values: ", values);
     handleSetModal();
   };
 
-  const editExpense = (values) => {
-    const editedExpense = { ...values };
-    setExpenses([editedExpense]);
-    db.insert("expenses", editedExpense);
-    db.commit();
-  };
+  //   const editExpense = (values) => {
+  //     const editedExpense = { ...values };
+  //     // setExpenses([...expenses, editedExpense]);
+  //     console.log("currentExpenseID", currentExpense.ID);
+  //   };
 
   return (
     <div className="mb-5">
@@ -104,7 +105,7 @@ export default function CreateExpense() {
             {...register("amount", {
               required: "amount required",
               pattern: {
-                value: /^[0-9]*$/i,
+                value: /^(\d{0,9})*|\.[0-9]{2}$/i,
                 message: "invalid type, please enter a number from 0-100",
               },
             })}
@@ -121,13 +122,13 @@ export default function CreateExpense() {
 
           <select
             name="group"
-            {...register("group", {
+            {...register("groupId", {
               required: "select a group to apply this expense",
             })}
           >
             <option value=""></option>
             {groupData.map((group) => (
-              <option key={group.id} value="{group.id}">
+              <option key={group.id} value={group.id}>
                 {group.name}
               </option>
             ))}

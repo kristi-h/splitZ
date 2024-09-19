@@ -25,6 +25,7 @@ export const expensesSchema = [
   "category",
   "amount",
   "groupId",
+  "weight",
 ];
 export const dummyExpenses = [
   {
