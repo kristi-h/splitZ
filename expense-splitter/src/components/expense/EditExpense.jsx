@@ -1,35 +1,53 @@
+import React from "react";
 import { useForm } from "react-hook-form";
 import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
-import { nanoid } from "nanoid";
 import db from "../../utils/localstoragedb";
 
 export default function CreateExpense() {
-  const { groupData, expenses, setExpenses, handleSetModal } = UseDataContext();
+  const { groupData, expenses, setExpenses, modal, handleSetModal } =
+    UseDataContext();
 
   const {
     handleSubmit,
     register,
+    reset,
     formState: { errors },
   } = useForm();
 
-  const id = nanoid();
+  const currentExpense = expenses.find((expense) => expense.ID === modal.id);
+
+  React.useEffect(() => {
+    if (currentExpense) {
+      reset({
+        name: currentExpense.name || "",
+        description: currentExpense.description || "",
+        category: currentExpense.category || "",
+        amount: currentExpense.amount || "",
+        groupId: currentExpense.groupId || "",
+        weight: currentExpense.weight || "",
+      });
+    }
+  }, [currentExpense]);
 
   const onSubmit = (values) => {
-    createExpense({ ...values, id });
+    // editExpense({ ...values });
+    db.insertOrUpdate("expenses", { ID: currentExpense.ID }, { ...values });
+    db.commit();
+    setExpenses(db.queryAll("expenses"));
+    console.log("These are the values: ", values);
     handleSetModal();
   };
 
-  const createExpense = (values) => {
-    const newExpense = { ...values, date: new Date() };
-    setExpenses([...expenses, newExpense]);
-    db.insert("expenses", newExpense);
-    db.commit();
-  };
+  //   const editExpense = (values) => {
+  //     const editedExpense = { ...values };
+  //     // setExpenses([...expenses, editedExpense]);
+  //     console.log("currentExpenseID", currentExpense.ID);
+  //   };
 
   return (
     <div className="mb-5">
-      <h1 className="text-center">Create an Expense </h1>
+      <h1 className="text-center">Edit Expense </h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-5 flex flex-col">
           <label className="mb-1">Name: </label>
@@ -44,6 +62,7 @@ export default function CreateExpense() {
           <label className="mb-1">Description: </label>
           <input
             placeholder="Describe the expense"
+            defaultValue={currentExpense.description}
             {...register("description", {
               required: "description is required",
             })}
@@ -86,7 +105,7 @@ export default function CreateExpense() {
             {...register("amount", {
               required: "amount required",
               pattern: {
-                value: /^[0-9]*$/i,
+                value: /^(\d{0,9})*|\.[0-9]{2}$/i,
                 message: "invalid type, please enter a number from 0-100",
               },
             })}
@@ -103,13 +122,13 @@ export default function CreateExpense() {
 
           <select
             name="group"
-            {...register("group", {
+            {...register("groupId", {
               required: "select a group to apply this expense",
             })}
           >
             <option value=""></option>
             {groupData.map((group) => (
-              <option key={group.id} value="{group.id}">
+              <option key={group.id} value={group.id}>
                 {group.name}
               </option>
             ))}
@@ -123,7 +142,7 @@ export default function CreateExpense() {
         <div className="mb-2">
           <label className="mr-2">Weight: </label>
           <input
-            defaultValue="0"
+            // defaultValue={currentExpense.weight}
             placeholder=""
             {...register("weight", {
               pattern: {
@@ -135,11 +154,11 @@ export default function CreateExpense() {
           <div>{errors.budget && errors.budget.message}</div>
         </div>
 
-        <div className="flex gap-8">
-          <Button onClick={handleSetModal} className="w-full md:w-auto">
+        <div className="flex">
+          <Button className="w-full md:w-auto">Submit</Button>
+          <Button onClick={handleSetModal} className="ml-4 w-full md:w-auto">
             Cancel
           </Button>
-          <Button className="w-full bg-primary md:w-auto">Submit</Button>
         </div>
       </form>
     </div>

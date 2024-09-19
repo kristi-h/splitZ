@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createContext, useContext } from "react";
 import db from "../../utils/localstoragedb";
 import { nanoid } from "nanoid";
+import "../../utils/dummyData";
 
 const SiteContext = createContext(null);
 
@@ -12,6 +13,7 @@ export const DataProvider = ({ children }) => {
   const initialFriends = db.queryAll("friends");
   const initalGroup = db.queryAll("groups");
   const initialExpenses = db.queryAll("expenses");
+
 
   const [user, setUser] = useState(db.queryAll("user")[0]?.name || "");
   const [expense, setExpense] = useState(initialExpenses);
@@ -48,13 +50,6 @@ export const DataProvider = ({ children }) => {
     setShowCreateGroupForm(!showCreateGroupForm);
   };
 
-  const handleSetExpense = (values) => {
-    setExpense((prev) => [
-      ...prev,
-      { ...values, id: nanoid(), date: new Date() },
-    ]);
-  };
-
   return (
     <SiteContext.Provider
       value={{
@@ -64,9 +59,8 @@ export const DataProvider = ({ children }) => {
         setGroupData,
         friends,
         setFriends,
-        expense,
-        setExpense,
-        handleSetExpense,
+        expenses,
+        setExpenses,
         showCreateGroupForm,
         handleCreateGroupForm,
         modal,
