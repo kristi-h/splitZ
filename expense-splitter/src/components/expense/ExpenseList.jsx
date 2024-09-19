@@ -1,8 +1,9 @@
 import { UseDataContext } from "../context/SiteContext";
 import db from "../../utils/localstoragedb";
+import Button from '../ui/Button'
 
 export default function ExpenseList() {
-  const { expenses, setExpenses, handleSetModal } = UseDataContext();
+  const { groupData, setGroupData, expenses, setExpenses, handleSetModal } = UseDataContext();
   // console.log('expenses', expenses)
 
   // Filter out id match, delete from local storage
@@ -17,31 +18,33 @@ export default function ExpenseList() {
   const expenseItems = expenses.map((expense) => (
     <div
       key={expense.id}
-      className="mb-1 flex cursor-pointer flex-col rounded-md bg-slate-100 px-2 py-4"
+      className="flex flex-col bg-slate-100 rounded-lg py-4 px-4 mb-1"
     >
-      <div className="flex justify-between">
+      <div className="flex justify-between items-center">
         <div>{expense.name}</div>
         <div>{expense.amount}</div>
         <div className="flex gap-2">
-          <button
-            onClick={() => handleSetModal("EditExpense", expense.id)}
-            className="rounded-sm bg-slate-500 px-2 text-slate-100 hover:bg-slate-600"
-          >
-            edit
-          </button>
-          <button
-            className="rounded-sm bg-slate-500 px-2 text-slate-100 hover:bg-slate-600"
-            onClick={() => {
+           <Button
+                    onClick={() => handleSetModal("EditExpense", expense.id)}
+                    variant={'small'}
+                    className="font-normal"
+                    >
+                    Edit
+                    </Button>
+                    <Button
+                    onClick={() => {
               handleDeleteExpense(expense.id);
             }}
-          >
-            delete
-          </button>
+                    variant={'small'}
+                    className="font-normal"
+                    >
+                    Delete
+                </Button>
+   
         </div>
       </div>
     </div>
   ));
-  //    console.log('expenses'. expenses)
 
-  return <div className="mb-4 flex flex-col-reverse">{expenseItems}</div>;
-}
+  return( <div className="flex flex-col-reverse mb-4">{expenseItems}</div>;
+)}

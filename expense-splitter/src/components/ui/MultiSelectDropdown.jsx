@@ -18,7 +18,7 @@ export default function MultiSelectDropdown({ friends, control, editFriends }) {
   return (
     <div ref={ref}>
       <div
-        className="flex justify-between items-center cursor-pointer bg-accent/10 rounded-lg px-4 py-2 font-roboto font-light text-sm"
+        className="flex justify-between items-center cursor-pointer bg-accent/10 rounded-lg px-4 py-3 font-roboto font-light"
         onClick={toggleDropdown}
       >
         <div className="text-accent">Select Friends</div>
