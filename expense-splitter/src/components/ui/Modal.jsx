@@ -2,6 +2,7 @@ import EditGroup from "../group/EditGroup";
 import CreateGroup from "../group/CreateGroup";
 import { UseDataContext } from "../context/SiteContext";
 import CreateExpense from "../expense/CreateExpense";
+import EditExpense from "../expense/EditExpense";
 import CreateFriend from "../friend/CreateFriend";
 
 // map component names to actual components
@@ -9,6 +10,7 @@ const components = {
   CreateGroup,
   EditGroup,
   CreateExpense,
+  EditExpense,
   CreateFriend,
 };
 
@@ -19,7 +21,7 @@ export default function Modal() {
   return (
     modal.show && (
       // <div className="absolute top-[200px] h-full flex bg-black/50 w-full z-20">
-      <div className="z-20 flex h-full w-full bg-black/50">
+      <div className="z-20 flex h-full w-full max-w-4xl mx-auto bg-black/50">
         <div className="w-full bg-white p-6">
           {Component ? <Component /> : null}
         </div>

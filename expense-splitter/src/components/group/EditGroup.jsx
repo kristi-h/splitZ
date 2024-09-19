@@ -53,7 +53,6 @@ export default function EditGroup() {
           <input
             placeholder="Name"
             {...register("name", { required: "name is required" })}
-            // value={currentGroupData.name}
           />
           <div className="error-text">{errors.name && errors.name.message}</div>
         </div>
@@ -99,15 +98,15 @@ export default function EditGroup() {
           />
         </div>
 
-        <div className="flex">
-          <Button className="w-full md:w-auto">Submit</Button>
+        <div className="flex gap-8">
           <Button
             type="button"
             onClick={handleSetModal}
-            className="ml-4 w-full md:w-auto"
+            className="w-full md:w-auto"
           >
             Cancel
           </Button>
+          <Button className="w-full bg-primary md:w-auto">Submit</Button>
         </div>
       </form>
     </div>

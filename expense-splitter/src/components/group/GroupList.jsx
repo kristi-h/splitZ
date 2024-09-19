@@ -7,7 +7,7 @@ import db from "../../utils/localstoragedb";
 
 export default function GroupList() {
   const [displayDetails, setDisplayDetails] = useState("");
-  const { groupData, setGroupData, friends, expense, handleSetModal } =
+  const { groupData, setGroupData, friends, expenses, handleSetModal } =
     UseDataContext();
 
   //change arrow icon when info displays
@@ -61,7 +61,7 @@ export default function GroupList() {
     const retrieveGroupExpenses = expenseObject.filter((object) =>
       groupExpenseArray.includes(object.id),
     );
-    //if group has no expense then it a new group
+    //if group has no expenses then it a new group
     const newGroup = retrieveGroupExpenses ? false : true;
     //calculate the expense Amount
     const expenseAmount = retrieveGroupExpenses.reduce(
@@ -77,7 +77,7 @@ export default function GroupList() {
   const groupList = groupData.map((group) => {
     //expense calculator
     const [expenseTotal, flag, newGroup] = expenseAmount(
-      expense,
+      expenses,
       group.expenseIDs,
       group.budget,
     );
@@ -118,9 +118,9 @@ export default function GroupList() {
                 </p>
                 {/* call a function to display friends list */}
                 {retrieveList(friends, group.friendIDs, "friends")}
-                {/* check for group expense, if exists call a function to display expense list */}
+                {/* check for group expenses, if exists call a function to display expense list */}
                 {group.expenseIDs &&
-                  retrieveList(expense, group.expenseIDs, "expense")}
+                  retrieveList(expenses, group.expenseIDs, "expenses")}
               </div>
               <div className="flex justify-between">
                 <div className="flex gap-2">
