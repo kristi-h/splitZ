@@ -13,6 +13,7 @@ export const DataProvider = ({ children }) => {
   const initalGroup = db.queryAll("groups");
   const initialExpenses = db.queryAll("expenses");
 
+  const [user, setUser] = useState(db.queryAll("user")[0]?.name || "");
   const [expense, setExpense] = useState(initialExpenses);
   const [groupData, setGroupData] = useState(initalGroup);
   const [friends, setFriends] = useState(initialFriends);
@@ -22,6 +23,10 @@ export const DataProvider = ({ children }) => {
     type: "",
     id: "",
   });
+
+  const handleSetUser = (username) => {
+    setUser(username);
+  };
 
   const handleSetModal = (type, id) => {
     setModal((prev) => ({
@@ -46,6 +51,8 @@ export const DataProvider = ({ children }) => {
   return (
     <SiteContext.Provider
       value={{
+        user,
+        handleSetUser,
         groupData,
         setGroupData,
         friends,
