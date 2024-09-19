@@ -105,7 +105,7 @@ export default function CreateExpense() {
             {...register("amount", {
               required: "amount required",
               pattern: {
-                value: /^(\d{0,9})*|\.[0-9]{2}$/i,
+                value: /^[0-9]*(.[0-9]{2})?$/i,
                 message: "invalid type, please enter a number from 0-100",
               },
             })}
@@ -146,7 +146,7 @@ export default function CreateExpense() {
             placeholder=""
             {...register("weight", {
               pattern: {
-                value: /^[0-9]*$/i,
+                value: /^[0-9]{1,2}$/i,
                 message: "invalid type, please enter a number between 1-100%",
               },
             })}
