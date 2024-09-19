@@ -1,9 +1,9 @@
 import { useState } from "react";
 import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
-import EditGroup from "./EditGroup";
 import GroupFriendList from "./groupListComponent/GroupFriendList";
 import GroupExpenseList from "./groupListComponent/GroupExpenseList";
+import db from "../../utils/localstoragedb";
 
 export default function GroupList() {
   const [displayDetails, setDisplayDetails] = useState("");
@@ -23,8 +23,10 @@ export default function GroupList() {
 
   //delete a group
   const handleDelete = (id) => {
-    const updatedGroupData = groupData.filter((item) => item.id !== id);
-    setGroupData(updatedGroupData);
+    db.deleteRows("groups", { ID: id });
+    db.commit();
+    //call setState to render the component
+    setGroupData(db.queryAll("groups"));
   };
 
   //retrieve Friends/Expense List
@@ -68,8 +70,6 @@ export default function GroupList() {
     );
     //determine over / under
     const flag = expenseAmount < 0 ? "text-red-600" : "text-green-600";
-
-    console.log(expenseAmount.toFixed(2), flag, newGroup);
     //return an array
     return [expenseAmount.toFixed(2), flag, newGroup];
   };
@@ -84,14 +84,15 @@ export default function GroupList() {
     return (
       <div
         onClick={() => {
-          handleDisplayDetails(group.id);
+          console.log(" these are id: ", group.ID, group.id);
+          handleDisplayDetails(group.ID);
           if (icon === "up") {
             setIcon("down");
           } else {
             setIcon("up");
           }
         }}
-        key={group.id}
+        key={group.ID}
         className="mb-1 flex cursor-pointer flex-col rounded-lg bg-slate-100 px-4 py-4"
       >
         <div className="flex items-center justify-between">
@@ -104,7 +105,7 @@ export default function GroupList() {
           ) : null}
         </div>
         <div>
-          {displayDetails === group.id && (
+          {displayDetails === group.ID && (
             <>
               <div className="mb-4 mt-2 font-roboto text-sm font-light">
                 <p>{group.description}</p>
@@ -127,14 +128,14 @@ export default function GroupList() {
                   <Button
                     variant={"small"}
                     // onClick={() => handleEditGroup(group)}
-                    onClick={() => handleSetModal("EditGroup", group.id)}
+                    onClick={() => handleSetModal("EditGroup", group.ID)}
                     className={"bg-accent"}
                   >
                     Edit
                   </Button>
                   <Button
                     variant={"small"}
-                    onClick={() => handleDelete(group.id)}
+                    onClick={() => handleDelete(group.ID)}
                     className={"bg-accent"}
                   >
                     Delete
