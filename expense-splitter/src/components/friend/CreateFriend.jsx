@@ -65,7 +65,7 @@ const CreateFriend = ({ id }) => {
     // Pass onSubmit function to useForm submit handler
     <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
       <label htmlFor="name">
-        Name
+        Name*
         {/* Render errors if name validation does not pass */}
         {errors.name && (
           <span className="ml-2 text-sm text-red-400">
