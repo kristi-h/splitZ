@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createContext, useContext } from "react";
 import db from "../../utils/localstoragedb";
 import { nanoid } from "nanoid";
+import "../../utils/dummyData";
 
 const SiteContext = createContext(null);
 

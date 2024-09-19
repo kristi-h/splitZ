@@ -8,15 +8,15 @@ export default function ExpenseList() {
   // Filter out id match, delete from local storage
   const handleDeleteExpense = (id) => {
     const updatedExpense = expenses.filter((exp) => exp.id !== id);
-    setExpenses(updatedExpense);
     console.log("expenses", updatedExpense);
     db.deleteRows("expenses", { id });
     db.commit();
+    setExpenses(db.queryAll("expenses"));
   };
 
   const expenseItems = expenses.map((expense) => (
     <div
-      key={expense.id}
+      key={expense.ID}
       className="mb-1 flex cursor-pointer flex-col rounded-md bg-slate-100 px-2 py-4"
     >
       <div className="flex justify-between">
@@ -24,7 +24,7 @@ export default function ExpenseList() {
         <div>{expense.amount}</div>
         <div className="flex gap-2">
           <button
-            onClick={() => handleSetModal("EditExpense", expense.id)}
+            onClick={() => handleSetModal("EditExpense", expense.ID)}
             className="rounded-sm bg-slate-500 px-2 text-slate-100 hover:bg-slate-600"
           >
             edit
