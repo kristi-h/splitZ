@@ -2,12 +2,8 @@ import { useForm } from "react-hook-form";
 import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
 import { nanoid } from "nanoid";
-<<<<<<< HEAD
 import ReceiptUpload from "../upload/ReceiptUpload";
 import db from "../../utils/localstoragedb";
-=======
-import ReceiptUpload from "../upload/ReceiptUpload"
->>>>>>> dev
 
 export default function CreateExpense() {
   const { groupData, expenses, setExpenses, handleSetModal } = UseDataContext();
@@ -127,7 +123,6 @@ export default function CreateExpense() {
           )}
         </div>
 
-<<<<<<< HEAD
         <div className="mb-2">
           <label className="mr-2">Weight: </label>
           <input
@@ -145,18 +140,12 @@ export default function CreateExpense() {
 
         <ReceiptUpload />
 
-        <div className="flex">
-          <Button className="w-full md:w-auto">Submit</Button>
-          <Button onClick={handleSetModal} className="ml-4 w-full md:w-auto">
-=======
         <div className="flex gap-8">
+          <Button className="w-full md:w-auto">Submit</Button>
           <Button onClick={handleSetModal} className="w-full md:w-auto">
->>>>>>> dev
             Cancel
           </Button>
-          <Button className="w-full md:w-auto bg-primary">Submit</Button>
-
- 
+          <Button className="w-full bg-primary md:w-auto">Submit</Button>
         </div>
       </form>
     </div>

@@ -1,6 +1,6 @@
 import { UseDataContext } from "../context/SiteContext";
 import db from "../../utils/localstoragedb";
-import Button from '../ui/Button'
+import Button from "../ui/Button";
 
 export default function ExpenseList() {
   const { expenses, setExpenses, handleSetModal } = UseDataContext();
@@ -18,35 +18,33 @@ export default function ExpenseList() {
   const expenseItems = expenses.map((expense) => (
     <div
       key={expense.ID}
-      className="flex flex-col bg-slate-100 rounded-lg py-4 px-4 mb-1"
+      className="mb-1 flex flex-col rounded-lg bg-slate-100 px-4 py-4"
     >
-      <div className="flex justify-between items-center">
+      <div className="flex items-center justify-between">
         <div>{expense.name}</div>
         <div>{expense.amount}</div>
         <div className="flex gap-2">
-    
           <Button
-                    onClick={() => handleSetModal("EditExpense", expense.ID)}
-                    variant={'small'}
-                    className="font-normal"
-                    >
-                    Edit
-           </Button>
-          
+            onClick={() => handleSetModal("EditExpense", expense.ID)}
+            variant={"small"}
+            className="font-normal"
+          >
+            Edit
+          </Button>
+
           <Button
-                    onClick={() => {
-                        handleDeleteExpense(expense.id);
-                      }}
-                    variant={'small'}
-                    className="font-normal"
-                    >
-                    Delete
-            </Button>
+            onClick={() => {
+              handleDeleteExpense(expense.id);
+            }}
+            variant={"small"}
+            className="font-normal"
+          >
+            Delete
+          </Button>
         </div>
       </div>
     </div>
   ));
-  
 
-  return ( <div className="mb-4 flex flex-col-reverse">{expenseItems}</div>;
-)}
+  return <div className="mb-4 flex flex-col-reverse">{expenseItems}</div>;
+}
