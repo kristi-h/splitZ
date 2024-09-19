@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
 import db from "../../utils/localstoragedb";
+import PropTypes from "prop-types";
 
 // Define schema for optional email
 const optionalEmail = z.union([z.string().trim().email(), z.literal("")]);
@@ -103,6 +104,10 @@ const CreateFriend = ({ id }) => {
       </div>
     </form>
   );
+};
+
+CreateFriend.propTypes = {
+  id: PropTypes.string,
 };
 
 export default CreateFriend;
