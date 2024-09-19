@@ -1,10 +1,19 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "../ui/Button";
 import GroupList from "./GroupList";
 import { UseDataContext } from "../context/SiteContext";
 
 export default function Group() {
-  const { handleSetModal, modal } = UseDataContext();
-  console.log(modal);
+  const navigate = useNavigate();
+  const { user, handleSetModal, modal } = UseDataContext();
+
+  useEffect(() => {
+    // if user is not "logged in", go to login
+    if (!user) {
+      navigate("/");
+    }
+  }, [user]);
 
   return (
     // if modal is not showing then display the following
