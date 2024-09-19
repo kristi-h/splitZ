@@ -84,7 +84,6 @@ export default function GroupList() {
     return (
       <div
         onClick={() => {
-          console.log(" these are id: ", group.ID, group.id);
           handleDisplayDetails(group.ID);
           if (icon === "up") {
             setIcon("down");

@@ -11,7 +11,6 @@ export default function EditGroup() {
 
   //form properties
   const currentGroupData = groupData.find((group) => group.ID === modal.id);
-  console.log(currentGroupData);
   const editFriends = currentGroupData.friendIDs;
 
   const {
@@ -36,16 +35,6 @@ export default function EditGroup() {
 
   //onSubmit
   const onSubmit = (values) => {
-    //check see if current edit Object id match the id of the group object
-    //then replace that object with current edit data
-    //else return group object
-    // setGroupData((prevState) =>
-    //   prevState.map((currentStateObject) =>
-    //     currentStateObject.id === currentGroupData.id
-    //       ? { ...currentStateObject, ...values }
-    //       : currentStateObject,
-    //   ),
-    // );
     //updating the group data in groups database
     db.insertOrUpdate("groups", { ID: currentGroupData.ID }, { ...values });
     db.commit();
@@ -112,7 +101,11 @@ export default function EditGroup() {
 
         <div className="flex">
           <Button className="w-full md:w-auto">Submit</Button>
-          <Button onClick={handleSetModal} className="ml-4 w-full md:w-auto">
+          <Button
+            type="button"
+            onClick={handleSetModal}
+            className="ml-4 w-full md:w-auto"
+          >
             Cancel
           </Button>
         </div>
