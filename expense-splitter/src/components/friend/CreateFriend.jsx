@@ -43,8 +43,22 @@ const CreateFriend = ({ id }) => {
   // Add friend to state and save to local storage
   const onSubmit = (data) => {
     const newFriend = { ...data, id: nanoid() };
-    setFriends([...friends, newFriend]);
-    db.insert("friends", newFriend);
+    // Save friend to state
+    if (currentFriend) {
+      // Update friend in state
+      const index = friends.findIndex((friend) => friend.id === id);
+      setFriends([
+        ...friends.slice(0, index),
+        newFriend,
+        ...friends.slice(index + 1),
+      ]);
+    } else {
+      // Append friend to state
+      setFriends([...friends, newFriend]);
+    }
+
+    // Save friend to local storage
+    db.insertOrUpdate("friends", { id }, newFriend);
     db.commit();
     handleSetModal();
   };
@@ -106,6 +120,7 @@ const CreateFriend = ({ id }) => {
   );
 };
 
+// Props validation
 CreateFriend.propTypes = {
   id: PropTypes.string,
 };
