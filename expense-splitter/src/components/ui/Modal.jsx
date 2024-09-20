@@ -14,16 +14,16 @@ const components = {
   CreateFriend,
 };
 
-export default function Modal() {
+export default function Modal({ id }) {
   const { modal } = UseDataContext();
   const Component = components[modal.type];
 
   return (
     modal.show && (
       // <div className="absolute top-[200px] h-full flex bg-black/50 w-full z-20">
-      <div className="z-20 flex h-full w-full max-w-4xl mx-auto bg-black/50">
+      <div className="z-20 mx-auto flex h-full w-full max-w-4xl bg-black/50">
         <div className="w-full bg-white p-6">
-          {Component ? <Component /> : null}
+          {Component ? <Component id={modal.id} /> : null}
         </div>
       </div>
     )

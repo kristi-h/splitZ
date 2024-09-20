@@ -3,7 +3,7 @@ import Button from "../ui/Button";
 import db from "../../utils/localstoragedb";
 
 const FriendList = () => {
-  const { friends, setFriends } = UseDataContext();
+  const { friends, setFriends, handleSetModal } = UseDataContext();
 
   // Delete friend if matches id
   const handleDeleteFriend = (id) => {
@@ -30,17 +30,16 @@ const FriendList = () => {
 
           <div className="ml-auto flex gap-2">
             <Button
-              variant={'small'}
+              variant={"small"}
               className="font-normal"
               onClick={() => {
-                // TODO - Implement Friend Edit Funcitonality
-                console.log(`Editing this friend: ${friend.id}`);
+                handleSetModal("CreateFriend", friend.id);
               }}
             >
               Edit
             </Button>
             <Button
-              variant={'small'}
+              variant={"small"}
               className="font-normal"
               onClick={() => handleDeleteFriend(friend.id)}
             >
