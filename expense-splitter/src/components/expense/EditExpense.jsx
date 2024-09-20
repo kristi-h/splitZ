@@ -16,6 +16,7 @@ export default function CreateExpense() {
   } = useForm();
 
   const currentExpense = expenses.find((expense) => expense.ID === modal.id);
+  //   const involvedFriends = currentExpense[groupId][friendIDs];
 
   React.useEffect(() => {
     if (currentExpense) {
@@ -39,18 +40,16 @@ export default function CreateExpense() {
     handleSetModal();
   };
 
-  //   const editExpense = (values) => {
-  //     const editedExpense = { ...values };
-  //     // setExpenses([...expenses, editedExpense]);
-  //     console.log("currentExpenseID", currentExpense.ID);
-  //   };
+  console.log("currentExpense", currentExpense);
 
   return (
     <div className="mb-5">
       <h1 className="text-center">Edit Expense </h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-5 flex flex-col">
-          <label className="mb-1">Name: </label>
+          <label className="mb-1" aria-required="true">
+            Name:*{" "}
+          </label>
           <input
             placeholder="Name of expense"
             {...register("name", { required: "name is required" })}
@@ -59,7 +58,9 @@ export default function CreateExpense() {
         </div>
 
         <div className="mb-5 flex flex-col">
-          <label className="mb-1">Description: </label>
+          <label className="mb-1" aria-required="true">
+            Description:*{" "}
+          </label>
           <input
             placeholder="Describe the expense"
             defaultValue={currentExpense.description}
@@ -73,8 +74,8 @@ export default function CreateExpense() {
         </div>
 
         <div className="mb-5 flex flex-col">
-          <label htmlFor="category" className="mb-1">
-            Category:
+          <label htmlFor="category" className="mb-1" aria-required="true">
+            Category:*
           </label>
           <select
             name="category"
@@ -99,7 +100,9 @@ export default function CreateExpense() {
         </div>
 
         <div className="mb-5 flex flex-col">
-          <label className="mb-1">Amount: </label>
+          <label className="mb-1" aria-required="true">
+            Amount:*{" "}
+          </label>
           <input
             placeholder="Enter a value"
             {...register("amount", {
@@ -115,9 +118,9 @@ export default function CreateExpense() {
           )}
         </div>
 
-        <div className="mb-5 flex flex-col">
+        <div className="mb-5 flex flex-col" aria-required="true">
           <label htmlFor="group" className="mb-2">
-            Group Name:
+            Group Name:*
           </label>
 
           <select
@@ -142,12 +145,11 @@ export default function CreateExpense() {
         <div className="mb-2">
           <label className="mr-2">Weight: </label>
           <input
-            // defaultValue={currentExpense.weight}
-            placeholder=""
+            placeholder="0"
             {...register("weight", {
               pattern: {
                 value: /^[0-9]{1,2}$/i,
-                message: "invalid type, please enter a number between 1-99%",
+                message: "invalid type, please enter a number between 0-100%",
               },
             })}
           />

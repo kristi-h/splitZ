@@ -21,9 +21,9 @@ export default function ExpenseList() {
       className="mb-1 flex flex-col rounded-lg bg-slate-100 px-4 py-4"
     >
       <div className="flex items-center justify-between">
-        <div>{expense.name}</div>
-        <div>{expense.amount}</div>
-        <div className="flex gap-2">
+        <div className="content-start">{expense.name}</div>
+        <div className="content-end">{expense.amount}</div>
+        <div className="flex content-end gap-2">
           <Button
             onClick={() => handleSetModal("EditExpense", expense.ID)}
             variant={"small"}
