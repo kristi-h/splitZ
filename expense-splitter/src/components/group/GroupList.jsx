@@ -10,14 +10,12 @@ export default function GroupList() {
   const { groupData, setGroupData, friends, expenses, handleSetModal } =
     UseDataContext();
 
-  //change arrow icon when info displays
-  const [icon, setIcon] = useState("up");
-
   const handleDisplayDetails = (id) => {
     if (displayDetails === id) {
       setDisplayDetails("");
     } else {
       setDisplayDetails(id);
+      setIcon("up");
     }
   };
 
@@ -85,11 +83,6 @@ export default function GroupList() {
       <div
         onClick={() => {
           handleDisplayDetails(group.ID);
-          if (icon === "up") {
-            setIcon("down");
-          } else {
-            setIcon("up");
-          }
         }}
         key={group.ID}
         className="mb-1 flex cursor-pointer flex-col rounded-lg bg-slate-100 px-4 py-4"
@@ -106,12 +99,9 @@ export default function GroupList() {
               </span>
             )}
           </div>
-          {icon === "up" ? (
-            <i className="fa-solid fa-chevron-up text-3xl text-accent"></i>
-          ) : null}
-          {icon === "down" ? (
-            <i className="fa-solid fa-chevron-down text-3xl text-accent"></i>
-          ) : null}
+          <i
+            className={`fa-solid ${displayDetails === group.ID ? `fa-chevron-down` : `fa-chevron-up`} text-3xl text-accent`}
+          ></i>
         </div>
         <div>
           {displayDetails === group.ID && (
