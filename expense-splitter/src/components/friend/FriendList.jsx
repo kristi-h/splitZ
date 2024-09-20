@@ -5,7 +5,8 @@ import { useRef, useState } from "react";
 import Dialog from "../ui/Dialog";
 
 const FriendList = () => {
-  const { friends, setFriends, handleSetModal } = UseDataContext();
+  const { friends, groupData, expenses, setFriends, handleSetModal } =
+    UseDataContext();
 
   // Create reference to dom element
   const dialogRef = useRef(null);
@@ -19,6 +20,11 @@ const FriendList = () => {
     dialogRef.current.hasAttribute("open")
       ? dialogRef.current.close()
       : dialogRef.current.showModal();
+  };
+
+  // Checks group data for user id
+  const existsInGroup = (array, nestedArray, element) => {
+    return array.some((obj) => obj[nestedArray].includes(element));
   };
 
   // Delete friend if matches id
@@ -59,6 +65,11 @@ const FriendList = () => {
               className="font-normal"
               // Put friend id in state and opens dialog
               onClick={() => {
+                // Check if user if part of a group or expense
+                if (existsInGroup(groupData, "friendIDs", friend.id)) {
+                  console.log("User exists in a group");
+                  return;
+                }
                 setDeleteID(friend.id);
                 toggleDialog();
               }}
