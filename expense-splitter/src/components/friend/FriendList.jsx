@@ -5,21 +5,21 @@ import { useRef, useState } from "react";
 import Dialog from "../ui/Dialog";
 
 const FriendList = () => {
-  const { friends, groupData, expenses, setFriends, handleSetModal } =
-    UseDataContext();
+  const { friends, groupData, setFriends, handleSetModal } = UseDataContext();
 
   // Create reference to dom element
-  const dialogRef = useRef(null);
+  const deleteDialogRef = useRef(null);
+  const cantDeleteDialogRef = useRef(null);
   const [deleteID, setDeleteID] = useState(null);
 
   // Closes or opens the dialog
-  const toggleDialog = () => {
-    if (!dialogRef.current) {
+  const toggleDialog = (ref) => {
+    if (!ref.current) {
       return;
     }
-    dialogRef.current.hasAttribute("open")
-      ? dialogRef.current.close()
-      : dialogRef.current.showModal();
+    ref.current.hasAttribute("open")
+      ? ref.current.close()
+      : ref.current.showModal();
   };
 
   // Checks group data for user id
@@ -43,10 +43,12 @@ const FriendList = () => {
           className="mb-1 flex items-center rounded-lg bg-slate-100 px-4 py-4"
         >
           <i className="fa-solid fa-user mr-4 text-2xl"></i>
-          <div className="flex flex-col">
-            <div>{friend.name}</div>
+          <div className="flex max-w-36 flex-col">
+            <div className="break-words">{friend.name}</div>
             <div className="text-sm font-light text-gray-500">
-              <a href={`mailto: ${friend.email}`}>{friend.email}</a>
+              <a href={`mailto: ${friend.email}`} className="break-words">
+                {friend.email}
+              </a>
             </div>
           </div>
 
@@ -68,10 +70,11 @@ const FriendList = () => {
                 // Check if user if part of a group or expense
                 if (existsInGroup(groupData, "friendIDs", friend.id)) {
                   console.log("User exists in a group");
+                  toggleDialog(cantDeleteDialogRef);
                   return;
                 }
                 setDeleteID(friend.id);
-                toggleDialog();
+                toggleDialog(deleteDialogRef);
               }}
             >
               Delete
@@ -81,11 +84,18 @@ const FriendList = () => {
       ))}
 
       <Dialog
-        dialogRef={dialogRef}
-        cancelOnClick={toggleDialog}
+        dialogRef={deleteDialogRef}
+        cancelOnClick={() => toggleDialog(deleteDialogRef)}
         confirmOnClick={() => handleDeleteFriend(deleteID)}
       >
         <p>Are you sure you want to delete this friend?</p>
+      </Dialog>
+
+      <Dialog
+        dialogRef={cantDeleteDialogRef}
+        cancelOnClick={() => toggleDialog(cantDeleteDialogRef)}
+      >
+        Cannot delete a friend that is part of a group.
       </Dialog>
     </>
   );
