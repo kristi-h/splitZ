@@ -30,12 +30,10 @@ export const DataProvider = ({ children }) => {
   };
 
   const handleSetModal = (type, id) => {
-    console.log(type);
     if (!type) {
       setModal({ show: false });
     } else {
       setModal((prev) => ({
-        ...prev,
         show: !prev.show,
         type,
         id,
