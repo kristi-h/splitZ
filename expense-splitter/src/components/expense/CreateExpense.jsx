@@ -32,7 +32,9 @@ export default function CreateExpense() {
       <h1 className="text-center">Create an Expense </h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-5 flex flex-col">
-          <label className="mb-1">Name: </label>
+          <label className="mb-1" aria-required="true">
+            Name:*{" "}
+          </label>
           <input
             placeholder="Name of expense"
             {...register("name", { required: "name is required" })}
@@ -41,7 +43,9 @@ export default function CreateExpense() {
         </div>
 
         <div className="mb-5 flex flex-col">
-          <label className="mb-1">Description: </label>
+          <label className="mb-1" aria-required="true">
+            Description:*{" "}
+          </label>
           <input
             placeholder="Describe the expense"
             {...register("description", {
@@ -54,8 +58,8 @@ export default function CreateExpense() {
         </div>
 
         <div className="mb-5 flex flex-col">
-          <label htmlFor="category" className="mb-1">
-            Category:
+          <label htmlFor="category" className="mb-1" aria-required="true">
+            Category:*
           </label>
           <select
             name="category"
@@ -80,13 +84,15 @@ export default function CreateExpense() {
         </div>
 
         <div className="mb-5 flex flex-col">
-          <label className="mb-1">Amount: </label>
+          <label className="mb-1" aria-required="true">
+            Amount:*{" "}
+          </label>
           <input
             placeholder="Enter a value"
             {...register("amount", {
               required: "amount required",
               pattern: {
-                value: /^[0-9]*$/i,
+                value: /^[0-9]*(.[0-9]{2})?$/i,
                 message: "invalid type, please enter a number from 0-100",
               },
             })}
@@ -97,8 +103,8 @@ export default function CreateExpense() {
         </div>
 
         <div className="mb-5 flex flex-col">
-          <label htmlFor="group" className="mb-2">
-            Group Name:
+          <label htmlFor="group" className="mb-2" aria-required="true">
+            Group Name:*
           </label>
 
           <select
@@ -123,16 +129,17 @@ export default function CreateExpense() {
         <div className="mb-2">
           <label className="mr-2">Weight: </label>
           <input
-            defaultValue="0"
-            placeholder=""
+            placeholder="0"
             {...register("weight", {
               pattern: {
-                value: /^[0-9]*$/i,
+                value: /^[0-9]{1,2}$/i,
                 message: "invalid type, please enter a number between 1-100%",
               },
             })}
           />
-          <div>{errors.budget && errors.budget.message}</div>
+          {errors.weight && (
+            <p style={{ color: "red" }}> {errors.weight.message} </p>
+          )}
         </div>
 
         <div className="flex gap-8">

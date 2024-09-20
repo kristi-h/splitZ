@@ -18,7 +18,6 @@ export default function Expense() {
   return (
     !modal.show && (
       <>
-        <h1 className="text-center">Expenses</h1>
         <div>
           <ExpenseList />
         </div>
