@@ -12,20 +12,24 @@ const Dialog = ({ dialogRef, cancelOnClick, confirmOnClick, children }) => {
         <Button onClick={cancelOnClick} className={"grow"}>
           Cancel
         </Button>
-        <Button
-          className={"grow bg-primary"}
-          onClick={() => {
-            confirmOnClick();
-            cancelOnClick();
-          }}
-        >
-          Confirm
-        </Button>
+
+        {confirmOnClick && ( //Render 2nd button if 2nd onClick is provided
+          <Button
+            className={"grow bg-primary"}
+            onClick={() => {
+              confirmOnClick();
+              cancelOnClick();
+            }}
+          >
+            Confirm
+          </Button>
+        )}
       </div>
     </dialog>
   );
 };
 
+// Props validation
 Dialog.propTypes = {
   dialogRef: PropTypes.object.isRequired,
   cancelOnClick: PropTypes.func,
