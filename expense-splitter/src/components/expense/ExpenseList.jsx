@@ -1,6 +1,6 @@
 import { UseDataContext } from "../context/SiteContext";
 import db from "../../utils/localstoragedb";
-import Button from "../ui/Button";
+import IconButton from "../ui/IconButton";
 
 export default function ExpenseList() {
   const { expenses, setExpenses, handleSetModal } = UseDataContext();
@@ -24,23 +24,22 @@ export default function ExpenseList() {
         <div className="content-start">{expense.name}</div>
         <div className="content-end">{expense.amount}</div>
         <div className="flex content-end gap-2">
-          <Button
+          <IconButton
+            icon="fa-regular fa-pen-to-square"
             onClick={() => handleSetModal("EditExpense", expense.ID)}
             variant={"small"}
             className="font-normal"
-          >
-            Edit
-          </Button>
+            style="blue"
+          ></IconButton>
 
-          <Button
+          <IconButton
+            icon="fa-regular fa-trash-can"
             onClick={() => {
               handleDeleteExpense(expense.id);
             }}
             variant={"small"}
             className="font-normal"
-          >
-            Delete
-          </Button>
+          ></IconButton>
         </div>
       </div>
     </div>
