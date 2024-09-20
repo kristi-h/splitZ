@@ -20,7 +20,7 @@ export default function EditGroup() {
     description: z
       .string({ required_error: "Description is required" })
       .trim()
-      .min(1, { message: "Please add description" }),
+      .min(1, { message: "Please add a description" }),
     budget: z
       .string()
       .min(1, { message: "Enter the amount please" })
@@ -73,8 +73,15 @@ export default function EditGroup() {
       <h1 className="text-center">Edit a group</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-5 flex flex-col">
-          <label className="mb-1">Group Name</label>
-          <input placeholder="Name" {...register("name")} />
+          <label htmlFor="name" autoComplete="on" className="mb-1">
+            Name
+          </label>
+          <input
+            id="name"
+            placeholder="Name"
+            className={`border ${errors.name ? "border-red-500 outline-red-500" : "border-transparent"} `}
+            {...register("name")}
+          />
           {errors.name && (
             <span className="ml-2 text-sm text-red-400">
               {errors.name.message}
@@ -83,9 +90,13 @@ export default function EditGroup() {
         </div>
 
         <div className="mb-5 flex flex-col">
-          <label className="mb-1">Group Description</label>
+          <label htmlFor="description" autoComplete="on" className="mb-1">
+            Description
+          </label>
           <input
+            id="description"
             placeholder="What is this group about"
+            className={`border ${errors.description ? "border-red-500 outline-red-500" : "border-transparent"} `}
             {...register("description")}
           />
           {errors.description && (
@@ -96,8 +107,15 @@ export default function EditGroup() {
         </div>
 
         <div className="mb-5 flex flex-col">
-          <label className="mb-1">Budget</label>
-          <input placeholder="Enter a value" {...register("budget")} />
+          <label htmlFor="budget" autoComplete="on" className="mb-1">
+            Budget
+          </label>
+          <input
+            id="budget"
+            placeholder="Enter a value"
+            className={`border ${errors.budget ? "border-red-500 outline-red-500" : "border-transparent"} `}
+            {...register("budget")}
+          />
           {errors.budget && (
             <span className="ml-2 text-sm text-red-400">
               {errors.budget.message}

@@ -42,6 +42,7 @@ export default function MultiSelectDropdown({ friends, control, editFriends }) {
                 control={control}
                 render={({ field }) => (
                   <input
+                    id="friends"
                     type="checkbox"
                     value={friend.id}
                     onChange={(e) => {
