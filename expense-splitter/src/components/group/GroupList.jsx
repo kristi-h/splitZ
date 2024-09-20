@@ -117,7 +117,8 @@ export default function GroupList() {
                   </span>
                 </p>
                 {/* call a function to display friends list */}
-                {retrieveList(friends, group.friendIDs, "friends")}
+                {group.friendIDs &&
+                  retrieveList(friends, group.friendIDs, "friends")}
                 {/* check for group expenses, if exists call a function to display expense list */}
                 {group.expenseIDs &&
                   retrieveList(expenses, group.expenseIDs, "expenses")}

@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
 import MultiSelectDropdown from "../ui/MultiSelectDropdown";
@@ -9,8 +11,27 @@ export default function EditGroup() {
   const { friends, setGroupData, groupData, modal, handleSetModal } =
     UseDataContext();
 
+  // Define validation schema and error messages
+  const schema = z.object({
+    name: z
+      .string({ required_error: "Name is required" })
+      .trim()
+      .min(2, { message: "Must be at least 2 characters" }),
+    description: z
+      .string({ required_error: "Description is required" })
+      .trim()
+      .min(1, { message: "Please add description" }),
+    budget: z
+      .string()
+      .min(1, { message: "Enter the amount please" })
+      .regex(new RegExp(/^[0-9]*(.[0-9]{2})?$/, "i"), {
+        message: "Please enter an valid amount (100, 100.99)",
+      }),
+  });
+
   //form properties
   const currentGroupData = groupData.find((group) => group.ID === modal.id);
+  //save the list of friends
   const editFriends = currentGroupData.friendIDs;
 
   const {
@@ -19,7 +40,10 @@ export default function EditGroup() {
     control,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    // Used to check form data against validation schema
+    resolver: zodResolver(schema),
+  });
 
   // if another group is selected for edit, reset the form
   useEffect(() => {
@@ -50,41 +74,35 @@ export default function EditGroup() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-5 flex flex-col">
           <label className="mb-1">Group Name</label>
-          <input
-            placeholder="Name"
-            {...register("name", { required: "name is required" })}
-          />
-          <div className="error-text">{errors.name && errors.name.message}</div>
+          <input placeholder="Name" {...register("name")} />
+          {errors.name && (
+            <span className="ml-2 text-sm text-red-400">
+              {errors.name.message}
+            </span>
+          )}
         </div>
 
         <div className="mb-5 flex flex-col">
           <label className="mb-1">Group Description</label>
           <input
             placeholder="What is this group about"
-            {...register("description", {
-              required: "description is required",
-            })}
+            {...register("description")}
           />
-          <div className="error-text">
-            {errors.description && errors.description.message}
-          </div>
+          {errors.description && (
+            <span className="ml-2 text-sm text-red-400">
+              {errors.description.message}
+            </span>
+          )}
         </div>
 
         <div className="mb-5 flex flex-col">
           <label className="mb-1">Budget</label>
-          <input
-            placeholder="Enter a value"
-            {...register("budget", {
-              required: "budget is required",
-              pattern: {
-                value: /^[0-9]*(\.[0-9]{2})?$/i,
-                message: "invalid type, only numbers allowed",
-              },
-            })}
-          />
-          <div className="error-text">
-            {errors.budget && errors.budget.message}
-          </div>
+          <input placeholder="Enter a value" {...register("budget")} />
+          {errors.budget && (
+            <span className="ml-2 text-sm text-red-400">
+              {errors.budget.message}
+            </span>
+          )}
         </div>
 
         <div className="mb-5 flex flex-col">
