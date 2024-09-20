@@ -69,7 +69,7 @@ export default function GroupList() {
     //determine over / under
     const overBudget = expenseAmount < 0 ? true : false; //"text-red-600" : "text-green-600";
     //return an array
-    return [expenseAmount.toFixed(2), overBudget, newGroup];
+    return [Math.abs(expenseAmount.toFixed(2)), overBudget, newGroup];
   };
 
   const groupList = groupData.map((group) => {
