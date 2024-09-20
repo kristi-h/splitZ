@@ -4,6 +4,10 @@ import useOutsideClick from "../../hooks/useOutsideClick";
 
 export default function MultiSelectDropdown({ friends, control, editFriends }) {
   const [isOpen, setIsOpen] = useState(false);
+  //this is to store friends list to display after added to group
+  const [displayFriendName, setDisplayFriendName] = useState(() =>
+    editFriends ? editFriends : [],
+  );
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -14,6 +18,11 @@ export default function MultiSelectDropdown({ friends, control, editFriends }) {
   };
 
   const ref = useOutsideClick(handleClickOutside);
+
+  //handle adding selected friend to the list to be displayed
+  const handleDisplaySelectedFriends = (arr) => {
+    setDisplayFriendName([...arr]);
+  };
 
   return (
     <div ref={ref}>
@@ -42,6 +51,8 @@ export default function MultiSelectDropdown({ friends, control, editFriends }) {
                         ? [...valueArray, friend.id]
                         : valueArray.filter((id) => id !== friend.id);
                       field.onChange(newValue);
+                      //update the checked friends list
+                      handleDisplaySelectedFriends(newValue);
                     }}
                     checked={field.value?.includes(friend.id) || false}
                   />
@@ -51,6 +62,19 @@ export default function MultiSelectDropdown({ friends, control, editFriends }) {
             </label>
           ))}
         </div>
+      )}
+      {displayFriendName && (
+        <p className="text-sm font-bold">
+          Friends:
+          {friends.map(
+            (friend, i) =>
+              displayFriendName.includes(friend.id) && (
+                <span key={friend.id} className="pl-[2px]">
+                  {friend.name} {displayFriendName.length > i + 1 && `,`}
+                </span>
+              ),
+          )}
+        </p>
       )}
     </div>
   );
