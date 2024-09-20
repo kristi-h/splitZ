@@ -1,9 +1,25 @@
 import { UseDataContext } from "../context/SiteContext";
 import Button from "../ui/Button";
 import db from "../../utils/localstoragedb";
+import { useRef, useState } from "react";
+import Dialog from "../ui/Dialog";
 
 const FriendList = () => {
   const { friends, setFriends, handleSetModal } = UseDataContext();
+
+  // Create reference to dom element
+  const dialogRef = useRef(null);
+  const [deleteID, setDeleteID] = useState(null);
+
+  // Closes or opens the dialog
+  const toggleDialog = () => {
+    if (!dialogRef.current) {
+      return;
+    }
+    dialogRef.current.hasAttribute("open")
+      ? dialogRef.current.close()
+      : dialogRef.current.showModal();
+  };
 
   // Delete friend if matches id
   const handleDeleteFriend = (id) => {
@@ -41,13 +57,25 @@ const FriendList = () => {
             <Button
               variant={"small"}
               className="font-normal"
-              onClick={() => handleDeleteFriend(friend.id)}
+              // Put friend id in state and opens dialog
+              onClick={() => {
+                setDeleteID(friend.id);
+                toggleDialog();
+              }}
             >
               Delete
             </Button>
           </div>
         </div>
       ))}
+
+      <Dialog
+        dialogRef={dialogRef}
+        cancelOnClick={toggleDialog}
+        confirmOnClick={() => handleDeleteFriend(deleteID)}
+      >
+        <p>Are you sure you want to delete this friend?</p>
+      </Dialog>
     </>
   );
 };
