@@ -69,14 +69,14 @@ export default function GroupList() {
       Number(currentGroupBudget),
     );
     //determine over / under
-    const flag = expenseAmount < 0 ? "text-red-600" : "text-green-600";
+    const overBudget = expenseAmount < 0 ? true : false; //"text-red-600" : "text-green-600";
     //return an array
-    return [expenseAmount.toFixed(2), flag, newGroup];
+    return [expenseAmount.toFixed(2), overBudget, newGroup];
   };
 
   const groupList = groupData.map((group) => {
     //expense calculator
-    const [expenseTotal, flag, newGroup] = expenseAmount(
+    const [expenseTotal, overBudget, newGroup] = expenseAmount(
       expenses,
       group.expenseIDs,
       group.budget,
@@ -95,7 +95,17 @@ export default function GroupList() {
         className="mb-1 flex cursor-pointer flex-col rounded-lg bg-slate-100 px-4 py-4"
       >
         <div className="flex items-center justify-between">
-          <h2 className="">{group.name}</h2>
+          <div className="flex flex-col">
+            <h2 className="">{group.name}</h2>
+            {!newGroup && (
+              <span
+                className={`${overBudget ? `text-red-600` : `text-green-600`} text-sm`}
+              >
+                {overBudget ? `Over: ` : `Under: `}
+                {expenseTotal}
+              </span>
+            )}
+          </div>
           {icon === "up" ? (
             <i className="fa-solid fa-chevron-up text-3xl text-accent"></i>
           ) : null}
@@ -108,14 +118,7 @@ export default function GroupList() {
             <>
               <div className="mb-4 mt-2 font-roboto text-sm font-light">
                 <p>{group.description}</p>
-                <p>
-                  Budget:
-                  <span className={newGroup ? "" : flag}>
-                    {newGroup
-                      ? ` \$${group.budget}`
-                      : ` \$${expenseTotal} / \$${group.budget}`}
-                  </span>
-                </p>
+                <p>Budget:{group.budget}</p>
                 {/* call a function to display friends list */}
                 {group.friendIDs &&
                   retrieveList(friends, group.friendIDs, "friends")}
