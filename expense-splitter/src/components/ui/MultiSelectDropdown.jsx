@@ -2,11 +2,16 @@ import { useState } from "react";
 import { Controller } from "react-hook-form";
 import useOutsideClick from "../../hooks/useOutsideClick";
 
-export default function MultiSelectDropdown({ friends, control, editFriends }) {
+export default function MultiSelectDropdown({
+  friends,
+  control,
+  editFriends,
+  errors,
+}) {
   const [isOpen, setIsOpen] = useState(false);
   //this is to store friends list to display after added to group
   const [displayFriendName, setDisplayFriendName] = useState(() =>
-    editFriends ? editFriends : [],
+    editFriends ? editFriends : null,
   );
 
   const toggleDropdown = () => {
@@ -27,7 +32,7 @@ export default function MultiSelectDropdown({ friends, control, editFriends }) {
   return (
     <div ref={ref}>
       <div
-        className="flex cursor-pointer items-center justify-between rounded-lg bg-accent/10 px-4 py-3 font-roboto font-light"
+        className={`flex cursor-pointer items-center justify-between rounded-lg bg-accent/10 px-4 py-3 font-roboto font-light ${errors ? "border-red-500 outline-red-500" : "border-transparent"}`}
         onClick={toggleDropdown}
       >
         <div className="text-accent">Select Friends</div>
@@ -63,6 +68,11 @@ export default function MultiSelectDropdown({ friends, control, editFriends }) {
             </label>
           ))}
         </div>
+      )}
+      {errors && (
+        <span className="ml-2 text-sm text-red-400">
+          Please select a friend
+        </span>
       )}
       {displayFriendName && (
         <p className="text-sm font-bold">

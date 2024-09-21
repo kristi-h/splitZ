@@ -26,6 +26,9 @@ export default function CreateGroup() {
       .regex(new RegExp(/^[0-9]*(.[0-9]{2})?$/, "i"), {
         message: "Please enter an valid amount (100, 100.99)",
       }),
+    friendIDs: z
+      .array(z.string())
+      .nonempty({ message: "At least one friend ID is required" }),
   });
   //form properties
   const {
@@ -114,7 +117,11 @@ export default function CreateGroup() {
           <label htmlFor="friends" className="mr-2">
             Friends
           </label>
-          <MultiSelectDropdown friends={friends} control={control} />
+          <MultiSelectDropdown
+            friends={friends}
+            control={control}
+            errors={errors.friendIDs}
+          />
         </div>
 
         <div className="flex gap-8">

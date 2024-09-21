@@ -15,7 +15,6 @@ export default function GroupList() {
       setDisplayDetails("");
     } else {
       setDisplayDetails(id);
-      setIcon("up");
     }
   };
 

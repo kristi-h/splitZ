@@ -27,6 +27,9 @@ export default function EditGroup() {
       .regex(new RegExp(/^[0-9]*(.[0-9]{2})?$/, "i"), {
         message: "Please enter an valid amount (100, 100.99)",
       }),
+    friendIDs: z
+      .array(z.string())
+      .nonempty({ message: "At least one friend ID is required" }),
   });
 
   //form properties
@@ -131,6 +134,7 @@ export default function EditGroup() {
             friends={friends}
             control={control}
             editFriends={editFriends}
+            errors={errors.friendIDs}
           />
         </div>
 
