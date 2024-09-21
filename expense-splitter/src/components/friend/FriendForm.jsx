@@ -19,7 +19,7 @@ const schema = z.object({
   email: optionalEmail,
 });
 
-const CreateFriend = ({ id }) => {
+const FriendForm = ({ id }) => {
   // Grab data from context
   const { handleSetModal, friends, setFriends } = UseDataContext();
   // Retrieve friend from state
@@ -128,8 +128,8 @@ const CreateFriend = ({ id }) => {
 };
 
 // Props validation
-CreateFriend.propTypes = {
+FriendForm.propTypes = {
   id: PropTypes.string,
 };
 
-export default CreateFriend;
+export default FriendForm;

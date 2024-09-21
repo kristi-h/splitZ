@@ -57,7 +57,7 @@ const FriendList = () => {
               variant={"small"}
               className="font-normal"
               onClick={() => {
-                handleSetModal("CreateFriend", friend.id);
+                handleSetModal("FriendForm", friend.id);
               }}
             >
               Edit
