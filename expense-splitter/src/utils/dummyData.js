@@ -53,7 +53,7 @@ export const dummyExpenses = [
     description: "The finest goobers",
     category: "gift",
     amount: "49.99",
-    groupId: "",
+    groupId: "c35a55d7-1b2d-4185-98b4-f536f5ea25f6",
   },
 ];
 
