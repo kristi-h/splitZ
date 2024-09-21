@@ -6,6 +6,7 @@ import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
 import db from "../../utils/localstoragedb";
 import PropTypes from "prop-types";
+import { useEffect } from "react";
 
 // Define schema for optional email
 const optionalEmail = z.union([z.string().trim().email(), z.literal("")]);
@@ -26,6 +27,7 @@ const CreateFriend = ({ id }) => {
 
   // Destructure useForm hook
   const {
+    setFocus,
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -37,6 +39,11 @@ const CreateFriend = ({ id }) => {
     // Used to check form data against validation schema
     resolver: zodResolver(schema),
   });
+
+  // Set focus on name fied on initial render
+  useEffect(() => {
+    setFocus("name");
+  }, [setFocus]);
 
   // Add friend to state and save to local storage
   const onSubmit = (data) => {
