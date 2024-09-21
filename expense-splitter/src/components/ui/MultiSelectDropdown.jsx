@@ -69,11 +69,6 @@ export default function MultiSelectDropdown({
           ))}
         </div>
       )}
-      {errors && (
-        <span className="ml-2 text-sm text-red-400">
-          Please select a friend
-        </span>
-      )}
       {displayFriendName && (
         <p className="text-sm font-bold">
           Friends:

@@ -26,9 +26,7 @@ export default function CreateGroup() {
       .regex(new RegExp(/^[0-9]*(.[0-9]{2})?$/, "i"), {
         message: "Please enter an valid amount (100, 100.99)",
       }),
-    friendIDs: z
-      .array(z.string())
-      .nonempty({ message: "At least one friend ID is required" }),
+    friendIDs: z.array(z.string()).optional(),
   });
   //form properties
   const {
