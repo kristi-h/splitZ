@@ -38,10 +38,9 @@ your repo access and to practice PR'ing with your team _before_ you start
 coding!
 
 - Kristi #1: [GitHub](https://github.com/kristi-h) / [LinkedIn](https://linkedin.com/in/liaccountname)
-- Maya Power #2: [GitHub](https://github.com/maya17power) / [LinkedOut](https://maya17power.github.io/pun_generator/)
 - Carlos Cespedes (Developer) #3: [GitHub](https://github.com/ccespedes) / [LinkedIn](https://linkedin.com/in/account)
 - Abel Sila (Developer) #4: [GitHub](https://github.com/belunatic) / [LinkedIn](https://www.linkedin.com/in/abel-sila-24b4a97a/)
-- Matthew #5: [GitHub](https://github.com/MatthewNeie) / [LinkedIn](https://linkedin.com/in/matthew-neie)
+- Matthew Neie (Developer) #5: [GitHub](https://github.com/MatthewNeie) / [LinkedIn](https://linkedin.com/in/matthew-neie)
 - Alex Singh (Developer) #6: [GitHub](https://github.com/singhalex) / [LinkedIn](https://www.linkedin.com/in/kaur-singh-748000254/)
 - Bolaji #7: [GitHub](https://github.com/Anuoluwatobi) / [LinkedIn](https://linkedin.com/in/liaccountname)
 - Smiti #8: [GitHub](https://github.com/SM171906) / [LinkedIn](https://www.linkedin.com/in/smitimishra/)
