@@ -14,7 +14,7 @@
     "@emotion/styled": "^11.13.0",
     "@hookform/resolvers": "^3.9.0",
     "@mui/icons-material": "^6.1.0",
-    "@mui/material": "^6.1.0",
+    "@mui/material": "^6.1.1",
     "firebase": "^10.13.1",
     "localstoragedb": "^2.3.2",
     "nanoid": "^5.0.7",

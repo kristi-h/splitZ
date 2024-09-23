@@ -3,6 +3,7 @@ import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
 import EditGroup from "./EditGroup";
 
+// export default function GroupList(props) {
 export default function GroupList() {
   const [displayDetails, setDisplayDetails] = useState("");
   const [editGroup, setEditGroup] = useState(false);
@@ -12,6 +13,14 @@ export default function GroupList() {
 
   //change arrow icon when info displays
   const [ icon, setIcon ] = useState("up");
+
+  // const filteredData = groupData.filter((search) => {
+  //   if (props.input === '') {
+  //     return search;
+  //   } else {
+  //     return search.name.toLowerCase().includes(props.input)
+  //   }
+  // });
 
   const handleDisplayDetails = (id) => {
     if (displayDetails === id) {
@@ -49,6 +58,7 @@ export default function GroupList() {
     ));
   };
 
+  // const groupList = filteredData.map((group) => (
   const groupList = groupData.map((group) => (
     <div
       onClick={() => {handleDisplayDetails(group.id); if(icon === "up") {setIcon("down")} else {setIcon("up")}}}
