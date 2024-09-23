@@ -41,11 +41,11 @@ const Footer = () => {
                     {/* <a href=""><LinkedInIcon /></a> */}
                 </p>
                 <p className="mb-1 text-sm">Role</p>
-                <p className="font-bold">Smiti
+                <p className="font-bold">Smiti Mishra
                     <a className="ml-1" href="https://github.com/SM171906"><GitHubIcon /></a> /
                     <a href="https://www.linkedin.com/in/smitimishra/"><LinkedInIcon /></a>
                 </p>
-                <p className="mb-1 text-sm">Role</p>
+                <p className="mb-1 text-sm">Scrum Master</p>
                 <p className="font-bold">Abby Nyhof
                     <a className="ml-1" href="https://github.com/abbynyhof"><GitHubIcon /></a> /
                     <a href="https://www.linkedin.com/in/abbynyhof/"><LinkedInIcon /></a>
