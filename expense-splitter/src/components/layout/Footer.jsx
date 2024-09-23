@@ -40,7 +40,7 @@ const Footer = () => {
                     <a className="ml-1" href="https://github.com/Anuoluwatobi"><GitHubIcon /></a> /
                     {/* <a href=""><LinkedInIcon /></a> */}
                 </p>
-                <p className="mb-1 text-sm">Role</p>
+                <p className="mb-1 text-sm">Product Owner</p>
                 <p className="font-bold">Smiti Mishra
                     <a className="ml-1" href="https://github.com/SM171906"><GitHubIcon /></a> /
                     <a href="https://www.linkedin.com/in/smitimishra/"><LinkedInIcon /></a>
