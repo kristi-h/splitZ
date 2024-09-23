@@ -23,7 +23,7 @@ const Friend = () => {
         <Button
           className="over absolute bottom-6 left-1/2 z-10 h-14 w-[200px] -translate-x-1/2 bg-primary"
           onClick={() => {
-            handleSetModal("CreateFriend");
+            handleSetModal("FriendForm");
           }}
         >
           Add Friend

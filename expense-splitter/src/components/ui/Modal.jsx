@@ -3,7 +3,7 @@ import CreateGroup from "../group/CreateGroup";
 import { UseDataContext } from "../context/SiteContext";
 import CreateExpense from "../expense/CreateExpense";
 import EditExpense from "../expense/EditExpense";
-import CreateFriend from "../friend/CreateFriend";
+import FriendForm from "../friend/FriendForm";
 
 // map component names to actual components
 const components = {
@@ -11,7 +11,7 @@ const components = {
   EditGroup,
   CreateExpense,
   EditExpense,
-  CreateFriend,
+  FriendForm,
 };
 
 export default function Modal({ id }) {
