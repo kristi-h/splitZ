@@ -1,20 +1,23 @@
 //-- Feel free to edit the dummy data to fit your need --//
-export const friendsSchema = ["id", "name", "email"];
+export const friendsSchema = ["id", "name", "email", "weight"];
 export const dummyFriends = [
   {
     id: "9641947f-6b00-4db7-9c7e-9e479b438bd8",
     name: "Lloyd Kneman",
     email: "lloydk@email.com",
+    weight: 0,
   },
   {
     id: "d5923f14-bc79-44ea-8388-d354c72c2253",
     name: "Joz Freedle",
     email: "jfree@email.com",
+    weight: 0,
   },
   {
     id: "8217468b-ec4e-4340-9c90-665dff5d22d2",
     name: "Nunya",
     email: "buzzzz@off.com",
+    weight: 0,
   },
 ];
 
