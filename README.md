@@ -44,4 +44,4 @@ coding!
 - Alex Singh (Developer) #6: [GitHub](https://github.com/singhalex) / [LinkedIn](https://www.linkedin.com/in/kaur-singh-748000254/)
 - Bolaji #7: [GitHub](https://github.com/Anuoluwatobi) / [LinkedIn](https://linkedin.com/in/liaccountname)
 - Smiti #8: [GitHub](https://github.com/SM171906) / [LinkedIn](https://www.linkedin.com/in/smitimishra/)
-- Abby #9: [GitHub](https://github.com/abbynyhof) / [LinkedIn](https://www.linkedin.com/in/abbynyhof/)
+- Abby Nyhof (UX Designer): [GitHub](https://github.com/abbynyhof) / [LinkedIn](https://www.linkedin.com/in/abbynyhof/)
