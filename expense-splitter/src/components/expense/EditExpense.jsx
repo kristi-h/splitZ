@@ -119,12 +119,12 @@ export default function CreateExpense() {
         </div>
 
         <div className="mb-5 flex flex-col" aria-required="true">
-          <label htmlFor="group" className="mb-2">
+          <label htmlFor="groupId" className="mb-2">
             Group Name:*
           </label>
 
           <select
-            name="group"
+            name="groupId"
             {...register("groupId", {
               required: "select a group to apply this expense",
             })}

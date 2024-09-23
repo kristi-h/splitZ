@@ -1,3 +1,4 @@
+import React from "react";
 import { useForm } from "react-hook-form";
 import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
@@ -6,10 +7,11 @@ import db from "../../utils/localstoragedb";
 
 export default function CreateExpense() {
   const { groupData, expenses, setExpenses, handleSetModal } = UseDataContext();
-
+  const [groupFriendsList, setGroupFriendsList] = React.useState([]);
   const {
     handleSubmit,
     register,
+    getValues,
     formState: { errors },
   } = useForm();
 
@@ -26,6 +28,29 @@ export default function CreateExpense() {
     db.insert("expenses", newExpense);
     db.commit();
   };
+
+  const handleSelectedGroup = (event) => {
+    //slate of names every time new group is chosen
+    clearNames();
+    const selectedId = event.target.value;
+    //query db for match with chosen id, grab nested friend objects
+    const friendsArr = db.queryAll("groups", { query: { id: selectedId } })[0]
+      .friendIDs;
+    //grab each friend obj and set state
+    friendsArr.map((f) => {
+      const friendObj = db.queryAll("friends", { query: { id: f } })[0];
+      setGroupFriendsList((groupFriendsList) => [
+        ...groupFriendsList,
+        friendObj,
+      ]);
+    });
+  };
+
+  const clearNames = () => {
+    setGroupFriendsList([]);
+  };
+
+  console.log("groupFriendsList", groupFriendsList);
 
   return (
     <div className="mb-5">
@@ -103,19 +128,22 @@ export default function CreateExpense() {
         </div>
 
         <div className="mb-5 flex flex-col">
-          <label htmlFor="group" className="mb-2" aria-required="true">
+          <label htmlFor="groupId" className="mb-2" aria-required="true">
             Group Name:*
           </label>
 
           <select
-            name="group"
-            {...register("group", {
+            name="groupId"
+            {...register("groupId", {
+              onChange: (event) => {
+                handleSelectedGroup(event);
+              },
               required: "select a group to apply this expense",
             })}
           >
             <option value=""></option>
             {groupData.map((group) => (
-              <option key={group.id} value="{group.id}">
+              <option key={group.id} value={group.id}>
                 {group.name}
               </option>
             ))}
@@ -127,20 +155,27 @@ export default function CreateExpense() {
         </div>
 
         <div className="mb-2">
-          <label className="mr-2">Weight: </label>
-          <input
-            placeholder="0"
-            {...register("weight", {
-              pattern: {
-                value: /^[0-9]{1,2}$/i,
-                message: "invalid type, please enter a number between 1-100%",
-              },
-            })}
-          />
+          <label className="mr-2">Weight Contribution: </label>
+          {groupFriendsList.map((f) => (
+            <div key={f.id}>
+              <label className="mr-2">{f.name}</label>
+            </div>
+          ))}
           {errors.weight && (
             <p style={{ color: "red" }}> {errors.weight.message} </p>
           )}
         </div>
+
+        {/* <input
+                placeholder="0"
+                {...register("weight", {
+                  pattern: {
+                    value: /^[0-9]{1,2}$/i,
+                    message:
+                      "invalid type, please enter a number between 1-100%",
+                  },
+                })}
+              /> */}
 
         <div className="flex gap-8">
           <Button onClick={handleSetModal} className="w-full md:w-auto">

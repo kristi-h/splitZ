@@ -11,7 +11,7 @@ export default function EditGroup() {
 
   //form properties
   const currentGroupData = groupData.find((group) => group.ID === modal.id);
-  console.log(currentGroupData);
+  console.log("currentGroupData", currentGroupData);
   const editFriends = currentGroupData.friendIDs;
 
   const {
@@ -113,7 +113,7 @@ export default function EditGroup() {
           <Button onClick={handleSetModal} className="w-full md:w-auto">
             Cancel
           </Button>
-          <Button className="w-full md:w-auto bg-primary">Submit</Button>
+          <Button className="w-full bg-primary md:w-auto">Submit</Button>
         </div>
       </form>
     </div>
