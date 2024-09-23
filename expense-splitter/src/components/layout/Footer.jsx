@@ -4,7 +4,7 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 const Footer = () => {
   return (
     <div className="bg-sky-100 mt-auto opacity-20">
-      <h2 className="bg-blue-300 text-center">------------------------------------</h2>
+      <h2 className="bg-blue-300 text-center">Our Team</h2>
         <div className="flex text-center justify-center">
             <div className="mt-2 mb-2">
                 <p className="mt-1 font-bold">Kristi
