@@ -46,11 +46,11 @@ const Footer = () => {
                     <a href="https://www.linkedin.com/in/smitimishra/"><LinkedInIcon /></a>
                 </p>
                 <p className="mb-1 text-sm">Role</p>
-                <p className="font-bold">Abby
+                <p className="font-bold">Abby Nyhof
                     <a className="ml-1" href="https://github.com/abbynyhof"><GitHubIcon /></a> /
                     <a href="https://www.linkedin.com/in/abbynyhof/"><LinkedInIcon /></a>
                 </p>
-                <p className="mb-1 text-sm">Role</p>
+                <p className="mb-1 text-sm">UX Designer</p>
             </div>
         </div>
         <p className="text-center">see GitHub repository <a href="https://github.com/chingu-voyages/v51-tier2-team-28">here</a></p>
