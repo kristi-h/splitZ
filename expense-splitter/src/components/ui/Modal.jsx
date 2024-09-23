@@ -3,8 +3,8 @@ import CreateGroup from "../group/CreateGroup";
 import { UseDataContext } from "../context/SiteContext";
 import CreateExpense from "../expense/CreateExpense";
 import EditExpense from "../expense/EditExpense";
-import CreateFriend from "../friend/CreateFriend";
-import ReceiptImage from "./receiptImage";
+import CreateFriend from "../friend/FriendForm";
+import ReceiptImage from "./ReceiptImage";
 
 // map component names to actual components
 const components = {
