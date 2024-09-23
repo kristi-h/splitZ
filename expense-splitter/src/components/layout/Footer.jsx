@@ -7,38 +7,33 @@ const Footer = () => {
       <h2 className="bg-blue-300 text-center">------------------------------------</h2>
         <div className="flex text-center justify-center">
             <div className="mt-2 mb-2">
-                <p className="mt-1 font-bold">Kris
+                <p className="mt-1 font-bold">Kristi
                     <a className="ml-1" href="https://github.com/kristi-h"><GitHubIcon /></a> /
                     {/* <a href=""><LinkedInIcon /></a> */}
                 </p>
                 <p className="mb-1 text-sm">Role</p>
-                <p className="font-bold">Maya
-                    <a className="ml-1" href="https://github.com/maya17power"><GitHubIcon /></a> /
-                    {/* <a href=""><LinkedInIcon /></a> */}
-                </p>
-                <p className="mb-1 text-sm">Role</p>
-                <p className="font-bold">Carlos
+                <p className="font-bold">Carlos Cespedes
                     <a className="ml-1" href="https://github.com/ccespedes"><GitHubIcon /></a> /
                     {/* <a href=""><LinkedInIcon /></a> */}
                 </p>
-                <p className="mb-1 text-sm">Role</p>
+                <p className="mb-1 text-sm">Developer</p>
             </div>
             <div className="ml-10 mt-2 mb-2">
-                <p className="font-bold">Abel
+                <p className="font-bold">Abel Sila
                     <a className="ml-1" href="https://github.com/belunatic"><GitHubIcon /></a> /
                     <a href="https://www.linkedin.com/in/abel-sila-24b4a97a/"><LinkedInIcon /></a>
                 </p>
-                <p className="mb-1 text-sm">Role</p>
+                <p className="mb-1 text-sm">Developer</p>
                 <p className="font-bold">Matthew Neie
                     <a className="ml-1" href="https://github.com/MatthewNeie"><GitHubIcon /></a> /
                     <a href="https://www.linkedin.com/in/matthew-neie"><LinkedInIcon /></a>
                 </p>
-                <p className="mb-1 text-sm">Web Developer</p>
-                <p className="font-bold">Alex
+                <p className="mb-1 text-sm">Developer</p>
+                <p className="font-bold">Alex Singh
                     <a className="ml-1" href="https://github.com/singhalex"><GitHubIcon /></a> /
                     <a href="https://www.linkedin.com/in/kaur-singh-748000254/"><LinkedInIcon /></a>
                 </p>
-                <p className="mb-1 text-sm">Role</p>
+                <p className="mb-1 text-sm">Developer</p>
             </div>
             <div className="ml-10 mt-2 mb-2">
                 <p className="font-bold">Bolaji
