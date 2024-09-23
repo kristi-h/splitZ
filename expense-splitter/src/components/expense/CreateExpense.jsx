@@ -30,7 +30,7 @@ export default function CreateExpense() {
   };
 
   const handleSelectedGroup = (event) => {
-    //slate of names every time new group is chosen
+    //clear slate of names every time new group is chosen
     clearNames();
     const selectedId = event.target.value;
     //query db for match with chosen id, grab nested friend objects
@@ -50,7 +50,12 @@ export default function CreateExpense() {
     setGroupFriendsList([]);
   };
 
-  console.log("groupFriendsList", groupFriendsList);
+  const handleWeightAssignment = (event, id) => {
+    console.log("id", id);
+    console.log("event.target.value", event.target.value);
+    db.insertOrUpdate("friends", { id }, { weight: event.target.value });
+    db.commit();
+  };
 
   return (
     <div className="mb-5">
@@ -159,23 +164,25 @@ export default function CreateExpense() {
           {groupFriendsList.map((f) => (
             <div key={f.id}>
               <label className="mr-2">{f.name}</label>
-            </div>
-          ))}
-          {errors.weight && (
-            <p style={{ color: "red" }}> {errors.weight.message} </p>
-          )}
-        </div>
-
-        {/* <input
+              <input
                 placeholder="0"
                 {...register("weight", {
+                  onChange: (event) => {
+                    handleWeightAssignment(event, id);
+                  },
                   pattern: {
                     value: /^[0-9]{1,2}$/i,
                     message:
                       "invalid type, please enter a number between 1-100%",
                   },
                 })}
-              /> */}
+              />
+            </div>
+          ))}
+          {errors.weight && (
+            <p style={{ color: "red" }}> {errors.weight.message} </p>
+          )}
+        </div>
 
         <div className="flex gap-8">
           <Button onClick={handleSetModal} className="w-full md:w-auto">

@@ -23,6 +23,7 @@ const FriendList = () => {
           <i className="fa-solid fa-user mr-4 text-2xl"></i>
           <div className="flex flex-col">
             <div>{friend.name}</div>
+            <div>{friend.weight}</div>
             <div className="text-sm font-light text-gray-500">
               <a href={`mailto: ${friend.email}`}>{friend.email}</a>
             </div>
