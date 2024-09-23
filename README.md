@@ -43,5 +43,5 @@ coding!
 - Matthew Neie (Developer) #5: [GitHub](https://github.com/MatthewNeie) / [LinkedIn](https://linkedin.com/in/matthew-neie)
 - Alex Singh (Developer) #6: [GitHub](https://github.com/singhalex) / [LinkedIn](https://www.linkedin.com/in/kaur-singh-748000254/)
 - Bolaji #7: [GitHub](https://github.com/Anuoluwatobi) / [LinkedIn](https://linkedin.com/in/liaccountname)
-- Smiti #8: [GitHub](https://github.com/SM171906) / [LinkedIn](https://www.linkedin.com/in/smitimishra/)
+- Smiti Mishra (Scrum Master) #8: [GitHub](https://github.com/SM171906) / [LinkedIn](https://www.linkedin.com/in/smitimishra/)
 - Abby Nyhof (UX Designer): [GitHub](https://github.com/abbynyhof) / [LinkedIn](https://www.linkedin.com/in/abbynyhof/)
