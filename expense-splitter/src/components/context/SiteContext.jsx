@@ -23,13 +23,15 @@ export const DataProvider = ({ children }) => {
     show: false,
     type: "",
     id: "",
+    image_url: "",
+    image_alt: "",
   });
 
   const handleSetUser = (username) => {
     setUser(username);
   };
 
-  const handleSetModal = (type, id) => {
+  const handleSetModal = (type, id, image_url, image_alt) => {
     if (!type) {
       setModal({ show: false });
     } else {
@@ -37,6 +39,8 @@ export const DataProvider = ({ children }) => {
         show: !prev.show,
         type,
         id,
+        image_url,
+        image_alt,
       }));
     }
   };

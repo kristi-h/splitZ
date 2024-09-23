@@ -4,6 +4,7 @@ import { UseDataContext } from "../context/SiteContext";
 import CreateExpense from "../expense/CreateExpense";
 import EditExpense from "../expense/EditExpense";
 import CreateFriend from "../friend/CreateFriend";
+import ReceiptImage from "./receiptImage";
 
 // map component names to actual components
 const components = {
@@ -12,9 +13,10 @@ const components = {
   CreateExpense,
   EditExpense,
   CreateFriend,
+  ReceiptImage,
 };
 
-export default function Modal({ id }) {
+export default function Modal({ id, image_url, image_alt }) {
   const { modal } = UseDataContext();
   const Component = components[modal.type];
 
@@ -23,7 +25,13 @@ export default function Modal({ id }) {
       // <div className="absolute top-[200px] h-full flex bg-black/50 w-full z-20">
       <div className="z-20 mx-auto flex h-full w-full max-w-4xl bg-black/50">
         <div className="w-full bg-white p-6">
-          {Component ? <Component id={modal.id} /> : null}
+          {Component ? (
+            <Component
+              id={modal.id}
+              image_url={modal.image_url}
+              image_alt={modal.image_alt}
+            />
+          ) : null}
         </div>
       </div>
     )
