@@ -38,7 +38,7 @@ const Footer = () => {
             <div className="ml-10 mt-2 mb-2">
                 <p className="font-bold">Bolaji
                     <a className="ml-1" href="https://github.com/Anuoluwatobi"><GitHubIcon /></a> /
-                    {/* <a href=""><LinkedInIcon /></a> */}
+                    <a href="https://www.linkedin.com/in/anuoluwatobi-majesty-bolaji-734583237/"><LinkedInIcon /></a>
                 </p>
                 <p className="mb-1 text-sm">Product Owner</p>
                 <p className="font-bold">Smiti Mishra
