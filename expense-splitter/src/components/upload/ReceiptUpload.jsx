@@ -77,7 +77,11 @@ const ReceiptUpload = () => {
       </form>
       {/* Display uploaded img */}
       <img src={imageUrl} alt="" />
-      {imageUrl && <a href={imageUrl}>Download</a>}
+      {imageUrl && (
+        <a href={imageUrl} target="_blank">
+          Download
+        </a>
+      )}
     </>
   );
 };
