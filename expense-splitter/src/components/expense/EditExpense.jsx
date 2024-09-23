@@ -7,7 +7,7 @@ import db from "../../utils/localstoragedb";
 export default function CreateExpense() {
   const { groupData, expenses, setExpenses, modal, handleSetModal } =
     UseDataContext();
-
+  const [groupFriendsList, setGroupFriendsList] = React.useState([]);
   const {
     handleSubmit,
     register,
@@ -38,6 +38,27 @@ export default function CreateExpense() {
     setExpenses(db.queryAll("expenses"));
     console.log("These are the values: ", values);
     handleSetModal();
+  };
+
+  const handleSelectedGroup = (event) => {
+    //clear slate of names every time new group is chosen
+    clearNames();
+    const selectedId = event.target.value;
+    //query db for match with chosen id, grab nested friend objects
+    const friendsArr = db.queryAll("groups", { query: { id: selectedId } })[0]
+      .friendIDs;
+    //grab each friend obj and set state
+    friendsArr.map((f) => {
+      const friendObj = db.queryAll("friends", { query: { id: f } })[0];
+      setGroupFriendsList((groupFriendsList) => [
+        ...groupFriendsList,
+        friendObj,
+      ]);
+    });
+  };
+
+  const clearNames = () => {
+    setGroupFriendsList([]);
   };
 
   console.log("currentExpense", currentExpense);
@@ -126,6 +147,9 @@ export default function CreateExpense() {
           <select
             name="groupId"
             {...register("groupId", {
+              onChange: (event) => {
+                handleSelectedGroup(event);
+              },
               required: "select a group to apply this expense",
             })}
           >
@@ -143,16 +167,23 @@ export default function CreateExpense() {
         </div>
 
         <div className="mb-2">
-          <label className="mr-2">Weight: </label>
-          <input
-            placeholder="0"
-            {...register("weight", {
-              pattern: {
-                value: /^[0-9]{1,2}$/i,
-                message: "invalid type, please enter a number between 0-100%",
-              },
-            })}
-          />
+          <label className="mr-2">Weight Adjustment: </label>
+          {groupFriendsList.map((f) => (
+            <div key={f.id}>
+              <label className="mr-2">{f.name} </label>
+              <input
+                placeholder="0"
+                {...register("weight", {
+                  pattern: {
+                    value: /^[0-9]{1,2}$/i,
+                    message:
+                      "invalid type, please enter a number between 1-100%",
+                  },
+                })}
+              />
+            </div>
+          ))}
+
           {errors.weight && (
             <p style={{ color: "red" }}> {errors.weight.message} </p>
           )}

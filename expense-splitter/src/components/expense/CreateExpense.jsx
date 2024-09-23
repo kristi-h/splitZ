@@ -18,6 +18,7 @@ export default function CreateExpense() {
   const id = nanoid();
 
   const onSubmit = (values) => {
+    console.log("values", values);
     createExpense({ ...values, id });
     handleSetModal();
   };
@@ -50,12 +51,12 @@ export default function CreateExpense() {
     setGroupFriendsList([]);
   };
 
-  const handleWeightAssignment = (event, id) => {
-    console.log("id", id);
-    console.log("event.target.value", event.target.value);
-    db.insertOrUpdate("friends", { id }, { weight: event.target.value });
-    db.commit();
-  };
+  // const handleWeightAssignment = (event, id) => {
+  //   console.log("id", id);
+  //   console.log("event.target.value", event.target.value);
+  //   db.insertOrUpdate("friends", { id }, { weight: event.target.value });
+  //   db.commit();
+  // };
 
   return (
     <div className="mb-5">
@@ -160,16 +161,13 @@ export default function CreateExpense() {
         </div>
 
         <div className="mb-2">
-          <label className="mr-2">Weight Contribution: </label>
+          <label className="mr-2">Weight Adjustment: </label>
           {groupFriendsList.map((f) => (
             <div key={f.id}>
               <label className="mr-2">{f.name}</label>
               <input
                 placeholder="0"
                 {...register("weight", {
-                  onChange: (event) => {
-                    handleWeightAssignment(event, id);
-                  },
                   pattern: {
                     value: /^[0-9]{1,2}$/i,
                     message:
