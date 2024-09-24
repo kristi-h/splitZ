@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { UseDataContext } from "./context/SiteContext";
+import Card from "./ui/Card";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -16,25 +17,13 @@ export default function Home() {
   }, [user]);
 
   const groupDisplay = groupData.map((group) => (
-    <div
+    <Card
       key={group.id}
-      className="bg-card-bg mb-2 flex cursor-pointer items-center rounded-2xl p-4"
-    >
-      <div className="flex w-full items-center justify-between">
-        <div className="flex items-center">
-          <div className="mr-4 rounded-xl bg-primary p-3">
-            <i className="fa-solid fa-user-group text-3xl text-white"></i>
-          </div>
-          <div>
-            <h2 className="leading-5">{group.name}</h2>
-            <p>{group.description}</p>
-          </div>
-        </div>
-        <div>
-          <i className="fa-solid fa-chevron-right mr-2 text-3xl text-accent"></i>
-        </div>
-      </div>
-    </div>
+      id={group.id}
+      icon={"fa-user-group"}
+      title={group.name}
+      subtitle={group.description}
+    />
   ));
 
   const expenseDisplay = expenses.map((expense) => {
@@ -44,28 +33,14 @@ export default function Home() {
     );
 
     return (
-      <div
+      <Card
         key={expense.id}
-        className="bg-card-bg mb-2 flex cursor-pointer items-center rounded-2xl p-4"
-      >
-        <div className="flex w-full items-center justify-between">
-          <div className="flex items-center">
-            <div className="mr-4 rounded-xl bg-primary p-3">
-              <i className="fa-solid fa-money-check-dollar text-3xl text-white"></i>
-            </div>
-            <div>
-              <h2 className="leading-5">{expense.name}</h2>
-              <p>{expenseGroup.name}</p>
-            </div>
-          </div>
-          <div className="flex items-center">
-            <div className="mx-4 text-lg">{expense.amount}</div>
-            <div>
-              <i className="fa-solid fa-chevron-right mr-2 text-3xl text-accent"></i>
-            </div>
-          </div>
-        </div>
-      </div>
+        id={expense.id}
+        icon={"fa-money-check-dollar"}
+        title={expense.name}
+        subtitle={expenseGroup.name}
+        price={expense.amount}
+      />
     );
   });
 
