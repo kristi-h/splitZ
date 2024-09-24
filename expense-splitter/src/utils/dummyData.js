@@ -58,7 +58,7 @@ export const dummyExpenses = [
     description: "The finest goobers",
     category: "gift",
     amount: "49.99",
-    groupId: "",
+    groupId: "c35a55d7-1b2d-4185-98b4-f536f5ea25f6",
   },
 ];
 
@@ -99,6 +99,17 @@ export const dummyGroups = [
     name: "Day Trippers",
     description: "Explorer group",
     budget: "1000",
+    friendIDs: ["d5923f14-bc79-44ea-8388-d354c72c2253"],
+    expenseIDs: [
+      "2c0ce368-7a0c-4b72-ad30-8c03a8d7318a",
+      "fb5669e1-caf6-463a-a9b9-a57af90a0a66",
+    ],
+  },
+  {
+    id: "j35r55d7-7n6d-4566-54l6-f536f5ea56g8",
+    name: "Bird Watchers",
+    description: "Tweety Fans",
+    budget: "500",
     friendIDs: ["d5923f14-bc79-44ea-8388-d354c72c2253"],
     expenseIDs: [
       "2c0ce368-7a0c-4b72-ad30-8c03a8d7318a",

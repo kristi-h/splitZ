@@ -14,7 +14,7 @@
     @apply text-lg font-semibold;
   }
   p {
-    @apply text-[16px] font-light;
+    @apply font-roboto font-light;
   }
   input,
   select {

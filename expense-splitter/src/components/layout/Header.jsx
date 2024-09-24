@@ -5,7 +5,7 @@ import { UseDataContext } from "../context/SiteContext";
 export default function Header() {
   const { handleSetModal } = UseDataContext();
   return (
-    <div className="flex h-[200px] flex-col bg-primary/70 pb-3 pt-[62px] text-white">
+    <div className="flex h-[200px] flex-col bg-primary pb-3 pt-[62px] text-white">
       <div className="text-center text-[40px] font-extrabold uppercase">
         Let's Split It
       </div>
@@ -17,7 +17,7 @@ export default function Header() {
             </IconButton>
           </Link>
           <Link to="/groups">
-            <IconButton onClick={() => handleSetModal()} icon={"people-group"}>
+            <IconButton onClick={() => handleSetModal()} icon={"user-group"}>
               Groups
             </IconButton>
           </Link>
