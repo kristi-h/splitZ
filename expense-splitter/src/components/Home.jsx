@@ -91,6 +91,10 @@ export default function Home() {
             </>
           )}
         </div>
+        <div className="mb-4">
+          <h2 className="mb-2 text-2xl font-normal">Friends</h2>
+          <ReceiptUpload />
+        </div>
       </div>
     )
   );
