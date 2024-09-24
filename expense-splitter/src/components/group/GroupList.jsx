@@ -1,17 +1,20 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
 import GroupFriendList from "./groupListComponent/GroupFriendList";
 import GroupExpenseList from "./groupListComponent/GroupExpenseList";
 import db from "../../utils/localstoragedb";
+import Dialog from "../ui/Dialog";
 
 // export default function GroupList(props) {
 export default function GroupList() {
   const [displayDetails, setDisplayDetails] = useState("");
-  const { groupData, setGroupData, friends, expenses, handleSetModal } =
-    UseDataContext();
+  const [deleteID, setDeleteID] = useState(null);
+  const { groupData, setGroupData, friends, expenses, handleSetModal } = UseDataContext();
 
+  // Create reference to dom element
+  const deleteDialogRef = useRef(null);
   const navigate = useNavigate();
 
   // const filteredData = groupData.filter((search) => {
@@ -22,6 +25,17 @@ export default function GroupList() {
   //   }
   // });
 
+  // Closes or opens the dialog
+  const toggleDialog = (ref) => {
+    if (!ref.current) {
+      return;
+    }
+    ref.current.hasAttribute("open")
+      ? ref.current.close()
+      : ref.current.showModal();
+  };
+
+  //handle displaying group detail on a dropdown
   const handleDisplayDetails = (id) => {
     if (displayDetails === id) {
       setDisplayDetails("");
@@ -147,7 +161,10 @@ export default function GroupList() {
                   </Button>
                   <Button
                     variant={"small"}
-                    onClick={() => handleDelete(group.ID)}
+                    onClick={() => {
+                      setDeleteID(group.ID);
+                      toggleDialog(deleteDialogRef);
+                    }}
                     className={"bg-accent"}
                   >
                     Delete
@@ -163,6 +180,13 @@ export default function GroupList() {
   return (
     <div>
       <div className="mb-4 flex flex-col-reverse">{groupList}</div>
+      <Dialog
+        dialogRef={deleteDialogRef}
+        cancelOnClick={() => toggleDialog(deleteDialogRef)}
+        confirmOnClick={() => handleDelete(deleteID)}
+      >
+        <p>Are you sure you want to delete this group?</p>
+      </Dialog>
     </div>
   );
 }

@@ -29,6 +29,7 @@ export const expensesSchema = [
   "amount",
   "groupId",
   "weight",
+  "receipt_URL",
 ];
 export const dummyExpenses = [
   {
@@ -38,6 +39,8 @@ export const dummyExpenses = [
     category: "restaurant",
     amount: "489.32",
     groupId: "2d638ad6-2dde-44a9-b8d6-2e58a380b78c",
+    receipt_URL:
+      "https://firebasestorage.googleapis.com/v0/b/expense-splitter-399e6.appspot.com/o/3dGxTrD_ItpNRB-36nqd--dinner-receipt.jpg?alt=media&token=9f273f03-7f99-4f0c-a4aa-802d8f04297b",
   },
   {
     id: "2c0ce368-7a0c-4b72-ad30-8c03a8d7318a",
@@ -46,6 +49,8 @@ export const dummyExpenses = [
     category: "trip",
     amount: "343.11",
     groupId: "47dd1683-bcbf-4a20-9e10-d8596474bc5c",
+    receipt_URL:
+      "https://firebasestorage.googleapis.com/v0/b/expense-splitter-399e6.appspot.com/o/OdrXleNjeXec-tqmLuJcj-fake-receipt-expense-splitter.jpg?alt=media&token=9857d611-9a94-4c7e-b37b-0da78befdd3d",
   },
   {
     id: "ecd43989-b611-49d1-9093-0f8bc2378a11",
