@@ -51,7 +51,11 @@ export const dummyExpenses = [
     category: "restaurant",
     amount: "489.32",
     groupId: "2d638ad6-2dde-44a9-b8d6-2e58a380b78c",
-    weight: [{ "9641947f-6b00-4db7-9c7e-9e479b438bd8": 25 }],
+    weight: [
+      {
+        "9641947f-6b00-4db7-9c7e-9e479b438bd8": 25,
+      },
+    ],
   },
   {
     id: "2c0ce368-7a0c-4b72-ad30-8c03a8d7318a",
@@ -62,7 +66,9 @@ export const dummyExpenses = [
     groupId: "47dd1683-bcbf-4a20-9e10-d8596474bc5c",
     weight: [
       { "d5923f14-bc79-44ea-8388-d354c72c2253": 50 },
-      { "9641947f-6b00-4db7-9c7e-9e479b438bd8": 25 },
+      {
+        "9641947f-6b00-4db7-9c7e-9e479b438bd8": 25,
+      },
       { "8217468b-ec4e-4340-9c90-665dff5d22d2": 25 },
     ],
   },

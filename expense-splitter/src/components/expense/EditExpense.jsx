@@ -173,7 +173,7 @@ export default function CreateExpense() {
               <label className="mr-2">{f.name} </label>
               <input
                 placeholder="0"
-                {...register("weight", {
+                {...register(`weight.${f.id}`, {
                   pattern: {
                     value: /^[0-9]{1,2}$/i,
                     message:

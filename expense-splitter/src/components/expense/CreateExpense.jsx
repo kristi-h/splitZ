@@ -161,13 +161,13 @@ export default function CreateExpense() {
         </div>
 
         <div className="mb-2">
-          <label className="mr-2">Weight Adjustment: </label>
+          <h1 className="mr-2">Weight Adjustment: </h1>
           {groupFriendsList.map((f) => (
             <div key={f.id}>
               <label className="mr-2">{f.name}</label>
               <input
                 placeholder="0"
-                {...register("weight", {
+                {...register(`weight.${f.id}`, {
                   pattern: {
                     value: /^[0-9]{1,2}$/i,
                     message:
