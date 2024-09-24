@@ -2,6 +2,8 @@ import { useState } from "react";
 import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
 import EditGroup from "./EditGroup";
+import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // export default function GroupList(props) {
 export default function GroupList() {
@@ -13,6 +15,9 @@ export default function GroupList() {
 
   //change arrow icon when info displays
   const [ icon, setIcon ] = useState("up");
+
+  //navigate base
+  const navigate = useNavigate();
 
   // const filteredData = groupData.filter((search) => {
   //   if (props.input === '') {
@@ -85,6 +90,14 @@ export default function GroupList() {
           <div className="flex justify-between">
           
           <div className="flex gap-2">
+            <Button
+              variant={"small"} 
+              // onClick={() => handleEditGroup(group)}
+              onClick={() => {navigate(`/groups/id/${group.id}`)}}
+              className={'bg-accent'}
+              >
+              View
+            </Button>
             <Button 
               variant={"small"} 
               // onClick={() => handleEditGroup(group)}
