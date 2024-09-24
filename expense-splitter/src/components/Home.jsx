@@ -18,11 +18,11 @@ export default function Home() {
   const groupDisplay = groupData.map((group) => (
     <div
       key={group.id}
-      className="mb-2 flex cursor-pointer items-center rounded-2xl bg-accent p-4 text-white"
+      className="bg-card-bg mb-2 flex cursor-pointer items-center rounded-2xl p-4"
     >
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center">
-          <div className="mr-4 rounded-xl bg-primary/50 p-3">
+          <div className="mr-4 rounded-xl bg-primary p-3">
             <i className="fa-solid fa-user-group text-3xl text-white"></i>
           </div>
           <div>
@@ -31,7 +31,7 @@ export default function Home() {
           </div>
         </div>
         <div>
-          <i className="fa-solid fa-chevron-right mr-2 text-3xl text-white"></i>
+          <i className="fa-solid fa-chevron-right mr-2 text-3xl text-accent"></i>
         </div>
       </div>
     </div>
@@ -46,11 +46,11 @@ export default function Home() {
     return (
       <div
         key={expense.id}
-        className="mb-2 flex cursor-pointer items-center rounded-2xl bg-accent p-4 text-white"
+        className="bg-card-bg mb-2 flex cursor-pointer items-center rounded-2xl p-4"
       >
         <div className="flex w-full items-center justify-between">
           <div className="flex items-center">
-            <div className="mr-4 rounded-xl bg-primary/50 p-3">
+            <div className="mr-4 rounded-xl bg-primary p-3">
               <i className="fa-solid fa-money-check-dollar text-3xl text-white"></i>
             </div>
             <div>
@@ -61,7 +61,7 @@ export default function Home() {
           <div className="flex items-center">
             <div className="mx-4 text-lg">{expense.amount}</div>
             <div>
-              <i className="fa-solid fa-chevron-right mr-2 text-3xl text-white"></i>
+              <i className="fa-solid fa-chevron-right mr-2 text-3xl text-accent"></i>
             </div>
           </div>
         </div>
