@@ -167,7 +167,7 @@ export default function GroupList() {
         cancelOnClick={() => toggleDialog(deleteDialogRef)}
         confirmOnClick={() => handleDelete(deleteID)}
       >
-        <p>Are you sure you want to delete this friend?</p>
+        <p>Are you sure you want to delete this group?</p>
       </Dialog>
     </div>
   );
