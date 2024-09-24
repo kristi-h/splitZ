@@ -4,6 +4,7 @@ import GroupList from "./group/GroupList";
 import FriendList from "./friend/FriendList";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import ReceiptUpload from "./upload/ReceiptUpload";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -33,6 +34,10 @@ export default function Home() {
         <div className="mb-4">
           <h2 className="mb-2 text-2xl font-normal">Friends</h2>
           <FriendList />
+        </div>
+        <div className="mb-4">
+          <h2 className="mb-2 text-2xl font-normal">Friends</h2>
+          <ReceiptUpload />
         </div>
       </div>
     )
