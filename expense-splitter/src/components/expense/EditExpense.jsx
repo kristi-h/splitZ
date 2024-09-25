@@ -53,22 +53,29 @@ export default function CreateExpense() {
 
   const onSubmit = (values) => {
     // editExpense({ ...values });
-    db.insertOrUpdate(
-      "expenses",
-      { ID: currentExpense.id },
-      { ...values, ...values.weight },
-    );
+    // db.insertOrUpdate(
+    //   "expenses",
+    //   { ID: currentExpense.ID },
+    //   { ...values, ...values.weight },
+    // );
+    db.update("expenses", { groupId: currentExpense.groupId }, function (row) {
+      row.weight = { ...values.weight };
+
+      // the update callback function returns to the modified record
+      return row;
+    });
     db.commit();
-    console.log("viewAll", { ...values, ...values.weight });
+    // console.log("viewAll", { ...values, ...values.weight });
     setExpenses(db.queryAll("expenses"));
-    console.log("These are the values: ", values);
-    // handleSetModal();
+    // console.log("These are the values: ", ...values);
+    handleSetModal();
   };
 
   const handleSelectedGroup = () => {
     //clear slate of names every time new group is chosen
     clearNames();
     //query db for match with chosen id, grab nested friend objects
+    console.log("currentExpense.groupId", currentExpense.groupId);
     const friendsArr = db.queryAll("groups", {
       query: { id: currentExpense.groupId },
     })[0].friendIDs;

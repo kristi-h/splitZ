@@ -78,7 +78,7 @@ export const dummyExpenses = [
     description: "The finest goobers",
     category: "gift",
     amount: "49.99",
-    groupId: "",
+    groupId: "47dd1683-bcbf-4a20-9e10-d8596474bc5c",
     weight: [
       { "d5923f14-bc79-44ea-8388-d354c72c2253": 50 },
       { "9641947f-6b00-4db7-9c7e-9e479b438bd8": 25 },
