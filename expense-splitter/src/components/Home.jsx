@@ -15,7 +15,7 @@ export default function Home() {
     }
   }, [user]);
 
-  const groupDisplay = groupData.map((group, i) => {
+  const groupDisplay = groupData.reverse().map((group, i) => {
     // show a max of 3 groups
     if (i <= 2) {
       return (
@@ -31,7 +31,7 @@ export default function Home() {
     }
   });
 
-  const expenseDisplay = expenses.map((expense, i) => {
+  const expenseDisplay = expenses.reverse().map((expense, i) => {
     // show a max of 3 expenses
     if (i <= 2) {
       // get the group associated with this expense
