@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Expense from "./components/expense/Expense";
-import SingleExpense from "./components/expense/SingleExpense";
+import ExpenseDetail from "./components/expense/ExpenseDetail";
 import Group from "./components/group/Group";
-import SingleGroup from "./components/group/SingleGroup";
+import GroupDetail from "./components/group/GroupDetail";
 import Footer from "./components/layout/Footer";
 import { DataProvider } from "./components/context/SiteContext";
 import Header from "./components/layout/Header";
@@ -25,12 +25,12 @@ function App() {
                 <Route path="/" element={<Login />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/groups" element={<Group />} />
-                <Route path="/group/id/:groupId" element={<SingleGroup />} />
+                <Route path="/group/id/:groupId" element={<GroupDetail />} />
                 <Route path="/friends" element={<Friend />} />
                 <Route path="/expenses" element={<Expense />} />
                 <Route
                   path="/expense/id/:expenseId"
-                  element={<SingleExpense />}
+                  element={<ExpenseDetail />}
                 />
                 <Route path="/receipts" element={<ReceiptUpload />} />
               </Routes>
