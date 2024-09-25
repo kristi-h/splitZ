@@ -28,7 +28,7 @@ export default function ExpenseList() {
         <div className="content-end">{expense.amount}</div>
         <div className="flex content-end gap-2">
           <IconButton
-            icon="fa-regular fa-square-info"
+            icon="fa-regular fa-circle-info"
             onClick={() => {navigate(`/expenses/id/${expense.id}`)}}
             variant={"small"}
             className="font-normal"
