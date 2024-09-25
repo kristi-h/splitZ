@@ -1,7 +1,17 @@
 import Button from "./Button";
 import PropTypes from "prop-types";
 
-const Dialog = ({ dialogRef, cancelOnClick, confirmOnClick, children }) => {
+const Dialog = ({ dialogRef, confirmOnClick, children }) => {
+  // Add or remove the open attribute as needed
+  const toggleDialog = () => {
+    if (!dialogRef.current) {
+      return;
+    }
+    dialogRef.current.hasAttribute("open")
+      ? dialogRef.current.close()
+      : dialogRef.current.showModal();
+  };
+
   return (
     <dialog
       ref={dialogRef}
@@ -9,7 +19,7 @@ const Dialog = ({ dialogRef, cancelOnClick, confirmOnClick, children }) => {
     >
       <div className="mb-6">{children}</div>
       <div className="flex gap-2">
-        <Button onClick={cancelOnClick} className={"grow"}>
+        <Button onClick={toggleDialog} className={"grow"}>
           Cancel
         </Button>
 
@@ -18,7 +28,7 @@ const Dialog = ({ dialogRef, cancelOnClick, confirmOnClick, children }) => {
             className={"grow bg-primary"}
             onClick={() => {
               confirmOnClick();
-              cancelOnClick();
+              toggleDialog();
             }}
           >
             Confirm

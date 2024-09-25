@@ -12,16 +12,6 @@ const FriendList = () => {
   const cantDeleteDialogRef = useRef(null);
   const [deleteID, setDeleteID] = useState(null);
 
-  // Closes or opens the dialog
-  const toggleDialog = (ref) => {
-    if (!ref.current) {
-      return;
-    }
-    ref.current.hasAttribute("open")
-      ? ref.current.close()
-      : ref.current.showModal();
-  };
-
   // Checks group data for user id
   const existsInGroup = (array, nestedArray, element) => {
     return array.some((obj) => obj[nestedArray].includes(element));
@@ -69,12 +59,11 @@ const FriendList = () => {
               onClick={() => {
                 // Check if user if part of a group or expense
                 if (existsInGroup(groupData, "friendIDs", friend.id)) {
-                  console.log("User exists in a group");
-                  toggleDialog(cantDeleteDialogRef);
+                  cantDeleteDialogRef.current.showModal();
                   return;
                 }
                 setDeleteID(friend.id);
-                toggleDialog(deleteDialogRef);
+                deleteDialogRef.current.showModal();
               }}
             >
               Delete
@@ -85,16 +74,12 @@ const FriendList = () => {
 
       <Dialog
         dialogRef={deleteDialogRef}
-        cancelOnClick={() => toggleDialog(deleteDialogRef)}
         confirmOnClick={() => handleDeleteFriend(deleteID)}
       >
         <p>Are you sure you want to delete this friend?</p>
       </Dialog>
 
-      <Dialog
-        dialogRef={cantDeleteDialogRef}
-        cancelOnClick={() => toggleDialog(cantDeleteDialogRef)}
-      >
+      <Dialog dialogRef={cantDeleteDialogRef}>
         Cannot delete a friend that is part of a group.
       </Dialog>
     </>
