@@ -18,14 +18,6 @@ export default function GroupList() {
   const deleteDialogRef = useRef(null);
   const navigate = useNavigate();
 
-  // const filteredData = groupData.filter((search) => {
-  //   if (props.input === '') {
-  //     return search;
-  //   } else {
-  //     return search.name.toLowerCase().includes(props.input)
-  //   }
-  // });
-
   //handle displaying group detail on a dropdown
   const handleDisplayDetails = (id) => {
     if (displayDetails === id) {
@@ -175,7 +167,6 @@ export default function GroupList() {
       <div className="mb-4 flex flex-col-reverse">{groupList}</div>
       <Dialog
         dialogRef={deleteDialogRef}
-        // cancelOnClick={() => toggleDialog(deleteDialogRef)}
         confirmOnClick={() => handleDelete(deleteID)}
       >
         <p>Are you sure you want to delete this group?</p>
