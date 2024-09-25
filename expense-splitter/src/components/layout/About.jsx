@@ -50,13 +50,13 @@ const About = () => {
     <div>
         <div>
         {team.map((item) => (
-            <div className="flex justify-between border-2 border-[#72a1e5] rounded-lg items-center p-2 mb-2">
+            <div className="flex justify-between border-2 border-[#05299e] rounded-lg items-center p-2 mb-2">
                 <h2>{item.name}
                     <p className="text-sm text-gray-400">{item.role}</p>
                 </h2>
                 <div>
-                    <a href={item.gitHubUrl}><GitHubIcon /></a>
-                    <a href={item.linkedInUrl}><LinkedInIcon /></a>
+                    <a className="mr-4" href={item.gitHubUrl}><GitHubIcon /></a>
+                    <a className="mr-2" href={item.linkedInUrl}><LinkedInIcon /></a>
                 </div>
             </div>))}
         </div>
