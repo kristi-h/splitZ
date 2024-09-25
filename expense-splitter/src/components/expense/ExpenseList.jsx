@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 import { UseDataContext } from "../context/SiteContext";
 import db from "../../utils/localstoragedb";
 import IconButton from "../ui/IconButton";
@@ -6,7 +6,7 @@ import IconButton from "../ui/IconButton";
 export default function ExpenseList() {
   const { expenses, setExpenses, handleSetModal } = UseDataContext();
   // console.log('expenses', expenses)
-  
+
   const navigate = useNavigate();
 
   // Filter out id match, delete from local storage
@@ -29,7 +29,9 @@ export default function ExpenseList() {
         <div className="flex content-end gap-2">
           <IconButton
             icon="fa-regular fa-square-info"
-            onClick={() => {navigate(`/expenses/id/${expense.id}`)}}
+            onClick={() => {
+              navigate(`/expense/id/${expense.id}`);
+            }}
             variant={"small"}
             className="font-normal"
             style="blue"
