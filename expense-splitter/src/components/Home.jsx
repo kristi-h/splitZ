@@ -22,6 +22,7 @@ export default function Home() {
         <Card
           key={group.id}
           id={group.id}
+          type={"group"}
           icon={"fa-user-group"}
           title={group.name}
           subtitle={group.description}
@@ -42,6 +43,7 @@ export default function Home() {
         <Card
           key={expense.id}
           id={expense.id}
+          type={"expense"}
           icon={"fa-money-check-dollar"}
           title={expense.name}
           subtitle={expenseGroup?.name}
