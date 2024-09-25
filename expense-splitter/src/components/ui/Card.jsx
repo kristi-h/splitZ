@@ -22,7 +22,7 @@ export default function Card({ id, type, icon, title, subtitle, price }) {
           </div>
         </div>
         <div className="flex items-center">
-          <div className="mx-4 text-lg">{price}</div>
+          <div className="mx-4 text-lg">{price && `$${price}`}</div>
           <div>
             <i className="fa-solid fa-chevron-right mr-2 text-3xl text-accent"></i>
           </div>
