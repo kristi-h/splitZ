@@ -3,20 +3,39 @@ import { useForm } from "react-hook-form";
 import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
 import db from "../../utils/localstoragedb";
+// import PropTypes from "prop-types";
 
 export default function CreateExpense() {
   const { groupData, expenses, setExpenses, modal, handleSetModal } =
     UseDataContext();
+  const currentExpense = expenses.find((expense) => expense.ID === modal.id);
   const [groupFriendsList, setGroupFriendsList] = React.useState([]);
+
+  // const weightTransformed = Object.keys(currentExpense.weight).map((key) => ({
+  //   // return an object instead
+  //   key: currentExpense.weight[key],
+  // }));
+
+  // console.log("currentExpenseWeight", currentExpense.weight);
+  // console.log("weightTransformed", weightTransformed);
+
   const {
     handleSubmit,
     register,
-    reset,
     formState: { errors },
-  } = useForm();
+    reset,
+  } = useForm({
+    defaultValues: {
+      name: currentExpense?.name,
+      description: currentExpense?.description,
+      category: currentExpense?.category,
+      amount: currentExpense?.amount,
+      groupId: currentExpense?.groupId,
+      weight: currentExpense?.weight,
+    },
+  });
 
-  const currentExpense = expenses.find((expense) => expense.ID === modal.id);
-  //   const involvedFriends = currentExpense[groupId][friendIDs];
+  console.log("currentExpense", currentExpense);
 
   React.useEffect(() => {
     if (currentExpense) {
@@ -28,25 +47,30 @@ export default function CreateExpense() {
         groupId: currentExpense.groupId || "",
         weight: currentExpense.weight || "",
       });
+      handleSelectedGroup();
     }
   }, [currentExpense]);
 
   const onSubmit = (values) => {
     // editExpense({ ...values });
-    db.insertOrUpdate("expenses", { ID: currentExpense.ID }, { ...values });
+    db.insertOrUpdate(
+      "expenses",
+      { ID: currentExpense.ID },
+      { ...values, ...values.weight },
+    );
     db.commit();
     setExpenses(db.queryAll("expenses"));
     console.log("These are the values: ", values);
     handleSetModal();
   };
 
-  const handleSelectedGroup = (event) => {
+  const handleSelectedGroup = () => {
     //clear slate of names every time new group is chosen
     clearNames();
-    const selectedId = event.target.value;
     //query db for match with chosen id, grab nested friend objects
-    const friendsArr = db.queryAll("groups", { query: { id: selectedId } })[0]
-      .friendIDs;
+    const friendsArr = db.queryAll("groups", {
+      query: { id: currentExpense.groupId },
+    })[0].friendIDs;
     //grab each friend obj and set state
     friendsArr.map((f) => {
       const friendObj = db.queryAll("friends", { query: { id: f } })[0];
@@ -72,6 +96,7 @@ export default function CreateExpense() {
             Name:*{" "}
           </label>
           <input
+            autoComplete="name"
             placeholder="Name of expense"
             {...register("name", { required: "name is required" })}
           />
@@ -83,6 +108,7 @@ export default function CreateExpense() {
             Description:*{" "}
           </label>
           <input
+            autoComplete="description"
             placeholder="Describe the expense"
             defaultValue={currentExpense.description}
             {...register("description", {
@@ -100,6 +126,7 @@ export default function CreateExpense() {
           </label>
           <select
             name="category"
+            autoComplete="category"
             {...register("category", {
               required: "select a category",
             })}
@@ -125,6 +152,7 @@ export default function CreateExpense() {
             Amount:*{" "}
           </label>
           <input
+            autoComplete="amount"
             placeholder="Enter a value"
             {...register("amount", {
               required: "amount required",
@@ -146,10 +174,12 @@ export default function CreateExpense() {
 
           <select
             name="groupId"
+            autoComplete="groupId"
+            disabled
             {...register("groupId", {
-              onChange: (event) => {
-                handleSelectedGroup(event);
-              },
+              // onChange: (event) => {
+              //   handleSelectedGroup(event);
+              // },
               required: "select a group to apply this expense",
             })}
           >
@@ -166,28 +196,31 @@ export default function CreateExpense() {
           )}
         </div>
 
-        <div className="mb-2">
-          <label className="mr-2">Weight Adjustment: </label>
-          {groupFriendsList.map((f) => (
-            <div key={f.id}>
-              <label className="mr-2">{f.name} </label>
-              <input
-                placeholder="0"
-                {...register(`weight.${f.id}`, {
-                  pattern: {
-                    value: /^[0-9]{1,2}$/i,
-                    message:
-                      "invalid type, please enter a number between 1-100%",
-                  },
-                })}
-              />
-            </div>
-          ))}
+        {currentExpense.groupId.length > 0 && (
+          <div className="mb-2">
+            <label className="mr-2">Weight Adjustment: </label>
+            {groupFriendsList.map((f) => (
+              <div key={f.id}>
+                <label className="mr-2">{f.name} </label>
+                <input
+                  autoComplete={`weight.${f.id}`}
+                  placeholder="0"
+                  {...register(`weight.${f.id}`, {
+                    pattern: {
+                      value: /^[0-9]{1,2}$/i,
+                      message:
+                        "invalid type, please enter a number between 1-100%",
+                    },
+                  })}
+                />
+              </div>
+            ))}
 
-          {errors.weight && (
-            <p style={{ color: "red" }}> {errors.weight.message} </p>
-          )}
-        </div>
+            {errors.weight && (
+              <p style={{ color: "red" }}> {errors.weight.message} </p>
+            )}
+          </div>
+        )}
 
         <div className="flex">
           <Button className="w-full md:w-auto">Submit</Button>
