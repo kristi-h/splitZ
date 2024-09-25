@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { UseDataContext } from "./context/SiteContext";
 import Card from "./ui/Card";
 import Button from "./ui/Button";
+import FooterHome from './layout/FooterHome'
 
 export default function Home() {
   const navigate = useNavigate();
@@ -91,6 +92,7 @@ export default function Home() {
             </>
           )}
         </div>
+        <FooterHome />
       </div>
     )
   );

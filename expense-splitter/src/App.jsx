@@ -10,6 +10,7 @@ import Modal from "./components/ui/Modal";
 import ReceiptUpload from "./components/upload/ReceiptUpload";
 import Friend from "./components/friend/Friend";
 import Home from "./components/Home";
+import About from './components/layout/About';
 import Login from "./components/Login";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Login />} />
                 <Route path="/home" element={<Home />} />
+                <Route path="/about" element={<About />} />
                 <Route path="/groups" element={<Group />} />
                 <Route path="/groups/id/:groupId" element={<SingleGroup />} />
                 <Route path="/friends" element={<Friend />} />
