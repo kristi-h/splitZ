@@ -8,13 +8,7 @@ import { nanoid } from "nanoid";
 import Button from "../ui/Button";
 
 const MAX_FILE_SIZE = 6000000; //6MB
-const ACCEPTED_TYPES = [
-  "image/jpeg",
-  "image/jpg",
-  "image/png",
-  "image/webp",
-  "application/pdf",
-];
+const ACCEPTED_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 
 // Define validation schema
 const schema = z
