@@ -15,43 +15,47 @@ export default function Home() {
     }
   }, [user]);
 
-  const groupDisplay = groupData.reverse().map((group, i) => {
-    // show a max of 3 groups
-    if (i <= 2) {
-      return (
-        <Card
-          key={group.id}
-          id={group.id}
-          type={"group"}
-          icon={"fa-user-group"}
-          title={group.name}
-          subtitle={group.description}
-        />
-      );
-    }
-  });
+  const groupDisplay = groupData
+    .sort((a, b) => b.ID - a.ID)
+    .map((group, i) => {
+      // show a max of 3 groups
+      if (i <= 2) {
+        return (
+          <Card
+            key={group.id}
+            id={group.id}
+            type={"group"}
+            icon={"fa-user-group"}
+            title={group.name}
+            subtitle={group.description}
+          />
+        );
+      }
+    });
 
-  const expenseDisplay = expenses.reverse().map((expense, i) => {
-    // show a max of 3 expenses
-    if (i <= 2) {
-      // get the group associated with this expense
-      const expenseGroup = groupData.find(
-        (group) => group.id === expense.groupId,
-      );
+  const expenseDisplay = expenses
+    .sort((a, b) => b.ID - a.ID)
+    .map((expense, i) => {
+      // show a max of 3 expenses
+      if (i <= 2) {
+        // get the group associated with this expense
+        const expenseGroup = groupData.find(
+          (group) => group.id === expense.groupId,
+        );
 
-      return (
-        <Card
-          key={expense.id}
-          id={expense.id}
-          type={"expense"}
-          icon={"fa-money-check-dollar"}
-          title={expense.name}
-          subtitle={expenseGroup?.name}
-          price={expense.amount}
-        />
-      );
-    }
-  });
+        return (
+          <Card
+            key={expense.id}
+            id={expense.id}
+            type={"expense"}
+            icon={"fa-money-check-dollar"}
+            title={expense.name}
+            subtitle={expenseGroup?.name}
+            price={expense.amount}
+          />
+        );
+      }
+    });
 
   return (
     // if modal is not showing then display the following
