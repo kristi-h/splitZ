@@ -18,7 +18,7 @@ export default function Card({ id, type, icon, title, subtitle, price }) {
           </div>
           <div>
             <h2 className="leading-5">{title}</h2>
-            <p>{subtitle}</p>
+            {subtitle && <p>{subtitle}</p>}
           </div>
         </div>
         <div className="flex items-center">
