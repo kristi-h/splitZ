@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
 import GroupFriendList from "./groupListComponent/GroupFriendList";
@@ -6,14 +7,23 @@ import GroupExpenseList from "./groupListComponent/GroupExpenseList";
 import db from "../../utils/localstoragedb";
 import Dialog from "../ui/Dialog";
 
+// export default function GroupList(props) {
 export default function GroupList() {
   const [displayDetails, setDisplayDetails] = useState("");
-  const { groupData, setGroupData, friends, expenses, handleSetModal } =
-    UseDataContext();
+  const [deleteID, setDeleteID] = useState(null);
+  const { groupData, setGroupData, friends, expenses, handleSetModal } = UseDataContext();
 
   // Create reference to dom element
   const deleteDialogRef = useRef(null);
-  const [deleteID, setDeleteID] = useState(null);
+  const navigate = useNavigate();
+
+  // const filteredData = groupData.filter((search) => {
+  //   if (props.input === '') {
+  //     return search;
+  //   } else {
+  //     return search.name.toLowerCase().includes(props.input)
+  //   }
+  // });
 
   // Closes or opens the dialog
   const toggleDialog = (ref) => {
@@ -87,6 +97,7 @@ export default function GroupList() {
     return [Math.abs(expenseAmount.toFixed(2)), overBudget, newGroup];
   };
 
+  // const groupList = filteredData.map((group) => (
   const groupList = groupData.map((group) => {
     //expense calculator
     const [expenseTotal, overBudget, newGroup] = expenseAmount(
@@ -133,6 +144,13 @@ export default function GroupList() {
               </div>
               <div className="flex justify-between">
                 <div className="flex gap-2">
+                  <Button
+                    variant={"small"}                    
+                    onClick={() => {navigate(`/groups/id/${group.id}`)}}
+                    className={'bg-accent'}
+                   >
+                    View
+                  </Button>
                   <Button
                     variant={"small"}
                     // onClick={() => handleEditGroup(group)}
