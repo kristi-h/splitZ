@@ -55,13 +55,14 @@ export default function CreateExpense() {
     // editExpense({ ...values });
     db.insertOrUpdate(
       "expenses",
-      { ID: currentExpense.ID },
+      { ID: currentExpense.id },
       { ...values, ...values.weight },
     );
     db.commit();
+    console.log("viewAll", { ...values, ...values.weight });
     setExpenses(db.queryAll("expenses"));
     console.log("These are the values: ", values);
-    handleSetModal();
+    // handleSetModal();
   };
 
   const handleSelectedGroup = () => {
