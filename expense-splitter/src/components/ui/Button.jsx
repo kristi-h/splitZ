@@ -4,7 +4,6 @@ export default function Button({
   onClick,
   className,
   type,
-  disabled,
 }) {
   const buttonStyles =
     variant === "small"
@@ -16,7 +15,6 @@ export default function Button({
       className={`${buttonStyles} ${className} transition-colors`}
       onClick={onClick}
       type={type}
-      disabled={disabled}
     >
       {children}
     </button>
