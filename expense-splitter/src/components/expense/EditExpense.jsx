@@ -53,7 +53,9 @@ export default function CreateExpense() {
   }, [currentExpense]);
 
   const onSubmit = (values) => {
-    weightCalc(values);
+    console.log("values", values);
+    weightCalc();
+    console.log("weightCalc", weightCalc());
     // editExpense({ ...values });
     db.update("expenses", { groupId: currentExpense.groupId }, function (row) {
       row.weight = { ...values.weight };
@@ -66,20 +68,20 @@ export default function CreateExpense() {
     handleSetModal();
   };
 
-  // const weightTransformed = Object.values(currentExpense.weight);
-  console.log("currentExpense.weight", currentExpense.weight);
-  console.log("weightTransformed", weightTransformed);
-
   const weightCalc = () => {
     return weightTransformed.reduce((acc, weightObj) => {
       const key = Object.keys(weightObj)[0];
-      parseInt(weightObj[key]);
-      acc += parseInt(weightObj[key]);
-      console.log("acc", acc);
+
+      acc += Number(weightObj[key]);
+      console.log("Number(weightObj[key]", Number(weightObj[key]));
+      console.log(typeof acc);
+      console.log("inside-acc", acc);
       if (acc > 100) {
-        console.log("total weights cannot be more than 100");
+        console.log("Total weights cannot be more than 100.");
+      } else if (acc < 100) {
+        console.log("Total weights cannot be less than 100.");
       } else {
-        console.log("you're all goood");
+        console.log("You're all goood.");
       }
       return acc;
     }, 0);
