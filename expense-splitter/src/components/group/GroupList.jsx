@@ -18,6 +18,14 @@ export default function GroupList() {
   const deleteDialogRef = useRef(null);
   const navigate = useNavigate();
 
+  // const filteredData = groupData.filter((search) => {
+  //   if (props.input === '') {
+  //     return search;
+  //   } else {
+  //     return search.name.toLowerCase().includes(props.input)
+  //   }
+  // });
+
   //handle displaying group detail on a dropdown
   const handleDisplayDetails = (id) => {
     if (displayDetails === id) {
