@@ -11,7 +11,8 @@ import Dialog from "../ui/Dialog";
 export default function GroupList() {
   const [displayDetails, setDisplayDetails] = useState("");
   const [deleteID, setDeleteID] = useState(null);
-  const { groupData, setGroupData, friends, expenses, handleSetModal } = UseDataContext();
+  const { groupData, setGroupData, friends, expenses, handleSetModal } =
+    UseDataContext();
 
   // Create reference to dom element
   const deleteDialogRef = useRef(null);
@@ -24,16 +25,6 @@ export default function GroupList() {
   //     return search.name.toLowerCase().includes(props.input)
   //   }
   // });
-
-  // Closes or opens the dialog
-  const toggleDialog = (ref) => {
-    if (!ref.current) {
-      return;
-    }
-    ref.current.hasAttribute("open")
-      ? ref.current.close()
-      : ref.current.showModal();
-  };
 
   //handle displaying group detail on a dropdown
   const handleDisplayDetails = (id) => {
@@ -145,10 +136,12 @@ export default function GroupList() {
               <div className="flex justify-between">
                 <div className="flex gap-2">
                   <Button
-                    variant={"small"}                    
-                    onClick={() => {navigate(`/groups/id/${group.id}`)}}
-                    className={'bg-accent'}
-                   >
+                    variant={"small"}
+                    onClick={() => {
+                      navigate(`/groups/id/${group.id}`);
+                    }}
+                    className={"bg-accent"}
+                  >
                     View
                   </Button>
                   <Button
@@ -163,7 +156,7 @@ export default function GroupList() {
                     variant={"small"}
                     onClick={() => {
                       setDeleteID(group.ID);
-                      toggleDialog(deleteDialogRef);
+                      deleteDialogRef.current.showModal();
                     }}
                     className={"bg-accent"}
                   >
@@ -182,7 +175,6 @@ export default function GroupList() {
       <div className="mb-4 flex flex-col-reverse">{groupList}</div>
       <Dialog
         dialogRef={deleteDialogRef}
-        cancelOnClick={() => toggleDialog(deleteDialogRef)}
         confirmOnClick={() => handleDelete(deleteID)}
       >
         <p>Are you sure you want to delete this group?</p>
