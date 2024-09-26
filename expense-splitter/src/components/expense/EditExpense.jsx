@@ -219,7 +219,20 @@ export default function CreateExpense() {
 
         {currentExpense.groupId.length > 0 && (
           <div className="mb-2">
-            <label className="mr-2">Weight Adjustment: </label>
+            <div>
+              <label className="mr-2">Me </label>
+              <input
+                autoComplete="me"
+                placeholder="0"
+                {...register(`weight.me`, {
+                  pattern: {
+                    value: /^[0-9]{1,2}$/i,
+                    message:
+                      "invalid type, please enter a number between 1-100%",
+                  },
+                })}
+              />
+            </div>
             {groupFriendsList.map((f) => (
               <div key={f.id}>
                 <label className="mr-2">{f.name} </label>
@@ -240,6 +253,7 @@ export default function CreateExpense() {
             {errors.weight && (
               <p style={{ color: "red" }}> {errors.weight.message} </p>
             )}
+            <label className="mr-2">Weight Adjustment: </label>
           </div>
         )}
 
