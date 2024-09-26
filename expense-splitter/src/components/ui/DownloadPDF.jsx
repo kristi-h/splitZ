@@ -4,7 +4,7 @@ import Button from "./Button";
 const DownloadPDF = ({ filename, contentRef }) => {
   const pdfOptions = {
     filename,
-    margin: 10,
+    margin: 16,
   };
 
   const convertToPDF = async () => {
