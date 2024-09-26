@@ -51,13 +51,6 @@ export default function CreateExpense() {
     setGroupFriendsList([]);
   };
 
-  // const handleWeightAssignment = (event, id) => {
-  //   console.log("id", id);
-  //   console.log("event.target.value", event.target.value);
-  //   db.insertOrUpdate("friends", { id }, { weight: event.target.value });
-  //   db.commit();
-  // };
-
   return (
     <div className="mb-5">
       <h1 className="text-center">Create an Expense </h1>

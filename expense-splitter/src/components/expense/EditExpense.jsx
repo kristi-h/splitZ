@@ -11,10 +11,10 @@ export default function CreateExpense() {
   const currentExpense = expenses.find((expense) => expense.ID === modal.id);
   const [groupFriendsList, setGroupFriendsList] = React.useState([]);
 
-  // const weightTransformed = Object.keys(currentExpense.weight).map((key) => ({
-  //   // return an object instead
-  //   key: currentExpense.weight[key],
-  // }));
+  const weightTransformed = Object.keys(currentExpense.weight).map((key) => ({
+    // return an object instead
+    [currentExpense.groupId]: currentExpense.weight[key],
+  }));
 
   // console.log("currentExpenseWeight", currentExpense.weight);
   // console.log("weightTransformed", weightTransformed);
@@ -35,7 +35,8 @@ export default function CreateExpense() {
     },
   });
 
-  console.log("currentExpense", currentExpense);
+  // console.log("currentExpense", currentExpense);
+  // console.log("weightTransformed", weightTransformed);
 
   React.useEffect(() => {
     if (currentExpense) {
@@ -52,16 +53,10 @@ export default function CreateExpense() {
   }, [currentExpense]);
 
   const onSubmit = (values) => {
+    weightCalc(values);
     // editExpense({ ...values });
-    // db.insertOrUpdate(
-    //   "expenses",
-    //   { ID: currentExpense.ID },
-    //   { ...values, ...values.weight },
-    // );
     db.update("expenses", { groupId: currentExpense.groupId }, function (row) {
       row.weight = { ...values.weight };
-
-      // the update callback function returns to the modified record
       return row;
     });
     db.commit();
@@ -70,6 +65,12 @@ export default function CreateExpense() {
     // console.log("These are the values: ", ...values);
     handleSetModal();
   };
+
+  // const weightTransformed = Object.values(currentExpense.weight);
+  console.log("currentExpense.weight", currentExpense.weight);
+  console.log("weightTransformed", weightTransformed);
+
+  // console.log("weightCalc", weightCalc);
 
   const handleSelectedGroup = () => {
     //clear slate of names every time new group is chosen
@@ -185,9 +186,6 @@ export default function CreateExpense() {
             autoComplete="groupId"
             disabled
             {...register("groupId", {
-              // onChange: (event) => {
-              //   handleSelectedGroup(event);
-              // },
               required: "select a group to apply this expense",
             })}
           >
