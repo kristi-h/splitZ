@@ -5,17 +5,58 @@ import db from "../../utils/localstoragedb";
 import Button from "../ui/Button";
 import Card from "../ui/Card";
 import Dialog from "../ui/Dialog";
+import { categories } from "../../utils/dummyData";
 
 function GroupDetail() {
   const [deleteID, setDeleteID] = useState(null);
   const { groupData, setGroupData, friends, expenses, handleSetModal, modal } =
     UseDataContext();
 
-  // Create reference to dom element
+  // Create reference to dom elements
   const deleteDialogRef = useRef(null);
+  const chartRef = useRef(null);
 
   const { groupId } = useParams();
   const navigate = useNavigate();
+
+  const singleGroup = groupData.find((group) => group.id === groupId);
+  console.log(singleGroup);
+
+  useEffect(() => {
+    const dataPie = {
+      labels: categories,
+      //   labels: ["JavaScript", "Python", "Ruby"],
+      datasets: [
+        {
+          label: "Categories",
+          data: [20, 50, 100, 90, 20, 40, 70],
+          backgroundColor: [
+            "#ffd373",
+            "#fd8021",
+            "#e05400",
+            "#0073cc",
+            "#003488",
+            "#001d59",
+            "#001524",
+          ],
+          hoverOffset: 4,
+        },
+      ],
+    };
+
+    const configPie = {
+      type: "pie",
+      data: dataPie,
+      options: {},
+    };
+
+    const pieChart = new Chart(chartRef.current, configPie);
+
+    // Cleanup the chart on component unmount
+    return () => {
+      pieChart.destroy();
+    };
+  });
 
   // Closes or opens the dialog
   const toggleDialog = (ref) => {
@@ -36,8 +77,6 @@ function GroupDetail() {
     // after deleting, navigate to groups
     navigate("/groups");
   };
-
-  const singleGroup = groupData.find((group) => group.id === groupId);
 
   const friendsList = friends
     .filter((friend) => singleGroup.friendIDs.includes(friend.id))
@@ -63,7 +102,7 @@ function GroupDetail() {
   return (
     !modal.show && (
       <>
-        <div className="mb-8">
+        <div className="mb-4">
           <div className="mb-4 flex items-center">
             <i
               onClick={() => navigate("/groups")}
@@ -85,6 +124,10 @@ function GroupDetail() {
             <span className="font-bold">Budget remaining this month:</span> $250
             / ${singleGroup.budget}
           </p>
+        </div>
+
+        <div className="mb-4 overflow-hidden">
+          <canvas className="mx-20 p-1" ref={chartRef}></canvas>
         </div>
 
         <div>
