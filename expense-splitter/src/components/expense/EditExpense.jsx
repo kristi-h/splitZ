@@ -70,7 +70,20 @@ export default function CreateExpense() {
   console.log("currentExpense.weight", currentExpense.weight);
   console.log("weightTransformed", weightTransformed);
 
-  // console.log("weightCalc", weightCalc);
+  const weightCalc = () => {
+    return weightTransformed.reduce((acc, weightObj) => {
+      const key = Object.keys(weightObj)[0];
+      parseInt(weightObj[key]);
+      acc += parseInt(weightObj[key]);
+      console.log("acc", acc);
+      if (acc > 100) {
+        console.log("total weights cannot be more than 100");
+      } else {
+        console.log("you're all goood");
+      }
+      return acc;
+    }, 0);
+  };
 
   const handleSelectedGroup = () => {
     //clear slate of names every time new group is chosen
