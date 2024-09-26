@@ -126,8 +126,8 @@ function GroupDetail() {
           </p>
         </div>
 
-        <div className="mb-4 overflow-hidden">
-          <canvas className="mx-20 p-1" ref={chartRef}></canvas>
+        <div className="mx-auto mb-4 max-w-md overflow-hidden">
+          <canvas className="p-1" ref={chartRef}></canvas>
         </div>
 
         <div>
@@ -149,7 +149,6 @@ function GroupDetail() {
         </div>
 
         <div className="over absolute bottom-0 left-1/2 z-10 flex w-full -translate-x-1/2 bg-gradient-to-t from-white to-white/0 pb-5 pt-20">
-          {/* <div className="over absolute bottom-6 left-1/2 z-10 -translate-x-1/2"> */}
           <div className="mx-auto flex gap-4">
             <Button
               className="h-14 bg-red-700"
