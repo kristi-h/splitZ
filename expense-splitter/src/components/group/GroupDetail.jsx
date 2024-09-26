@@ -102,7 +102,7 @@ function GroupDetail() {
   return (
     !modal.show && (
       <>
-        <div className="mb-2">
+        <div>
           <div className="mb-4 flex items-center">
             <i
               onClick={() => navigate("/groups")}
@@ -126,8 +126,8 @@ function GroupDetail() {
           </p>
         </div>
 
-        <div className="mx-auto mb-4 max-w-md overflow-hidden">
-          <canvas className="p-1" ref={chartRef}></canvas>
+        <div className="mx-auto max-w-sm overflow-hidden lg:max-w-lg">
+          <canvas className="p-4" ref={chartRef}></canvas>
         </div>
 
         <div>
