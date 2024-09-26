@@ -102,7 +102,7 @@ function GroupDetail() {
   return (
     !modal.show && (
       <>
-        <div className="mb-4">
+        <div className="mb-2">
           <div className="mb-4 flex items-center">
             <i
               onClick={() => navigate("/groups")}
@@ -147,8 +147,10 @@ function GroupDetail() {
             </>
           )}
         </div>
-        <div className="over absolute bottom-6 left-1/2 z-10 -translate-x-1/2">
-          <div className="flex w-full gap-4">
+
+        <div className="over absolute bottom-0 left-1/2 z-10 flex w-full -translate-x-1/2 bg-gradient-to-t from-white to-white/0 pb-5 pt-20">
+          {/* <div className="over absolute bottom-6 left-1/2 z-10 -translate-x-1/2"> */}
+          <div className="mx-auto flex gap-4">
             <Button
               className="h-14 bg-red-700"
               onClick={() => {
