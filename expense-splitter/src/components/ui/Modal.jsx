@@ -5,7 +5,6 @@ import CreateExpense from "../expense/CreateExpense";
 import EditExpense from "../expense/EditExpense";
 import CreateFriend from "../friend/FriendForm";
 import ReceiptImage from "./ReceiptImage";
-import { useEffect } from "react";
 
 // map component names to actual components
 const components = {
@@ -20,13 +19,6 @@ const components = {
 export default function Modal({ id, image_url, image_alt }) {
   const { modal } = UseDataContext();
   const Component = components[modal.type];
-
-  // scroll to top when modal is loaded
-  useEffect(() => {
-    if (modal.show) {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  }, [modal.show]);
 
   return (
     modal.show && (
