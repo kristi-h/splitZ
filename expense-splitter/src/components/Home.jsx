@@ -16,7 +16,7 @@ export default function Home() {
   }, [user]);
 
   const groupDisplay = groupData
-    .sort((a, b) => b.ID - a.ID)
+    .sort((a, b) => b.ID - a.ID) // show latest expense up top
     .map((group, i) => {
       // show a max of 3 groups
       if (i <= 2) {
@@ -34,7 +34,7 @@ export default function Home() {
     });
 
   const expenseDisplay = expenses
-    .sort((a, b) => b.ID - a.ID)
+    .sort((a, b) => b.ID - a.ID) // show latest expense up top
     .map((expense, i) => {
       // show a max of 3 expenses
       if (i <= 2) {

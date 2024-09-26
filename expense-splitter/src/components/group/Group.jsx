@@ -71,19 +71,19 @@ export default function Group() {
     )
   );
 }
+
 // Group page with expand
 
 // export default function Group() {
-
 //   const navigate = useNavigate();
 //   const { user, handleSetModal, modal } = UseDataContext();
 
 //   // const [inputText, setInputText] = useState("");
 
-//     // let inputHandler = (e) => {
-//     //     var lowerCase = e.target.value.toLowerCase();
-//     //     setInputText(lowerCase);
-//     // };
+//   // let inputHandler = (e) => {
+//   //     var lowerCase = e.target.value.toLowerCase();
+//   //     setInputText(lowerCase);
+//   // };
 
 //   useEffect(() => {
 //     // if user is not "logged in", go to login
