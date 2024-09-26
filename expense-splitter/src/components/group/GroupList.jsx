@@ -26,6 +26,16 @@ export default function GroupList() {
   //   }
   // });
 
+  // Closes or opens the dialog
+  const toggleDialog = (ref) => {
+    if (!ref.current) {
+      return;
+    }
+    ref.current.hasAttribute("open")
+      ? ref.current.close()
+      : ref.current.showModal();
+  };
+
   //handle displaying group detail on a dropdown
   const handleDisplayDetails = (id) => {
     if (displayDetails === id) {
@@ -138,7 +148,7 @@ export default function GroupList() {
                   <Button
                     variant={"small"}
                     onClick={() => {
-                      navigate(`/groups/id/${group.id}`);
+                      navigate(`/group/id/${group.id}`);
                     }}
                     className={"bg-accent"}
                   >
@@ -156,7 +166,7 @@ export default function GroupList() {
                     variant={"small"}
                     onClick={() => {
                       setDeleteID(group.ID);
-                      deleteDialogRef.current.showModal();
+                      toggleDialog(deleteDialogRef);
                     }}
                     className={"bg-accent"}
                   >
@@ -175,6 +185,7 @@ export default function GroupList() {
       <div className="mb-4 flex flex-col-reverse">{groupList}</div>
       <Dialog
         dialogRef={deleteDialogRef}
+        cancelOnClick={() => toggleDialog(deleteDialogRef)}
         confirmOnClick={() => handleDelete(deleteID)}
       >
         <p>Are you sure you want to delete this group?</p>
