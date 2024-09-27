@@ -96,29 +96,33 @@ function GroupDetail() {
   const friendsList = friends
     .filter((friend) => singleGroup.friendIDs.includes(friend.id))
     .map((friend) => friend.name.split(" ")[0]);
-  // .join(", ");
-  console.log(friends.length);
-  console.log(friendsList);
 
   const friendsDisplay =
-    friends.length <= 3 ? (
-      friendsList.join(", ")
-    ) : seeMore ? (
-      <>
-        {friendsList.join(", ")}
-        {/* ... <span className="font-semibold">see more</span> */}
-      </>
+    friendsList.length > 3 ? (
+      seeMore ? (
+        <>
+          {friendsList.join(", ")}{" "}
+          <span
+            onClick={() => setSeeMore(false)}
+            className="cursor-pointer font-semibold hover:underline"
+          >
+            see less
+          </span>
+        </>
+      ) : (
+        <>
+          {friendsList.slice(0, 3).join(", ")}
+          ...{" "}
+          <span
+            onClick={() => setSeeMore(true)}
+            className="cursor-pointer font-semibold hover:underline"
+          >
+            see more
+          </span>
+        </>
+      )
     ) : (
-      <>
-        {friendsList.slice(0, 3).join(", ")}
-        ...{" "}
-        <span
-          onClick={() => setSeeMore(!seeMore)}
-          className="cursor-pointer font-semibold hover:underline"
-        >
-          see more
-        </span>
-      </>
+      friendsList.join(", ")
     );
 
   const expenseDisplay = groupExpenses
