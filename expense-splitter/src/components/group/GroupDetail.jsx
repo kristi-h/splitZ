@@ -25,6 +25,13 @@ function GroupDetail() {
     singleGroup.expenseIDs.includes(expense.id),
   );
 
+  // get the total group expense amount
+  const totalExpenseAmount = groupExpenses
+    .map((expense) => parseFloat(expense.amount))
+    .reduce((acc, curr) => acc + curr, 0)
+    .toFixed(2);
+  console.log(totalExpenseAmount);
+
   //////////////////////// ----  pie chart stuff ---- ////////////////////////
   const groupCategories = groupExpenses.map((expense) => expense.category);
 
@@ -127,8 +134,8 @@ function GroupDetail() {
             <div className="h-8 w-full rounded-lg bg-accent"></div>
           </div>
           <p className="text-center font-normal">
-            <span className="font-bold">Budget remaining this month:</span> $250
-            / ${singleGroup.budget}
+            <span className="font-bold">Budget remaining this month:</span> $
+            {totalExpenseAmount} / ${singleGroup.budget}
           </p>
         </div>
 
