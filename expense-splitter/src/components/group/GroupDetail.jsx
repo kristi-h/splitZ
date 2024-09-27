@@ -35,7 +35,7 @@ function GroupDetail() {
   //////////////////////// ----  pie chart stuff ---- ////////////////////////
   const groupCategories = groupExpenses.map((expense) => expense.category);
 
-  // test cats with broader range
+  //   test cats with broader range
   //   const groupCategories = [
   //     "trip",
   //     "trip",
@@ -46,29 +46,29 @@ function GroupDetail() {
   //   ];
 
   // get unique categories sorted alphabetically
-  const sortedCategories = [...new Set(groupCategories)].sort();
+  //   const sortedCategories = [...new Set(groupCategories)].sort();
 
-  function calculateCategoryPercentages(categories) {
-    // count the occurrences of each category
-    const categoryCount = categories.reduce((acc, category) => {
-      acc[category] = (acc[category] || 0) + 1;
-      return acc;
-    }, {});
-    // console.log(categoryCount);
+  //   function calculateCategoryPercentages(categories) {
+  //     // count the occurrences of each category
+  //     const categoryCount = categories.reduce((acc, category) => {
+  //       acc[category] = (acc[category] || 0) + 1;
+  //       return acc;
+  //     }, {});
+  //     // console.log(categoryCount);
 
-    // calculate the total number of categories
-    const total = categories.length;
+  //     // calculate the total number of categories
+  //     const total = categories.length;
 
-    // calculate the percentages for each category
-    const percentages = sortedCategories.map((category) => {
-      //   console.log(Math.round((categoryCount[category] / total) * 100));
-      return Math.round((categoryCount[category] / total) * 100);
-    });
+  //     // calculate the percentages for each category
+  //     const percentages = sortedCategories.map((category) => {
+  //       //   console.log(Math.round((categoryCount[category] / total) * 100));
+  //       return Math.round((categoryCount[category] / total) * 100);
+  //     });
 
-    return percentages;
-  }
+  //     return percentages;
+  //   }
 
-  const pieSlices = calculateCategoryPercentages(groupCategories);
+  //   const pieSlices = calculateCategoryPercentages(groupCategories);
 
   //////////////////////// ----  pie chart stuff ---- ////////////////////////
 
@@ -139,11 +139,7 @@ function GroupDetail() {
           </p>
         </div>
 
-        <PieGraph
-          labels={sortedCategories}
-          label={"Categories"}
-          data={pieSlices}
-        />
+        <PieGraph label={"Categories"} slices={groupCategories} />
 
         <div>
           {expenses.length > 0 ? (
