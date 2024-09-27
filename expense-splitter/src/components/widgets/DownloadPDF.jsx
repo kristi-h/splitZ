@@ -1,5 +1,5 @@
 import html2pdf from "html2pdf.js";
-import Button from "./Button";
+import Button from "../ui/Button";
 
 // Add data-html2canvas-ignore class to hide element
 
