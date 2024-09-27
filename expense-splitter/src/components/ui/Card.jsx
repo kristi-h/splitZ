@@ -1,6 +1,10 @@
-export default function Card({ id, icon, title, subtitle, price }) {
+import { useNavigate } from "react-router-dom";
+
+export default function Card({ id, type, icon, title, subtitle, price }) {
+  const navigate = useNavigate();
   const handleClick = () => {
     console.log("Clicking ID: ", id);
+    navigate(`/${type}/id/${id}`);
   };
   return (
     <div
@@ -14,11 +18,11 @@ export default function Card({ id, icon, title, subtitle, price }) {
           </div>
           <div>
             <h2 className="leading-5">{title}</h2>
-            <p>{subtitle}</p>
+            {subtitle && <p>{subtitle}</p>}
           </div>
         </div>
         <div className="flex items-center">
-          <div className="mx-4 text-lg">{price}</div>
+          <div className="mx-4 text-lg">{price && `$${price}`}</div>
           <div>
             <i className="fa-solid fa-chevron-right mr-2 text-3xl text-accent"></i>
           </div>

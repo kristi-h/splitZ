@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { UseDataContext } from "../context/SiteContext";
 import Button from "../ui/Button";
 
-function SingleExpense() {
+function ExpenseDetail() {
   const { expenses } = UseDataContext();
   const { expenseId } = useParams();
   const navigate = useNavigate();
@@ -26,4 +26,4 @@ function SingleExpense() {
   );
 }
 
-export default SingleExpense;
+export default ExpenseDetail;

@@ -11,7 +11,8 @@ import Dialog from "../ui/Dialog";
 export default function GroupList() {
   const [displayDetails, setDisplayDetails] = useState("");
   const [deleteID, setDeleteID] = useState(null);
-  const { groupData, setGroupData, friends, expenses, handleSetModal } = UseDataContext();
+  const { groupData, setGroupData, friends, expenses, handleSetModal } =
+    UseDataContext();
 
   // Create reference to dom element
   const deleteDialogRef = useRef(null);
@@ -145,10 +146,12 @@ export default function GroupList() {
               <div className="flex justify-between">
                 <div className="flex gap-2">
                   <Button
-                    variant={"small"}                    
-                    onClick={() => {navigate(`/groups/id/${group.id}`)}}
-                    className={'bg-accent'}
-                   >
+                    variant={"small"}
+                    onClick={() => {
+                      navigate(`/group/id/${group.id}`);
+                    }}
+                    className={"bg-accent"}
+                  >
                     View
                   </Button>
                   <Button
