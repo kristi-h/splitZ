@@ -5,7 +5,7 @@ import db from "../../utils/localstoragedb";
 import Button from "../ui/Button";
 import Card from "../ui/Card";
 import Dialog from "../ui/Dialog";
-import PieGraph from "../widgets/PieGraph";
+import PieChart from "../widgets/PieChart";
 
 function GroupDetail() {
   const [deleteID, setDeleteID] = useState(null);
@@ -94,8 +94,9 @@ function GroupDetail() {
 
   const friendsList = friends
     .filter((friend) => singleGroup.friendIDs.includes(friend.id))
-    .map((friend) => friend.name)
+    .map((friend) => friend.name.split(" ")[0])
     .join(", ");
+  console.log(friendsList);
 
   const expenseDisplay = groupExpenses
     .sort((a, b) => b.ID - a.ID) // show latest expense up top
@@ -139,7 +140,7 @@ function GroupDetail() {
           </p>
         </div>
 
-        <PieGraph label={"Categories"} slices={groupCategories} />
+        <PieChart label={"Categories"} slices={groupCategories} />
 
         <div>
           {expenses.length > 0 ? (

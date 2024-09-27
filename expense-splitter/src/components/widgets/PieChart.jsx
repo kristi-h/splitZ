@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export default function PieGraph({ label, slices }) {
+export default function PieChart({ label, slices }) {
   // Create reference to dom elements
   const chartRef = useRef(null);
 
