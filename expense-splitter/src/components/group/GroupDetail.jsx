@@ -1,11 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { UseDataContext } from "../context/SiteContext";
 import db from "../../utils/localstoragedb";
 import Button from "../ui/Button";
 import Card from "../ui/Card";
 import Dialog from "../ui/Dialog";
-import { categories } from "../../utils/dummyData";
 import PieGraph from "../widgets/PieGraph";
 
 function GroupDetail() {
@@ -16,13 +15,55 @@ function GroupDetail() {
   // Create reference to dom elements
   const deleteDialogRef = useRef(null);
 
-  const pieChartData = [20, 50, 100, 90, 20, 40, 70];
-
   const { groupId } = useParams();
   const navigate = useNavigate();
 
   const singleGroup = groupData.find((group) => group.id === groupId);
-  console.log(singleGroup);
+
+  // get all the group expenses
+  const groupExpenses = expenses.filter((expense) =>
+    singleGroup.expenseIDs.includes(expense.id),
+  );
+
+  //////////////////////// ----  pie chart stuff ---- ////////////////////////
+  const groupCategories = groupExpenses.map((expense) => expense.category);
+
+  // test cats with broader range
+  //   const groupCategories = [
+  //     "trip",
+  //     "trip",
+  //     "trip",
+  //     "restaurant",
+  //     "shopping",
+  //     "bar",
+  //   ];
+
+  // get unique categories sorted alphabetically
+  const sortedCategories = [...new Set(groupCategories)].sort();
+
+  function calculateCategoryPercentages(categories) {
+    // count the occurrences of each category
+    const categoryCount = categories.reduce((acc, category) => {
+      acc[category] = (acc[category] || 0) + 1;
+      return acc;
+    }, {});
+    // console.log(categoryCount);
+
+    // calculate the total number of categories
+    const total = categories.length;
+
+    // calculate the percentages for each category
+    const percentages = sortedCategories.map((category) => {
+      //   console.log(Math.round((categoryCount[category] / total) * 100));
+      return Math.round((categoryCount[category] / total) * 100);
+    });
+
+    return percentages;
+  }
+
+  const pieSlices = calculateCategoryPercentages(groupCategories);
+
+  //////////////////////// ----  pie chart stuff ---- ////////////////////////
 
   // Closes or opens the dialog
   const toggleDialog = (ref) => {
@@ -49,8 +90,7 @@ function GroupDetail() {
     .map((friend) => friend.name)
     .join(", ");
 
-  const expenseDisplay = expenses
-    .filter((expense) => singleGroup.expenseIDs.includes(expense.id))
+  const expenseDisplay = groupExpenses
     .sort((a, b) => b.ID - a.ID) // show latest expense up top
     .map((expense, i) => {
       return (
@@ -83,7 +123,7 @@ function GroupDetail() {
             {friendsList}
           </p>
           <div className="relative mb-2 flex">
-            <div className="absolute h-8 w-1/2 rounded-lg bg-primary"></div>
+            <div className="absolute h-8 w-[20%] rounded-lg bg-primary"></div>
             <div className="h-8 w-full rounded-lg bg-accent"></div>
           </div>
           <p className="text-center font-normal">
@@ -93,9 +133,9 @@ function GroupDetail() {
         </div>
 
         <PieGraph
-          labels={categories}
+          labels={sortedCategories}
           label={"Categories"}
-          data={pieChartData}
+          data={pieSlices}
         />
 
         <div>
