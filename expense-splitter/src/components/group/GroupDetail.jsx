@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { UseDataContext } from "../context/SiteContext";
 import db from "../../utils/localstoragedb";
@@ -10,6 +10,7 @@ import PieChart from "../widgets/PieChart";
 function GroupDetail() {
   const [deleteID, setDeleteID] = useState(null);
   const [seeMore, setSeeMore] = useState(false);
+  const [progressBarWidth, setProgressBarWidth] = useState(0);
   const { groupData, setGroupData, friends, expenses, handleSetModal, modal } =
     UseDataContext();
 
@@ -31,47 +32,22 @@ function GroupDetail() {
     .map((expense) => parseFloat(expense.amount))
     .reduce((acc, curr) => acc + curr, 0)
     .toFixed(2);
-  console.log(totalExpenseAmount);
 
-  //////////////////////// ----  pie chart stuff ---- ////////////////////////
+  const expensePercentage =
+    ((totalExpenseAmount / singleGroup.budget) * 100).toFixed() >= 100
+      ? 100
+      : ((totalExpenseAmount / singleGroup.budget) * 100).toFixed();
+  //   const progressBar = `absolute h-8 w-[${expensePercentage}%] rounded-lg bg-primary`;
+  //   console.log(expensePercentage);
+  //   console.log((totalExpenseAmount / singleGroup.budget) * 100);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setProgressBarWidth(expensePercentage);
+    }, 100);
+  }, [expensePercentage]);
+
   const groupCategories = groupExpenses.map((expense) => expense.category);
-
-  //   test cats with broader range
-  //   const groupCategories = [
-  //     "trip",
-  //     "trip",
-  //     "trip",
-  //     "restaurant",
-  //     "shopping",
-  //     "bar",
-  //   ];
-
-  // get unique categories sorted alphabetically
-  //   const sortedCategories = [...new Set(groupCategories)].sort();
-
-  //   function calculateCategoryPercentages(categories) {
-  //     // count the occurrences of each category
-  //     const categoryCount = categories.reduce((acc, category) => {
-  //       acc[category] = (acc[category] || 0) + 1;
-  //       return acc;
-  //     }, {});
-  //     // console.log(categoryCount);
-
-  //     // calculate the total number of categories
-  //     const total = categories.length;
-
-  //     // calculate the percentages for each category
-  //     const percentages = sortedCategories.map((category) => {
-  //       //   console.log(Math.round((categoryCount[category] / total) * 100));
-  //       return Math.round((categoryCount[category] / total) * 100);
-  //     });
-
-  //     return percentages;
-  //   }
-
-  //   const pieSlices = calculateCategoryPercentages(groupCategories);
-
-  //////////////////////// ----  pie chart stuff ---- ////////////////////////
 
   // Closes or opens the dialog
   const toggleDialog = (ref) => {
@@ -158,7 +134,10 @@ function GroupDetail() {
             {friendsDisplay}
           </p>
           <div className="relative mb-2 flex">
-            <div className="absolute h-8 w-[20%] rounded-lg bg-primary"></div>
+            <div
+              className={`absolute h-8 rounded-lg bg-primary transition-all duration-500 ease-out`}
+              style={{ width: `${progressBarWidth}%` }}
+            ></div>
             <div className="h-8 w-full rounded-lg bg-accent"></div>
           </div>
           <p className="text-center font-normal">
