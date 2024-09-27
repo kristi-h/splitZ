@@ -9,6 +9,7 @@ import PieChart from "../widgets/PieChart";
 
 function GroupDetail() {
   const [deleteID, setDeleteID] = useState(null);
+  const [seeMore, setSeeMore] = useState(false);
   const { groupData, setGroupData, friends, expenses, handleSetModal, modal } =
     UseDataContext();
 
@@ -94,9 +95,31 @@ function GroupDetail() {
 
   const friendsList = friends
     .filter((friend) => singleGroup.friendIDs.includes(friend.id))
-    .map((friend) => friend.name.split(" ")[0])
-    .join(", ");
+    .map((friend) => friend.name.split(" ")[0]);
+  // .join(", ");
+  console.log(friends.length);
   console.log(friendsList);
+
+  const friendsDisplay =
+    friends.length <= 3 ? (
+      friendsList.join(", ")
+    ) : seeMore ? (
+      <>
+        {friendsList.join(", ")}
+        {/* ... <span className="font-semibold">see more</span> */}
+      </>
+    ) : (
+      <>
+        {friendsList.slice(0, 3).join(", ")}
+        ...{" "}
+        <span
+          onClick={() => setSeeMore(!seeMore)}
+          className="cursor-pointer font-semibold hover:underline"
+        >
+          see more
+        </span>
+      </>
+    );
 
   const expenseDisplay = groupExpenses
     .sort((a, b) => b.ID - a.ID) // show latest expense up top
@@ -128,7 +151,7 @@ function GroupDetail() {
           <p className="mb-2">{singleGroup.description}</p>
           <p className="mb-4">
             <span className="font-bold">Group Members: </span>
-            {friendsList}
+            {friendsDisplay}
           </p>
           <div className="relative mb-2 flex">
             <div className="absolute h-8 w-[20%] rounded-lg bg-primary"></div>
