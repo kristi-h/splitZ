@@ -23,4 +23,7 @@
   .error-text {
     @apply text-sm font-normal text-red-500;
   }
+  img {
+    display: initial;
+  }
 }
