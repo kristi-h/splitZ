@@ -33,18 +33,17 @@ function GroupDetail() {
     .reduce((acc, curr) => acc + curr, 0)
     .toFixed(2);
 
+  // figure out the width of the expense percentage bar
+  // if it's higher than 100, max it out at 100 to not go outside the div
   const expensePercentage =
     ((totalExpenseAmount / singleGroup.budget) * 100).toFixed() >= 100
       ? 100
       : ((totalExpenseAmount / singleGroup.budget) * 100).toFixed();
-  //   const progressBar = `absolute h-8 w-[${expensePercentage}%] rounded-lg bg-primary`;
-  //   console.log(expensePercentage);
-  //   console.log((totalExpenseAmount / singleGroup.budget) * 100);
 
+  // set the percentage to state and disply as style as tailwind is
+  // bad at dynamically rendering
   useEffect(() => {
-    setTimeout(() => {
-      setProgressBarWidth(expensePercentage);
-    }, 100);
+    setProgressBarWidth(expensePercentage);
   }, [expensePercentage]);
 
   const groupCategories = groupExpenses.map((expense) => expense.category);
