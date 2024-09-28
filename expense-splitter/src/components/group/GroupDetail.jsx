@@ -27,7 +27,7 @@ function GroupDetail() {
 
   // get all the group expenses
   const groupExpenses = expenses.filter((expense) =>
-    singleGroup.expenseIDs.includes(expense.id),
+    singleGroup.expenseIDs?.includes(expense.id),
   );
 
   // get the total group expense amount
