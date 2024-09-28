@@ -7,6 +7,7 @@ import Card from "../ui/Card";
 import Dialog from "../ui/Dialog";
 import PieChart from "../widgets/PieChart";
 import NoDataPlaceholder from "../ui/NoDataPlaceholder";
+import ButtonFooter from "../ui/ButtonFooter";
 
 function GroupDetail() {
   const [deleteID, setDeleteID] = useState(null);
@@ -183,31 +184,30 @@ function GroupDetail() {
           )}
         </div>
 
-        <div className="over absolute bottom-0 left-1/2 z-10 flex w-full -translate-x-1/2 bg-gradient-to-t from-white to-white/0 pb-5 pt-20">
-          <div className="mx-auto flex gap-2">
-            <Button
-              className="h-14 bg-red-700"
-              onClick={() => {
-                setDeleteID(singleGroup.ID);
-                toggleDialog(deleteDialogRef);
-              }}
-            >
-              Delete
-            </Button>
-            <Button
-              className="h-14 bg-primary"
-              onClick={() => handleSetModal("EditGroup", singleGroup.ID)}
-            >
-              Edit
-            </Button>
-            <Button
-              className="h-14 bg-primary"
-              onClick={() => handleSetModal("CreateExpense")}
-            >
-              Create Expense
-            </Button>
-          </div>
-        </div>
+        <ButtonFooter>
+          <Button
+            className="bg-red-700"
+            onClick={() => {
+              setDeleteID(singleGroup.ID);
+              toggleDialog(deleteDialogRef);
+            }}
+          >
+            Delete
+          </Button>
+          <Button
+            className="bg-primary"
+            onClick={() => handleSetModal("EditGroup", singleGroup.ID)}
+          >
+            Edit
+          </Button>
+          <Button
+            className="bg-primary"
+            onClick={() => handleSetModal("CreateExpense")}
+          >
+            Create Expense
+          </Button>
+        </ButtonFooter>
+
         <Dialog
           dialogRef={deleteDialogRef}
           cancelOnClick={() => toggleDialog(deleteDialogRef)}

@@ -6,6 +6,7 @@ import GroupList from "./GroupList";
 import { UseDataContext } from "../context/SiteContext";
 import Card from "../ui/Card";
 import NoDataPlaceholder from "../ui/NoDataPlaceholder";
+import ButtonFooter from "../ui/ButtonFooter";
 
 export default function Group() {
   const navigate = useNavigate();
@@ -59,14 +60,16 @@ export default function Group() {
             />
           )}
         </div>
-        <Button
-          className="over absolute bottom-6 left-1/2 z-10 h-14 w-[200px] -translate-x-1/2 rounded-md bg-primary"
-          onClick={() => {
-            handleSetModal("CreateGroup");
-          }}
-        >
-          Create Group
-        </Button>
+        <ButtonFooter>
+          <Button
+            className="bg-primary"
+            onClick={() => {
+              handleSetModal("CreateGroup");
+            }}
+          >
+            Create Group
+          </Button>
+        </ButtonFooter>
       </>
     )
   );
