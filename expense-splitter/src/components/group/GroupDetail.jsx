@@ -10,7 +10,10 @@ import PieChart from "../widgets/PieChart";
 function GroupDetail() {
   const [deleteID, setDeleteID] = useState(null);
   const [seeMore, setSeeMore] = useState(false);
-  const [progressBarWidth, setProgressBarWidth] = useState(0);
+  const [progressBarStyle, setProgressBarStyle] = useState({
+    width: 0,
+    color: "#05299e",
+  });
   const { groupData, setGroupData, friends, expenses, handleSetModal, modal } =
     UseDataContext();
 
@@ -34,16 +37,22 @@ function GroupDetail() {
     .toFixed(2);
 
   // figure out the width of the expense percentage bar
-  // if it's higher than 100, max it out at 100 to not go outside the div
+  // max it out at 100 to avoid growing outside the div
   const expensePercentage =
     ((totalExpenseAmount / singleGroup.budget) * 100).toFixed() >= 100
       ? 100
       : ((totalExpenseAmount / singleGroup.budget) * 100).toFixed();
 
-  // set the percentage to state and disply as style as tailwind is
-  // bad at dynamically rendering
+  // set the percentage and color to state and disply as style
+  // tailwind is bad at rendering dynamically
   useEffect(() => {
-    setProgressBarWidth(expensePercentage);
+    // if budget is over 75%, bar is red
+    const barColor = expensePercentage > 75 ? "#d20000" : "#05299e";
+    setProgressBarStyle((prev) => ({
+      ...prev,
+      width: expensePercentage,
+      color: barColor,
+    }));
   }, [expensePercentage]);
 
   const groupCategories = groupExpenses.map((expense) => expense.category);
@@ -134,8 +143,11 @@ function GroupDetail() {
           </p>
           <div className="relative mb-2 flex">
             <div
-              className={`absolute h-8 rounded-lg bg-primary transition-all duration-500 ease-out`}
-              style={{ width: `${progressBarWidth}%` }}
+              className={`absolute h-8 rounded-lg transition-all duration-500 ease-out`}
+              style={{
+                width: `${progressBarStyle.width}%`,
+                background: `${progressBarStyle.color}`,
+              }}
             ></div>
             <div className="h-8 w-full rounded-lg bg-accent"></div>
           </div>
