@@ -5,7 +5,7 @@ import { UseDataContext } from "../context/SiteContext";
 export default function Header() {
   const { handleSetModal } = UseDataContext();
   return (
-    <div className="flex h-[200px] flex-col bg-primary pb-3 pt-[62px] text-white">
+    <div className="flex h-[200px] flex-col bg-primary pb-3 pt-[40px] text-white">
       <div className="text-center text-[40px] font-extrabold uppercase">
         Let's Split It
       </div>

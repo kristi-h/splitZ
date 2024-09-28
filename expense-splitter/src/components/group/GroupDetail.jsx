@@ -1,28 +1,61 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { UseDataContext } from "../context/SiteContext";
 import db from "../../utils/localstoragedb";
 import Button from "../ui/Button";
 import Card from "../ui/Card";
 import Dialog from "../ui/Dialog";
-import { categories } from "../../utils/dummyData";
-import PieGraph from "../widgets/PieGraph";
+import PieChart from "../widgets/PieChart";
 
 function GroupDetail() {
   const [deleteID, setDeleteID] = useState(null);
+  const [seeMore, setSeeMore] = useState(false);
+  const [progressBarStyle, setProgressBarStyle] = useState({
+    width: 0,
+    color: "#05299e",
+  });
   const { groupData, setGroupData, friends, expenses, handleSetModal, modal } =
     UseDataContext();
 
   // Create reference to dom elements
   const deleteDialogRef = useRef(null);
 
-  const pieChartData = [20, 50, 100, 90, 20, 40, 70];
-
   const { groupId } = useParams();
   const navigate = useNavigate();
 
   const singleGroup = groupData.find((group) => group.id === groupId);
-  console.log(singleGroup);
+
+  // get all the group expenses
+  const groupExpenses = expenses.filter((expense) =>
+    singleGroup.expenseIDs.includes(expense.id),
+  );
+
+  // get the total group expense amount
+  const totalExpenseAmount = groupExpenses
+    .map((expense) => parseFloat(expense.amount))
+    .reduce((acc, curr) => acc + curr, 0)
+    .toFixed(2);
+
+  // figure out the width of the expense percentage bar
+  // max it out at 100 to avoid growing outside the div
+  const expensePercentage =
+    ((totalExpenseAmount / singleGroup.budget) * 100).toFixed() >= 100
+      ? 100
+      : ((totalExpenseAmount / singleGroup.budget) * 100).toFixed();
+
+  // set the percentage and color to state and disply as style
+  // tailwind is bad at rendering dynamically
+  useEffect(() => {
+    // if budget is over 75%, bar is red
+    const barColor = expensePercentage > 75 ? "#d20000" : "#05299e";
+    setProgressBarStyle((prev) => ({
+      ...prev,
+      width: expensePercentage,
+      color: barColor,
+    }));
+  }, [expensePercentage]);
+
+  const groupCategories = groupExpenses.map((expense) => expense.category);
 
   // Closes or opens the dialog
   const toggleDialog = (ref) => {
@@ -46,11 +79,37 @@ function GroupDetail() {
 
   const friendsList = friends
     .filter((friend) => singleGroup.friendIDs.includes(friend.id))
-    .map((friend) => friend.name)
-    .join(", ");
+    .map((friend) => friend.name.split(" ")[0]);
 
-  const expenseDisplay = expenses
-    .filter((expense) => singleGroup.expenseIDs.includes(expense.id))
+  const friendsDisplay =
+    friendsList.length > 3 ? (
+      seeMore ? (
+        <>
+          {friendsList.join(", ")}{" "}
+          <span
+            onClick={() => setSeeMore(false)}
+            className="cursor-pointer font-semibold hover:underline"
+          >
+            see less
+          </span>
+        </>
+      ) : (
+        <>
+          {friendsList.slice(0, 3).join(", ")}
+          ...{" "}
+          <span
+            onClick={() => setSeeMore(true)}
+            className="cursor-pointer font-semibold hover:underline"
+          >
+            see more
+          </span>
+        </>
+      )
+    ) : (
+      friendsList.join(", ")
+    );
+
+  const expenseDisplay = groupExpenses
     .sort((a, b) => b.ID - a.ID) // show latest expense up top
     .map((expense, i) => {
       return (
@@ -80,23 +139,25 @@ function GroupDetail() {
           <p className="mb-2">{singleGroup.description}</p>
           <p className="mb-4">
             <span className="font-bold">Group Members: </span>
-            {friendsList}
+            {friendsDisplay}
           </p>
           <div className="relative mb-2 flex">
-            <div className="absolute h-8 w-1/2 rounded-lg bg-primary"></div>
+            <div
+              className={`absolute h-8 rounded-lg transition-all duration-500 ease-out`}
+              style={{
+                width: `${progressBarStyle.width}%`,
+                background: `${progressBarStyle.color}`,
+              }}
+            ></div>
             <div className="h-8 w-full rounded-lg bg-accent"></div>
           </div>
           <p className="text-center font-normal">
-            <span className="font-bold">Budget remaining this month:</span> $250
-            / ${singleGroup.budget}
+            <span className="font-bold">Budget remaining this month:</span> $
+            {totalExpenseAmount} / ${singleGroup.budget}
           </p>
         </div>
 
-        <PieGraph
-          labels={categories}
-          label={"Categories"}
-          data={pieChartData}
-        />
+        <PieChart label={"Categories"} slices={groupCategories} />
 
         <div>
           {expenses.length > 0 ? (
