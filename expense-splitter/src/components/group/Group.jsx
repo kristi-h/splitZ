@@ -5,6 +5,7 @@ import Button from "../ui/Button";
 import GroupList from "./GroupList";
 import { UseDataContext } from "../context/SiteContext";
 import Card from "../ui/Card";
+import NoDataPlaceholder from "../ui/NoDataPlaceholder";
 
 export default function Group() {
   const navigate = useNavigate();
@@ -48,15 +49,14 @@ export default function Group() {
           {groupData.length > 0 ? (
             <>{groupDisplay}</>
           ) : (
-            <>
-              <div className="mb-2 flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-accent/50 p-4 py-12">
-                <p className="font-semibold">There are no groups to display</p>
-                <p className="text-sm">Get started by creating a group.</p>
-                <Button className="mt-4 w-full bg-primary md:w-auto">
-                  Create a Group
-                </Button>
-              </div>
-            </>
+            <NoDataPlaceholder
+              title="There are no groups to display"
+              subtitle="Get started by creating a group."
+              btnText="Create a Group"
+              onClick={() => {
+                handleSetModal("CreateGroup");
+              }}
+            />
           )}
         </div>
         <Button
