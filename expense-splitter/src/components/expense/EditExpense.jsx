@@ -10,6 +10,8 @@ export default function CreateExpense() {
     UseDataContext();
   const currentExpense = expenses.find((expense) => expense.ID === modal.id);
   const [groupFriendsList, setGroupFriendsList] = React.useState([]);
+  const [totalWeight, setTotalWeight] = React.useState(100);
+  const [customError, setCustomError] = React.useState("");
 
   const weightTransformed = Object.keys(currentExpense.weight).map((key) => ({
     // return an object instead
@@ -17,7 +19,7 @@ export default function CreateExpense() {
   }));
 
   // console.log("currentExpenseWeight", currentExpense.weight);
-  // console.log("weightTransformed", weightTransformed);
+  console.log("weightTransformed", weightTransformed);
 
   const {
     handleSubmit,
@@ -36,7 +38,7 @@ export default function CreateExpense() {
   });
 
   // console.log("currentExpense", currentExpense);
-  // console.log("weightTransformed", weightTransformed);
+  console.log("weightTransformed", weightTransformed);
 
   React.useEffect(() => {
     if (currentExpense) {
@@ -53,38 +55,54 @@ export default function CreateExpense() {
   }, [currentExpense]);
 
   const onSubmit = (values) => {
-    console.log("values", values);
-    weightCalc();
-    console.log("weightCalc", weightCalc());
-    // editExpense({ ...values });
-    db.update("expenses", { groupId: currentExpense.groupId }, function (row) {
-      row.weight = { ...values.weight };
-      return row;
-    });
-    db.commit();
-    // console.log("viewAll", { ...values, ...values.weight });
-    setExpenses(db.queryAll("expenses"));
-    // console.log("These are the values: ", ...values);
-    handleSetModal();
+    setTotalWeight(weightCalc());
+    console.log("These are the values submitted", values);
+    if (totalWeight !== 0) {
+      alert("weight contribution must total 100");
+      console.log("totalWeight", totalWeight);
+      return;
+    } else {
+      console.log("values", values);
+      weightCalc();
+      console.log("weightCalc", weightCalc());
+      // editExpense({ ...values });
+      db.update(
+        "expenses",
+        { groupId: currentExpense.groupId },
+        function (row) {
+          row.weight = { ...values.weight };
+          return row;
+        },
+      );
+      db.commit();
+      // console.log("viewAll", { ...values, ...values.weight });
+      setExpenses(db.queryAll("expenses"));
+      // console.log("These are the values: ", ...values);
+      handleSetModal();
+    }
   };
 
   const weightCalc = () => {
     return weightTransformed.reduce((acc, weightObj) => {
       const key = Object.keys(weightObj)[0];
-
+      console.log("acc", Number(weightObj[key]));
       acc += Number(weightObj[key]);
-      console.log("Number(weightObj[key]", Number(weightObj[key]));
-      console.log(typeof acc);
-      console.log("inside-acc", acc);
       if (acc > 100) {
-        console.log("Total weights cannot be more than 100.");
+        setCustomError("Total weights cannot be more than 100.");
       } else if (acc < 100) {
-        console.log("Total weights cannot be less than 100.");
+        setCustomError("Total weights cannot be less than 100.");
       } else {
-        console.log("You're all goood.");
+        return;
       }
       return acc;
     }, 0);
+  };
+
+  const adjustWeight = (e) => {
+    const adjusted = totalWeight - e.target.value;
+    console.log("adjusted", adjusted);
+
+    return setTotalWeight(adjusted);
   };
 
   const handleSelectedGroup = () => {
@@ -219,6 +237,7 @@ export default function CreateExpense() {
 
         {currentExpense.groupId.length > 0 && (
           <div className="mb-2">
+            <label className="mr-2">Weight Adjustment: </label>
             <div>
               <label className="mr-2">Me </label>
               <input
@@ -230,7 +249,14 @@ export default function CreateExpense() {
                     message:
                       "invalid type, please enter a number between 1-100%",
                   },
+                  max: {
+                    value: { totalWeight },
+                    message: "Individual contributions must total 100",
+                  },
                 })}
+                onChange={(e) => {
+                  adjustWeight(e);
+                }}
               />
             </div>
             {groupFriendsList.map((f) => (
@@ -245,15 +271,23 @@ export default function CreateExpense() {
                       message:
                         "invalid type, please enter a number between 1-100%",
                     },
+                    max: {
+                      value: { totalWeight },
+                      message: "Individual contributions must total 100",
+                    },
                   })}
+                  onChange={(e) => {
+                    adjustWeight(e);
+                  }}
                 />
               </div>
             ))}
-
-            {errors.weight && (
-              <p style={{ color: "red" }}> {errors.weight.message} </p>
-            )}
-            <label className="mr-2">Weight Adjustment: </label>
+            {totalWeight && customError}
+            {totalWeight !== 0
+              ? ""
+              : errors.weight && (
+                  <p style={{ color: "red" }}> {errors.weight.message} </p>
+                )}
           </div>
         )}
 

@@ -8,26 +8,36 @@ import db from "../../utils/localstoragedb";
 export default function CreateExpense() {
   const { groupData, expenses, setExpenses, handleSetModal } = UseDataContext();
   const [groupFriendsList, setGroupFriendsList] = React.useState([]);
+  const [totalWeight, setTotalWeight] = React.useState(100);
+  const [totalAmount, setTotalAmount] = React.useState(0);
+  const [customError, setCustomError] = React.useState("");
+  const [cont, setCont] = React.useState([]);
   const {
     handleSubmit,
     register,
-    getValues,
+    setValue,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      name: "Kris",
+      description: "Matt",
+      amount: 500,
+    },
+  });
 
   const id = nanoid();
 
   const onSubmit = (values) => {
-    console.log("values", values);
+    console.log("values", values, { ...values.weight });
     createExpense({ ...values, id });
     handleSetModal();
   };
 
   const createExpense = (values) => {
-    const newExpense = { ...values, date: new Date() };
+    const newExpense = { ...values, date: new Date(), id };
     setExpenses([...expenses, newExpense]);
-    db.insert("expenses", newExpense);
-    db.commit();
+    // db.insert("expenses", newExpense);
+    // db.commit();
   };
 
   const handleSelectedGroup = (event) => {
@@ -45,6 +55,13 @@ export default function CreateExpense() {
         friendObj,
       ]);
     });
+  };
+
+  const convertWeightToAmount = (e) => {
+    const toConvert = Number(e.target.value);
+    const amountConverted = totalAmount * (toConvert / 100);
+    console.log(amountConverted);
+    return amountConverted;
   };
 
   const clearNames = () => {
@@ -120,6 +137,7 @@ export default function CreateExpense() {
                 message: "invalid type, please enter a number from 0-100",
               },
             })}
+            onChange={(e) => setTotalAmount(Number(e.target.value))}
           />
           {errors.amount && (
             <p style={{ color: "red" }}> {errors.amount.message} </p>
@@ -155,21 +173,40 @@ export default function CreateExpense() {
 
         <div className="mb-2">
           <h1 className="mr-2">Weight Adjustment: </h1>
-          {groupFriendsList.map((f) => (
-            <div key={f.id}>
-              <label className="mr-2">{f.name}</label>
-              <input
-                placeholder="0"
-                {...register(`weight.${f.id}`, {
-                  pattern: {
-                    value: /^[0-9]{1,2}$/i,
-                    message:
-                      "invalid type, please enter a number between 1-100%",
-                  },
-                })}
-              />
-            </div>
-          ))}
+          {groupFriendsList.map((f, i) => {
+            setCont((prev) => [...prev, 0]);
+            return (
+              <div key={f.id}>
+                <label className="mr-2">{f.name}</label>
+                <input
+                  placeholder="0"
+                  onChange={(e) => {
+                    setCont((prev) => (prev[i] = convertWeightToAmount(e)));
+                  }}
+                />
+                <input
+                  placeholder="0"
+                  value={cont[i]}
+                  {...register(
+                    `weight.id.${f.id}`,
+                    `weight.contribution.${cont[i]}`,
+                    {
+                      pattern: {
+                        value: { cont },
+                        message:
+                          "invalid type, please enter a number between 1-100%",
+                      },
+                    },
+                  )}
+                  onChange={(e) => {
+                    console.log("Amount Changing", e.target.value);
+                    setValue(`weight.contribution.${cont}`, cont);
+                  }}
+                />
+              </div>
+            );
+          })}
+          ;
           {errors.weight && (
             <p style={{ color: "red" }}> {errors.weight.message} </p>
           )}
