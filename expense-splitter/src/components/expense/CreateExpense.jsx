@@ -5,7 +5,8 @@ import { nanoid } from "nanoid";
 import db from "../../utils/localstoragedb";
 
 export default function CreateExpense() {
-  const { groupData, expenses, setExpenses, handleSetModal } = UseDataContext();
+  const { groupData, expenses, setExpenses, setGroupData, handleSetModal } =
+    UseDataContext();
 
   const {
     handleSubmit,
@@ -19,11 +20,27 @@ export default function CreateExpense() {
     createExpense({ ...values, id });
     handleSetModal();
   };
+  // console.log(groupData);
+  // console.log(expenses);
 
   const createExpense = (values) => {
     const newExpense = { ...values, date: new Date() };
+    console.log(newExpense);
     setExpenses([...expenses, newExpense]);
-    db.insert("expenses", newExpense);
+    db.insert("expenses", { ...newExpense, groupId: values.group });
+    // // update groups state with new expense id
+    setGroupData((prev) =>
+      prev.map((group) =>
+        group.id === values.group
+          ? { ...group, expenseIDs: [...group.expenseIDs, values.id] }
+          : group,
+      ),
+    );
+    // update groups with new expense id
+    db.update("groups", { id: values.group }, (row) => ({
+      ...row,
+      expenseIDs: [...row.expenseIDs, values.id],
+    }));
     db.commit();
   };
 
@@ -115,7 +132,7 @@ export default function CreateExpense() {
           >
             <option value=""></option>
             {groupData.map((group) => (
-              <option key={group.id} value="{group.id}">
+              <option key={group.id} value={group.id}>
                 {group.name}
               </option>
             ))}
@@ -152,3 +169,8 @@ export default function CreateExpense() {
     </div>
   );
 }
+
+// db.update("groups", { ID: values.group }, (row) => ({
+//   ...row,
+//   ...row.expenseIDs.map((id) => [...id, values.id]),
+// }));
