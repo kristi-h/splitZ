@@ -3,6 +3,7 @@ import Button from "../ui/Button";
 import db from "../../utils/localstoragedb";
 import { useRef, useState } from "react";
 import Dialog from "../ui/Dialog";
+import Card from "../ui/Card";
 
 const FriendList = () => {
   const { friends, groupData, setFriends, handleSetModal } = UseDataContext();
@@ -28,48 +29,41 @@ const FriendList = () => {
   return (
     <>
       {friends.map((friend) => (
-        <div
+        <Card
           key={friend.id}
-          className="mb-1 flex items-center rounded-lg bg-slate-100 px-4 py-4"
+          id={friend.id}
+          type={"expense"}
+          icon={"fa-user"}
+          title={friend.name}
+          subtitle={friend?.email}
+          hasButtons={true}
         >
-          <i className="fa-solid fa-user mr-4 text-2xl"></i>
-          <div className="flex max-w-36 flex-col">
-            <div className="break-words">{friend.name}</div>
-            <div className="text-sm font-light text-gray-500">
-              <a href={`mailto: ${friend.email}`} className="break-words">
-                {friend.email}
-              </a>
-            </div>
-          </div>
-
-          <div className="ml-auto flex gap-2">
-            <Button
-              variant={"small"}
-              className="font-normal"
-              onClick={() => {
-                handleSetModal("FriendForm", friend.id);
-              }}
-            >
-              Edit
-            </Button>
-            <Button
-              variant={"small"}
-              className="font-normal"
-              // Put friend id in state and opens dialog
-              onClick={() => {
-                // Check if user if part of a group or expense
-                if (existsInGroup(groupData, "friendIDs", friend.id)) {
-                  cantDeleteDialogRef.current.showModal();
-                  return;
-                }
-                setDeleteID(friend.id);
-                deleteDialogRef.current.showModal();
-              }}
-            >
-              Delete
-            </Button>
-          </div>
-        </div>
+          <Button
+            variant={"small"}
+            className="font-normal"
+            onClick={() => {
+              handleSetModal("FriendForm", friend.id);
+            }}
+          >
+            Edit
+          </Button>
+          <Button
+            variant={"small"}
+            className="font-normal"
+            // Put friend id in state and opens dialog
+            onClick={() => {
+              // Check if user if part of a group or expense
+              if (existsInGroup(groupData, "friendIDs", friend.id)) {
+                cantDeleteDialogRef.current.showModal();
+                return;
+              }
+              setDeleteID(friend.id);
+              deleteDialogRef.current.showModal();
+            }}
+          >
+            Delete
+          </Button>
+        </Card>
       ))}
 
       <Dialog
