@@ -6,13 +6,14 @@ import { nanoid } from "nanoid";
 import db from "../../utils/localstoragedb";
 
 export default function CreateExpense() {
-  const { groupData, setGroupData, expenses, setExpenses, handleSetModal } =
-    UseDataContext();
+  const { groupData, expenses, setExpenses, handleSetModal } = UseDataContext();
   const [groupFriendsList, setGroupFriendsList] = React.useState([]);
   const [totalWeight, setTotalWeight] = React.useState(100);
   const [totalAmount, setTotalAmount] = React.useState(0);
   const [customError, setCustomError] = React.useState("");
   const [cont, setCont] = React.useState([]);
+  //an array to hold the weight object array
+  const [weightObject, setWeightObject] = React.useState([]);
   const {
     handleSubmit,
     register,
@@ -26,33 +27,36 @@ export default function CreateExpense() {
     },
   });
 
+  React.useEffect(() => {
+    console.log("useEffect", groupFriendsList);
+    //function to set up the weight array
+    //creat a weight object array to be store in db
+    setWeightObject(setUpWeightObjectArray(groupFriendsList));
+    console.log("This is the weight object", weightObject);
+  }, [groupFriendsList]);
+
   const id = nanoid();
 
   const onSubmit = (values) => {
-    console.log("values", values, { ...values.weight });
-    createExpense({ ...values, id });
+    console.log("values", values, values.weight);
+    //store the weight object from the saved state
+    const retrieveTheWeightObject = [...weightObject];
+    console.log("This is the retrieve weight object", retrieveTheWeightObject);
+    const addBackTheWeightObject = values.weight.map((weightPercentage, i) => {
+      console.log("Show me the weights", weightPercentage);
+      retrieveTheWeightObject[i].percentage = weightPercentage;
+      // retrieveTheWeightObject[i].amount = values.weight.amount[i];
+    });
+    console.log(addBackTheWeightObject, "  $ ", retrieveTheWeightObject);
+    // createExpense({ ...values, id });
     handleSetModal();
   };
 
   const createExpense = (values) => {
-    const newExpense = { ...values, date: new Date() };
-    console.log(newExpense);
+    const newExpense = { ...values, date: new Date(), id };
     setExpenses([...expenses, newExpense]);
-    db.insert("expenses", { ...newExpense, groupId: values.group });
-    // // update groups state with new expense id
-    setGroupData((prev) =>
-      prev.map((group) =>
-        group.id === values.group
-          ? { ...group, expenseIDs: [...group.expenseIDs, values.id] }
-          : group,
-      ),
-    );
-    // update groups with new expense id
-    db.update("groups", { id: values.group }, (row) => ({
-      ...row,
-      expenseIDs: [...row.expenseIDs, values.id],
-    }));
-    db.commit();
+    // db.insert("expenses", newExpense);
+    // db.commit();
   };
 
   const handleSelectedGroup = (event) => {
@@ -72,15 +76,33 @@ export default function CreateExpense() {
     });
   };
 
-  const convertWeightToAmount = (e) => {
+  const convertWeightToAmount = (e, i) => {
     const toConvert = Number(e.target.value);
-    const amountConverted = totalAmount * (toConvert / 100);
+    const amountConverted = 200 * (toConvert / 100);
     console.log(amountConverted);
+    setValue(`amount.${i}`, amountConverted);
     return amountConverted;
   };
 
   const clearNames = () => {
     setGroupFriendsList([]);
+  };
+
+  //set up the weight object
+  const setUpWeightObjectArray = (friendsListArray) => {
+    console.log("These are ids", friendsListArray);
+    //clear the array
+    setWeightObject([]);
+    //array to insert data into the weightObject State
+    const arrObj = [];
+    // setUp the structure for the weight object
+    const weightStructure = { id: "", percentage: 0, amount: 0 };
+    // map the friends ids into id object
+    friendsListArray.map((friend) => {
+      arrObj.push({ ...weightStructure, id: friend.id });
+    });
+    console.log("This is console", arrObj);
+    return arrObj;
   };
 
   return (
@@ -189,39 +211,34 @@ export default function CreateExpense() {
         <div className="mb-2">
           <h1 className="mr-2">Weight Adjustment: </h1>
           {groupFriendsList.map((f, i) => {
-            setCont((prev) => [...prev, 0]);
             return (
               <div key={f.id}>
                 <label className="mr-2">{f.name}</label>
                 <input
+                  {...register(`amount.${i}`)}
                   placeholder="0"
-                  onChange={(e) => {
-                    setCont((prev) => (prev[i] = convertWeightToAmount(e)));
-                  }}
+                  // onChange={(e) => {
+                  //   setCont((prev) => (prev[i] = convertWeightToAmount(e)));
+                  // }}
                 />
                 <input
                   placeholder="0"
-                  value={cont[i]}
-                  {...register(
-                    `weight.id.${f.id}`,
-                    `weight.contribution.${cont[i]}`,
-                    {
-                      pattern: {
-                        value: { cont },
-                        message:
-                          "invalid type, please enter a number between 1-100%",
-                      },
+                  {...register(`weight.${i}`, {
+                    pattern: {
+                      value: /^[0-9]{2}$/i,
+                      message:
+                        "invalid type, please enter a number between 1-100%",
                     },
-                  )}
+                  })}
                   onChange={(e) => {
-                    console.log("Amount Changing", e.target.value);
-                    setValue(`weight.contribution.${cont}`, cont);
+                    convertWeightToAmount(e, i);
+                    // console.log("Amount Changing", e.target.value);
+                    // setValue(`weight.contribution.${cont}`, cont);
                   }}
                 />
               </div>
             );
           })}
-          ;
           {errors.weight && (
             <p style={{ color: "red" }}> {errors.weight.message} </p>
           )}
