@@ -40,16 +40,7 @@ const FriendList = () => {
         >
           <Button
             variant={"small"}
-            className="font-normal"
-            onClick={() => {
-              handleSetModal("FriendForm", friend.id);
-            }}
-          >
-            Edit
-          </Button>
-          <Button
-            variant={"small"}
-            className="font-normal"
+            className="bg-red-700 px-3 font-normal"
             // Put friend id in state and opens dialog
             onClick={() => {
               // Check if user if part of a group or expense
@@ -61,7 +52,16 @@ const FriendList = () => {
               deleteDialogRef.current.showModal();
             }}
           >
-            Delete
+            <i className="fa-solid fa-trash"></i>
+          </Button>
+          <Button
+            variant={"small"}
+            className="px-3 font-normal"
+            onClick={() => {
+              handleSetModal("FriendForm", friend.id);
+            }}
+          >
+            <i class="fa-solid fa-pen-to-square"></i>
           </Button>
         </Card>
       ))}

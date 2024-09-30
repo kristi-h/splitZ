@@ -21,7 +21,7 @@ export default function Card({
       onClick={hasButtons ? null : handleClick}
       className={`mb-2 flex ${hasButtons ? "" : "cursor-pointer"} items-center rounded-2xl bg-card-bg p-4`}
     >
-      <div className="flex w-full items-center justify-between">
+      <div className="relative flex w-full items-center justify-between">
         <div className="flex items-center">
           <div className="mr-4 flex w-[60px] rounded-xl bg-primary p-3">
             <i className={`fa-solid ${icon} mx-auto text-3xl text-white`}></i>
@@ -31,7 +31,10 @@ export default function Card({
             {subtitle && <p>{subtitle}</p>}
           </div>
         </div>
-        <div className="flex items-center">
+        <div
+          // if the card has buttons, make absolute so they don't fly off the right side
+          className={`${hasButtons ? "absolute right-0" : ""} flex items-center`}
+        >
           <div className="mx-4 text-lg">{price && `$${price}`}</div>
           {hasButtons ? (
             <div className="flex items-center gap-2">{children}</div>
