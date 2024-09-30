@@ -6,7 +6,8 @@ import { nanoid } from "nanoid";
 import db from "../../utils/localstoragedb";
 
 export default function CreateExpense() {
-  const { groupData, expenses, setExpenses, handleSetModal } = UseDataContext();
+  const { groupData, setGroupData, expenses, setExpenses, handleSetModal } =
+    UseDataContext();
   const [groupFriendsList, setGroupFriendsList] = React.useState([]);
   const [totalWeight, setTotalWeight] = React.useState(100);
   const [totalAmount, setTotalAmount] = React.useState(0);
@@ -34,10 +35,24 @@ export default function CreateExpense() {
   };
 
   const createExpense = (values) => {
-    const newExpense = { ...values, date: new Date(), id };
+    const newExpense = { ...values, date: new Date() };
+    console.log(newExpense);
     setExpenses([...expenses, newExpense]);
-    // db.insert("expenses", newExpense);
-    // db.commit();
+    db.insert("expenses", { ...newExpense, groupId: values.group });
+    // // update groups state with new expense id
+    setGroupData((prev) =>
+      prev.map((group) =>
+        group.id === values.group
+          ? { ...group, expenseIDs: [...group.expenseIDs, values.id] }
+          : group,
+      ),
+    );
+    // update groups with new expense id
+    db.update("groups", { id: values.group }, (row) => ({
+      ...row,
+      expenseIDs: [...row.expenseIDs, values.id],
+    }));
+    db.commit();
   };
 
   const handleSelectedGroup = (event) => {
