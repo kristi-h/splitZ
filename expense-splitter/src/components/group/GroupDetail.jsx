@@ -49,8 +49,20 @@ function GroupDetail() {
   // set the percentage and color to state and disply as style
   // tailwind is bad at rendering dynamically
   useEffect(() => {
-    // if budget is over 75%, bar is red
-    const barColor = expensePercentage > 75 ? "#d20000" : "#05299e";
+    let barColor;
+    switch (true) {
+      case expensePercentage <= 25:
+        barColor = "#1d9e05"; //green
+        break;
+      case expensePercentage > 25 && expensePercentage <= 50:
+        barColor = "#e6d900"; //yellow
+        break;
+      case expensePercentage > 50 && expensePercentage <= 75:
+        barColor = "#de8200"; //orange
+        break;
+      default:
+        barColor = "#d20000"; //red
+    }
     setProgressBarStyle((prev) => ({
       ...prev,
       width: expensePercentage,
