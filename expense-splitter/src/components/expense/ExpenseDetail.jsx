@@ -19,8 +19,6 @@ function ExpenseDetail() {
 
   const getWeight = expenseDetails.weight
 
-  console.log(getWeight)
-
   const totalAmount = expenseDetails.amount
 
   const pieChartData = getWeight.map(item => item.contribution);
@@ -33,7 +31,10 @@ function ExpenseDetail() {
 
   const amountPaid = totalAmount - contributionSum
 
-  console.log(pieChartData, contributionSum, amountPaid)
+  const sortedContributions = getWeight.sort(function(a, b) {return (b.contribution - a.contribution)})
+
+  pieChartData.push(amountPaid)
+
 
   function PieChart() {
   
@@ -45,8 +46,8 @@ function ExpenseDetail() {
       const dataPie = {
         datasets: [
           {
-            label: (getFriends.map(item => item.name)),
-            data: [pieChartData],
+            // label: getFriends.map(item => item.name),
+            data: pieChartData,
             backgroundColor: [
               "#05299e",
               "#761699",
@@ -82,11 +83,7 @@ function ExpenseDetail() {
     );
   }
 
-  console.log(expenseDetails)
-
-  console.log(expenseGroup)
-
-  console.log(getFriends)
+  console.log(getFriends.map(item => item.name))
 
   return (
     <div>
@@ -99,16 +96,20 @@ function ExpenseDetail() {
         <p>${amountPaid} / ${totalAmount}</p>
       </div>
       <PieChart
-          labels={getFriends.map(item => item.name)}
+          // labels={getFriends.map(item => item.name)}
           label={"Contribution"}
           data={pieChartData}
         />
       <p className="mt-4 mb-2 bg-primary text-white p-2">Remaining Pay:</p>
-        {getFriends.map((item) => (
+        <div className="flex-row mb-4">
+          <p>Me:</p>
+          <p className="text-red-400">${amountPaid}</p>
+        </div>
+          {sortedContributions.map((item) => (
           <div className="flex-row mb-4">
-            <p className="">{item.name}:
+            <p className="">{item.id}:
             </p>
-            <p className="text-red-400">$25</p>
+            <p className="text-red-400">${item.contribution}</p>
           </div>
         ))}
     </div>

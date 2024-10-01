@@ -40,9 +40,9 @@ export const dummyExpenses = [
     amount: "1000",
     groupId: "fbkj3Bgb-jkw3t-23h9g-sKlfh43ntnMi",
     weight: [
-      { id: "d5923f14-bc79-44ea-8388-d354c72c2253", contribution: 50 },
-      { id: "9641947f-6b00-4db7-9c7e-9e479b438bd8", contribution: 25 },
-      { id: "8217468b-ec4e-4340-9c90-665dff5d22d2", contribution: 25 },
+      { id: "d5923f14-bc79-44ea-8388-d354c72c2253", contribution: 300 },
+      { id: "9641947f-6b00-4db7-9c7e-9e479b438bd8", contribution: 100 },
+      { id: "8217468b-ec4e-4340-9c90-665dff5d22d2", contribution: 400 },
     ],
   },
   {
@@ -53,7 +53,7 @@ export const dummyExpenses = [
     amount: "489.32",
     groupId: "2d638ad6-2dde-44a9-b8d6-2e58a380b78c",
     receipt_URL: "https://firebasestorage.googleapis.com/v0/b/expense-splitter-399e6.appspot.com/o/3dGxTrD_ItpNRB-36nqd--dinner-receipt.jpg?alt=media&token=9f273f03-7f99-4f0c-a4aa-802d8f04297b",
-    weight: [{ id: "9641947f-6b00-4db7-9c7e-9e479b438bd8", contribution: 25 }],
+    weight: [{ id: "9641947f-6b00-4db7-9c7e-9e479b438bd8", contribution: 240.32 }],
   },
   {
     id: "2c0ce368-7a0c-4b72-ad30-8c03a8d7318a",
@@ -64,9 +64,9 @@ export const dummyExpenses = [
     groupId: "47dd1683-bcbf-4a20-9e10-d8596474bc5c",
     receipt_URL: "https://firebasestorage.googleapis.com/v0/b/expense-splitter-399e6.appspot.com/o/OdrXleNjeXec-tqmLuJcj-fake-receipt-expense-splitter.jpg?alt=media&token=9857d611-9a94-4c7e-b37b-0da78befdd3d",
     weight: [
-      { id: "d5923f14-bc79-44ea-8388-d354c72c2253", contribution: 50 },
-      { id: "9641947f-6b00-4db7-9c7e-9e479b438bd8", contribution: 25 },
-      { id: "8217468b-ec4e-4340-9c90-665dff5d22d2", contribution: 25 },
+      { id: "d5923f14-bc79-44ea-8388-d354c72c2253", contribution: 100 },
+      { id: "9641947f-6b00-4db7-9c7e-9e479b438bd8", contribution: 50.11 },
+      { id: "8217468b-ec4e-4340-9c90-665dff5d22d2", contribution: 75 },
     ],
   },
   {
@@ -77,9 +77,9 @@ export const dummyExpenses = [
     amount: "49.99",
     groupId: "c35a55d7-1b2d-4185-98b4-f536f5ea25f6",
     weight: [
-      { id: "d5923f14-bc79-44ea-8388-d354c72c2253", contribution: 50 },
-      { id: "9641947f-6b00-4db7-9c7e-9e479b438bd8", contribution: 20 },
-      { id: "8217468b-ec4e-4340-9c90-665dff5d22d2", contribution: 30 },
+      { id: "d5923f14-bc79-44ea-8388-d354c72c2253", contribution: 10 },
+      { id: "9641947f-6b00-4db7-9c7e-9e479b438bd8", contribution: 19.99 },
+      { id: "8217468b-ec4e-4340-9c90-665dff5d22d2", contribution: 5 },
     ],
   },
 ];
