@@ -1,25 +1,28 @@
 import { useEffect, useRef } from "react";
 
-export default function PieGraph({ labels, label, data }) {
+export default function PieChart({ label, pieData }) {
   // Create reference to dom elements
   const chartRef = useRef(null);
+  console.log(pieData);
+
+  const labels = Object.keys(pieData);
+  const data = Object.values(pieData);
 
   useEffect(() => {
     const dataPie = {
-      labels: labels,
-      //   labels: ["JavaScript", "Python", "Ruby"],
+      labels,
       datasets: [
         {
           label,
           data,
           backgroundColor: [
-            "#ffd373",
-            "#fd8021",
-            "#e05400",
-            "#0073cc",
-            "#003488",
-            "#001d59",
-            "#001524",
+            "#05299e",
+            "#761699",
+            "#af008b",
+            "#d80076",
+            "#f4235d",
+            "#ff5344",
+            "#ffa600",
           ],
           hoverOffset: 4,
         },

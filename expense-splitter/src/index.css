@@ -23,4 +23,12 @@
   .error-text {
     @apply text-sm font-normal text-red-500;
   }
+  img {
+    display: initial;
+  }
+}
+
+.active > button {
+  background: white;
+  color: #05299e;
 }

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { UseDataContext } from "../context/SiteContext";
 import Button from "../ui/Button";
 import ExpenseList from "./ExpenseList";
+import ButtonFooter from "../ui/ButtonFooter";
 
 export default function Expense() {
   const navigate = useNavigate();
@@ -21,12 +22,14 @@ export default function Expense() {
         <div>
           <ExpenseList />
         </div>
-        <Button
-          className="over absolute bottom-6 left-1/2 z-10 h-14 w-[200px] -translate-x-1/2 bg-primary"
-          onClick={() => handleSetModal("CreateExpense")}
-        >
-          Create Expense
-        </Button>
+        <ButtonFooter>
+          <Button
+            className="bg-primary"
+            onClick={() => handleSetModal("CreateExpense")}
+          >
+            Create Expense
+          </Button>
+        </ButtonFooter>
       </>
     )
   );
