@@ -7,7 +7,7 @@ export default function Header() {
   return (
     <div className="flex h-[200px] flex-col bg-primary pb-3 pt-[40px] text-white">
       <div className="text-center text-[40px] font-extrabold uppercase">
-        Let's Split It
+        Let&rsquo;s Split It
       </div>
       <nav className="m-auto w-full max-w-4xl px-4">
         <div className="flex justify-between gap-2">
