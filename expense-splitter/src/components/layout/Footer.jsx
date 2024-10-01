@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <div className="bg-primary text-white mt-auto cursor-pointer"
          onClick={() => {navigate('/about')}}>
-    <h2 className="text-center font-bold">Application Creators</h2>
+    <h2 className="text-center font-bold">About Our Team</h2>
     </div>
   )
 }
