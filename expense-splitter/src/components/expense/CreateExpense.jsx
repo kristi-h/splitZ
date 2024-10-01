@@ -105,7 +105,7 @@ export default function CreateExpense() {
     //setTotalAmount(getValues("amount"));
     const amount = getValues("amount");
     //calculate the contribution
-    const toConvert = x ? Number(e.target.value) : x;
+    const toConvert = !x ? Number(e.target.value) : x;
     // setTotalAmount(totalAmount * (toConvert / 100));
     const amountConverted = amount * (toConvert / 100);
     //console.log(amountConverted);
@@ -140,11 +140,11 @@ export default function CreateExpense() {
     console.log("These are getValues", getValues("weight"));
     console.log(numberZeroFields);
 
-    for (let i = 0; i < weightObject.length; i++) {
+    for (let i = 0; i < (weightObject.length+1); i++) {
       whateverRemaining = percentageRemaining / numberZeroFields;
       console.log("first", percentageRemaining, whateverRemaining);
       if (arr2[i] === "" || arr2[i] === "0" || arr2[i] === 0) {
-        convertWeightToAmount("", i, whateverRemaining);
+        convertWeightToAmount(null, i, whateverRemaining);
         console.log(percentageRemaining, whateverRemaining);
       }
     }
