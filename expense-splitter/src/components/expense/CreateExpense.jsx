@@ -13,68 +13,97 @@ export default function CreateExpense() {
   const [customError, setCustomError] = React.useState("");
 
   //an array to hold the weight object array
-  const [weightObject, setWeightObject] = React.useState([]);
+  const [weights, setWeights] = React.useState([]);
   const {
     handleSubmit,
     register,
     setValue,
     getValues,
-    formState: { errors },
+    getFieldState,
+    formState: { errors, isDirty, isValid },
   } = useForm({
+    mode: "onChange",
     defaultValues: {
       name: "Kris",
       description: "Matt",
       amount: 500,
+      weight: 0,
     },
   });
+  getFieldState("test");
 
   React.useEffect(() => {
     console.log("useEffect", groupFriendsList);
     //function to set up the weight array
     //creat a weight object array to be store in db
-    setWeightObject(setUpWeightObjectArray(groupFriendsList));
-    console.log("This is the weight object", weightObject);
+    setWeights(convertWeightToArray(groupFriendsList));
+    console.log("This is the weight object", weights);
   }, [groupFriendsList]);
 
   React.useEffect(() => {
-    checkForZeros();
+    assignWeightedAmounts();
   }, [totalAmount]);
 
   const id = nanoid();
 
   const onSubmit = (values) => {
-    console.log("values", values, values.weight);
+    console.log("submittedValues", values, values.weight);
+    // setWeights(convertWeightToArray(groupFriendsList));
+    // console.log("weights", weights);
     //store the weight object from the saved state
-    const retrieveTheWeightObject = [...weightObject];
-    console.log("This is the retrieve weight object", retrieveTheWeightObject);
-    const addBackTheWeightObject = values.weight.map((weightPercentage, i) => {
+    // const retrieveWeight = [...weights];
+    // console.log("This is the retrieve weight object", retrieveWeight);
+    const addBackWeight = values.weight.map((percentage, i) => {
       //discard the user info
       if (i === 0) {
-        return;
+        null;
       }
-      console.log(
-        "Show me the weights",
-        typeof weightPercentage,
-        weightPercentage,
-      );
+      console.log("Show me the weights", typeof percentage, percentage);
       //update the percentage in weight
-      retrieveTheWeightObject[i - 1].percentage = weightPercentage;
+      weights[i].percentage = percentage;
+      console.log("percentage", percentage);
       //update the contribution in weight
-      retrieveTheWeightObject[i - 1].contribution = values.contribution[i];
+      // weights[i - 1].contribution = values.contribution[i];
+      // console.log("contribution", values.contribution)
 
-      return retrieveTheWeightObject;
+      return weights;
     });
-    console.log(addBackTheWeightObject, "  $ ", retrieveTheWeightObject);
+    // console.log("addBackWeight", addBackWeight);
+    // console.log("weights", weights);
     // createExpense({ ...values, id });
 
     handleSetModal();
   };
 
+  // console.log("addBackWeight", addBackWeight);
+  console.log("weights", weights);
+
+  // const createExpense = (values) => {
+  //   const newExpense = { ...values, date: new Date(), id };
+  //   setExpenses([...expenses, newExpense]);
+  //   // db.insert("expenses", newExpense);
+  //   // db.commit();
+  // };
+
   const createExpense = (values) => {
-    const newExpense = { ...values, date: new Date(), id };
+    const newExpense = { ...values, date: new Date() };
+    console.log(newExpense);
     setExpenses([...expenses, newExpense]);
-    // db.insert("expenses", newExpense);
-    // db.commit();
+    db.insert("expenses", { ...newExpense, groupId: values.group });
+    // // update groups state with new expense id
+    setGroupData((prev) =>
+      prev.map((group) =>
+        group.id === values.group
+          ? { ...group, expenseIDs: [...group.expenseIDs, values.id] }
+          : group,
+      ),
+    );
+    // update groups with new expense id
+    db.update("groups", { id: values.group }, (row) => ({
+      ...row,
+      expenseIDs: [...row.expenseIDs, values.id],
+    }));
+    db.commit();
   };
 
   const handleSelectedGroup = (event) => {
@@ -100,75 +129,94 @@ export default function CreateExpense() {
     // }
   };
 
-  const convertWeightToAmount = (e, i, x = 0) => {
-    //retrieve the amount from the amount input
-    //setTotalAmount(getValues("amount"));
-    const amount = getValues("amount");
-    //calculate the contribution
-    const toConvert = x ? Number(e.target.value) : x;
-    // setTotalAmount(totalAmount * (toConvert / 100));
-    const amountConverted = amount * (toConvert / 100);
-    //console.log(amountConverted);
-    setValue(`contribution.${i}`, amountConverted);
-    setTotalAmount(amountConverted);
-    return amountConverted;
+  //do on button click or on EditExpense load
+  // const convertWeightToAmount = (e, i, x = 0) => {
+  //   //retrieve the amount from the amount input
+  //   //setTotalAmount(getValues("amount"));
+  //   const amount = getValues("amount");
+  //   //calculate the contribution
+  //   const toConvert = x ? Number(e.target.value) : x;
+  //   // setTotalAmount(totalAmount * (toConvert / 100));
+  //   const amountConverted = amount * (toConvert / 100);
+  //   //console.log(amountConverted);
+  //   setValue(`contribution.${i}`, amountConverted);
+  //   setTotalAmount(amountConverted);
+  //   return amountConverted;
+  // };
+
+  const assignWeightedAmounts = (e) => {
+    console.log("getFieldState(`weight`)", getFieldState("weight"));
+    let numOfDefault = groupFriendsList.length + 1;
+
+    if (getFieldState("weight").isDirty) {
+      setTotalWeight(totalWeight - e.target.value);
+    } else {
+      return numOfDefault--;
+    }
+    console.log("numOfDefault", numOfDefault);
+    console.log("weight", getValues("weight"));
+    let defaultAmount = totalWeight / numOfDefault;
   };
 
-  const checkForZeros = () => {
-    // const retrieveTheWeightObject = [...weightObject];
-    let percentageRemaining = 100;
-    let numberZeroFields = 0;
-    let whateverRemaining = 0;
-    const arr = getValues("weight");
-    const arr2 = Object.values(arr);
-    //check for zeros
-    console.log("These are getValues", getValues("weight"));
-    console.log("and this is the arr", arr2, typeof arr2);
-    for (let i = 0; i < weightObject.length; i++) {
-      console.log(
-        "Let's get the values",
-        typeof arr2.i,
-        typeof arr2[i],
-        arr2[i],
-      );
-      if (arr2[i] === "" || arr2[i] === "0" || arr2[i] === 0) {
-        numberZeroFields++;
-      } else {
-        percentageRemaining -= arr[i];
-      }
-    }
-    console.log("These are getValues", getValues("weight"));
-    console.log(numberZeroFields);
-
-    for (let i = 0; i < weightObject.length; i++) {
-      whateverRemaining = percentageRemaining / numberZeroFields;
-      console.log("first", percentageRemaining, whateverRemaining);
-      if (arr2[i] === "" || arr2[i] === "0" || arr2[i] === 0) {
-        convertWeightToAmount("", i, whateverRemaining);
-        console.log(percentageRemaining, whateverRemaining);
-      }
-    }
-
-    // for (let i = 0; i < weightObject.length + 1; i++) {
-    //   const retrieveInput = getValues(`weight.${i}`);
-    //   console.log("Hello", retrieveInput, i);
-    //   // if (retrieveInput.value === 0) {
-    //     retrieveTheWeightObject[i - 1].percentage =  percentageRemainging / numberZeroFields ;
-    //     retrieveTheWeightObject[i - 1].contribution = values.contribution[i];
-    //   // }
-    // }
+  const convertedToDollars = () => {
+    console.log("printingDollars");
   };
+
+  // const assignWeightedAmounts = () => {
+  //   // const retrieveWeight = [...weight];
+  //   let percentageRemaining = 100;
+  //   let numberZeroFields = 0;
+  //   let whateverRemaining = 0;
+  //   const arr = getValues("weight");
+  //   const arr2 = Object.values(arr);
+  //   //check for zeros
+  //   console.log("These are getValues", getValues("weight"));
+  //   console.log("and this is the arr", arr2, typeof arr2);
+  //   for (let i = 0; i < weight.length; i++) {
+  //     console.log(
+  //       "Let's get the values",
+  //       typeof arr2.i,
+  //       typeof arr2[i],
+  //       arr2[i],
+  //     );
+  //     if (arr2[i] === "" || arr2[i] === "0" || arr2[i] === 0) {
+  //       numberZeroFields++;
+  //     } else {
+  //       percentageRemaining -= arr[i];
+  //     }
+  //   }
+  //   console.log("These are getValues", getValues("weight"));
+  //   console.log(numberZeroFields);
+
+  //   for (let i = 0; i < weight.length; i++) {
+  //     whateverRemaining = percentageRemaining / numberZeroFields;
+  //     console.log("first", percentageRemaining, whateverRemaining);
+  //     if (arr2[i] === "" || arr2[i] === "0" || arr2[i] === 0) {
+  //       convertWeightToAmount("", i, whateverRemaining);
+  //       console.log(percentageRemaining, whateverRemaining);
+  //     }
+  //   }
+
+  // for (let i = 0; i < weight.length + 1; i++) {
+  //   const retrieveInput = getValues(`weight.${i}`);
+  //   console.log("Hello", retrieveInput, i);
+  //   // if (retrieveInput.value === 0) {
+  //     retrieveWeight[i - 1].percentage =  percentageRemainging / numberZeroFields ;
+  //     retrieveWeight[i - 1].contribution = values.contribution[i];
+  //   // }
+  // }
+  // }
 
   const clearNames = () => {
     setGroupFriendsList([]);
   };
 
   //set up the weight object
-  const setUpWeightObjectArray = (friendsListArray) => {
+  const convertWeightToArray = (friendsListArray) => {
     console.log("These are ids", friendsListArray);
     //clear the array
-    setWeightObject([]);
-    //array to insert data into the weightObject State
+    setWeights([]);
+    //array to insert data into the weight State
     const arrObj = [];
     // setUp the structure for the weight object
     const weightStructure = { id: "", percentage: 0, contribution: 0 };
@@ -288,7 +336,7 @@ export default function CreateExpense() {
           {/* user contribution */}
           <div>
             <label className="mr-2">Me</label>
-            <input {...register(`contribution.0`)} placeholder="0" />
+
             <input
               placeholder="0"
               {...register(`weight.0`, {
@@ -299,24 +347,17 @@ export default function CreateExpense() {
                 },
               })}
               onChange={(e) => {
-                convertWeightToAmount(e, 0);
-                checkForZeros();
-                // console.log("Amount Changing", e.target.value);
-                // setValue(`weight.contribution.${cont}`, cont);
+                // convertWeightToAmount(e, 0);
+                assignWeightedAmounts(e);
               }}
             />
+            <label>Amount Due: {convertedToDollars}</label>
           </div>
           {groupFriendsList.map((f, i) => {
             return (
               <div key={f.id}>
                 <label className="mr-2">{f.name}</label>
-                <input
-                  {...register(`contribution.${i + 1}`)}
-                  placeholder="0"
-                  // onChange={(e) => {
-                  //   setCont((prev) => (prev[i] = convertWeightToAmount(e)));
-                  // }}
-                />
+
                 <input
                   placeholder="0"
                   {...register(`weight.${i + 1}`, {
@@ -327,12 +368,11 @@ export default function CreateExpense() {
                     },
                   })}
                   onChange={(e) => {
-                    convertWeightToAmount(e, i + 1);
-                    checkForZeros();
-                    // console.log("Amount Changing", e.target.value);
-                    // setValue(`weight.contribution.${cont}`, cont);
+                    // convertWeightToAmount(e, i + 1);
+                    assignWeightedAmounts(e);
                   }}
                 />
+                <label>Amount Due: {convertedToDollars}</label>
               </div>
             );
           })}
