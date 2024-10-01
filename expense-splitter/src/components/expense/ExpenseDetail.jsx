@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { UseDataContext } from "../context/SiteContext";
 import Button from "../ui/Button";
-import PieGraph from "../widgets/PieGraph";
+import PieChart from "../widgets/PieChartExpense";
 
 function ExpenseDetail() {
   const { expenses, groupData, friends } = UseDataContext();
@@ -38,7 +38,7 @@ function ExpenseDetail() {
           value={amountPaid/totalAmount} />
         <p>${amountPaid} / ${totalAmount}</p>
       </div>
-      <PieGraph
+      <PieChart
           labels={getFriends.map(item => item.name)}
           label={"Contribution"}
           data={pieChartData}
