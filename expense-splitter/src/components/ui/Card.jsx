@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 
-export default function Card({ id, icon, title, subtitle, price }) {
+export default function Card({ id, icon, type, title, subtitle, price }) {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate(`${id}`);
+    navigate(`/${type}s/${id}`);
   };
   return (
     <div
