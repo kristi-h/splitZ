@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { UseDataContext } from "../context/SiteContext";
 import Button from "../ui/Button";
 import FriendList from "./FriendList";
+import ButtonFooter from "../ui/ButtonFooter";
 
 const Friend = () => {
   const navigate = useNavigate();
@@ -20,14 +21,16 @@ const Friend = () => {
       <>
         <h1 className="text-center">Friends</h1>
         <FriendList />
-        <Button
-          className="over absolute bottom-6 left-1/2 z-10 h-14 w-[200px] -translate-x-1/2 bg-primary"
-          onClick={() => {
-            handleSetModal("FriendForm");
-          }}
-        >
-          Add Friend
-        </Button>
+        <ButtonFooter>
+          <Button
+            className="bg-primary"
+            onClick={() => {
+              handleSetModal("FriendForm");
+            }}
+          >
+            Add Friend
+          </Button>
+        </ButtonFooter>
       </>
     )
   );

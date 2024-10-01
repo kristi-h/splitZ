@@ -5,6 +5,8 @@ import Button from "../ui/Button";
 import GroupList from "./GroupList";
 import { UseDataContext } from "../context/SiteContext";
 import Card from "../ui/Card";
+import NoDataPlaceholder from "../ui/NoDataPlaceholder";
+import ButtonFooter from "../ui/ButtonFooter";
 
 export default function Group() {
   const navigate = useNavigate();
@@ -48,25 +50,26 @@ export default function Group() {
           {groupData.length > 0 ? (
             <>{groupDisplay}</>
           ) : (
-            <>
-              <div className="mb-2 flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-accent/50 p-4 py-12">
-                <p className="font-semibold">There are no groups to display</p>
-                <p className="text-sm">Get started by creating a group.</p>
-                <Button className="mt-4 w-full bg-primary md:w-auto">
-                  Create a Group
-                </Button>
-              </div>
-            </>
+            <NoDataPlaceholder
+              title="There are no groups to display"
+              subtitle="Get started by creating a group."
+              btnText="Create a Group"
+              onClick={() => {
+                handleSetModal("CreateGroup");
+              }}
+            />
           )}
         </div>
-        <Button
-          className="over absolute bottom-6 left-1/2 z-10 h-14 w-[200px] -translate-x-1/2 rounded-md bg-primary"
-          onClick={() => {
-            handleSetModal("CreateGroup");
-          }}
-        >
-          Create Group
-        </Button>
+        <ButtonFooter>
+          <Button
+            className="bg-primary"
+            onClick={() => {
+              handleSetModal("CreateGroup");
+            }}
+          >
+            Create Group
+          </Button>
+        </ButtonFooter>
       </>
     )
   );

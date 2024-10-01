@@ -1,37 +1,16 @@
 import { useEffect, useRef } from "react";
 
-export default function PieChart({ label, slices }) {
+export default function PieChart({ label, pieData }) {
   // Create reference to dom elements
   const chartRef = useRef(null);
+  console.log(pieData);
 
-  const sortedLabels = [...new Set(slices)].sort();
-
-  function calculateSlicePercentages(slices) {
-    // count the occurrences of each category
-    const sliceCount = slices.reduce((acc, category) => {
-      acc[category] = (acc[category] || 0) + 1;
-      return acc;
-    }, {});
-    // console.log(sliceCount);
-
-    // calculate the total number of slices
-    const total = slices.length;
-
-    // calculate the percentages for each slice
-    const percentages = sortedLabels.map((slice) => {
-      //   console.log(Math.round((sliceCount[slice] / total) * 100));
-      return Math.round((sliceCount[slice] / total) * 100);
-    });
-
-    return percentages;
-  }
-
-  const data = calculateSlicePercentages(slices);
+  const labels = Object.keys(pieData);
+  const data = Object.values(pieData);
 
   useEffect(() => {
     const dataPie = {
-      labels: sortedLabels,
-      //   labels: ["JavaScript", "Python", "Ruby"],
+      labels,
       datasets: [
         {
           label,
