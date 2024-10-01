@@ -1,7 +1,8 @@
+import { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { UseDataContext } from "../context/SiteContext";
+import db from "../../utils/localstoragedb";
 import Button from "../ui/Button";
-import PieChart from "../widgets/PieChartExpense";
 
 function ExpenseDetail() {
   const { expenses, groupData, friends } = UseDataContext();
@@ -16,11 +17,70 @@ function ExpenseDetail() {
 
   const getFriends = friends.filter((friend) => test.friendIDs.includes(friend.id))
 
+  const getWeight = expenseDetails.weight
+
+  console.log(getWeight)
+
   const totalAmount = expenseDetails.amount
 
-  const pieChartData = [40, 30, 25, 15, 30];
+  const pieChartData = getWeight.map(item => item.contribution);
 
-  const amountPaid = 40
+  let contributionSum = 0;
+
+  for (let i = 0; i < pieChartData.length; i++) {
+    contributionSum += pieChartData[i];
+  }
+
+  const amountPaid = totalAmount - contributionSum
+
+  console.log(pieChartData, contributionSum, amountPaid)
+
+  function PieChart() {
+  
+    const chartRef = useRef(null);
+  
+  
+    useEffect(() => {
+      
+      const dataPie = {
+        datasets: [
+          {
+            label: (getFriends.map(item => item.name)),
+            data: [pieChartData],
+            backgroundColor: [
+              "#05299e",
+              "#761699",
+              "#af008b",
+              "#d80076",
+              "#f4235d",
+              "#ff5344",
+              "#ffa600",
+            ],
+            hoverOffset: 4,
+          },
+        ],
+      };
+  
+      const configPie = {
+        type: "pie",
+        data: dataPie,
+        options: {},
+      };
+  
+      const pieChart = new Chart(chartRef.current, configPie);
+  
+      // Cleanup the chart on component unmount
+      return () => {
+        pieChart.destroy();
+      };
+    });
+  
+    return (
+      <div className="mx-auto max-w-sm overflow-hidden lg:max-w-lg">
+        <canvas className="p-4" ref={chartRef}></canvas>
+      </div>
+    );
+  }
 
   console.log(expenseDetails)
 
