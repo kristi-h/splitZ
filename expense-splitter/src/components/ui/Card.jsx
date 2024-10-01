@@ -12,7 +12,7 @@ export default function Card({
 }) {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate(`/${type}/id/${id}`);
+    navigate(`/${type}s/${id}`);
   };
 
   return (

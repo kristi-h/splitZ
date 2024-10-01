@@ -27,3 +27,8 @@
     display: initial;
   }
 }
+
+.active > button {
+  background: white;
+  color: #05299e;
+}

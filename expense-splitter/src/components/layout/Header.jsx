@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import IconButton from "../ui/IconButton";
 import { UseDataContext } from "../context/SiteContext";
 
@@ -7,30 +7,30 @@ export default function Header() {
   return (
     <div className="flex h-[200px] flex-col bg-primary pb-3 pt-[40px] text-white">
       <div className="text-center text-[40px] font-extrabold uppercase">
-        Let's Split It
+        Let&rsquo;s Split It
       </div>
       <nav className="m-auto w-full max-w-4xl px-4">
         <div className="flex justify-between gap-2">
-          <Link to="/home">
+          <NavLink to="/home">
             <IconButton onClick={() => handleSetModal()} icon={"house"}>
               Home
             </IconButton>
-          </Link>
-          <Link to="/groups">
+          </NavLink>
+          <NavLink to="/groups">
             <IconButton onClick={() => handleSetModal()} icon={"user-group"}>
               Groups
             </IconButton>
-          </Link>
-          <Link to="/friends">
+          </NavLink>
+          <NavLink to="/friends">
             <IconButton onClick={() => handleSetModal()} icon={"address-book"}>
               Friends
             </IconButton>
-          </Link>
-          <Link to="/expenses">
+          </NavLink>
+          <NavLink to="/expenses">
             <IconButton onClick={() => handleSetModal()} icon={"credit-card"}>
               Expenses
             </IconButton>
-          </Link>
+          </NavLink>
         </div>
       </nav>
     </div>

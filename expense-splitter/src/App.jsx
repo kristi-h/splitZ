@@ -24,14 +24,15 @@ function App() {
               <Routes>
                 <Route path="/" element={<Login />} />
                 <Route path="/home" element={<Home />} />
-                <Route path="/groups" element={<Group />} />
-                <Route path="/group/id/:groupId" element={<GroupDetail />} />
+                <Route path="/groups">
+                  <Route index element={<Group />} />
+                  <Route path=":groupId" element={<GroupDetail />} />
+                </Route>
                 <Route path="/friends" element={<Friend />} />
-                <Route path="/expenses" element={<Expense />} />
-                <Route
-                  path="/expense/id/:expenseId"
-                  element={<ExpenseDetail />}
-                />
+                <Route path="/expenses">
+                  <Route index element={<Expense />} />
+                  <Route path=":expenseId" element={<ExpenseDetail />} />
+                </Route>
                 <Route path="/receipts" element={<ReceiptUpload />} />
               </Routes>
             </section>
