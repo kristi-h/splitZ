@@ -31,7 +31,7 @@ function GroupDetail() {
   const groupExpenses = expenses.filter((expense) =>
     singleGroup.expenseIDs?.includes(expense.id),
   );
-  console.log(groupExpenses);
+  // console.log(groupExpenses);
 
   // get the total group expense amount
   const totalExpenseAmount = groupExpenses
@@ -59,6 +59,22 @@ function GroupDetail() {
   }, [expensePercentage]);
 
   const groupCategories = groupExpenses.map((expense) => expense.category);
+  // console.log(groupCategories);
+
+  // pie data
+  const pieData = () => {
+    const results = {};
+    groupExpenses.forEach((expense) => {
+      const cat = expense.category;
+      const amt = parseFloat(expense.amount);
+      if (results[cat]) {
+        results[cat] += amt;
+      } else {
+        results[cat] = amt;
+      }
+    });
+    return results;
+  };
 
   // Closes or opens the dialog
   const toggleDialog = (ref) => {
@@ -126,7 +142,7 @@ function GroupDetail() {
         />
       );
     });
-  console.log(expenses);
+  // console.log(expenses);
 
   return (
     !modal.show && (
@@ -166,7 +182,7 @@ function GroupDetail() {
                 <span className="font-bold">Budget remaining this month:</span>{" "}
                 ${totalExpenseAmount} / ${singleGroup.budget}
               </p>
-              <PieChart label={"Categories"} slices={groupCategories} />
+              <PieChart label={"Categories"} pieData={pieData()} />
             </>
           )}
         </div>

@@ -14,7 +14,6 @@ export default function Card({
   const handleClick = () => {
     navigate(`/${type}/id/${id}`);
   };
-  console.log(hasButtons);
 
   return (
     <div
