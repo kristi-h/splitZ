@@ -1,15 +1,14 @@
 import { useNavigate } from "react-router-dom";
 
-export default function Card({ id, type, icon, title, subtitle, price }) {
+export default function Card({ id, icon, title, subtitle, price }) {
   const navigate = useNavigate();
   const handleClick = () => {
-    console.log("Clicking ID: ", id);
-    navigate(`/${type}/id/${id}`);
+    navigate(`${id}`);
   };
   return (
     <div
       onClick={handleClick}
-      className="bg-card-bg mb-2 flex cursor-pointer items-center rounded-2xl p-4"
+      className="mb-2 flex cursor-pointer items-center rounded-2xl bg-card-bg p-4"
     >
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center">
