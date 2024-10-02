@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import SearchBar from "../ui/SearchBar";
+import SearchBar from "../ui/SearchBar";
 import Button from "../ui/Button";
 import GroupList from "./GroupList";
 import { UseDataContext } from "../context/SiteContext";
@@ -12,12 +12,12 @@ export default function Group() {
   const navigate = useNavigate();
   const { user, handleSetModal, modal, groupData } = UseDataContext();
 
-  // const [inputText, setInputText] = useState("");
+  const [inputText, setInputText] = useState("");
 
-  // let inputHandler = (e) => {
-  //     var lowerCase = e.target.value.toLowerCase();
-  //     setInputText(lowerCase);
-  // };
+  let inputHandler = (e) => {
+      var lowerCase = e.target.value.toLowerCase();
+      setInputText(lowerCase);
+  };
 
   useEffect(() => {
     // if user is not "logged in", go to login
@@ -39,16 +39,26 @@ export default function Group() {
       />
     ));
 
+     // filter groupDisplay for search bar
+   const filteredData = groupDisplay.filter((search) => {
+    if (inputText === '') {
+      return search;
+    } else {
+      return search.props.title.toLowerCase().includes(inputText)
+    }
+  });
+
   return (
     // if modal is not showing then display the following
     !modal.show && (
       <>
         <h1 className="text-center">Groups</h1>
-        {/* <SearchBar input={inputText} inputHandler={inputHandler}/> */}
+        <div className="mb-2">
+          <SearchBar input={inputText} inputHandler={inputHandler}/>
+        </div>
         <div>
-          {/* <GroupList input={inputText} /> */}
-          {groupData.length > 0 ? (
-            <>{groupDisplay}</>
+          {filteredData.length > 0 ? (
+            <>{filteredData}</>
           ) : (
             <NoDataPlaceholder
               title="There are no groups to display"
