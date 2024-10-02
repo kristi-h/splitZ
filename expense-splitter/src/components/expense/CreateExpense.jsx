@@ -36,22 +36,36 @@ export default function CreateExpense() {
     },
   });
 
+  // watch all fields
+  const watchedValues = watch();
+
   // get the group that was selected
-  const groupSelected = watch("group");
+  // const groupSelected = watch("group");
 
   // get the budget
-  const budget = watch("amount");
+  // const budget = watch("amount");
 
   useEffect(() => {
     // start with initialFriend aka app user
     setAllFriends([initialFriend]);
     // add the friends in the group
     setAllFriends((prev) => [...prev, ...friendsInGroup]);
-  }, [groupSelected]);
+  }, [watchedValues["group"]]);
+
+  // useEffect(() => {
+  //   const watchedValue = watch(friend.name);
+  //   setAllFriends((prev) =>
+  //     prev.map((frd) =>
+  //       frd.name === friend.name ? { ...frd, weight: watchedValue } : frd,
+  //     ),
+  //   );
+  // })
+
+  const handleWeights = () => {};
 
   // get the friends in the group
   const friendIdsArr = groupData.find(
-    (group) => group.id === groupSelected,
+    (group) => group.id === watchedValues["group"],
   )?.friendIDs;
 
   const friendsInGroup = friends
@@ -79,11 +93,14 @@ export default function CreateExpense() {
           })}
         />
         <div className="field w-20 text-center">
-          ${(parseFloat(budget) * watchedValue) / 100 || 0}
+          {/* display dollar amount based on percentage */}$
+          {(parseFloat(watchedValues["amount"]) * watchedValue) / 100 || 0}
         </div>
       </div>
     );
   });
+
+  console.log(allFriends);
 
   const id = nanoid();
 
@@ -213,7 +230,7 @@ export default function CreateExpense() {
         </div>
 
         <div className="mb-8">
-          {groupSelected && (
+          {watchedValues["group"] && (
             <>
               <h2 className="mb-4">Weight Contribution:*</h2>
               {friendContributionFields}
