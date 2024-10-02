@@ -74,13 +74,15 @@ function ExpenseDetail() {
   // sort payers by contribution amount
   const sortedContributions = getWeight.sort(function(a, b) {return (b.contribution - a.contribution)})
 
-  // add Me contribution to pie chart data
+  // add 'me' contribution to pie chart data
   pieChartData.push(contributionMeRounded)
 
+  // calculate amount of progress paid
   const progressPercentage = progressPaid / totalAmount * 100
 
+  // handle bar status
   useEffect(() => {
-    // if budget is over 75%, bar is red
+    // if progress is over 75%, bar is red
     const barColor = progressPercentage > 75 ? "#d20000" : "#05299e";
     setProgressBarStyle((prev) => ({
       ...prev,
@@ -88,9 +90,6 @@ function ExpenseDetail() {
       color: barColor,
     }));
   }, [progressPercentage]);
-
- 
-          // <p>${progressPaidRounded} / ${totalAmount}</p>
 
   // create PieChart function
   function PieChart() {
