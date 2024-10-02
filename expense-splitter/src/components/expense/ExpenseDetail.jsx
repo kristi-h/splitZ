@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { UseDataContext } from "../context/SiteContext";
-import db from "../../utils/localstoragedb";
 import Button from "../ui/Button";
 
 function ExpenseDetail() {
@@ -9,38 +8,76 @@ function ExpenseDetail() {
   const { expenseId } = useParams();
   const navigate = useNavigate();
 
+  // get expense details
   const expenseDetails = expenses.find((expense) => expense.id === expenseId);
 
-  const expenseGroup = groupData.filter((group) => group.id === expenseDetails.groupId)
-
-  const test = expenseGroup.find((group) => group.id === expenseDetails.groupId)
-
-  const getFriends = friends.filter((friend) => test.friendIDs.includes(friend.id))
-
-  const getWeight = expenseDetails.weight
-
+  // get total amount of expense
   const totalAmount = expenseDetails.amount
 
+  // get group connected to expense
+  const expenseGroup = groupData.filter((group) => group.id === expenseDetails.groupId)
+
+  // turn array into single object
+  const findGroup = expenseGroup.find((group) => group.id === expenseDetails.groupId)
+
+  // get friends names from goup
+  const getFriends = friends.filter((friend) => findGroup.friendIDs.includes(friend.id))
+
+  // get weight array from expense object
+  const getWeight = expenseDetails.weight
+
+  // get percentages from weight array
+  const getPercentages = getWeight.map(item => item.percentage)
+
+  // set sum of percentage to calculate 'me' percentage 
+  let percentageSum = 0
+
+  // sum of values in percentages array
+  for (let i = 0; i < getPercentages.length; i++) {
+    percentageSum += getPercentages[i];
+  }
+
+  // calculate 'me' percentage
+  const percentageMe = 100 - percentageSum
+
+  // calculate contribution of 'me'
+  const contributionMe = (percentageMe / 100) * totalAmount
+
+  // round 'me' contribution to 2 decimal places
+  const contributionMeRounded = contributionMe.toFixed(2)
+
+  // set data for pie chart to be array of contribution values
   const pieChartData = getWeight.map(item => item.contribution);
 
+  // set sum of contributions to calculate 'me' contribution
   let contributionSum = 0;
 
+  // sum of values in pie chart array which contains contribution values
   for (let i = 0; i < pieChartData.length; i++) {
     contributionSum += pieChartData[i];
   }
 
-  const amountPaid = totalAmount - contributionSum
+  // calculate total amount to pay of all payers ('me' + group members)
+  const totalContribution = contributionSum + contributionMe
 
+  // calculate progress to total expense amount payoff
+  const progressPaid = totalAmount - totalContribution
+
+  // round progress paid to 2 decimal places
+  const progressPaidRounded = progressPaid.toFixed(2)
+
+  // sort payers by contribution amount
   const sortedContributions = getWeight.sort(function(a, b) {return (b.contribution - a.contribution)})
 
-  pieChartData.push(amountPaid)
+  // add Me contribution to pie chart data
+  pieChartData.push(contributionMeRounded)
 
-
+  // create PieChart function
   function PieChart() {
   
     const chartRef = useRef(null);
   
-  
+    
     useEffect(() => {
       
       const dataPie = {
@@ -70,7 +107,6 @@ function ExpenseDetail() {
   
       const pieChart = new Chart(chartRef.current, configPie);
   
-      // Cleanup the chart on component unmount
       return () => {
         pieChart.destroy();
       };
@@ -83,8 +119,6 @@ function ExpenseDetail() {
     );
   }
 
-  console.log(getFriends.map(item => item.name))
-
   return (
     <div>
       <h1 className="text-center">{expenseDetails.name}</h1>
@@ -92,8 +126,8 @@ function ExpenseDetail() {
       <div className="text-center">
         <progress
           className=""
-          value={amountPaid/totalAmount} />
-        <p>${amountPaid} / ${totalAmount}</p>
+          value={progressPaid/totalAmount} />
+        <p>${progressPaidRounded} / ${totalAmount}</p>
       </div>
       <PieChart
           // labels={getFriends.map(item => item.name)}
@@ -103,13 +137,13 @@ function ExpenseDetail() {
       <p className="mt-4 mb-2 bg-primary text-white p-2">Remaining Pay:</p>
         <div className="flex-row mb-4">
           <p>Me:</p>
-          <p className="text-red-400">${amountPaid}</p>
+          <p className="text-green-600">${contributionMeRounded}</p>
         </div>
           {sortedContributions.map((item) => (
           <div className="flex-row mb-4">
             <p className="">{item.id}:
             </p>
-            <p className="text-red-400">${item.contribution}</p>
+            <p className="text-green-600">${item.contribution.toFixed(2)}</p>
           </div>
         ))}
     </div>
