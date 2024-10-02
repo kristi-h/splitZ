@@ -4,7 +4,12 @@ import { UseDataContext } from "../context/SiteContext";
 import Button from "../ui/Button";
 
 function ExpenseDetail() {
+
   const { expenses, groupData, friends } = UseDataContext();
+  const [progressBarStyle, setProgressBarStyle] = useState({
+    width: 0,
+    color: "#05299e",
+  });
   const { expenseId } = useParams();
   const navigate = useNavigate();
 
@@ -72,6 +77,21 @@ function ExpenseDetail() {
   // add Me contribution to pie chart data
   pieChartData.push(contributionMeRounded)
 
+  const progressPercentage = progressPaid / totalAmount * 100
+
+  useEffect(() => {
+    // if budget is over 75%, bar is red
+    const barColor = progressPercentage > 75 ? "#d20000" : "#05299e";
+    setProgressBarStyle((prev) => ({
+      ...prev,
+      width: progressPercentage,
+      color: barColor,
+    }));
+  }, [progressPercentage]);
+
+ 
+          // <p>${progressPaidRounded} / ${totalAmount}</p>
+
   // create PieChart function
   function PieChart() {
   
@@ -123,10 +143,17 @@ function ExpenseDetail() {
     <div>
       <h1 className="text-center">{expenseDetails.name}</h1>
       <p className="mb-3 text-center">{expenseDetails.category}: {expenseDetails.description}</p>
+      <div className="relative mb-2 flex">
+        <div
+          className={`absolute h-8 rounded-lg transition-all duration-500 ease-out`}
+          style={{
+            width: `${progressBarStyle.width}%`,
+            background: `${progressBarStyle.color}`,
+          }}
+        ></div>
+        <div className="h-8 w-full rounded-lg bg-accent"></div>
+      </div>
       <div className="text-center">
-        <progress
-          className=""
-          value={progressPaid/totalAmount} />
         <p>${progressPaidRounded} / ${totalAmount}</p>
       </div>
       <PieChart
@@ -145,7 +172,11 @@ function ExpenseDetail() {
             </p>
             <p className="text-green-600">${item.contribution.toFixed(2)}</p>
           </div>
-        ))}
+          ))}
+        <div className="text-center">
+          { (expenseDetails.receipt_URL !== null) ? <a href={expenseDetails.receipt_URL}
+            className="text-blue-400">Receipt</a> : null }
+        </div>
     </div>
   );
 }
