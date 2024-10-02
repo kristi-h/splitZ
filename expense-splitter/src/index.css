@@ -17,7 +17,8 @@
     @apply font-roboto font-light;
   }
   input,
-  select {
+  select,
+  .field {
     @apply rounded-lg bg-accent/10 p-5 font-roboto font-light placeholder:text-accent;
   }
   .error-text {
