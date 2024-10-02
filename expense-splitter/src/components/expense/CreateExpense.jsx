@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
@@ -5,14 +6,84 @@ import { nanoid } from "nanoid";
 import db from "../../utils/localstoragedb";
 
 export default function CreateExpense() {
-  const { groupData, expenses, setExpenses, setGroupData, handleSetModal } =
-    UseDataContext();
+  const {
+    groupData,
+    expenses,
+    setExpenses,
+    setGroupData,
+    handleSetModal,
+    friends,
+  } = UseDataContext();
+
+  const initialFriend = {
+    name: "Me",
+    weight: 0,
+  };
+
+  const [allFriends, setAllFriends] = useState([initialFriend]);
 
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm();
+    watch, // lets use this to track values
+  } = useForm({
+    defaultValues: {
+      // default values for testing only
+      name: "Binocular shopping",
+      description: "Shopping for binocs",
+      amount: 500,
+    },
+  });
+
+  // get the group that was selected
+  const groupSelected = watch("group");
+
+  // get the budget
+  const budget = watch("amount");
+
+  useEffect(() => {
+    // start with initialFriend aka app user
+    setAllFriends([initialFriend]);
+    // add the friends in the group
+    setAllFriends((prev) => [...prev, ...friendsInGroup]);
+  }, [groupSelected]);
+
+  // get the friends in the group
+  const friendIdsArr = groupData.find(
+    (group) => group.id === groupSelected,
+  )?.friendIDs;
+
+  const friendsInGroup = friends
+    .filter((friends) => friendIdsArr?.includes(friends.id))
+    .map((friend) => ({ name: friend.name, weight: 0 }));
+
+  // generate friend contribution fields
+  const friendContributionFields = allFriends?.map((friend) => {
+    const watchedValue = watch(friend.name);
+    return (
+      <div
+        key={friend.name}
+        className="mb-2 flex items-center justify-between gap-2"
+      >
+        <label className="mr-2">{friend.name}</label>
+        <input
+          className="ml-auto w-20 text-center"
+          name={friend.name}
+          placeholder="0"
+          {...register(`${friend.name}`, {
+            pattern: {
+              value: /^[0-9]{1,2}$/i,
+              message: "invalid type, please enter a number between 1-100%",
+            },
+          })}
+        />
+        <div className="field w-20 text-center">
+          ${(parseFloat(budget) * watchedValue) / 100 || 0}
+        </div>
+      </div>
+    );
+  });
 
   const id = nanoid();
 
@@ -20,8 +91,6 @@ export default function CreateExpense() {
     createExpense({ ...values, id });
     handleSetModal();
   };
-  // console.log(groupData);
-  // console.log(expenses);
 
   const createExpense = (values) => {
     const newExpense = { ...values, date: new Date() };
@@ -127,7 +196,7 @@ export default function CreateExpense() {
           <select
             name="group"
             {...register("group", {
-              required: "select a group to apply this expense",
+              required: "select a group to apply this expense to",
             })}
           >
             <option value=""></option>
@@ -143,19 +212,12 @@ export default function CreateExpense() {
           )}
         </div>
 
-        <div className="mb-2">
-          <label className="mr-2">Weight: </label>
-          <input
-            placeholder="0"
-            {...register("weight", {
-              pattern: {
-                value: /^[0-9]{1,2}$/i,
-                message: "invalid type, please enter a number between 1-100%",
-              },
-            })}
-          />
-          {errors.weight && (
-            <p style={{ color: "red" }}> {errors.weight.message} </p>
+        <div className="mb-8">
+          {groupSelected && (
+            <>
+              <h2 className="mb-4">Weight Contribution:*</h2>
+              {friendContributionFields}
+            </>
           )}
         </div>
 
