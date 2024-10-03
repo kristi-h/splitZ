@@ -7,8 +7,7 @@ import GroupExpenseList from "./groupListComponent/GroupExpenseList";
 import db from "../../utils/localstoragedb";
 import Dialog from "../ui/Dialog";
 
-// export default function GroupList(props) {
-export default function GroupList() {
+export default function GroupList(props) {
   const [displayDetails, setDisplayDetails] = useState("");
   const [deleteID, setDeleteID] = useState(null);
   const { groupData, setGroupData, friends, expenses, handleSetModal } =
@@ -18,13 +17,14 @@ export default function GroupList() {
   const deleteDialogRef = useRef(null);
   const navigate = useNavigate();
 
-  // const filteredData = groupData.filter((search) => {
-  //   if (props.input === '') {
-  //     return search;
-  //   } else {
-  //     return search.name.toLowerCase().includes(props.input)
-  //   }
-  // });
+  // filter groupData for search bar
+  const filteredData = groupData.filter((search) => {
+    if (props.input === '') {
+      return search;
+    } else {
+      return search.name.toLowerCase().includes(props.input)
+    }
+  });
 
   // Closes or opens the dialog
   const toggleDialog = (ref) => {
@@ -98,8 +98,7 @@ export default function GroupList() {
     return [Math.abs(expenseAmount.toFixed(2)), overBudget, newGroup];
   };
 
-  // const groupList = filteredData.map((group) => (
-  const groupList = groupData.map((group) => {
+  const groupList = filteredData.map((group) => {
     //expense calculator
     const [expenseTotal, overBudget, newGroup] = expenseAmount(
       expenses,

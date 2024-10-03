@@ -3,7 +3,7 @@ import { UseDataContext } from "../context/SiteContext";
 import db from "../../utils/localstoragedb";
 import IconButton from "../ui/IconButton";
 
-export default function ExpenseList() {
+export default function ExpenseList(props) {
   const { expenses, setExpenses, handleSetModal } = UseDataContext();
   // console.log('expenses', expenses)
 
@@ -18,7 +18,17 @@ export default function ExpenseList() {
     setExpenses(db.queryAll("expenses"));
   };
 
-  const expenseItems = expenses.map((expense) => (
+  // filter expenses for search bar
+  const filteredData = expenses.filter((search) => {
+    if (props.input === '') {
+      return search;
+    } else {
+      return search.name.toLowerCase().includes(props.input)
+      || search.amount.toLowerCase().includes(props.input)
+    }
+  });
+
+  const expenseItems = filteredData.map((expense) => (
     <div
       key={expense.ID}
       className="mb-1 flex flex-col rounded-lg bg-slate-100 px-4 py-4"
