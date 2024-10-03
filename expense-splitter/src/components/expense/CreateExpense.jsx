@@ -20,7 +20,7 @@ export default function CreateExpense() {
     weight: 0,
   };
 
-  const [allFriends, setAllFriends] = useState([initialFriend]);
+  const [allFriends, setAllFriends] = useState([]);
 
   const {
     handleSubmit,
@@ -46,20 +46,33 @@ export default function CreateExpense() {
   // const budget = watch("amount");
 
   useEffect(() => {
-    // start with initialFriend aka app user
+    console.log("setting initial friend");
     setAllFriends([initialFriend]);
+  }, []);
+
+  useEffect(() => {
+    // start with initialFriend aka app user
+    // setAllFriends([initialFriend]);
     // add the friends in the group
     setAllFriends((prev) => [...prev, ...friendsInGroup]);
   }, [watchedValues["group"]]);
 
-  // useEffect(() => {
-  //   const watchedValue = watch(friend.name);
-  //   setAllFriends((prev) =>
-  //     prev.map((frd) =>
-  //       frd.name === friend.name ? { ...frd, weight: watchedValue } : frd,
-  //     ),
-  //   );
-  // })
+  useEffect(() => {
+    // only update when more than one friend to avoid 'Me' overwrite
+    if (allFriends.length > 1) {
+      const updatedFriends = allFriends.map((friend) => {
+        const newWeight = watchedValues[friend.name];
+        return newWeight !== undefined
+          ? { ...friend, weight: newWeight }
+          : friend;
+      });
+      setAllFriends(updatedFriends);
+    }
+    // only update state when friend values change
+  }, [allFriends.map((friend) => watchedValues[friend.name]).join()]);
+
+  console.log("watchedValues", watchedValues);
+  console.log(allFriends);
 
   const handleWeights = () => {};
 
@@ -85,6 +98,7 @@ export default function CreateExpense() {
           className="ml-auto w-20 text-center"
           name={friend.name}
           placeholder="0"
+          defaultValue={0}
           {...register(`${friend.name}`, {
             pattern: {
               value: /^[0-9]{1,2}$/i,
@@ -99,8 +113,6 @@ export default function CreateExpense() {
       </div>
     );
   });
-
-  console.log(allFriends);
 
   const id = nanoid();
 
@@ -253,3 +265,26 @@ export default function CreateExpense() {
 //   ...row,
 //   ...row.expenseIDs.map((id) => [...id, values.id]),
 // }));
+
+// const [allFriends, setAllFriends] = useState([
+//   [
+//     {
+//         "name": "Me",
+//         "weight": 0
+//     }
+// ]
+// ]);
+
+// useEffect(() => {
+//   let newFriendArr;
+//   if (allFriends.length > 1) {
+//     console.log("do the loop");
+//     for (const [key, value] of Object.entries(watchedValues)) {
+//       newFriendArr = allFriends.map((friend) => {
+//         return friend.name === key ? { ...friend, weight: value } : friend;
+//       });
+//     }
+//     setAllFriends(newFriendArr);
+//   }
+//   // console.log(newFriendArr);
+// }, [watchedValues[allFriends[0]?.name]]);
