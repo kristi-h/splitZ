@@ -82,6 +82,19 @@ export const dummyExpenses = [
       { id: "8217468b-ec4e-4340-9c90-665dff5d22d2", percentage: 10, contribution: 2 },
     ],
   },
+  {
+    id: "r5tjfd34-b9s0-hd2i-j39d-34j4n20dfjvu",
+    name: "Mammoth",
+    description: "Resort and Lodging costs",
+    category: "trip",
+    amount: "440.00",
+    groupId: "j35r55d7-7n6d-4566-54l6-f536f5ea56g8",
+    weight: [
+      { id: "d5923f14-bc79-44ea-8388-d354c72c2253", percentage: 30, contribution: 50 },
+      { id: "9641947f-6b00-4db7-9c7e-9e479b438bd8", percentage: 30, contribution: 15 },
+      { id: "8217468b-ec4e-4340-9c90-665dff5d22d2", percentage: 20, contribution: 25 },
+    ],
+  },
 ];
 
 export const groupSchema = [
@@ -105,9 +118,6 @@ export const dummyGroups = [
     ],
     expenseIDs: [
       "testing1-0ff6-463a-zk0s-a5lke3nta91",
-      "fb5669e1-caf6-463a-a9b9-a57af90a0a66",
-      "2c0ce368-7a0c-4b72-ad30-8c03a8d7318a",
-      "ecd43989-b611-49d1-9093-0f8bc2378a11",
     ],
   },
   {
@@ -115,10 +125,11 @@ export const dummyGroups = [
     name: "The Brat Pack",
     description: "School friends",
     budget: "550",
-    friendIDs: ["9641947f-6b00-4db7-9c7e-9e479b438bd8"],
+    friendIDs: [ 
+      "9641947f-6b00-4db7-9c7e-9e479b438bd8",
+    ],
     expenseIDs: [
       "fb5669e1-caf6-463a-a9b9-a57af90a0a66",
-      "2c0ce368-7a0c-4b72-ad30-8c03a8d7318a",
     ],
   },
   {
@@ -126,11 +137,13 @@ export const dummyGroups = [
     name: "CoWorkers",
     description: "Work gift exchange",
     budget: "60",
-    friendIDs: ["d5923f14-bc79-44ea-8388-d354c72c2253"],
-    expenseIDs: [
-      "ecd43989-b611-49d1-9093-0f8bc2378a11",
+    friendIDs: [
+      "d5923f14-bc79-44ea-8388-d354c72c2253",
+      "9641947f-6b00-4db7-9c7e-9e479b438bd8",
       "8217468b-ec4e-4340-9c90-665dff5d22d2",
-      "fb5669e1-caf6-463a-a9b9-a57af90a0a66",
+    ],
+    expenseIDs: [
+      "2c0ce368-7a0c-4b72-ad30-8c03a8d7318a",
     ],
   },
   {
@@ -138,10 +151,13 @@ export const dummyGroups = [
     name: "Day Trippers",
     description: "Explorer group",
     budget: "1000",
-    friendIDs: ["d5923f14-bc79-44ea-8388-d354c72c2253"],
+    friendIDs: [
+      "d5923f14-bc79-44ea-8388-d354c72c2253",
+      "9641947f-6b00-4db7-9c7e-9e479b438bd8",
+      "8217468b-ec4e-4340-9c90-665dff5d22d2",
+    ],
     expenseIDs: [
-      "2c0ce368-7a0c-4b72-ad30-8c03a8d7318a",
-      "fb5669e1-caf6-463a-a9b9-a57af90a0a66",
+      "ecd43989-b611-49d1-9093-0f8bc2378a11",
     ],
   },
   {
@@ -149,10 +165,13 @@ export const dummyGroups = [
     name: "Bird Watchers",
     description: "Tweety Fans",
     budget: "500",
-    friendIDs: ["d5923f14-bc79-44ea-8388-d354c72c2253"],
+    friendIDs: [
+      "d5923f14-bc79-44ea-8388-d354c72c2253",
+      "9641947f-6b00-4db7-9c7e-9e479b438bd8",
+      "8217468b-ec4e-4340-9c90-665dff5d22d2",
+    ],
     expenseIDs: [
-      "2c0ce368-7a0c-4b72-ad30-8c03a8d7318a",
-      "fb5669e1-caf6-463a-a9b9-a57af90a0a66",
+      "r5tjfd34-b9s0-hd2i-j39d-34j4n20dfjvu",
     ],
   },
 ];

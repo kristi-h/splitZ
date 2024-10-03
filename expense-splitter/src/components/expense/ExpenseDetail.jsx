@@ -166,8 +166,9 @@ function ExpenseDetail() {
           <p className="text-green-600">${contributionMeRounded}</p>
         </div>
           {sortedContributions.map((item) => (
+            
           <div className="flex-row mb-4">
-            <p className="">{item.id}:
+            <p className="">{getFriends.find(i => i.id === item.id).name}:
             </p>
             <p className="text-green-600">${item.contribution.toFixed(2)}</p>
           </div>
