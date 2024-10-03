@@ -24,6 +24,7 @@ export const dummyUser = [{ id: "1", name: "Cornelius", email: "c@c.com" }];
 export const expensesSchema = [
   "id",
   "name",
+  "date",
   "description",
   "category",
   "amount",
