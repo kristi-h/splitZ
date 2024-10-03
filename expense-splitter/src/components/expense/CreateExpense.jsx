@@ -57,7 +57,7 @@ export default function CreateExpense() {
         const newWeight = watchedValues[friend.name];
         const zeroDefault =
           watchedValues["amount"] / parseFloat(allFriends.length);
-        console.log(zeroDefault);
+        // console.log(zeroDefault);
         // generate the dollar amount based on weight
         const newDollar =
           parseInt(newWeight) === 0
@@ -67,18 +67,23 @@ export default function CreateExpense() {
               100;
 
         return newWeight !== undefined
-          ? { ...friend, weight: newWeight, dollar: newDollar }
+          ? {
+              ...friend,
+              weight: newWeight,
+              dollar: !newWeight ? 0 : `$${newDollar.toFixed(2)}`,
+            }
           : friend;
       });
       setAllFriends(updatedFriends);
     }
     // only update state when friend values change
-  }, [allFriends.map((friend) => watchedValues[friend.name]).join()]);
+  }, [
+    allFriends.map((friend) => watchedValues[friend.name]).join(),
+    watchedValues["amount"],
+  ]);
 
   console.log("watchedValues", watchedValues);
-  console.log(allFriends);
-
-  const handleWeights = () => {};
+  // console.log(allFriends);
 
   // get the friends in the group
   const friendIdsArr = groupData.find(
@@ -91,7 +96,6 @@ export default function CreateExpense() {
 
   // generate friend contribution fields
   const friendContributionFields = allFriends?.map((friend) => {
-    const watchedValue = watch(friend.name);
     return (
       <div
         key={friend.name}
@@ -99,7 +103,7 @@ export default function CreateExpense() {
       >
         <label className="mr-2">{friend.name}</label>
         <input
-          className="ml-auto w-20 text-center"
+          className="ml-auto w-[60px] text-center"
           name={friend.name}
           placeholder="0"
           defaultValue={0}
@@ -110,11 +114,7 @@ export default function CreateExpense() {
             },
           })}
         />
-        {/* <div className="field w-20 text-center">
-          display dollar amount based on percentage$
-          {(parseFloat(watchedValues["amount"]) * watchedValue) / 100 || 0}
-        </div> */}
-        <div className="field w-20 text-center">{friend.dollar}</div>
+        <div className="field w-28 text-center">{friend.dollar}</div>
       </div>
     );
   });
