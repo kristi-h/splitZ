@@ -5,7 +5,7 @@ const Footer = () => {
 
   return (
     <div
-      className="mt-auto cursor-pointer bg-primary text-white"
+      className="z-40 mt-auto cursor-pointer bg-primary text-white"
       onClick={() => {
         navigate("/about");
       }}
