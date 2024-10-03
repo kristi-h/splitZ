@@ -41,7 +41,7 @@ export const dummyExpenses = [
     groupId: "fbkj3Bgb-jkw3t-23h9g-sKlfh43ntnMi",
     weight: [
       { id: "d5923f14-bc79-44ea-8388-d354c72c2253", percentage: 30, contribution: 50 },
-      { id: "9641947f-6b00-4db7-9c7e-9e479b438bd8", percentage: 10, contribution: 25 },
+      { id: "9641947f-6b00-4db7-9c7e-9e479b438bd8", percentage: 25, contribution: 25 },
       { id: "8217468b-ec4e-4340-9c90-665dff5d22d2", percentage: 40, contribution: 100 },
     ],
   },

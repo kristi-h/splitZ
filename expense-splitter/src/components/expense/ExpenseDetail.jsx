@@ -83,7 +83,7 @@ function ExpenseDetail() {
   // handle bar status
   useEffect(() => {
     // if progress is over 75%, bar is red
-    const barColor = progressPercentage > 75 ? "#d20000" : "#05299e";
+    const barColor = progressPercentage > 75 ? "#139B20" : "#05299e";
     setProgressBarStyle((prev) => ({
       ...prev,
       width: progressPercentage,
