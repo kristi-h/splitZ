@@ -40,14 +40,15 @@ export default function CreateExpense() {
 
   // watch all fields
   const watchedValues = watch();
+  console.log(watchedValues);
 
-  useEffect(() => {
-    // start with initialFriend aka app user
-    setAllFriends([initialFriend]);
-  }, [watchedValues["group"]]);
+  // useEffect(() => {
+  //   // start with initialFriend aka app user
+  // }, [watchedValues["group"]]);
 
   useEffect(() => {
     // add the friends in the group
+    setAllFriends([initialFriend]);
     setAllFriends((prev) => [...prev, ...friendsInGroup]);
   }, [watchedValues["group"]]);
 
@@ -58,7 +59,8 @@ export default function CreateExpense() {
         const newWeight = watchedValues[friend.name];
         const zeroDefault =
           watchedValues["amount"] / parseFloat(allFriends.length);
-        // console.log(zeroDefault);
+        console.log("newWeight", newWeight);
+        // console.log(newWeight);
         // generate the dollar amount based on weight
         const newDollar =
           parseInt(newWeight) === 0
@@ -83,15 +85,12 @@ export default function CreateExpense() {
     watchedValues["amount"],
   ]);
 
-  // console.log("watchedValues", watchedValues);
-  // console.log(allFriends);
-
   // get the friends in the group
   const friendIdsArr = groupData.find(
     (group) => group.id === watchedValues["group"],
   )?.friendIDs;
 
-  // console.log("friendIdsArr: ", friendIdsArr);
+  console.log("friendIdsArr: ", friendIdsArr);
 
   const friendsInGroup = friends
     .filter((friends) => friendIdsArr?.includes(friends.id))
@@ -126,10 +125,12 @@ export default function CreateExpense() {
     );
   });
 
+  console.log("allFriends", allFriends);
+
   const onSubmit = (values) => {
     const weightObj = allFriends.map((friend) => ({
       friendId: friend.id,
-      weight: friend.weight,
+      percentage: parseInt(friend.weight),
     }));
     const newExpense = {
       id: nanoid(),
