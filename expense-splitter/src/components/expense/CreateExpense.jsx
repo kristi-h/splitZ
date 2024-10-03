@@ -16,6 +16,7 @@ export default function CreateExpense() {
   } = UseDataContext();
 
   const initialFriend = {
+    id: "1",
     name: "Me",
     weight: 0,
     dollar: 0,
@@ -43,7 +44,7 @@ export default function CreateExpense() {
   useEffect(() => {
     // start with initialFriend aka app user
     setAllFriends([initialFriend]);
-  }, []);
+  }, [watchedValues["group"]]);
 
   useEffect(() => {
     // add the friends in the group
@@ -82,7 +83,7 @@ export default function CreateExpense() {
     watchedValues["amount"],
   ]);
 
-  console.log("watchedValues", watchedValues);
+  // console.log("watchedValues", watchedValues);
   // console.log(allFriends);
 
   // get the friends in the group
@@ -90,9 +91,15 @@ export default function CreateExpense() {
     (group) => group.id === watchedValues["group"],
   )?.friendIDs;
 
+  // console.log("friendIdsArr: ", friendIdsArr);
+
   const friendsInGroup = friends
     .filter((friends) => friendIdsArr?.includes(friends.id))
-    .map((friend) => ({ name: friend.name, weight: 0 }));
+    .map((friend, i) => ({
+      name: friend.name,
+      weight: 0,
+      id: friendIdsArr[i],
+    }));
 
   // generate friend contribution fields
   const friendContributionFields = allFriends?.map((friend) => {
@@ -119,32 +126,37 @@ export default function CreateExpense() {
     );
   });
 
-  const id = nanoid();
-
   const onSubmit = (values) => {
-    createExpense({ ...values, id });
-    handleSetModal();
-  };
+    const weightObj = allFriends.map((friend) => ({
+      friendId: friend.id,
+      weight: friend.weight,
+    }));
+    const newExpense = {
+      id: nanoid(),
+      ...values,
+      date: new Date(),
+      weight: weightObj,
+    };
 
-  const createExpense = (values) => {
-    const newExpense = { ...values, date: new Date() };
-    console.log(newExpense);
     setExpenses([...expenses, newExpense]);
     db.insert("expenses", { ...newExpense, groupId: values.group });
-    // // update groups state with new expense id
+    // update groups state with new expense id
     setGroupData((prev) =>
       prev.map((group) =>
         group.id === values.group
-          ? { ...group, expenseIDs: [...group.expenseIDs, values.id] }
+          ? { ...group, expenseIDs: [...group.expenseIDs] }
           : group,
       ),
     );
     // update groups with new expense id
     db.update("groups", { id: values.group }, (row) => ({
       ...row,
-      expenseIDs: [...row.expenseIDs, values.id],
+      expenseIDs: [...row.expenseIDs],
     }));
     db.commit();
+    // console.log(values);
+    // console.log(allFriends);
+    handleSetModal();
   };
 
   return (
