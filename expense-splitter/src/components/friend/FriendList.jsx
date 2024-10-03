@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 import Dialog from "../ui/Dialog";
 import Card from "../ui/Card";
 
-const FriendList = () => {
+const FriendList = (props) => {
   const { friends, groupData, setFriends, handleSetModal } = UseDataContext();
 
   // Create reference to dom element
@@ -26,9 +26,18 @@ const FriendList = () => {
     db.commit();
   };
 
+  // filter friends for search bar
+  const filteredData = friends.filter((search) => {
+    if (props.input === '') {
+      return search;
+    } else {
+      return search.name.toLowerCase().includes(props.input)
+    }
+  });
+
   return (
     <>
-      {friends.map((friend) => (
+      {filteredData.map((friend) => (
         <Card
           key={friend.id}
           id={friend.id}
