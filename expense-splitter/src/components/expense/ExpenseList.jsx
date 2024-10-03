@@ -30,7 +30,7 @@ export default function ExpenseList() {
           <IconButton
             icon="fa-regular fa-circle-info"
             onClick={() => {
-              navigate(`/expenses/id/${expense.id}`);
+              navigate(`${expense.id}`);
             }}
             variant={"small"}
             className="font-normal"
