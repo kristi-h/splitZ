@@ -4,6 +4,7 @@ import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
 import { nanoid } from "nanoid";
 import db from "../../utils/localstoragedb";
+import { categories } from "../../utils/dummyData";
 
 export default function CreateExpense() {
   const {
@@ -201,14 +202,11 @@ export default function CreateExpense() {
             })}
           >
             <option value=""></option>
-            <option value="entertainment">Entertainment</option>
-            <option value="gift">Gift</option>
-            <option value="groceries">Groceries</option>
-            <option value="restaurant">Restaurant</option>
-            <option value="shopping">Shopping</option>
-            <option value="trip">Trip</option>
-            <option value="utilities">Utilities</option>
-            <option value="other">Other</option>
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
           </select>
 
           {errors.category && (
@@ -278,31 +276,3 @@ export default function CreateExpense() {
     </div>
   );
 }
-
-// db.update("groups", { ID: values.group }, (row) => ({
-//   ...row,
-//   ...row.expenseIDs.map((id) => [...id, values.id]),
-// }));
-
-// const [allFriends, setAllFriends] = useState([
-//   [
-//     {
-//         "name": "Me",
-//         "weight": 0
-//     }
-// ]
-// ]);
-
-// useEffect(() => {
-//   let newFriendArr;
-//   if (allFriends.length > 1) {
-//     console.log("do the loop");
-//     for (const [key, value] of Object.entries(watchedValues)) {
-//       newFriendArr = allFriends.map((friend) => {
-//         return friend.name === key ? { ...friend, weight: value } : friend;
-//       });
-//     }
-//     setAllFriends(newFriendArr);
-//   }
-//   // console.log(newFriendArr);
-// }, [watchedValues[allFriends[0]?.name]]);
