@@ -2,6 +2,11 @@
 export const friendsSchema = ["id", "name", "email"];
 export const dummyFriends = [
   {
+    id: "xky170ms-srvb-fk5e-eprt-o5fazno3mq",
+    name: "Me",
+    email: "me@email.com",
+  },
+  {
     id: "9641947f-6b00-4db7-9c7e-9e479b438bd8",
     name: "Lloyd Kneman",
     email: "lloydk@email.com",
@@ -85,7 +90,7 @@ export const dummyExpenses = [
     amount: "1000",
     groupId: "fbkj3Bgb-jkw3t-23h9g-sKlfh43ntnMi",
     weight: [
-      { friendId: "Me", percentage: 10 },
+      { friendId: "xky170ms-srvb-fk5e-eprt-o5fazno3mq", percentage: 10 },
       { friendId: "d5923f14-bc79-44ea-8388-d354c72c2253", percentage: 35 },
       { friendId: "9641947f-6b00-4db7-9c7e-9e479b438bd8", percentage: 15 },
       { friendId: "8217468b-ec4e-4340-9c90-665dff5d22d2", percentage: 40 },
@@ -96,12 +101,12 @@ export const dummyExpenses = [
     name: "Dinner",
     description: "Omakase",
     category: "restaurant",
-    amount: "489.32",
+    amount: "189.32",
     groupId: "2d638ad6-2dde-44a9-b8d6-2e58a380b78c",
     receipt_URL:
       "https://firebasestorage.googleapis.com/v0/b/expense-splitter-399e6.appspot.com/o/3dGxTrD_ItpNRB-36nqd--dinner-receipt.jpg?alt=media&token=9f273f03-7f99-4f0c-a4aa-802d8f04297b",
     weight: [
-      { friendId: "Me", percentage: 65 },
+      { friendId: "xky170ms-srvb-fk5e-eprt-o5fazno3mq", percentage: 65 },
       { friendId: "9641947f-6b00-4db7-9c7e-9e479b438bd8", percentage: 35 },
     ],
   },
@@ -115,7 +120,7 @@ export const dummyExpenses = [
     receipt_URL:
       "https://firebasestorage.googleapis.com/v0/b/expense-splitter-399e6.appspot.com/o/OdrXleNjeXec-tqmLuJcj-fake-receipt-expense-splitter.jpg?alt=media&token=9857d611-9a94-4c7e-b37b-0da78befdd3d",
     weight: [
-      { friendId: "Me", percentage: 35 },
+      { friendId: "xky170ms-srvb-fk5e-eprt-o5fazno3mq", percentage: 35 },
       { friendId: "d5923f14-bc79-44ea-8388-d354c72c2253", percentage: 30 },
       { friendId: "zwo2wpz6-uulb-uais-gsil-3uto1zfubf", percentage: 15 },
       { friendId: "8217468b-ec4e-4340-9c90-665dff5d22d2", percentage: 20 },
@@ -129,7 +134,7 @@ export const dummyExpenses = [
     amount: "49.99",
     groupId: "c35a55d7-1b2d-4185-98b4-f536f5ea25f6",
     weight: [
-      { friendId: "Me", percentage: 30 },
+      { friendId: "xky170ms-srvb-fk5e-eprt-o5fazno3mq", percentage: 30 },
       { friendId: "d5923f14-bc79-44ea-8388-d354c72c2253", percentage: 20 },
       { friendId: "cknxcdjq-m7iv-9mib-x332-6vqvgpp024", percentage: 40 },
       { friendId: "zgqlayze-x1ah-w5wn-6lk4-r3twew40ca", percentage: 10 },
@@ -143,7 +148,7 @@ export const dummyExpenses = [
     amount: "144.25",
     groupId: "pazwo2wp-z6uu-lbua-isgs-il3uto1zfu",
     weight: [
-      { friendId: "Me", percentage: 25 },
+      { friendId: "xky170ms-srvb-fk5e-eprt-o5fazno3mq", percentage: 25 },
       { friendId: "ditccngi-ctdy-xkdr-kenu-ji9asy7r4q", percentage: 25 },
       { friendId: "6jrjhdqo-3sz4-19ll-018o-bv6txbg9vr", percentage: 25 },
       { friendId: "srukfk5n-dort-n4pa-zwo2-wpz6uulbua", percentage: 25 },
@@ -157,7 +162,7 @@ export const dummyExpenses = [
     amount: "440.00",
     groupId: "j35r55d7-7n6d-4566-54l6-f536f5ea56g8",
     weight: [
-      { friendId: "Me", percentage: 20 },
+      { friendId: "xky170ms-srvb-fk5e-eprt-o5fazno3mq", percentage: 20 },
       { friendId: "q5mhemy8-nel1-yij6-kotm-8efdhx27s1", percentage: 30 },
       { friendId: "0begar2x-m9bp-9cmj-7hyy-hnwftev7p8", percentage: 30 },
       { friendId: "fbocshos-py9k-pqwd-9uvh-mz5xjggfj8", percentage: 20 },
@@ -171,7 +176,7 @@ export const dummyExpenses = [
     amount: "85.00",
     groupId: "47dd1683-bcbf-4a20-9e10-d8596474bc5c",
     weight: [
-      { friendId: "Me", percentage: 40 },
+      { friendId: "xky170ms-srvb-fk5e-eprt-o5fazno3mq", percentage: 40 },
       { friendId: "d5923f14-bc79-44ea-8388-d354c72c2253", percentage: 25 },
       { friendId: "zwo2wpz6-uulb-uais-gsil-3uto1zfubf", percentage: 15 },
       { friendId: "8217468b-ec4e-4340-9c90-665dff5d22d2", percentage: 20 },
@@ -185,7 +190,7 @@ export const dummyExpenses = [
     amount: "120.00",
     groupId: "47dd1683-bcbf-4a20-9e10-d8596474bc5c",
     weight: [
-      { friendId: "Me", percentage: 10 },
+      { friendId: "xky170ms-srvb-fk5e-eprt-o5fazno3mq", percentage: 10 },
       { friendId: "d5923f14-bc79-44ea-8388-d354c72c2253", percentage: 50 },
       { friendId: "zwo2wpz6-uulb-uais-gsil-3uto1zfubf", percentage: 25 },
       { friendId: "8217468b-ec4e-4340-9c90-665dff5d22d2", percentage: 15 },
@@ -199,7 +204,7 @@ export const dummyExpenses = [
     amount: "95.00",
     groupId: "c35a55d7-1b2d-4185-98b4-f536f5ea25f6",
     weight: [
-      { friendId: "Me", percentage: 25 },
+      { friendId: "xky170ms-srvb-fk5e-eprt-o5fazno3mq", percentage: 25 },
       { friendId: "d5923f14-bc79-44ea-8388-d354c72c2253", percentage: 25 },
       { friendId: "cknxcdjq-m7iv-9mib-x332-6vqvgpp024", percentage: 10 },
       { friendId: "zgqlayze-x1ah-w5wn-6lk4-r3twew40ca", percentage: 40 },
@@ -213,7 +218,7 @@ export const dummyExpenses = [
     amount: "245.00",
     groupId: "pazwo2wp-z6uu-lbua-isgs-il3uto1zfu",
     weight: [
-      { friendId: "Me", percentage: 25 },
+      { friendId: "xky170ms-srvb-fk5e-eprt-o5fazno3mq", percentage: 25 },
       { friendId: "ditccngi-ctdy-xkdr-kenu-ji9asy7r4q", percentage: 20 },
       { friendId: "6jrjhdqo-3sz4-19ll-018o-bv6txbg9vr", percentage: 25 },
       { friendId: "srukfk5n-dort-n4pa-zwo2-wpz6uulbua", percentage: 30 },
@@ -227,7 +232,7 @@ export const dummyExpenses = [
     amount: "185.00",
     groupId: "2d638ad6-2dde-44a9-b8d6-2e58a380b78c",
     weight: [
-      { friendId: "Me", percentage: 40 },
+      { friendId: "xky170ms-srvb-fk5e-eprt-o5fazno3mq", percentage: 40 },
       { friendId: "9641947f-6b00-4db7-9c7e-9e479b438bd8", percentage: 60 },
     ],
   },
@@ -239,7 +244,7 @@ export const dummyExpenses = [
     amount: "110.00",
     groupId: "pazwo2wp-z6uu-lbua-isgs-il3uto1zfu",
     weight: [
-      { friendId: "Me", percentage: 40 },
+      { friendId: "xky170ms-srvb-fk5e-eprt-o5fazno3mq", percentage: 40 },
       { friendId: "ditccngi-ctdy-xkdr-kenu-ji9asy7r4q", percentage: 25 },
       { friendId: "6jrjhdqo-3sz4-19ll-018o-bv6txbg9vr", percentage: 20 },
       { friendId: "srukfk5n-dort-n4pa-zwo2-wpz6uulbua", percentage: 15 },
@@ -253,7 +258,7 @@ export const dummyExpenses = [
     amount: "80.00",
     groupId: "j35r55d7-7n6d-4566-54l6-f536f5ea56g8",
     weight: [
-      { friendId: "Me", percentage: 15 },
+      { friendId: "xky170ms-srvb-fk5e-eprt-o5fazno3mq", percentage: 15 },
       { friendId: "q5mhemy8-nel1-yij6-kotm-8efdhx27s1", percentage: 40 },
       { friendId: "0begar2x-m9bp-9cmj-7hyy-hnwftev7p8", percentage: 15 },
       { friendId: "fbocshos-py9k-pqwd-9uvh-mz5xjggfj8", percentage: 30 },
@@ -267,7 +272,7 @@ export const dummyExpenses = [
     amount: "160.00",
     groupId: "47dd1683-bcbf-4a20-9e10-d8596474bc5c",
     weight: [
-      { friendId: "Me", percentage: 25 },
+      { friendId: "xky170ms-srvb-fk5e-eprt-o5fazno3mq", percentage: 25 },
       { friendId: "d5923f14-bc79-44ea-8388-d354c72c2253", percentage: 35 },
       { friendId: "zwo2wpz6-uulb-uais-gsil-3uto1zfubf", percentage: 15 },
       { friendId: "8217468b-ec4e-4340-9c90-665dff5d22d2", percentage: 25 },
@@ -281,7 +286,7 @@ export const dummyExpenses = [
     amount: "320.00",
     groupId: "c35a55d7-1b2d-4185-98b4-f536f5ea25f6",
     weight: [
-      { friendId: "Me", percentage: 40 },
+      { friendId: "xky170ms-srvb-fk5e-eprt-o5fazno3mq", percentage: 40 },
       { friendId: "d5923f14-bc79-44ea-8388-d354c72c2253", percentage: 15 },
       { friendId: "cknxcdjq-m7iv-9mib-x332-6vqvgpp024", percentage: 10 },
       { friendId: "zgqlayze-x1ah-w5wn-6lk4-r3twew40ca", percentage: 35 },
@@ -295,7 +300,7 @@ export const dummyExpenses = [
     amount: "45.00",
     groupId: "2d638ad6-2dde-44a9-b8d6-2e58a380b78c",
     weight: [
-      { friendId: "Me", percentage: 75 },
+      { friendId: "xky170ms-srvb-fk5e-eprt-o5fazno3mq", percentage: 75 },
       { friendId: "9641947f-6b00-4db7-9c7e-9e479b438bd8", percentage: 25 },
     ],
   },
@@ -307,7 +312,7 @@ export const dummyExpenses = [
     amount: "75.00",
     groupId: "j35r55d7-7n6d-4566-54l6-f536f5ea56g8",
     weight: [
-      { friendId: "Me", percentage: 15 },
+      { friendId: "xky170ms-srvb-fk5e-eprt-o5fazno3mq", percentage: 15 },
       { friendId: "q5mhemy8-nel1-yij6-kotm-8efdhx27s1", percentage: 35 },
       { friendId: "0begar2x-m9bp-9cmj-7hyy-hnwftev7p8", percentage: 20 },
       { friendId: "fbocshos-py9k-pqwd-9uvh-mz5xjggfj8", percentage: 30 },
@@ -331,6 +336,7 @@ export const dummyGroups = [
     description: "Test Group",
     budget: "5000",
     friendIDs: [
+      "xky170ms-srvb-fk5e-eprt-o5fazno3mq",
       "9641947f-6b00-4db7-9c7e-9e479b438bd8",
       "d5923f14-bc79-44ea-8388-d354c72c2253",
       "8217468b-ec4e-4340-9c90-665dff5d22d2",
@@ -342,7 +348,10 @@ export const dummyGroups = [
     name: "The Brat Pack",
     description: "School friends",
     budget: "550",
-    friendIDs: ["9641947f-6b00-4db7-9c7e-9e479b438bd8"],
+    friendIDs: [
+      "xky170ms-srvb-fk5e-eprt-o5fazno3mq",
+      "9641947f-6b00-4db7-9c7e-9e479b438bd8",
+    ],
     expenseIDs: [
       "fb5669e1-caf6-463a-a9b9-a57af90a0a66",
       "24zgqlay-zex1-ahw5-wn6l-k4r3twew40",
@@ -353,8 +362,9 @@ export const dummyGroups = [
     id: "47dd1683-bcbf-4a20-9e10-d8596474bc5c",
     name: "CoWorkers",
     description: "Work gift exchange",
-    budget: "60",
+    budget: "800",
     friendIDs: [
+      "xky170ms-srvb-fk5e-eprt-o5fazno3mq",
       "d5923f14-bc79-44ea-8388-d354c72c2253",
       "zwo2wpz6-uulb-uais-gsil-3uto1zfubf",
       "8217468b-ec4e-4340-9c90-665dff5d22d2",
@@ -371,6 +381,7 @@ export const dummyGroups = [
     description: "roomies on elm",
     budget: "700",
     friendIDs: [
+      "xky170ms-srvb-fk5e-eprt-o5fazno3mq",
       "ditccngi-ctdy-xkdr-kenu-ji9asy7r4q",
       "6jrjhdqo-3sz4-19ll-018o-bv6txbg9vr",
       "srukfk5n-dort-n4pa-zwo2-wpz6uulbua",
@@ -387,6 +398,7 @@ export const dummyGroups = [
     description: "Explorer group",
     budget: "1000",
     friendIDs: [
+      "xky170ms-srvb-fk5e-eprt-o5fazno3mq",
       "d5923f14-bc79-44ea-8388-d354c72c2253",
       "cknxcdjq-m7iv-9mib-x332-6vqvgpp024",
       "zgqlayze-x1ah-w5wn-6lk4-r3twew40ca",
@@ -401,8 +413,9 @@ export const dummyGroups = [
     id: "j35r55d7-7n6d-4566-54l6-f536f5ea56g8",
     name: "Bird Watchers",
     description: "Tweety Fans",
-    budget: "500",
+    budget: "700",
     friendIDs: [
+      "xky170ms-srvb-fk5e-eprt-o5fazno3mq",
       "q5mhemy8-nel1-yij6-kotm-8efdhx27s1",
       "0begar2x-m9bp-9cmj-7hyy-hnwftev7p8",
       "fbocshos-py9k-pqwd-9uvh-mz5xjggfj8",
