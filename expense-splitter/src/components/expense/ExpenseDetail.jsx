@@ -143,28 +143,48 @@ function ExpenseDetail() {
     );
   }
 
+  const MeDisplay = () => {
+    return (
+      <Card
+        key={"Me"}
+        id={"Me"}
+        type={"friend"}
+        icon={"fa-user"}
+        title={"Me"}
+        subtitle={percentageMe + "%"}
+        price={contributionMe.toFixed(2)}
+      />
+    );
+  };
+
   const memberDisplay = sortedContributions.map((item) => {
     return (
       <Card
         key={item.id}
         id={item.id}
         type={"friend"}
-        icon={"fa-money-check-dollar"}
+        icon={"fa-user"}
         title={getFriends.find((i) => i.id === item.id).name}
+        subtitle={item.percentage + "%"}
         price={item.contribution.toFixed(2)}
       />
     );
   });
 
-  console.log(memberDisplay);
+  console.log(expenseDetails);
 
   return (
     <div>
-      <h1 className="text-center">{expenseDetails.name}</h1>
-      <p className="mb-3 text-center">
-        {expenseDetails.category}: {expenseDetails.description}
+      <h1 className="text-center text-5xl">{expenseDetails.name}</h1>
+      <h1 className="text-center text-4xl text-green-600">
+        ${expenseDetails.amount}
+      </h1>
+      <p className="mb-3">{expenseDetails.description}</p>
+      <p className="font-bold">
+        Category: <p>{expenseDetails.category}</p>
       </p>
-      <div className="relative mb-2 flex">
+
+      {/* <div className="relative mb-2 flex">
         <div
           className={`absolute h-8 rounded-lg transition-all duration-500 ease-out`}
           style={{
@@ -178,28 +198,20 @@ function ExpenseDetail() {
         <p>
           ${progressPaidRounded} / ${totalAmount}
         </p>
-      </div>
+      </div> */}
+
       <PieChart
         // labels={getFriends.map(item => item.name)}
         label={"Contribution"}
         data={pieChartData}
       />
       <p className="mb-2 mt-4 bg-primary p-2 text-white">Split Costs:</p>
-      <div className="mb-4 flex-row">
-        <p>Me:</p>
-        <p className="text-green-600">${contributionMeRounded}</p>
+      <div className="mb-4">
+        <MeDisplay />
       </div>
       <div>
         <>{memberDisplay}</>
       </div>
-      {/* {sortedContributions.map((item) => (
-            
-          <div className="flex-row mb-4">
-            <p className="">{getFriends.find(i => i.id === item.id).name}:
-            </p>
-            <p className="text-green-600">${item.contribution.toFixed(2)}</p>
-          </div>
-          ))} */}
       <div className="text-center">
         {expenseDetails.receipt_URL !== null ? (
           <a href={expenseDetails.receipt_URL} className="text-blue-400">

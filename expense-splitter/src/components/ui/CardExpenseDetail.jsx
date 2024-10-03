@@ -14,7 +14,9 @@ export default function Card({ id, type, icon, title, subtitle, price }) {
           </div>
         </div>
         <div className="flex items-center">
-          <div className="mx-4 text-lg">{price && `$${price}`}</div>
+          <div className="mx-4 text-lg text-green-600">
+            {price && `$${price}`}
+          </div>
         </div>
       </div>
     </div>
