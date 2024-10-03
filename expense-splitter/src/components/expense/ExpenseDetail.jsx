@@ -40,64 +40,25 @@ function ExpenseDetail() {
   // get percentages from weight array
   const getPercentages = getWeight.map((item) => item.percentage);
 
-  // set sum of percentage to calculate 'me' percentage
-  let percentageSum = 0;
-
-  // sum of values in percentages array
-  for (let i = 0; i < getPercentages.length; i++) {
-    percentageSum += getPercentages[i];
-  }
-
-  // calculate 'me' percentage
-  const percentageMe = 100 - percentageSum;
-
-  // calculate contribution of 'me'
-  const contributionMe = (percentageMe / 100) * totalAmount;
-
-  // round 'me' contribution to 2 decimal places
-  const contributionMeRounded = contributionMe.toFixed(2);
-
   // set data for pie chart to be array of contribution values
-  const pieChartData = getWeight.map((item) => item.contribution);
-
-  // set sum of contributions to calculate 'me' contribution
-  let contributionSum = 0;
-
-  // sum of values in pie chart array which contains contribution values
-  for (let i = 0; i < pieChartData.length; i++) {
-    contributionSum += pieChartData[i];
-  }
-
-  // calculate total amount to pay of all payers ('me' + group members)
-  const totalContribution = contributionSum + contributionMe;
-
-  // calculate progress to total expense amount payoff
-  const progressPaid = totalAmount - totalContribution;
-
-  // round progress paid to 2 decimal places
-  const progressPaidRounded = progressPaid.toFixed(2);
+  const pieChartData = getWeight.map(
+    (item) => (item.percentage / 100) * totalAmount,
+  );
 
   // sort payers by contribution amount
   const sortedContributions = getWeight.sort(function (a, b) {
-    return b.contribution - a.contribution;
+    return b.percentage - a.percentage;
   });
 
-  // add 'me' contribution to pie chart data
-  pieChartData.push(contributionMeRounded);
+  // useEffect(() => {
 
-  // calculate amount of progress paid
-  const progressPercentage = (progressPaid / totalAmount) * 100;
-
-  // handle bar status
-  useEffect(() => {
-    // if progress is over 75%, bar is red
-    const barColor = progressPercentage > 75 ? "#139B20" : "#05299e";
-    setProgressBarStyle((prev) => ({
-      ...prev,
-      width: progressPercentage,
-      color: barColor,
-    }));
-  }, [progressPercentage]);
+  //   const barColor = progressPercentage > 75 ? "#139B20" : "#05299e";
+  //   setProgressBarStyle((prev) => ({
+  //     ...prev,
+  //     width: progressPercentage,
+  //     color: barColor,
+  //   }));
+  // }, [progressPercentage]);
 
   // create PieChart function
   function PieChart() {
@@ -143,20 +104,6 @@ function ExpenseDetail() {
     );
   }
 
-  const MeDisplay = () => {
-    return (
-      <Card
-        key={"Me"}
-        id={"Me"}
-        type={"friend"}
-        icon={"fa-user"}
-        title={"Me"}
-        subtitle={percentageMe + "%"}
-        price={contributionMe.toFixed(2)}
-      />
-    );
-  };
-
   const memberDisplay = sortedContributions.map((item) => {
     return (
       <Card
@@ -164,9 +111,9 @@ function ExpenseDetail() {
         id={item.id}
         type={"friend"}
         icon={"fa-user"}
-        title={getFriends.find((i) => i.id === item.id).name}
+        title={getFriends.find((i) => i.id === item.friendId).name}
         subtitle={item.percentage + "%"}
-        price={item.contribution.toFixed(2)}
+        price={(item.percentage / 100) * totalAmount}
       />
     );
   });
@@ -206,9 +153,6 @@ function ExpenseDetail() {
         data={pieChartData}
       />
       <p className="mb-2 mt-4 bg-primary p-2 text-white">Split Costs:</p>
-      <div className="mb-4">
-        <MeDisplay />
-      </div>
       <div>
         <>{memberDisplay}</>
       </div>
