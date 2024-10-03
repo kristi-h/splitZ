@@ -16,6 +16,21 @@ export const dummyFriends = [
     name: "Nunya",
     email: "buzzzz@off.com",
   },
+  {
+    id: "w7KQ7cNnpyHYwitJKAcNf",
+    name: "Jeff",
+    email: "j@j.com",
+  },
+  {
+    id: "0aq-GydUc374A-77SDmT5",
+    name: "Elon",
+    email: "e@e.com",
+  },
+  {
+    id: "vi4suqW8lm99LTc1Qguvg",
+    name: "George Clinton",
+    email: "g@g.com",
+  },
 ];
 
 export const userSchema = ["name", "email"];
@@ -40,6 +55,16 @@ export const dummyExpenses = [
     category: "restaurant",
     amount: "489.32",
     groupId: "2d638ad6-2dde-44a9-b8d6-2e58a380b78c",
+    weight: [
+      {
+        friendId: "w7KQ7cNnpyHYwitJKAcNf",
+        percentage: 50,
+      },
+      {
+        friendId: "w7KQ7cNnpyHYwitJKAcNf",
+        percentage: 50,
+      },
+    ],
     receipt_URL:
       "https://firebasestorage.googleapis.com/v0/b/expense-splitter-399e6.appspot.com/o/3dGxTrD_ItpNRB-36nqd--dinner-receipt.jpg?alt=media&token=9f273f03-7f99-4f0c-a4aa-802d8f04297b",
   },
@@ -52,6 +77,16 @@ export const dummyExpenses = [
     groupId: "47dd1683-bcbf-4a20-9e10-d8596474bc5c",
     receipt_URL:
       "https://firebasestorage.googleapis.com/v0/b/expense-splitter-399e6.appspot.com/o/OdrXleNjeXec-tqmLuJcj-fake-receipt-expense-splitter.jpg?alt=media&token=9857d611-9a94-4c7e-b37b-0da78befdd3d",
+    weight: [
+      {
+        friendId: "w7KQ7cNnpyHYwitJKAcNf",
+        percentage: 0,
+      },
+      {
+        friendId: "0aq-GydUc374A-77SDmT5",
+        percentage: 0,
+      },
+    ],
   },
   {
     id: "ecd43989-b611-49d1-9093-0f8bc2378a11",
@@ -60,6 +95,12 @@ export const dummyExpenses = [
     category: "gift",
     amount: "49.99",
     groupId: "c35a55d7-1b2d-4185-98b4-f536f5ea25f6",
+    weight: [
+      {
+        friendId: "vi4suqW8lm99LTc1Qguvg",
+        percentage: 0,
+      },
+    ],
   },
 ];
 
@@ -110,8 +151,12 @@ export const dummyGroups = [
     id: "j35r55d7-7n6d-4566-54l6-f536f5ea56g8",
     name: "Bird Watchers",
     description: "Tweety Fans",
-    budget: "500",
-    friendIDs: ["d5923f14-bc79-44ea-8388-d354c72c2253"],
+    budget: "1500",
+    friendIDs: [
+      "d5923f14-bc79-44ea-8388-d354c72c2253",
+      "8217468b-ec4e-4340-9c90-665dff5d22d2",
+      "9641947f-6b00-4db7-9c7e-9e479b438bd8",
+    ],
     expenseIDs: [
       "2c0ce368-7a0c-4b72-ad30-8c03a8d7318a",
       "fb5669e1-caf6-463a-a9b9-a57af90a0a66",
