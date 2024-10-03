@@ -165,11 +165,12 @@ export const dummyGroups = [
 ];
 
 export const categories = [
-  "gift",
-  "groceries",
-  "restaurant",
-  "shopping",
-  "trip",
-  "utilities",
-  "other",
+  "Entertainment",
+  "Gift",
+  "Groceries",
+  "Restaurant",
+  "Shopping",
+  "Trip",
+  "Utilities",
+  "Other",
 ];
