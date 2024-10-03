@@ -2,8 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { UseDataContext } from "./context/SiteContext";
 import Card from "./ui/Card";
-import Button from "./ui/Button";
-import FooterHome from './layout/FooterHome'
+import FooterHome from "./layout/FooterHome";
 import NoDataPlaceholder from "./ui/NoDataPlaceholder";
 
 export default function Home() {
