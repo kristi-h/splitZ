@@ -18,6 +18,7 @@ export default function CreateExpense() {
   const initialFriend = {
     name: "Me",
     weight: 0,
+    dollar: 0,
   };
 
   const [allFriends, setAllFriends] = useState([]);
@@ -39,20 +40,12 @@ export default function CreateExpense() {
   // watch all fields
   const watchedValues = watch();
 
-  // get the group that was selected
-  // const groupSelected = watch("group");
-
-  // get the budget
-  // const budget = watch("amount");
-
   useEffect(() => {
-    console.log("setting initial friend");
+    // start with initialFriend aka app user
     setAllFriends([initialFriend]);
   }, []);
 
   useEffect(() => {
-    // start with initialFriend aka app user
-    // setAllFriends([initialFriend]);
     // add the friends in the group
     setAllFriends((prev) => [...prev, ...friendsInGroup]);
   }, [watchedValues["group"]]);
@@ -62,8 +55,19 @@ export default function CreateExpense() {
     if (allFriends.length > 1) {
       const updatedFriends = allFriends.map((friend) => {
         const newWeight = watchedValues[friend.name];
+        const zeroDefault =
+          watchedValues["amount"] / parseFloat(allFriends.length);
+        console.log(zeroDefault);
+        // generate the dollar amount based on weight
+        const newDollar =
+          parseInt(newWeight) === 0
+            ? zeroDefault
+            : (parseFloat(watchedValues[friend.name]) *
+                watchedValues["amount"]) /
+              100;
+
         return newWeight !== undefined
-          ? { ...friend, weight: newWeight }
+          ? { ...friend, weight: newWeight, dollar: newDollar }
           : friend;
       });
       setAllFriends(updatedFriends);
@@ -106,10 +110,11 @@ export default function CreateExpense() {
             },
           })}
         />
-        <div className="field w-20 text-center">
-          {/* display dollar amount based on percentage */}$
+        {/* <div className="field w-20 text-center">
+          display dollar amount based on percentage$
           {(parseFloat(watchedValues["amount"]) * watchedValue) / 100 || 0}
-        </div>
+        </div> */}
+        <div className="field w-20 text-center">{friend.dollar}</div>
       </div>
     );
   });
