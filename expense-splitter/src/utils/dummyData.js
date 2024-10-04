@@ -429,12 +429,12 @@ export const dummyGroups = [
 ];
 
 export const categories = [
-  "Entertainment",
-  "Gift",
-  "Groceries",
-  "Restaurant",
-  "Shopping",
-  "Trip",
-  "Utilities",
-  "Other",
+  "entertainment",
+  "gift",
+  "groceries",
+  "restaurant",
+  "shopping",
+  "trip",
+  "utilities",
+  "other",
 ];
