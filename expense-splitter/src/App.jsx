@@ -21,7 +21,7 @@ function App() {
           <Header />
           <div className="flex flex-col">
             <Modal />
-            <section className="mx-auto mb-[60px] w-full max-w-4xl px-4 py-6 font-semibold">
+            <section className="mx-auto mb-[80px] w-full max-w-4xl px-4 py-6 font-semibold">
               <Routes>
                 <Route path="/" element={<Login />} />
                 <Route path="/home" element={<Home />} />
