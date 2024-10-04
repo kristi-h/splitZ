@@ -122,11 +122,15 @@ function ExpenseDetail() {
 
   return (
     <div>
-      <h1 className="text-center text-5xl">{expenseDetails.name}</h1>
-      <h1 className="text-center text-4xl text-green-600">
+      <h1 className="border-b-2 border-[#05299e] p-2 text-center">
+        {expenseDetails.name}
+      </h1>
+      <h1 className="mb-6 border-b-2 border-[#05299e] p-2 text-center">
         ${expenseDetails.amount}
       </h1>
-      <p className="mb-3">{expenseDetails.description}</p>
+      <p className="mb-3 font-bold">
+        Info: <p>{expenseDetails.description}</p>
+      </p>
       <p className="font-bold">
         Category: <p>{expenseDetails.category}</p>
       </p>
