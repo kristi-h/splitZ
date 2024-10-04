@@ -5,12 +5,15 @@ const Footer = () => {
 
   return (
     <div
-      className="z-40 mt-auto cursor-pointer bg-primary text-white"
       onClick={() => {
         navigate("/about");
       }}
+      className="over fixed bottom-0 left-1/2 z-40 flex w-full -translate-x-1/2 cursor-pointer bg-primary py-1 text-white"
     >
-      <h2 className="text-center font-bold">About Our Team</h2>
+      <div className="mx-auto flex gap-2">
+        {" "}
+        <h2 className="text-center text-sm font-medium">About Our Team</h2>
+      </div>
     </div>
   );
 };
