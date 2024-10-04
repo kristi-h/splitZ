@@ -28,8 +28,8 @@ export default function CreateExpense() {
   const {
     handleSubmit,
     register,
-    formState: { errors },
     watch, // lets use this to track values
+    formState: { errors },
   } = useForm({
     defaultValues: {
       // default values for testing only
@@ -43,13 +43,10 @@ export default function CreateExpense() {
   const watchedValues = watch();
   console.log(watchedValues);
 
-  // useEffect(() => {
-  //   // start with initialFriend aka app user
-  // }, [watchedValues["group"]]);
-
   useEffect(() => {
-    // add the friends in the group
+    // reset to initial friend
     setAllFriends([initialFriend]);
+    // spread in friends in group
     setAllFriends((prev) => [...prev, ...friendsInGroup]);
   }, [watchedValues["group"]]);
 
@@ -208,7 +205,6 @@ export default function CreateExpense() {
               </option>
             ))}
           </select>
-
           {errors.category && (
             <p style={{ color: "red" }}> {errors.category.message}</p>
           )}
@@ -251,7 +247,6 @@ export default function CreateExpense() {
               </option>
             ))}
           </select>
-
           {errors.group && (
             <p style={{ color: "red" }}> {errors.group.message}</p>
           )}
