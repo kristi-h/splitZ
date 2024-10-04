@@ -19,7 +19,7 @@ function App() {
       <DataProvider>
         <div className="flex h-[100vh] flex-col">
           <Header />
-          <div className="flex h-full flex-col">
+          <div className="flex flex-col">
             <Modal />
             <section className="mx-auto mb-[60px] w-full max-w-4xl px-4 py-6 font-semibold">
               <Routes>
