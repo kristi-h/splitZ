@@ -201,7 +201,7 @@ export default function CreateExpense() {
             <option value=""></option>
             {categories.map((category) => (
               <option key={category} value={category}>
-                {category}
+                {category.replace(/^\w/, (char) => char.toUpperCase())}
               </option>
             ))}
           </select>
