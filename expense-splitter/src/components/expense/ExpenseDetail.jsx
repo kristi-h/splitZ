@@ -2,14 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { UseDataContext } from "../context/SiteContext";
 import Card from "../ui/CardExpenseDetail";
-import Button from "../ui/Button";
 
 function ExpenseDetail() {
   const { expenses, groupData, friends } = UseDataContext();
-  const [progressBarStyle, setProgressBarStyle] = useState({
-    width: 0,
-    color: "#05299e",
-  });
   const { expenseId } = useParams();
   const navigate = useNavigate();
 
@@ -37,9 +32,6 @@ function ExpenseDetail() {
   // get weight array from expense object
   const getWeight = expenseDetails.weight;
 
-  // get percentages from weight array
-  const getPercentages = getWeight.map((item) => item.percentage);
-
   // set data for pie chart to be array of contribution values
   const pieChartData = getWeight.map((item) =>
     ((item.percentage / 100) * totalAmount).toFixed(2),
@@ -49,16 +41,6 @@ function ExpenseDetail() {
   const sortedContributions = getWeight.sort(function (a, b) {
     return b.percentage - a.percentage;
   });
-
-  // useEffect(() => {
-
-  //   const barColor = progressPercentage > 75 ? "#139B20" : "#05299e";
-  //   setProgressBarStyle((prev) => ({
-  //     ...prev,
-  //     width: progressPercentage,
-  //     color: barColor,
-  //   }));
-  // }, [progressPercentage]);
 
   // create PieChart function
   function PieChart() {
@@ -118,8 +100,6 @@ function ExpenseDetail() {
     );
   });
 
-  console.log(expenseDetails);
-
   return (
     <div>
       <h1 className="border-b-2 border-[#05299e] p-2 text-center">
@@ -134,23 +114,6 @@ function ExpenseDetail() {
       <p className="font-bold">
         Category: <p>{expenseDetails.category}</p>
       </p>
-
-      {/* <div className="relative mb-2 flex">
-        <div
-          className={`absolute h-8 rounded-lg transition-all duration-500 ease-out`}
-          style={{
-            width: `${progressBarStyle.width}%`,
-            background: `${progressBarStyle.color}`,
-          }}
-        ></div>
-        <div className="h-8 w-full rounded-lg bg-accent"></div>
-      </div>
-      <div className="text-center">
-        <p>
-          ${progressPaidRounded} / ${totalAmount}
-        </p>
-      </div> */}
-
       <PieChart
         // labels={getFriends.map(item => item.name)}
         label={"Contribution"}
