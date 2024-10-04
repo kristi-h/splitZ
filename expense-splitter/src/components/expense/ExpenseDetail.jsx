@@ -41,8 +41,8 @@ function ExpenseDetail() {
   const getPercentages = getWeight.map((item) => item.percentage);
 
   // set data for pie chart to be array of contribution values
-  const pieChartData = getWeight.map(
-    (item) => (item.percentage / 100) * totalAmount,
+  const pieChartData = getWeight.map((item) =>
+    ((item.percentage / 100) * totalAmount).toFixed(2),
   );
 
   // sort payers by contribution amount
@@ -113,7 +113,7 @@ function ExpenseDetail() {
         icon={"fa-user"}
         title={getFriends.find((i) => i.id === item.friendId).name}
         subtitle={item.percentage + "%"}
-        price={(item.percentage / 100) * totalAmount}
+        price={((item.percentage / 100) * totalAmount).toFixed(2)}
       />
     );
   });
