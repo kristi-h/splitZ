@@ -1,12 +1,11 @@
-import { useEffect, useRef, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
 import { UseDataContext } from "../context/SiteContext";
-import Card from "../ui/CardExpenseDetail";
+import CardExpenseDetail from "../ui/CardExpenseDetail";
 
 function ExpenseDetail() {
   const { expenses, groupData, friends } = UseDataContext();
   const { expenseId } = useParams();
-  const navigate = useNavigate();
 
   // get expense details
   const expenseDetails = expenses.find((expense) => expense.id === expenseId);
@@ -86,16 +85,16 @@ function ExpenseDetail() {
     );
   }
 
-  const memberDisplay = sortedContributions.map((item) => {
+  const memberDisplay = sortedContributions.map((friend) => {
     return (
-      <Card
-        key={item.id}
-        id={item.id}
+      <CardExpenseDetail
+        key={friend.friendId}
+        id={friend.friendId}
         type={"friend"}
         icon={"fa-user"}
-        title={getFriends.find((i) => i.id === item.friendId).name}
-        subtitle={item.percentage + "%"}
-        price={((item.percentage / 100) * totalAmount).toFixed(2)}
+        title={getFriends.find((i) => i.id === friend.friendId).name}
+        subtitle={friend.percentage + "%"}
+        price={((friend.percentage / 100) * totalAmount).toFixed(2)}
       />
     );
   });
