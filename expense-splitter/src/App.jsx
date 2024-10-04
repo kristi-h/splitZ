@@ -10,7 +10,7 @@ import Modal from "./components/ui/Modal";
 import ReceiptUpload from "./components/upload/ReceiptUpload";
 import Friend from "./components/friend/Friend";
 import Home from "./components/Home";
-import About from './components/layout/About';
+import About from "./components/layout/About";
 import Login from "./components/Login";
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
           <Header />
           <div className="flex h-full flex-col">
             <Modal />
-            <section className="mx-auto w-full max-w-4xl px-4 py-6 font-semibold">
+            <section className="mx-auto mb-[60px] w-full max-w-4xl px-4 py-6 font-semibold">
               <Routes>
                 <Route path="/" element={<Login />} />
                 <Route path="/home" element={<Home />} />

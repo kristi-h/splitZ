@@ -158,7 +158,7 @@ function GroupDetail() {
 
   return (
     !modal.show && (
-      <div className="mb-28">
+      <>
         <div className="mb-4 flex items-center">
           <i
             onClick={() => navigate("/groups")}
@@ -241,7 +241,7 @@ function GroupDetail() {
         >
           <p>Are you sure you want to delete this group?</p>
         </Dialog>
-      </div>
+      </>
     )
   );
 }

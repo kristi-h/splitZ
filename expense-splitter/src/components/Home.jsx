@@ -79,7 +79,7 @@ export default function Home() {
           )}
         </div>
 
-        <div className="mb-8">
+        <>
           <h2 className="mb-4 text-2xl font-medium">Recent Expenses</h2>
           {expenses.length > 0 ? (
             <>{expenseDisplay}</>
@@ -91,8 +91,8 @@ export default function Home() {
               onClick={() => handleSetModal("CreateExpense")}
             />
           )}
-        </div>
-        <FooterHome />
+        </>
+        {/* <FooterHome /> // remove footer from home until we establish outlets*/}
       </div>
     )
   );
