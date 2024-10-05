@@ -12,6 +12,7 @@ import Friend from "./components/friend/Friend";
 import Home from "./components/Home";
 import About from "./components/layout/About";
 import Login from "./components/Login";
+import NotFound from "./components/layout/NotFound";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
                   <Route path=":expenseId" element={<ExpenseDetail />} />
                 </Route>
                 <Route path="/receipts" element={<ReceiptUpload />} />
+                <Route path="*" element={<NotFound />} />
               </Routes>
             </section>
             <Footer />

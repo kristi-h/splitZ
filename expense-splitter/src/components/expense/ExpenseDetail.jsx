@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Navigate } from "react-router-dom";
 import { UseDataContext } from "../context/SiteContext";
 import Button from "../ui/Button";
 
@@ -8,6 +8,11 @@ function ExpenseDetail() {
   const navigate = useNavigate();
 
   const singleExpense = expenses.find((expense) => expense.id === expenseId);
+
+  // Redirect to 404 page if expense not found
+  if (!singleExpense) {
+    return <Navigate to={"404"} />;
+  }
 
   return (
     <div>
