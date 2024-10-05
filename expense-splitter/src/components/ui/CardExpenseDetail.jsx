@@ -1,11 +1,4 @@
-export default function CardExpenseDetail({
-  id,
-  type,
-  icon,
-  title,
-  subtitle,
-  price,
-}) {
+export default function CardExpenseDetail({ icon, title, subtitle, price }) {
   return (
     <div className="mb-2 flex items-center rounded-2xl bg-card-bg p-4">
       <div className="flex w-full items-center justify-between">

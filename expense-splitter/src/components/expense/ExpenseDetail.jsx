@@ -1,11 +1,13 @@
 import { useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { UseDataContext } from "../context/SiteContext";
 import CardExpenseDetail from "../ui/CardExpenseDetail";
+// import PieChart from "../widgets/PieChart";
 
 function ExpenseDetail() {
   const { expenses, groupData, friends } = UseDataContext();
   const { expenseId } = useParams();
+  const navigate = useNavigate();
 
   // get expense details
   const expenseDetails = expenses.find((expense) => expense.id === expenseId);
@@ -16,16 +18,11 @@ function ExpenseDetail() {
   // get group connected to expense
   const expenseGroup = groupData.filter(
     (group) => group.id === expenseDetails.groupId,
-  );
-
-  // turn array into single object
-  const findGroup = expenseGroup.find(
-    (group) => group.id === expenseDetails.groupId,
-  );
+  )[0];
 
   // get friends names from goup
   const getFriends = friends.filter((friend) =>
-    findGroup.friendIDs.includes(friend.id),
+    expenseGroup.friendIDs.includes(friend.id),
   );
 
   // get weight array from expense object
@@ -89,8 +86,6 @@ function ExpenseDetail() {
     return (
       <CardExpenseDetail
         key={friend.friendId}
-        id={friend.friendId}
-        type={"friend"}
         icon={"fa-user"}
         title={getFriends.find((i) => i.id === friend.friendId).name}
         subtitle={friend.percentage + "%"}
@@ -101,30 +96,52 @@ function ExpenseDetail() {
 
   return (
     <div>
-      <h1 className="border-b-2 border-[#05299e] p-2 text-center">
-        {expenseDetails.name}
-      </h1>
+      <div className="mb-4 flex items-center">
+        <i
+          onClick={() => navigate("/expenses")}
+          className="fa-solid fa-chevron-left cursor-pointer text-3xl text-accent"
+        ></i>
+        <h1 className="mx-auto mb-0 border-b-2 border-[#05299e]">
+          {expenseDetails.name}
+        </h1>
+        <i className="fa-solid fa-chevron-right text-3xl text-accent opacity-0"></i>
+      </div>
       <h1 className="mb-6 border-b-2 border-[#05299e] p-2 text-center">
         ${expenseDetails.amount}
       </h1>
-      <p className="mb-3 font-bold">
-        Info: <p>{expenseDetails.description}</p>
-      </p>
-      <p className="font-bold">
-        Category: <p>{expenseDetails.category}</p>
-      </p>
+      <div className="mb-2 flex">
+        <p className="mr-1 font-bold">Info:</p>
+        <p>{expenseDetails.description}</p>
+      </div>
+      <div className="flex">
+        <p className="mr-1 font-bold">Category:</p>
+        <p>{expenseDetails.category}</p>
+      </div>
       <PieChart
         // labels={getFriends.map(item => item.name)}
         label={"Contribution"}
         data={pieChartData}
       />
+      <div className="flex justify-end">
+        <button
+          className="text-xl underline"
+          onClick={() => {
+            navigate(`/group/id/${expenseGroup.id}`);
+          }}
+        >
+          {expenseGroup.name}
+        </button>
+      </div>
       <p className="mb-2 mt-4 bg-primary p-2 text-white">Split Costs:</p>
       <div>
         <>{memberDisplay}</>
       </div>
       <div className="text-center">
         {expenseDetails.receipt_URL !== null ? (
-          <a href={expenseDetails.receipt_URL} className="text-blue-400">
+          <a
+            href={expenseDetails.receipt_URL}
+            className="text-blue-400 underline"
+          >
             Receipt
           </a>
         ) : null}
