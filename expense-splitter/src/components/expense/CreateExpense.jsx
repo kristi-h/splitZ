@@ -135,10 +135,11 @@ export default function CreateExpense() {
       ...values,
       date: new Date(),
       weight: weightObj,
+      groupId: values.group,
     };
 
     setExpenses([...expenses, newExpense]);
-    db.insert("expenses", { ...newExpense, groupId: values.group });
+    db.insert("expenses", { ...newExpense });
     // update groups state with new expense id
     setGroupData((prev) =>
       prev.map((group) =>
