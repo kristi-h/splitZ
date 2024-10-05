@@ -13,8 +13,8 @@ export default function Expense() {
   const [inputText, setInputText] = useState("");
 
   let inputHandler = (e) => {
-      var lowerCase = e.target.value.toLowerCase();
-      setInputText(lowerCase);
+    let lowerCase = e.target.value.toLowerCase();
+    setInputText(lowerCase);
   };
 
   useEffect(() => {
@@ -22,17 +22,17 @@ export default function Expense() {
     if (!user) {
       navigate("/");
     }
-  }, [user]);
+  }, [user, navigate]);
 
   return (
     !modal.show && (
       <>
         <h1 className="text-center">Expenses</h1>
         <div className="mb-2">
-          <SearchBar input={inputText} inputHandler={inputHandler}/>
+          <SearchBar input={inputText} inputHandler={inputHandler} />
         </div>
         <div>
-          <ExpenseList input={inputText}/>
+          <ExpenseList input={inputText} />
         </div>
         <ButtonFooter>
           <Button
