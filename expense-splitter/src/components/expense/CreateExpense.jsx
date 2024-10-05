@@ -16,12 +16,13 @@ export default function CreateExpense() {
     friends,
   } = UseDataContext();
 
-  const initialFriend = {
-    id: "xky170ms-srvb-fk5e-eprt-o5fazno3mq",
-    name: "Me",
-    weight: 0,
-    dollar: 0,
-  };
+  // const initialFriend = {
+  //   // id: "1s2e8y-8w9y7h973s-mk5o8y47",
+  //   id: "xky170ms-srvb-fk5e-eprt-o5fazno3mq",
+  //   name: "Me",
+  //   weight: 0,
+  //   dollar: 0,
+  // };
 
   const [allFriends, setAllFriends] = useState([]);
 
@@ -45,7 +46,7 @@ export default function CreateExpense() {
 
   useEffect(() => {
     // reset to initial friend
-    setAllFriends([initialFriend]);
+    // setAllFriends([initialFriend]);
     // spread in friends in group
     setAllFriends((prev) => [...prev, ...friendsInGroup]);
   }, [watchedValues["group"]]);
@@ -126,12 +127,13 @@ export default function CreateExpense() {
   console.log("allFriends", allFriends);
 
   const onSubmit = (values) => {
+    const id = nanoid();
     const weightObj = allFriends.map((friend) => ({
       friendId: friend.id,
       percentage: parseInt(friend.weight),
     }));
     const newExpense = {
-      id: nanoid(),
+      id,
       ...values,
       date: new Date(),
       weight: weightObj,
@@ -144,14 +146,14 @@ export default function CreateExpense() {
     setGroupData((prev) =>
       prev.map((group) =>
         group.id === values.group
-          ? { ...group, expenseIDs: [...group.expenseIDs] }
+          ? { ...group, expenseIDs: [...group.expenseIDs, id] }
           : group,
       ),
     );
     // update groups with new expense id
     db.update("groups", { id: values.group }, (row) => ({
       ...row,
-      expenseIDs: [...row.expenseIDs],
+      expenseIDs: [...row.expenseIDs, id],
     }));
     db.commit();
     // console.log(values);
