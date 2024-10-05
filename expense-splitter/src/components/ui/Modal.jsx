@@ -25,7 +25,7 @@ export default function Modal({ id, image_url, image_alt }) {
   return (
     modal.show && (
       // <div className="absolute top-[200px] h-full flex bg-black/50 w-full z-20">
-      <div className="z-20 mx-auto flex h-full w-full max-w-4xl bg-black/50">
+      <div className="z-20 mx-auto flex h-full w-full max-w-4xl">
         <div className="w-full bg-white p-6">
           {Component ? (
             <Component

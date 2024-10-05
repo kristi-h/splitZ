@@ -10,6 +10,7 @@ import Modal from "./components/ui/Modal";
 import ReceiptUpload from "./components/upload/ReceiptUpload";
 import Friend from "./components/friend/Friend";
 import Home from "./components/Home";
+import About from "./components/layout/About";
 import Login from "./components/Login";
 
 function App() {
@@ -18,20 +19,22 @@ function App() {
       <DataProvider>
         <div className="flex h-[100vh] flex-col">
           <Header />
-          <div className="flex h-full flex-col overflow-y-auto">
+          <div className="flex flex-col">
             <Modal />
-            <section className="mx-auto w-full max-w-4xl px-4 py-6 font-semibold">
+            <section className="mx-auto mb-[80px] w-full max-w-4xl px-4 py-6 font-semibold">
               <Routes>
                 <Route path="/" element={<Login />} />
                 <Route path="/home" element={<Home />} />
-                <Route path="/groups" element={<Group />} />
-                <Route path="/group/id/:groupId" element={<GroupDetail />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/groups">
+                  <Route index element={<Group />} />
+                  <Route path=":groupId" element={<GroupDetail />} />
+                </Route>
                 <Route path="/friends" element={<Friend />} />
-                <Route path="/expenses" element={<Expense />} />
-                <Route
-                  path="/expense/id/:expenseId"
-                  element={<ExpenseDetail />}
-                />
+                <Route path="/expenses">
+                  <Route index element={<Expense />} />
+                  <Route path=":expenseId" element={<ExpenseDetail />} />
+                </Route>
                 <Route path="/receipts" element={<ReceiptUpload />} />
               </Routes>
             </section>

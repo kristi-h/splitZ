@@ -1,30 +1,164 @@
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
 import { nanoid } from "nanoid";
 import db from "../../utils/localstoragedb";
+import { categories } from "../../utils/dummyData";
 
 export default function CreateExpense() {
-  const { groupData, expenses, setExpenses, handleSetModal } = UseDataContext();
+  const {
+    groupData,
+    expenses,
+    setExpenses,
+    setGroupData,
+    handleSetModal,
+    friends,
+  } = UseDataContext();
+
+  const initialFriend = {
+    id: "1",
+    name: "Me",
+    weight: 0,
+    dollar: 0,
+  };
+
+  const [allFriends, setAllFriends] = useState([]);
 
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm();
+    watch, // lets use this to track values
+  } = useForm({
+    defaultValues: {
+      // default values for testing only
+      name: "Binocular shopping",
+      description: "Shopping for binocs",
+      amount: 500,
+    },
+  });
 
-  const id = nanoid();
+  // watch all fields
+  const watchedValues = watch();
+  console.log(watchedValues);
+
+  // useEffect(() => {
+  //   // start with initialFriend aka app user
+  // }, [watchedValues["group"]]);
+
+  useEffect(() => {
+    // add the friends in the group
+    setAllFriends([initialFriend]);
+    setAllFriends((prev) => [...prev, ...friendsInGroup]);
+  }, [watchedValues["group"]]);
+
+  useEffect(() => {
+    // only update when more than one friend to avoid 'Me' overwrite
+    if (allFriends.length > 1) {
+      const updatedFriends = allFriends.map((friend) => {
+        const newWeight = watchedValues[friend.name];
+        const zeroDefault =
+          watchedValues["amount"] / parseFloat(allFriends.length);
+        console.log("newWeight", newWeight);
+        // console.log(newWeight);
+        // generate the dollar amount based on weight
+        const newDollar =
+          parseInt(newWeight) === 0
+            ? zeroDefault
+            : (parseFloat(watchedValues[friend.name]) *
+                watchedValues["amount"]) /
+              100;
+
+        return newWeight !== undefined
+          ? {
+              ...friend,
+              weight: newWeight,
+              dollar: !newWeight ? 0 : `$${newDollar.toFixed(2)}`,
+            }
+          : friend;
+      });
+      setAllFriends(updatedFriends);
+    }
+    // only update state when friend values change
+  }, [
+    allFriends.map((friend) => watchedValues[friend.name]).join(),
+    watchedValues["amount"],
+  ]);
+
+  // get the friends in the group
+  const friendIdsArr = groupData.find(
+    (group) => group.id === watchedValues["group"],
+  )?.friendIDs;
+
+  console.log("friendIdsArr: ", friendIdsArr);
+
+  const friendsInGroup = friends
+    .filter((friends) => friendIdsArr?.includes(friends.id))
+    .map((friend, i) => ({
+      name: friend.name,
+      weight: 0,
+      id: friendIdsArr[i],
+    }));
+
+  // generate friend contribution fields
+  const friendContributionFields = allFriends?.map((friend) => {
+    return (
+      <div
+        key={friend.name}
+        className="mb-2 flex items-center justify-between gap-2"
+      >
+        <label className="mr-2">{friend.name}</label>
+        <input
+          className="ml-auto w-[60px] text-center"
+          name={friend.name}
+          placeholder="0"
+          defaultValue={0}
+          {...register(`${friend.name}`, {
+            pattern: {
+              value: /^[0-9]{1,2}$/i,
+              message: "invalid type, please enter a number between 1-100%",
+            },
+          })}
+        />
+        <div className="field w-28 text-center">{friend.dollar}</div>
+      </div>
+    );
+  });
+
+  console.log("allFriends", allFriends);
 
   const onSubmit = (values) => {
-    createExpense({ ...values, id });
-    handleSetModal();
-  };
+    const weightObj = allFriends.map((friend) => ({
+      friendId: friend.id,
+      percentage: parseInt(friend.weight),
+    }));
+    const newExpense = {
+      id: nanoid(),
+      ...values,
+      date: new Date(),
+      weight: weightObj,
+    };
 
-  const createExpense = (values) => {
-    const newExpense = { ...values, date: new Date() };
     setExpenses([...expenses, newExpense]);
-    db.insert("expenses", newExpense);
+    db.insert("expenses", { ...newExpense, groupId: values.group });
+    // update groups state with new expense id
+    setGroupData((prev) =>
+      prev.map((group) =>
+        group.id === values.group
+          ? { ...group, expenseIDs: [...group.expenseIDs] }
+          : group,
+      ),
+    );
+    // update groups with new expense id
+    db.update("groups", { id: values.group }, (row) => ({
+      ...row,
+      expenseIDs: [...row.expenseIDs],
+    }));
     db.commit();
+    // console.log(values);
+    // console.log(allFriends);
+    handleSetModal();
   };
 
   return (
@@ -68,14 +202,11 @@ export default function CreateExpense() {
             })}
           >
             <option value=""></option>
-            <option value="entertainment">Entertainment</option>
-            <option value="gift">Gift</option>
-            <option value="groceries">Groceries</option>
-            <option value="restaurant">Restaurant</option>
-            <option value="shopping">Shopping</option>
-            <option value="trip">Trip</option>
-            <option value="utilities">Utilities</option>
-            <option value="other">Other</option>
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
           </select>
 
           {errors.category && (
@@ -110,12 +241,12 @@ export default function CreateExpense() {
           <select
             name="group"
             {...register("group", {
-              required: "select a group to apply this expense",
+              required: "select a group to apply this expense to",
             })}
           >
             <option value=""></option>
             {groupData.map((group) => (
-              <option key={group.id} value="{group.id}">
+              <option key={group.id} value={group.id}>
                 {group.name}
               </option>
             ))}
@@ -126,19 +257,12 @@ export default function CreateExpense() {
           )}
         </div>
 
-        <div className="mb-2">
-          <label className="mr-2">Weight: </label>
-          <input
-            placeholder="0"
-            {...register("weight", {
-              pattern: {
-                value: /^[0-9]{1,2}$/i,
-                message: "invalid type, please enter a number between 1-100%",
-              },
-            })}
-          />
-          {errors.weight && (
-            <p style={{ color: "red" }}> {errors.weight.message} </p>
+        <div className="mb-8">
+          {watchedValues["group"] && (
+            <>
+              <h2 className="mb-4">Weight Contribution:*</h2>
+              {friendContributionFields}
+            </>
           )}
         </div>
 

@@ -2,11 +2,12 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { UseDataContext } from "./context/SiteContext";
 import Card from "./ui/Card";
-import Button from "./ui/Button";
+import FooterHome from "./layout/FooterHome";
+import NoDataPlaceholder from "./ui/NoDataPlaceholder";
 
 export default function Home() {
   const navigate = useNavigate();
-  const { user, groupData, expenses, modal } = UseDataContext();
+  const { user, groupData, expenses, modal, handleSetModal } = UseDataContext();
 
   useEffect(() => {
     // if user is not "logged in", go to login
@@ -67,36 +68,31 @@ export default function Home() {
           {groupData.length > 0 ? (
             <>{groupDisplay}</>
           ) : (
-            <>
-              <div className="mb-2 flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-accent/50 p-4 py-12">
-                <p className="font-semibold">There are no groups to display</p>
-                <p className="text-sm">Get started by creating a group.</p>
-                <Button className="mt-4 w-full bg-primary md:w-auto">
-                  Create a Group
-                </Button>
-              </div>
-            </>
+            <NoDataPlaceholder
+              title="There are no groups to display"
+              subtitle="Get started by creating a group."
+              btnText="Create a Group"
+              onClick={() => {
+                handleSetModal("CreateGroup");
+              }}
+            />
           )}
         </div>
 
-        <div className="mb-8">
+        <>
           <h2 className="mb-4 text-2xl font-medium">Recent Expenses</h2>
           {expenses.length > 0 ? (
             <>{expenseDisplay}</>
           ) : (
-            <>
-              <div className="mb-2 flex cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed border-accent/50 p-4 py-12">
-                <p className="font-semibold">
-                  There are no expenses to display
-                </p>
-                <p className="text-sm">Get started by creating an expense.</p>
-                <Button className="mt-4 w-full bg-primary md:w-auto">
-                  Create an Expense
-                </Button>
-              </div>
-            </>
+            <NoDataPlaceholder
+              title="There are no expenses to display"
+              subtitle="Get started by creating an expense."
+              btnText="Create a Expense"
+              onClick={() => handleSetModal("CreateExpense")}
+            />
           )}
-        </div>
+        </>
+        {/* <FooterHome /> // remove footer from home until we establish outlets*/}
       </div>
     )
   );

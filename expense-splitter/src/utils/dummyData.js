@@ -1,6 +1,16 @@
 //-- Feel free to edit the dummy data to fit your need --//
 export const friendsSchema = ["id", "name", "email"];
 export const dummyFriends = [
+  // {
+  //   id: "xky170ms-srvb-fk5e-eprt-o5fazno3mq",
+  //   name: "Me",
+  //   email: "me@email.com",
+  // },
+  {
+    id: "xky170ms-srvb-fk5e-eprt-o5fazno3mq",
+    name: "Me",
+    email: "me@email.com",
+  },
   {
     id: "xky170ms-srvb-fk5e-eprt-o5fazno3mq",
     name: "Me",
@@ -429,11 +439,12 @@ export const dummyGroups = [
 ];
 
 export const categories = [
-  "gift",
-  "groceries",
-  "restaurant",
-  "shopping",
-  "trip",
-  "utilities",
-  "other",
+  "Entertainment",
+  "Gift",
+  "Groceries",
+  "Restaurant",
+  "Shopping",
+  "Trip",
+  "Utilities",
+  "Other",
 ];
