@@ -74,9 +74,6 @@ function GroupDetail() {
     return <Navigate to={"/404"} />;
   }
 
-  const groupCategories = groupExpenses.map((expense) => expense.category);
-  // console.log(groupCategories);
-
   // pie data
   const pieData = () => {
     const results = {};
@@ -158,7 +155,6 @@ function GroupDetail() {
         />
       );
     });
-  // console.log(expenses);
 
   return (
     !modal.show && (
