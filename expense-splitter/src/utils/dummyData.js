@@ -3,7 +3,7 @@ export const friendsSchema = ["id", "name", "email"];
 export const dummyFriends = [
   // {
   //   id: "xky170ms-srvb-fk5e-eprt-o5fazno3mq",
-  //   name: "Me",
+  //   name: "Dummy Me",
   //   email: "me@email.com",
   // },
   {
