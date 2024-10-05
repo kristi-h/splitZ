@@ -330,19 +330,19 @@ export const groupSchema = [
 ];
 
 export const dummyGroups = [
-  // {
-  //   id: "fbkj3Bgb-jkw3t-23h9g-sKlfh43ntnMi",
-  //   name: "Test Group",
-  //   description: "Test Group",
-  //   budget: "5000",
-  //   friendIDs: [
-  //     "xky170ms-srvb-fk5e-eprt-o5fazno3mq",
-  //     "9641947f-6b00-4db7-9c7e-9e479b438bd8",
-  //     "d5923f14-bc79-44ea-8388-d354c72c2253",
-  //     "8217468b-ec4e-4340-9c90-665dff5d22d2",
-  //   ],
-  //   expenseIDs: ["testing1-0ff6-463a-zk0s-a5lke3nta91"],
-  // },
+  {
+    id: "fbkj3Bgb-jkw3t-23h9g-sKlfh43ntnMi",
+    name: "Test Group",
+    description: "Test Group",
+    budget: "5000",
+    friendIDs: [
+      "xky170ms-srvb-fk5e-eprt-o5fazno3mq",
+      "9641947f-6b00-4db7-9c7e-9e479b438bd8",
+      "d5923f14-bc79-44ea-8388-d354c72c2253",
+      "8217468b-ec4e-4340-9c90-665dff5d22d2",
+    ],
+    expenseIDs: ["testing1-0ff6-463a-zk0s-a5lke3nta91"],
+  },
   // {
   //   id: "2d638ad6-2dde-44a9-b8d6-2e58a380b78c",
   //   name: "The Brat Pack",

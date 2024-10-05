@@ -139,25 +139,25 @@ export default function CreateExpense() {
   ]);
 
   // if group is changed, get new friends
-  // useEffect(() => {
-  //   // reset to initial friend
-  //   // setAllFriends([initialFriend]);
-  //   // spread in friends in group
-  //   // get the friends in the group
-  //   const friendIdsArr = groupData.find(
-  //     (group) => group.id === watchedValues["group"],
-  //   )?.friendIDs;
+  useEffect(() => {
+    // reset to initial friend
+    // setAllFriends([initialFriend]);
+    // spread in friends in group
+    // get the friends in the group
+    const friendIdsArr = groupData.find(
+      (group) => group.id === watchedValues["group"],
+    )?.friendIDs;
 
-  //   const friendsInGroup = friends
-  //     .filter((friends) => friendIdsArr?.includes(friends.id))
-  //     .map((friend, i) => ({
-  //       name: friend.name,
-  //       weight: 0,
-  //       id: friendIdsArr[i],
-  //     }));
-  //   setAllFriends(friendsInGroup);
-  //   // setAllFriends((prev) => [...prev, ...friendsInGroup]);
-  // }, [watchedValues["group"]]);
+    const friendsInGroup = friends
+      .filter((friends) => friendIdsArr?.includes(friends.id))
+      .map((friend, i) => ({
+        name: friend.name,
+        weight: 0,
+        id: friendIdsArr[i],
+      }));
+    setAllFriends(friendsInGroup);
+    // setAllFriends((prev) => [...prev, ...friendsInGroup]);
+  }, [watchedValues["group"]]);
 
   // generate friend contribution fields
   const friendContributionFields = allFriends?.map((friend) => {
