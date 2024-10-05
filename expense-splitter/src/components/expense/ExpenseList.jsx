@@ -5,7 +5,6 @@ import IconButton from "../ui/IconButton";
 
 export default function ExpenseList(props) {
   const { expenses, setExpenses, handleSetModal } = UseDataContext();
-  // console.log('expenses', expenses)
 
   const navigate = useNavigate();
 
@@ -20,11 +19,13 @@ export default function ExpenseList(props) {
 
   // filter expenses for search bar
   const filteredData = expenses.filter((search) => {
-    if (props.input === '') {
+    if (props.input === "") {
       return search;
     } else {
-      return search.name.toLowerCase().includes(props.input)
-      || search.amount.toLowerCase().includes(props.input)
+      return (
+        search.name.toLowerCase().includes(props.input) ||
+        search.amount.toLowerCase().includes(props.input)
+      );
     }
   });
 
