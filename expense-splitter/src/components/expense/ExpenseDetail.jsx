@@ -95,7 +95,7 @@ function ExpenseDetail() {
   });
 
   // Redirect to 404 page if expense not found
-  if (!singleExpense) {
+  if (!expenseDetails) {
     return <Navigate to={"404"} />;
   }
 
