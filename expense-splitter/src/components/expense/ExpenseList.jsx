@@ -20,17 +20,19 @@ export default function ExpenseList(props) {
 
   // filter expenses for search bar
   const filteredData = expenses.filter((search) => {
-    if (props.input === '') {
+    if (props.input === "") {
       return search;
     } else {
-      return search.name.toLowerCase().includes(props.input)
-      || search.amount.toLowerCase().includes(props.input)
+      return (
+        search.name.toLowerCase().includes(props.input) ||
+        search.amount.toLowerCase().includes(props.input)
+      );
     }
   });
 
   const expenseItems = filteredData.map((expense) => (
     <div
-      key={expense.ID}
+      key={expense.id}
       className="mb-1 flex flex-col rounded-lg bg-slate-100 px-4 py-4"
     >
       <div className="flex items-center justify-between">
