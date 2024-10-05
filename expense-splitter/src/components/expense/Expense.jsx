@@ -5,10 +5,12 @@ import SearchBar from "../ui/SearchBar";
 import Button from "../ui/Button";
 import ExpenseList from "./ExpenseList";
 import ButtonFooter from "../ui/ButtonFooter";
+import Card from "../ui/Card";
+import NoDataPlaceholder from "../ui/NoDataPlaceholder";
 
 export default function Expense() {
   const navigate = useNavigate();
-  const { user, handleSetModal, modal } = UseDataContext();
+  const { user, handleSetModal, modal, expenses } = UseDataContext();
 
   const [inputText, setInputText] = useState("");
 
@@ -24,16 +26,37 @@ export default function Expense() {
     }
   }, [user, navigate]);
 
+  // Sort expenses by db ID
+  const expenseDisplay = expenses
+    .sort((a, b) => b.ID - a.ID)
+    .map((expense) => (
+      <Card
+        key={expense.id}
+        id={expense.id}
+        type={"expense"}
+        icon={"fa-file-invoice-dollar"}
+        title={expense.name}
+        subtitle={expense.amount}
+      />
+    ));
+
   return (
+    // if modal is not showing then display the following
     !modal.show && (
       <>
-        <h1 className="text-center">Expenses</h1>
         <div className="mb-2">
           <SearchBar input={inputText} inputHandler={inputHandler} />
         </div>
-        <div>
-          <ExpenseList input={inputText} />
-        </div>
+        {expenseDisplay.length > 0 ? (
+          expenseDisplay
+        ) : (
+          <NoDataPlaceholder
+            title="There are no expenses to display"
+            subtitle="Get started by creating a new expense"
+            btnText="Create an Expense"
+            onClick={() => handleSetModal("CreateExpense")}
+          />
+        )}
         <ButtonFooter>
           <Button
             className="bg-primary"
