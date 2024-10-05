@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Navigate } from "react-router-dom";
 import { UseDataContext } from "../context/SiteContext";
 import db from "../../utils/localstoragedb";
 import Button from "../ui/Button";
@@ -29,9 +29,8 @@ function GroupDetail() {
 
   // get all the group expenses
   const groupExpenses = expenses.filter((expense) =>
-    singleGroup.expenseIDs?.includes(expense.id),
+    singleGroup?.expenseIDs?.includes(expense.id),
   );
-  // console.log(groupExpenses);
 
   // get the total group expense amount
   const totalExpenseAmount = groupExpenses
@@ -42,9 +41,9 @@ function GroupDetail() {
   // figure out the width of the expense percentage bar
   // max it out at 100 to avoid growing outside the div
   const expensePercentage =
-    ((totalExpenseAmount / singleGroup.budget) * 100).toFixed() >= 100
+    ((totalExpenseAmount / singleGroup?.budget) * 100).toFixed() >= 100
       ? 100
-      : ((totalExpenseAmount / singleGroup.budget) * 100).toFixed();
+      : ((totalExpenseAmount / singleGroup?.budget) * 100).toFixed();
 
   // set the percentage and color to state and disply as style
   // tailwind is bad at rendering dynamically
@@ -70,8 +69,10 @@ function GroupDetail() {
     }));
   }, [expensePercentage]);
 
-  const groupCategories = groupExpenses.map((expense) => expense.category);
-  // console.log(groupCategories);
+  // 404 if no ID found
+  if (!singleGroup) {
+    return <Navigate to={"/404"} />;
+  }
 
   // pie data
   const pieData = () => {
@@ -154,7 +155,6 @@ function GroupDetail() {
         />
       );
     });
-  // console.log(expenses);
 
   return (
     !modal.show && (

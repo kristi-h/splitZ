@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Navigate } from "react-router-dom";
 import { UseDataContext } from "../context/SiteContext";
 import CardExpenseDetail from "../ui/CardExpenseDetail";
 // import PieChart from "../widgets/PieChart";
@@ -93,6 +93,11 @@ function ExpenseDetail() {
       />
     );
   });
+
+  // Redirect to 404 page if expense not found
+  if (!singleExpense) {
+    return <Navigate to={"404"} />;
+  }
 
   return (
     <div>
