@@ -17,7 +17,7 @@ export default function CreateExpense() {
   } = UseDataContext();
 
   const initialFriend = {
-    id: "1",
+    id: "xky170ms-srvb-fk5e-eprt-o5fazno3mq",
     name: "Me",
     weight: 0,
     dollar: 0,
