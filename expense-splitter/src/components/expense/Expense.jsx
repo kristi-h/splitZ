@@ -40,6 +40,19 @@ export default function Expense() {
       />
     ));
 
+  const filteredExpenses = expenseDisplay.filter((search) => {
+    if (inputText === "") {
+      return search;
+    } else {
+      console.log(search.props);
+      console.log(inputText);
+      return (
+        search.props.title.toLowerCase().includes(inputText) ||
+        search.props.subtitle.toLowerCase().includes(inputText)
+      );
+    }
+  });
+
   return (
     // if modal is not showing then display the following
     !modal.show && (
@@ -47,8 +60,8 @@ export default function Expense() {
         <div className="mb-2">
           <SearchBar input={inputText} inputHandler={inputHandler} />
         </div>
-        {expenseDisplay.length > 0 ? (
-          expenseDisplay
+        {filteredExpenses.length > 0 ? (
+          filteredExpenses
         ) : (
           <NoDataPlaceholder
             title="There are no expenses to display"
