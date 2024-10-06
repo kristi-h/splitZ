@@ -11,7 +11,6 @@ function ExpenseDetail() {
 
   // get expense details
   const expenseDetails = expenses.find((expense) => expense.id === expenseId);
-  console.log(expenseDetails);
 
   // Redirect to 404 page if expense not found
   if (!expenseDetails) {
@@ -22,8 +21,6 @@ function ExpenseDetail() {
   const expenseGroup = groupData.filter(
     (group) => group.id === expenseDetails.groupId,
   )[0];
-
-  console.log(expenseGroup);
 
   // get friends names from goup
   const friendNames = friends.filter((friend) =>
