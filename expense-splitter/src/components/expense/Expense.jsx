@@ -33,7 +33,7 @@ export default function Expense() {
         key={expense.id}
         id={expense.id}
         type={"expense"}
-        icon={"fa-file-invoice-dollar"}
+        icon={"fa-money-check-dollar"}
         title={expense.name}
         subtitle={"$" + expense.amount}
       />
