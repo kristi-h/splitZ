@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { useParams, useNavigate, Navigate } from "react-router-dom";
 import { UseDataContext } from "../context/SiteContext";
 import CardExpenseDetail from "../ui/CardExpenseDetail";
-// import PieChart from "../widgets/PieChart";
+import PieChart from "../widgets/PieChart";
 
 function ExpenseDetail() {
   const { expenses, groupData, friends } = UseDataContext();
@@ -11,6 +11,7 @@ function ExpenseDetail() {
 
   // get expense details
   const expenseDetails = expenses.find((expense) => expense.id === expenseId);
+  console.log(expenseDetails);
 
   // Redirect to 404 page if expense not found
   if (!expenseDetails) {
@@ -30,58 +31,20 @@ function ExpenseDetail() {
   );
 
   // set data for pie chart to be array of contribution values
-  const pieChartData = expenseDetails.weight.map((item) =>
-    ((item.percentage / 100) * expenseDetails.amount).toFixed(2),
-  );
+  const pieChartData = {};
+
+  expenseDetails.weight.forEach((weight) => {
+    const friendInfo = friends.find((friend) => friend.id === weight.friendId);
+    pieChartData[friendInfo.name] = (
+      (weight.percentage / 100) *
+      expenseDetails.amount
+    ).toFixed(2);
+  });
 
   // sort payers by contribution amount
   const sortedContributions = expenseDetails.weight.sort(function (a, b) {
     return b.percentage - a.percentage;
   });
-
-  // create PieChart function
-  function PieChart() {
-    const chartRef = useRef(null);
-
-    useEffect(() => {
-      const dataPie = {
-        datasets: [
-          {
-            // label: getFriends.map(item => item.name),
-            data: pieChartData,
-            backgroundColor: [
-              "#05299e",
-              "#761699",
-              "#af008b",
-              "#d80076",
-              "#f4235d",
-              "#ff5344",
-              "#ffa600",
-            ],
-            hoverOffset: 4,
-          },
-        ],
-      };
-
-      const configPie = {
-        type: "pie",
-        data: dataPie,
-        options: {},
-      };
-
-      const pieChart = new Chart(chartRef.current, configPie);
-
-      return () => {
-        pieChart.destroy();
-      };
-    });
-
-    return (
-      <div className="mx-auto max-w-sm overflow-hidden lg:max-w-lg">
-        <canvas className="p-4" ref={chartRef}></canvas>
-      </div>
-    );
-  }
 
   const memberDisplay = sortedContributions.map((friend) => {
     return (
@@ -122,11 +85,7 @@ function ExpenseDetail() {
           {expenseDetails.category}
         </p>
       </div>
-      <PieChart
-        // labels={getFriends.map(item => item.name)}
-        label={"Contribution"}
-        data={pieChartData}
-      />
+      <PieChart label="Amount Owed" pieData={pieChartData} />
       <div className="flex justify-end">
         <button
           className="text-xl underline"
