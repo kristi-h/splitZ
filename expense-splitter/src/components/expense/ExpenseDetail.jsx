@@ -12,6 +12,11 @@ function ExpenseDetail() {
   // get expense details
   const expenseDetails = expenses.find((expense) => expense.id === expenseId);
 
+  // Redirect to 404 page if expense not found
+  if (!expenseDetails) {
+    return <Navigate to={"404"} />;
+  }
+
   // get total amount of expense
   const totalAmount = expenseDetails.amount;
 
@@ -93,11 +98,6 @@ function ExpenseDetail() {
       />
     );
   });
-
-  // Redirect to 404 page if expense not found
-  if (!expenseDetails) {
-    return <Navigate to={"404"} />;
-  }
 
   return (
     <div>
