@@ -2,11 +2,14 @@ import { useParams, useNavigate, Navigate } from "react-router-dom";
 import { UseDataContext } from "../context/SiteContext";
 import CardExpenseDetail from "../ui/CardExpenseDetail";
 import PieChart from "../widgets/PieChart";
+import DownloadPDF from "../widgets/DownloadPDF";
+import { useRef } from "react";
 
 function ExpenseDetail() {
   const { expenses, groupData, friends } = UseDataContext();
   const { expenseId } = useParams();
   const navigate = useNavigate();
+  const downloadRef = useRef(null);
 
   // get expense details
   const expenseDetails = expenses.find((expense) => expense.id === expenseId);
@@ -55,7 +58,7 @@ function ExpenseDetail() {
   });
 
   return (
-    <div>
+    <div ref={downloadRef}>
       <div className="mb-4 flex items-center">
         <i
           onClick={() => navigate("/expenses")}
@@ -106,6 +109,11 @@ function ExpenseDetail() {
           </a>
         ) : null}
       </div>
+      <DownloadPDF
+        filename={expenseDetails.name}
+        contentRef={downloadRef}
+        data-html2canvas-ignore
+      />
     </div>
   );
 }
