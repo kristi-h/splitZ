@@ -60,6 +60,26 @@ export default function CreateExpense() {
 
     console.log("finalFriends", friendObjs);
     setAllFriends(friendObjs);
+
+    // get the friend values for weights
+    const friendValues = friendObjs.reduce((acc, friend) => {
+      acc[friend.name] = friend.weight;
+      return acc;
+    }, {});
+    console.log("friendValues", friendValues);
+
+    const valuesObj = {
+      name: currentExpense.name || "",
+      description: currentExpense.description || "",
+      category: currentExpense.category || "",
+      amount: currentExpense.amount || "",
+      group: currentExpense.groupId || "",
+      receipt_URL: currentExpense.receipt_URL || "",
+      ...friendValues,
+    };
+    console.log("valuesObj", valuesObj);
+    reset(valuesObj);
+
     // const friendIdsArr = groupData.find(
     //   (group) => group.id === watchedValues["group"],
     // )?.friendIDs;
@@ -76,33 +96,33 @@ export default function CreateExpense() {
     //     };
     //   });
     // setAllFriends(friendsInGroup);
-  }, []);
+  }, [currentExpense]);
 
   console.log("allFriends", allFriends);
   // populate the initial form values
-  useEffect(() => {
-    if (currentExpense) {
-      // get the friend values for weights
-      const friendValues = allFriends.reduce((acc, friend) => {
-        acc[friend.name] = friend.weight;
-        return acc;
-      }, {});
-      console.log("friendValues", friendValues);
+  // useEffect(() => {
+  //   if (currentExpense) {
+  //     // get the friend values for weights
+  //     const friendValues = allFriends.reduce((acc, friend) => {
+  //       acc[friend.name] = friend.weight;
+  //       return acc;
+  //     }, {});
+  //     console.log("friendValues", friendValues);
 
-      const valuesObj = {
-        name: currentExpense.name || "",
-        description: currentExpense.description || "",
-        category: currentExpense.category || "",
-        amount: currentExpense.amount || "",
-        group: currentExpense.groupId || "",
-        receipt_URL: currentExpense.receipt_URL || "",
-        ...friendValues,
-        // weight: currentExpense.weight || "",
-      };
-      console.log("valuesObj", valuesObj);
-      reset(valuesObj);
-    }
-  }, [currentExpense]);
+  //     const valuesObj = {
+  //       name: currentExpense.name || "",
+  //       description: currentExpense.description || "",
+  //       category: currentExpense.category || "",
+  //       amount: currentExpense.amount || "",
+  //       group: currentExpense.groupId || "",
+  //       receipt_URL: currentExpense.receipt_URL || "",
+  //       ...friendValues,
+  //       // weight: currentExpense.weight || "",
+  //     };
+  //     console.log("valuesObj", valuesObj);
+  //     reset(valuesObj);
+  //   }
+  // }, [currentExpense]);
 
   // generate the dollar amount based on weight
   useEffect(() => {
