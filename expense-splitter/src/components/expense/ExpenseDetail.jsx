@@ -17,29 +17,25 @@ function ExpenseDetail() {
     return <Navigate to={"404"} />;
   }
 
-  // get total amount of expense
-  const totalAmount = expenseDetails.amount;
-
   // get group connected to expense
   const expenseGroup = groupData.filter(
     (group) => group.id === expenseDetails.groupId,
   )[0];
+
+  console.log(expenseGroup);
 
   // get friends names from goup
   const getFriends = friends.filter((friend) =>
     expenseGroup.friendIDs.includes(friend.id),
   );
 
-  // get weight array from expense object
-  const getWeight = expenseDetails.weight;
-
   // set data for pie chart to be array of contribution values
-  const pieChartData = getWeight.map((item) =>
-    ((item.percentage / 100) * totalAmount).toFixed(2),
+  const pieChartData = expenseDetails.weight.map((item) =>
+    ((item.percentage / 100) * expenseDetails.amount).toFixed(2),
   );
 
   // sort payers by contribution amount
-  const sortedContributions = getWeight.sort(function (a, b) {
+  const sortedContributions = expenseDetails.weight.sort(function (a, b) {
     return b.percentage - a.percentage;
   });
 
@@ -94,7 +90,7 @@ function ExpenseDetail() {
         icon={"fa-user"}
         title={getFriends.find((i) => i.id === friend.friendId).name}
         subtitle={friend.percentage + "%"}
-        price={((friend.percentage / 100) * totalAmount).toFixed(2)}
+        price={((friend.percentage / 100) * expenseDetails.amount).toFixed(2)}
       />
     );
   });
