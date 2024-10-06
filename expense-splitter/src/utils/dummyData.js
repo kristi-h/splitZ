@@ -12,6 +12,11 @@ export const dummyFriends = [
     email: "me@email.com",
   },
   {
+    id: "xky170ms-srvb-fk5e-eprt-o5fazno3mq",
+    name: "Me",
+    email: "me@email.com",
+  },
+  {
     id: "9641947f-6b00-4db7-9c7e-9e479b438bd8",
     name: "Lloyd Kneman",
     email: "lloydk@email.com",

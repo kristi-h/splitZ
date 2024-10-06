@@ -3,7 +3,6 @@ import { useEffect, useRef } from "react";
 export default function PieChart({ label, pieData }) {
   // Create reference to dom elements
   const chartRef = useRef(null);
-  console.log(pieData);
 
   const labels = Object.keys(pieData);
   const data = Object.values(pieData);
