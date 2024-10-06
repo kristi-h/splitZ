@@ -25,7 +25,7 @@ function ExpenseDetail() {
   console.log(expenseGroup);
 
   // get friends names from goup
-  const getFriends = friends.filter((friend) =>
+  const friendNames = friends.filter((friend) =>
     expenseGroup.friendIDs.includes(friend.id),
   );
 
@@ -88,7 +88,7 @@ function ExpenseDetail() {
       <CardExpenseDetail
         key={friend.friendId}
         icon={"fa-user"}
-        title={getFriends.find((i) => i.id === friend.friendId).name}
+        title={friendNames.find((i) => i.id === friend.friendId).name}
         subtitle={friend.percentage + "%"}
         price={((friend.percentage / 100) * expenseDetails.amount).toFixed(2)}
       />
