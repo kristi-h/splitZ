@@ -1,7 +1,7 @@
 import html2pdf from "html2pdf.js";
 import Button from "../ui/Button";
 
-// Add data-html2canvas-ignore class to hide element
+// Add data-html2canvas-ignore attribute to hide element
 
 const DownloadPDF = ({ filename, contentRef }) => {
   const pdfOptions = {
@@ -15,7 +15,7 @@ const DownloadPDF = ({ filename, contentRef }) => {
   };
 
   return (
-    <div>
+    <div data-html2canvas-ignore>
       <Button onClick={convertToPDF} variant={"small"} className={"my-2"}>
         Download PDF
       </Button>
