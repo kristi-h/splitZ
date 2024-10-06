@@ -45,8 +45,8 @@ export default function CreateExpense() {
   console.log(watchedValues);
 
   useEffect(() => {
-    // reset to initial friend
-    // setAllFriends([initialFriend]);
+    // reset all friends in group
+    setAllFriends([]);
     // spread in friends in group
     setAllFriends((prev) => [...prev, ...friendsInGroup]);
   }, [watchedValues["group"]]);
@@ -127,6 +127,7 @@ export default function CreateExpense() {
   console.log("allFriends", allFriends);
 
   const onSubmit = (values) => {
+    console.log(values);
     const id = nanoid();
     const weightObj = allFriends.map((friend) => ({
       friendId: friend.id,
