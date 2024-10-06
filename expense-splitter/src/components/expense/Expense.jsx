@@ -44,8 +44,6 @@ export default function Expense() {
     if (inputText === "") {
       return search;
     } else {
-      console.log(search.props);
-      console.log(inputText);
       return (
         search.props.title.toLowerCase().includes(inputText) ||
         search.props.subtitle.toLowerCase().includes(inputText)
