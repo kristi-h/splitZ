@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { UseDataContext } from "../context/SiteContext";
 import SearchBar from "../ui/SearchBar";
 import Button from "../ui/Button";
-import ExpenseList from "./ExpenseList";
 import ButtonFooter from "../ui/ButtonFooter";
 import Card from "../ui/Card";
 import NoDataPlaceholder from "../ui/NoDataPlaceholder";
