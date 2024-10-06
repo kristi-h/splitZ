@@ -58,14 +58,23 @@ export default function Expense() {
         <div className="mb-2">
           <SearchBar input={inputText} inputHandler={inputHandler} />
         </div>
-        {filteredExpenses.length > 0 ? (
-          filteredExpenses
-        ) : (
+        {expenseDisplay.length < 1 ? (
           <NoDataPlaceholder
             title="There are no expenses to display"
             subtitle="Get started by creating a new expense"
             btnText="Create an Expense"
             onClick={() => handleSetModal("CreateExpense")}
+          />
+        ) : filteredExpenses.length > 0 ? (
+          filteredExpenses
+        ) : (
+          <NoDataPlaceholder
+            title="There are no expenses matching this search"
+            subtitle="Would you like to create a new expense?"
+            btnText="Create an Expense"
+            onClick={() => {
+              handleSetModal("CreateExpense");
+            }}
           />
         )}
         <ButtonFooter>
