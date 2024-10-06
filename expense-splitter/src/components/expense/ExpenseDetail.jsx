@@ -115,12 +115,16 @@ function ExpenseDetail() {
         ${expenseDetails.amount}
       </h1>
       <div className="mb-2 flex">
-        <p className="mr-1 font-bold">Info:</p>
-        <p>{expenseDetails.description}</p>
+        <p>
+          <span className="mr-1 font-bold">Info:</span>
+          {expenseDetails.description}
+        </p>
       </div>
       <div className="flex">
-        <p className="mr-1 font-bold">Category:</p>
-        <p>{expenseDetails.category}</p>
+        <p>
+          <span className="mr-1 font-bold">Category:</span>
+          {expenseDetails.category}
+        </p>
       </div>
       <PieChart
         // labels={getFriends.map(item => item.name)}
