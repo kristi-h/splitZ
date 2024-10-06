@@ -36,7 +36,7 @@ export default function Expense() {
         type={"expense"}
         icon={"fa-file-invoice-dollar"}
         title={expense.name}
-        subtitle={expense.amount}
+        subtitle={"$" + expense.amount}
       />
     ));
 
