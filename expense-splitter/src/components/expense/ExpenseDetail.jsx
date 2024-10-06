@@ -1,6 +1,6 @@
 import { useParams, useNavigate, Navigate } from "react-router-dom";
 import { UseDataContext } from "../context/SiteContext";
-import CardExpenseDetail from "../ui/CardExpenseDetail";
+import Card from "../ui/Card";
 import PieChart from "../widgets/PieChart";
 import DownloadPDF from "../widgets/DownloadPDF";
 import { useRef } from "react";
@@ -47,9 +47,10 @@ function ExpenseDetail() {
 
   const memberDisplay = sortedContributions.map((friend) => {
     return (
-      <CardExpenseDetail
+      <Card
         key={friend.friendId}
         icon={"fa-user"}
+        hasButtons={true}
         title={friendNames.find((i) => i.id === friend.friendId).name}
         subtitle={friend.percentage + "%"}
         price={((friend.percentage / 100) * expenseDetails.amount).toFixed(2)}
