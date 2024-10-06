@@ -131,7 +131,7 @@ function ExpenseDetail() {
         <button
           className="text-xl underline"
           onClick={() => {
-            navigate(`/group/id/${expenseGroup.id}`);
+            navigate(`/groups/${expenseGroup.id}`);
           }}
         >
           {expenseGroup.name}
