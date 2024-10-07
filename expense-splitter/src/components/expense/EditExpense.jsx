@@ -32,14 +32,10 @@ export default function CreateExpense() {
       (friend) => friend.friendId,
     );
 
-    // console.log("friendIdsArr", friendIdsArr);
-    // console.log("friends", friends);
-
     const friendsInGroup = friends.filter((friend) =>
       friendIdsArr.includes(friend.id),
     );
     console.log("initialExpense", initialExpense);
-    console.log("friendsInGroup", friendsInGroup);
 
     const friendObjs = initialExpense.weight.map((item) => {
       if (friendIdsArr.includes(item.friendId)) {
@@ -58,7 +54,6 @@ export default function CreateExpense() {
       }
     });
 
-    console.log("finalFriends", friendObjs);
     setAllFriends(friendObjs);
 
     // get the friend values for weights
@@ -67,7 +62,7 @@ export default function CreateExpense() {
       acc[friend.name] = friend.weight;
       return acc;
     }, {});
-    console.log("friendValues", friendValues);
+    // console.log("friendValues", friendValues);
 
     const valuesObj = {
       name: currentExpense.name || "",
@@ -78,7 +73,7 @@ export default function CreateExpense() {
       receipt_URL: currentExpense.receipt_URL || "",
       ...friendValues,
     };
-    console.log("valuesObj", valuesObj);
+    // console.log("valuesObj", valuesObj);
     reset(valuesObj);
 
     // const friendIdsArr = groupData.find(
@@ -177,7 +172,7 @@ export default function CreateExpense() {
         weight: 0,
         id: friendIdsArr[i],
       }));
-    console.log("friendsInGroup", friendsInGroup);
+    // console.log("friendsInGroup", friendsInGroup);
     setAllFriends(friendsInGroup);
     // setAllFriends((prev) => [...prev, ...friendsInGroup]);
   }, [watchedValues["group"]]);
@@ -208,8 +203,7 @@ export default function CreateExpense() {
   });
 
   const onSubmit = (values) => {
-    console.log("These are the values: ", values);
-    // editExpense({ ...values });
+    const { ID } = expenses.find((expense) => expense.id === currentExpense.id);
     const weightObj = allFriends.map((friend) => ({
       friendId: friend.id,
       percentage: parseInt(friend.weight),
@@ -223,14 +217,10 @@ export default function CreateExpense() {
       groupId: values.group,
     };
     console.log("updatedExpense", updatedExpense);
-    db.insertOrUpdate(
-      "expenses",
-      { ID: currentExpense.ID },
-      { ...updatedExpense },
-    );
+    db.insertOrUpdate("expenses", { ID: ID }, { ...updatedExpense });
     db.commit();
+    // update expenses state with new db values
     setExpenses(db.queryAll("expenses"));
-    // console.log("These are the values: ", values);
     handleSetModal();
   };
 
