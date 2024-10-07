@@ -14,13 +14,22 @@
     @apply text-lg font-semibold;
   }
   p {
-    @apply text-[16px] font-light;
+    @apply font-roboto font-light;
   }
   input,
-  select {
+  select,
+  .field {
     @apply rounded-lg bg-accent/10 p-5 font-roboto font-light placeholder:text-accent;
   }
   .error-text {
     @apply text-sm font-normal text-red-500;
   }
+  img {
+    display: initial;
+  }
+}
+
+.active > button {
+  background: white;
+  color: #05299e;
 }

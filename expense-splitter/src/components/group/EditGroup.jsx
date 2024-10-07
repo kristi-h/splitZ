@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
 import MultiSelectDropdown from "../ui/MultiSelectDropdown";
@@ -9,9 +11,34 @@ export default function EditGroup() {
   const { friends, setGroupData, groupData, modal, handleSetModal } =
     UseDataContext();
 
+  // Define validation schema and error messages
+  const schema = z.object({
+    name: z
+      .string({ required_error: "Name is required" })
+      .trim()
+      .min(2, { message: "Must be at least 2 characters" }),
+    description: z
+      .string({ required_error: "Description is required" })
+      .trim()
+      .min(1, { message: "Please add a description" }),
+    budget: z
+      .string()
+      .min(1, { message: "Enter the amount please" })
+      .regex(new RegExp(/^[0-9]*(.[0-9]{2})?$/, "i"), {
+        message: "Please enter an valid amount (100, 100.99)",
+      }),
+    friendIDs: z
+      .array(z.string())
+      .nonempty({ message: "At least one friend ID is required" }),
+  });
+
   //form properties
   const currentGroupData = groupData.find((group) => group.ID === modal.id);
+<<<<<<< HEAD
   console.log("currentGroupData", currentGroupData);
+=======
+  //save the list of friends
+>>>>>>> dev
   const editFriends = currentGroupData.friendIDs;
 
   const {
@@ -20,7 +47,10 @@ export default function EditGroup() {
     control,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    // Used to check form data against validation schema
+    resolver: zodResolver(schema),
+  });
 
   // if another group is selected for edit, reset the form
   useEffect(() => {
@@ -36,16 +66,6 @@ export default function EditGroup() {
 
   //onSubmit
   const onSubmit = (values) => {
-    //check see if current edit Object id match the id of the group object
-    //then replace that object with current edit data
-    //else return group object
-    // setGroupData((prevState) =>
-    //   prevState.map((currentStateObject) =>
-    //     currentStateObject.id === currentGroupData.id
-    //       ? { ...currentStateObject, ...values }
-    //       : currentStateObject,
-    //   ),
-    // );
     //updating the group data in groups database
     db.insertOrUpdate("groups", { ID: currentGroupData.ID }, { ...values });
     db.commit();
@@ -60,42 +80,54 @@ export default function EditGroup() {
       <h1 className="text-center">Edit a group</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-5 flex flex-col">
-          <label className="mb-1">Group Name</label>
+          <label htmlFor="name" autoComplete="on" className="mb-1">
+            Name
+          </label>
           <input
+            id="name"
             placeholder="Name"
-            {...register("name", { required: "name is required" })}
+            className={`border ${errors.name ? "border-red-500 outline-red-500" : "border-transparent"} `}
+            {...register("name")}
           />
-          <div className="error-text">{errors.name && errors.name.message}</div>
+          {errors.name && (
+            <span className="ml-2 text-sm text-red-400">
+              {errors.name.message}
+            </span>
+          )}
         </div>
 
         <div className="mb-5 flex flex-col">
-          <label className="mb-1">Group Description</label>
+          <label htmlFor="description" autoComplete="on" className="mb-1">
+            Description
+          </label>
           <input
+            id="description"
             placeholder="What is this group about"
-            {...register("description", {
-              required: "description is required",
-            })}
+            className={`border ${errors.description ? "border-red-500 outline-red-500" : "border-transparent"} `}
+            {...register("description")}
           />
-          <div className="error-text">
-            {errors.description && errors.description.message}
-          </div>
+          {errors.description && (
+            <span className="ml-2 text-sm text-red-400">
+              {errors.description.message}
+            </span>
+          )}
         </div>
 
         <div className="mb-5 flex flex-col">
-          <label className="mb-1">Budget</label>
+          <label htmlFor="budget" autoComplete="on" className="mb-1">
+            Budget
+          </label>
           <input
+            id="budget"
             placeholder="Enter a value"
-            {...register("budget", {
-              required: "budget is required",
-              pattern: {
-                value: /^[0-9]*(\.[0-9]{2})?$/i,
-                message: "invalid type, only numbers allowed",
-              },
-            })}
+            className={`border ${errors.budget ? "border-red-500 outline-red-500" : "border-transparent"} `}
+            {...register("budget")}
           />
-          <div className="error-text">
-            {errors.budget && errors.budget.message}
-          </div>
+          {errors.budget && (
+            <span className="ml-2 text-sm text-red-400">
+              {errors.budget.message}
+            </span>
+          )}
         </div>
 
         <div className="mb-5 flex flex-col">
@@ -106,11 +138,16 @@ export default function EditGroup() {
             friends={friends}
             control={control}
             editFriends={editFriends}
+            errors={errors.friendIDs}
           />
         </div>
 
         <div className="flex gap-8">
-          <Button onClick={handleSetModal} className="w-full md:w-auto">
+          <Button
+            type="button"
+            onClick={handleSetModal}
+            className="w-full md:w-auto"
+          >
             Cancel
           </Button>
           <Button className="w-full bg-primary md:w-auto">Submit</Button>

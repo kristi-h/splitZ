@@ -1,5 +1,7 @@
+import { UseDataContext } from "../../context/SiteContext";
+
 export default function GroupExpenseList({ expenseList }) {
-  console.log(expenseList);
+  const { handleSetModal } = UseDataContext();
 
   return (
     <>
@@ -9,7 +11,24 @@ export default function GroupExpenseList({ expenseList }) {
       {expenseList.map((expense) => {
         return (
           <div key={expense.id} className="flex flex-row justify-between">
-            <p>{expense.name}</p>
+            <p>
+              {expense.name}
+              {expense.receipt_URL && (
+                <span
+                  onClick={() =>
+                    handleSetModal(
+                      "ReceiptImage",
+                      null,
+                      expense.receipt_URL,
+                      expense.name,
+                    )
+                  }
+                  className="ml-2 text-sm text-blue-700 underline"
+                >
+                  receipt
+                </span>
+              )}
+            </p>
             <p>${expense.amount}</p>
           </div>
         );

@@ -1,18 +1,19 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
-        primary: '#05299e',
-        secondary: '#070d0d',
-        accent: '#72a1e5',
+        primary: "#05299e",
+        secondary: "#070d0d",
+        accent: "#72a1e5",
+        "card-bg": "#D4E2F7",
       },
       fontFamily: {
-        sans: ['Outfit', 'sans-serif'],
-        roboto: ['Roboto', 'sans-serif'],
+        sans: ["Outfit", "sans-serif"],
+        roboto: ["Roboto", "sans-serif"],
       },
     },
   },
   plugins: [],
-}
+};

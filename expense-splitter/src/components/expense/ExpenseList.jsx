@@ -1,10 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import { UseDataContext } from "../context/SiteContext";
 import db from "../../utils/localstoragedb";
 import IconButton from "../ui/IconButton";
 
-export default function ExpenseList() {
+export default function ExpenseList(props) {
   const { expenses, setExpenses, handleSetModal } = UseDataContext();
-  // console.log('expenses', expenses)
+
+  const navigate = useNavigate();
 
   // Filter out id match, delete from local storage
   const handleDeleteExpense = (id) => {
@@ -15,15 +17,37 @@ export default function ExpenseList() {
     setExpenses(db.queryAll("expenses"));
   };
 
-  const expenseItems = expenses.map((expense) => (
+  // filter expenses for search bar
+  const filteredData = expenses.filter((search) => {
+    if (props.input === "") {
+      return search;
+    } else {
+      return (
+        search.name.toLowerCase().includes(props.input) ||
+        search.amount.toLowerCase().includes(props.input)
+      );
+    }
+  });
+
+  const expenseItems = filteredData.map((expense) => (
     <div
       key={expense.id}
       className="mb-1 flex flex-col rounded-lg bg-slate-100 px-4 py-4"
     >
       <div className="flex items-center justify-between">
         <div className="content-start">{expense.name}</div>
-        <div className="content-end">{expense.amount}</div>
-        <div className="flex content-end gap-2">
+        <div className="justify-center">{expense.amount}</div>
+        <div className="flex justify-center gap-2">
+          <IconButton
+            icon="fa-regular fa-circle-info"
+            onClick={() => {
+              navigate(`${expense.id}`);
+            }}
+            variant={"small"}
+            className="font-normal"
+            style="blue"
+          ></IconButton>
+
           <IconButton
             icon="fa-regular fa-pen-to-square"
             onClick={() => handleSetModal("EditExpense", expense.ID)}

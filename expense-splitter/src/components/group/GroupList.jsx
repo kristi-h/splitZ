@@ -1,18 +1,42 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
 import GroupFriendList from "./groupListComponent/GroupFriendList";
 import GroupExpenseList from "./groupListComponent/GroupExpenseList";
 import db from "../../utils/localstoragedb";
+import Dialog from "../ui/Dialog";
 
-export default function GroupList() {
+export default function GroupList(props) {
   const [displayDetails, setDisplayDetails] = useState("");
+  const [deleteID, setDeleteID] = useState(null);
   const { groupData, setGroupData, friends, expenses, handleSetModal } =
     UseDataContext();
 
-  //change arrow icon when info displays
-  const [icon, setIcon] = useState("up");
+  // Create reference to dom element
+  const deleteDialogRef = useRef(null);
+  const navigate = useNavigate();
 
+  // filter groupData for search bar
+  const filteredData = groupData.filter((search) => {
+    if (props.input === '') {
+      return search;
+    } else {
+      return search.name.toLowerCase().includes(props.input)
+    }
+  });
+
+  // Closes or opens the dialog
+  const toggleDialog = (ref) => {
+    if (!ref.current) {
+      return;
+    }
+    ref.current.hasAttribute("open")
+      ? ref.current.close()
+      : ref.current.showModal();
+  };
+
+  //handle displaying group detail on a dropdown
   const handleDisplayDetails = (id) => {
     if (displayDetails === id) {
       setDisplayDetails("");
@@ -69,14 +93,14 @@ export default function GroupList() {
       Number(currentGroupBudget),
     );
     //determine over / under
-    const flag = expenseAmount < 0 ? "text-red-600" : "text-green-600";
+    const overBudget = expenseAmount < 0 ? true : false; //"text-red-600" : "text-green-600";
     //return an array
-    return [expenseAmount.toFixed(2), flag, newGroup];
+    return [Math.abs(expenseAmount.toFixed(2)), overBudget, newGroup];
   };
 
-  const groupList = groupData.map((group) => {
+  const groupList = filteredData.map((group) => {
     //expense calculator
-    const [expenseTotal, flag, newGroup] = expenseAmount(
+    const [expenseTotal, overBudget, newGroup] = expenseAmount(
       expenses,
       group.expenseIDs,
       group.budget,
@@ -84,47 +108,51 @@ export default function GroupList() {
     return (
       <div
         onClick={() => {
-          console.log(" these are id: ", group.ID, group.id);
           handleDisplayDetails(group.ID);
-          if (icon === "up") {
-            setIcon("down");
-          } else {
-            setIcon("up");
-          }
         }}
         key={group.ID}
         className="mb-1 flex cursor-pointer flex-col rounded-lg bg-slate-100 px-4 py-4"
       >
         <div className="flex items-center justify-between">
-          <h2 className="">{group.name}</h2>
-          {icon === "up" ? (
-            <i className="fa-solid fa-chevron-up text-3xl text-accent"></i>
-          ) : null}
-          {icon === "down" ? (
-            <i className="fa-solid fa-chevron-down text-3xl text-accent"></i>
-          ) : null}
+          <div className="flex flex-col">
+            <h2 className="">{group.name}</h2>
+            {!newGroup && (
+              <span
+                className={`${overBudget ? `text-red-600` : `text-green-600`} text-sm`}
+              >
+                {overBudget ? `Over: ` : `Under: `}
+                {expenseTotal}
+              </span>
+            )}
+          </div>
+          <i
+            className={`fa-solid ${displayDetails === group.ID ? `fa-chevron-down` : `fa-chevron-up`} text-3xl text-accent`}
+          ></i>
         </div>
         <div>
           {displayDetails === group.ID && (
             <>
               <div className="mb-4 mt-2 font-roboto text-sm font-light">
                 <p>{group.description}</p>
-                <p>
-                  Budget:
-                  <span className={newGroup ? "" : flag}>
-                    {newGroup
-                      ? ` \$${group.budget}`
-                      : ` \$${expenseTotal} / \$${group.budget}`}
-                  </span>
-                </p>
+                <p>Budget:{group.budget}</p>
                 {/* call a function to display friends list */}
-                {retrieveList(friends, group.friendIDs, "friends")}
+                {group.friendIDs &&
+                  retrieveList(friends, group.friendIDs, "friends")}
                 {/* check for group expenses, if exists call a function to display expense list */}
                 {group.expenseIDs &&
                   retrieveList(expenses, group.expenseIDs, "expenses")}
               </div>
               <div className="flex justify-between">
                 <div className="flex gap-2">
+                  <Button
+                    variant={"small"}
+                    onClick={() => {
+                      navigate(`/group/id/${group.id}`);
+                    }}
+                    className={"bg-accent"}
+                  >
+                    View
+                  </Button>
                   <Button
                     variant={"small"}
                     // onClick={() => handleEditGroup(group)}
@@ -135,7 +163,10 @@ export default function GroupList() {
                   </Button>
                   <Button
                     variant={"small"}
-                    onClick={() => handleDelete(group.ID)}
+                    onClick={() => {
+                      setDeleteID(group.ID);
+                      toggleDialog(deleteDialogRef);
+                    }}
                     className={"bg-accent"}
                   >
                     Delete
@@ -151,6 +182,13 @@ export default function GroupList() {
   return (
     <div>
       <div className="mb-4 flex flex-col-reverse">{groupList}</div>
+      <Dialog
+        dialogRef={deleteDialogRef}
+        cancelOnClick={() => toggleDialog(deleteDialogRef)}
+        confirmOnClick={() => handleDelete(deleteID)}
+      >
+        <p>Are you sure you want to delete this group?</p>
+      </Dialog>
     </div>
   );
 }

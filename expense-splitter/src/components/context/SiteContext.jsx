@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { createContext, useContext } from "react";
 import db from "../../utils/localstoragedb";
-import { nanoid } from "nanoid";
 import "../../utils/dummyData";
 
 const SiteContext = createContext(null);
@@ -23,13 +22,15 @@ export const DataProvider = ({ children }) => {
     show: false,
     type: "",
     id: "",
+    image_url: "",
+    image_alt: "",
   });
 
   const handleSetUser = (username) => {
     setUser(username);
   };
 
-  const handleSetModal = (type, id) => {
+  const handleSetModal = (type, id, image_url, image_alt) => {
     if (!type) {
       setModal({ show: false });
     } else {
@@ -37,11 +38,11 @@ export const DataProvider = ({ children }) => {
         show: !prev.show,
         type,
         id,
+        image_url,
+        image_alt,
       }));
     }
   };
-
-  // console.log(modal);
 
   const handleCreateGroupForm = () => {
     setShowCreateGroupForm(!showCreateGroupForm);

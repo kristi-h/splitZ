@@ -5,14 +5,15 @@ export default function Button({
   className,
   type,
 }) {
+  const baseStyles = "bg-accent whitespace-nowrap text-white ";
   const buttonStyles =
     variant === "small"
-      ? "bg-accent text-white py-2 px-6 rounded-md hover:bg-secondary text-sm font-light"
-      : "bg-accent text-white py-2 px-8 rounded-lg hover:bg-secondary";
+      ? "py-2 px-3 rounded-md hover:bg-secondary text-sm font-light"
+      : "py-3 max-w-[380px] px-8 rounded-xl hover:bg-secondary";
 
   return (
     <button
-      className={`${buttonStyles} ${className} transition-colors`}
+      className={`${baseStyles} ${buttonStyles} ${className} transition-colors`}
       onClick={onClick}
       type={type}
     >

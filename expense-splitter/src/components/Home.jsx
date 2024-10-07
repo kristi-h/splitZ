@@ -1,14 +1,13 @@
-import { UseDataContext } from "./context/SiteContext";
-import ExpenseList from "./expense/ExpenseList";
-import GroupList from "./group/GroupList";
-import FriendList from "./friend/FriendList";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { UseDataContext } from "./context/SiteContext";
+import Card from "./ui/Card";
+import FooterHome from "./layout/FooterHome";
+import NoDataPlaceholder from "./ui/NoDataPlaceholder";
 
 export default function Home() {
   const navigate = useNavigate();
-  const { user, modal } = UseDataContext();
-  console.log(user);
+  const { user, groupData, expenses, modal, handleSetModal } = UseDataContext();
 
   useEffect(() => {
     // if user is not "logged in", go to login
@@ -17,23 +16,83 @@ export default function Home() {
     }
   }, [user]);
 
+  const groupDisplay = groupData
+    .sort((a, b) => b.ID - a.ID) // show latest expense up top
+    .map((group, i) => {
+      // show a max of 3 groups
+      if (i <= 2) {
+        return (
+          <Card
+            key={group.id}
+            id={group.id}
+            type={"group"}
+            icon={"fa-user-group"}
+            title={group.name}
+            subtitle={group.description}
+          />
+        );
+      }
+    });
+
+  const expenseDisplay = expenses
+    .sort((a, b) => b.ID - a.ID) // show latest expense up top
+    .map((expense, i) => {
+      // show a max of 3 expenses
+      if (i <= 2) {
+        // get the group associated with this expense
+        const expenseGroup = groupData.find(
+          (group) => group.id === expense.groupId,
+        );
+
+        return (
+          <Card
+            key={expense.id}
+            id={expense.id}
+            type={"expense"}
+            icon={"fa-money-check-dollar"}
+            title={expense.name}
+            subtitle={expenseGroup?.name}
+            price={expense.amount}
+          />
+        );
+      }
+    });
+
   return (
     // if modal is not showing then display the following
     !modal.show && (
       <div>
         <h1 className="text-center">Welcome, {user}!</h1>
-        <div className="mb-4">
-          <h2 className="mb-2 text-2xl font-normal">Groups</h2>
-          <GroupList />
+        <div className="mb-8">
+          <h2 className="mb-4 text-2xl font-medium">Recent Groups</h2>
+          {groupData.length > 0 ? (
+            <>{groupDisplay}</>
+          ) : (
+            <NoDataPlaceholder
+              title="There are no groups to display"
+              subtitle="Get started by creating a group."
+              btnText="Create a Group"
+              onClick={() => {
+                handleSetModal("CreateGroup");
+              }}
+            />
+          )}
         </div>
-        <div className="mb-4">
-          <h2 className="mb-2 text-2xl font-normal">Expenses</h2>
-          <ExpenseList />
-        </div>
-        <div className="mb-4">
-          <h2 className="mb-2 text-2xl font-normal">Friends</h2>
-          <FriendList />
-        </div>
+
+        <>
+          <h2 className="mb-4 text-2xl font-medium">Recent Expenses</h2>
+          {expenses.length > 0 ? (
+            <>{expenseDisplay}</>
+          ) : (
+            <NoDataPlaceholder
+              title="There are no expenses to display"
+              subtitle="Get started by creating an expense."
+              btnText="Create a Expense"
+              onClick={() => handleSetModal("CreateExpense")}
+            />
+          )}
+        </>
+        {/* <FooterHome /> // remove footer from home until we establish outlets*/}
       </div>
     )
   );
