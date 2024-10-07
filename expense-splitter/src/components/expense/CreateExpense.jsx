@@ -34,8 +34,8 @@ export default function CreateExpense() {
   } = useForm({
     defaultValues: {
       // default values for testing only
-      name: "Munchies on the way there",
-      description: "Munchies for the trip in",
+      name: "Munchies",
+      description: "Junky stuff for the trip in",
       amount: 500,
     },
   });
