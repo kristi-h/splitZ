@@ -62,6 +62,7 @@ export default function CreateExpense() {
     setAllFriends(friendObjs);
 
     // get the friend values for weights
+    // populate the initial form values
     const friendValues = friendObjs.reduce((acc, friend) => {
       acc[friend.name] = friend.weight;
       return acc;
@@ -164,6 +165,7 @@ export default function CreateExpense() {
     // setAllFriends([initialFriend]);
     // spread in friends in group
     // get the friends in the group
+
     const friendIdsArr = groupData.find(
       (group) => group.id === watchedValues["group"],
     )?.friendIDs;
@@ -175,6 +177,7 @@ export default function CreateExpense() {
         weight: 0,
         id: friendIdsArr[i],
       }));
+    console.log("friendsInGroup", friendsInGroup);
     setAllFriends(friendsInGroup);
     // setAllFriends((prev) => [...prev, ...friendsInGroup]);
   }, [watchedValues["group"]]);
@@ -205,11 +208,29 @@ export default function CreateExpense() {
   });
 
   const onSubmit = (values) => {
+    console.log("These are the values: ", values);
     // editExpense({ ...values });
-    db.insertOrUpdate("expenses", { ID: currentExpense.ID }, { ...values });
+    const weightObj = allFriends.map((friend) => ({
+      friendId: friend.id,
+      percentage: parseInt(friend.weight),
+    }));
+    const updatedExpense = {
+      amount: values.amount,
+      category: values.category,
+      name: values.name,
+      description: values.description,
+      weight: weightObj,
+      groupId: values.group,
+    };
+    console.log("updatedExpense", updatedExpense);
+    db.insertOrUpdate(
+      "expenses",
+      { ID: currentExpense.ID },
+      { ...updatedExpense },
+    );
     db.commit();
     setExpenses(db.queryAll("expenses"));
-    console.log("These are the values: ", values);
+    // console.log("These are the values: ", values);
     handleSetModal();
   };
 
