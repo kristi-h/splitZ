@@ -17,6 +17,7 @@ export default function Card({
 
   return (
     <div
+      tabIndex={0}
       onClick={hasButtons ? null : handleClick}
       className={`mb-2 flex ${hasButtons ? "" : "cursor-pointer"} items-center rounded-2xl bg-card-bg p-4`}
     >
