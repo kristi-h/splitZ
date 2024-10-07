@@ -28,10 +28,10 @@ const FriendList = (props) => {
 
   // filter friends for search bar
   const filteredData = friends.filter((search) => {
-    if (props.input === '') {
+    if (props.input === "") {
       return search;
     } else {
-      return search.name.toLowerCase().includes(props.input)
+      return search.name.toLowerCase().includes(props.input);
     }
   });
 
@@ -47,36 +47,6 @@ const FriendList = (props) => {
           subtitle={friend?.email}
           hasButtons={true}
         >
-<<<<<<< HEAD
-          <i className="fa-solid fa-user mr-4 text-2xl"></i>
-          <div className="flex flex-col">
-            <div>{friend.name}</div>
-            <div>{friend.weight}</div>
-            <div className="text-sm font-light text-gray-500">
-              <a href={`mailto: ${friend.email}`}>{friend.email}</a>
-            </div>
-          </div>
-
-          <div className="ml-auto flex gap-2">
-            <Button
-              variant={"small"}
-              className="font-normal"
-              onClick={() => {
-                handleSetModal("CreateFriend", friend.id);
-              }}
-            >
-              Edit
-            </Button>
-            <Button
-              variant={"small"}
-              className="font-normal"
-              onClick={() => handleDeleteFriend(friend.id)}
-            >
-              Delete
-            </Button>
-          </div>
-        </div>
-=======
           <Button
             variant={"small"}
             className="bg-red-700"
@@ -102,7 +72,6 @@ const FriendList = (props) => {
             <i className="fa-solid fa-pen-to-square"></i>
           </Button>
         </Card>
->>>>>>> dev
       ))}
 
       <Dialog

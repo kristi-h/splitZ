@@ -34,11 +34,8 @@ export default function EditGroup() {
 
   //form properties
   const currentGroupData = groupData.find((group) => group.ID === modal.id);
-<<<<<<< HEAD
-  console.log("currentGroupData", currentGroupData);
-=======
+
   //save the list of friends
->>>>>>> dev
   const editFriends = currentGroupData.friendIDs;
 
   const {
