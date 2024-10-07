@@ -141,7 +141,6 @@ export default function CreateExpense() {
       groupId: values.group,
     };
 
-    setExpenses([...expenses, newExpense]);
     db.insert("expenses", { ...newExpense });
     // update groups state with new expense id
     setGroupData((prev) =>
@@ -157,8 +156,8 @@ export default function CreateExpense() {
       expenseIDs: [...row.expenseIDs, id],
     }));
     db.commit();
-    // console.log(values);
-    // console.log(allFriends);
+    // update expenses state with new db values
+    setExpenses(db.queryAll("expenses"));
     handleSetModal();
   };
 
