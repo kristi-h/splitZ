@@ -5,7 +5,6 @@ import IconButton from "../ui/IconButton";
 
 export default function ExpenseList(props) {
   const { expenses, setExpenses, handleSetModal } = UseDataContext();
-  // console.log('expenses', expenses)
 
   const navigate = useNavigate();
 
