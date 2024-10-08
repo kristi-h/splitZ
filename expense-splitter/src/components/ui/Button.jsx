@@ -4,6 +4,7 @@ export default function Button({
   onClick,
   className,
   type,
+  disabled,
 }) {
   const baseStyles = "bg-accent whitespace-nowrap text-white ";
   const buttonStyles =
@@ -13,6 +14,7 @@ export default function Button({
 
   return (
     <button
+      disabled={disabled}
       className={`${baseStyles} ${buttonStyles} ${className} transition-colors`}
       onClick={onClick}
       type={type}

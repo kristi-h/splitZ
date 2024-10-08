@@ -325,7 +325,16 @@ export default function CreateExpense() {
           <Button onClick={handleSetModal} className="w-full md:w-auto">
             Cancel
           </Button>
-          <Button className="w-full bg-primary md:w-auto">Submit</Button>
+          {weightLimitExceeded ? (
+            <Button
+              disabled={true}
+              className="w-full cursor-not-allowed bg-primary opacity-25 md:w-auto"
+            >
+              Submit
+            </Button>
+          ) : (
+            <Button className="w-full bg-primary md:w-auto">Submit</Button>
+          )}
         </div>
       </form>
     </div>
