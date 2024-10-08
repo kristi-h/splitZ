@@ -60,28 +60,34 @@ const ReceiptUpload = () => {
   return (
     <>
       <form className="flex flex-col py-1" onSubmit={handleSubmit(onUpload)}>
-        <h2>Upload Receipt</h2>
-        <div className="flex items-center gap-4">
+        <p className="text-lg font-bold">
+          Upload Receipt
+          <span className="ml-2 text-sm font-light">
+            (File size must be less than 6MB)
+          </span>
+        </p>
+        <div className="flex items-center gap-4 py-2">
           <label
             htmlFor="upload"
-            className="flex h-12 w-36 cursor-pointer items-center justify-center rounded-lg bg-accent"
+            className="flex h-12 w-36 cursor-pointer items-center justify-center rounded-xl bg-accent transition-colors hover:bg-secondary hover:text-white"
           >
-            Select File
+            <i className="fa-solid fa-paperclip mr-2"></i>Select File
           </label>
-          <p className="text-sm font-light">
-            (File size must be less than 6MB)
-          </p>
+          <input
+            className="absolute h-[0.1px] w-[0.1px] p-2 opacity-0"
+            type="file"
+            id="upload"
+            {...register("upload")}
+          />
+          {/* Conditionally render button based on isSubmitting */}
+          <Button
+            type={"submit"}
+            disabled={isSubmitting || !isValid}
+            className={`bg-primary ${isValid ? "" : "cursor-default bg-slate-400 hover:bg-slate-400"}`}
+          >
+            {isSubmitting ? "Uploading..." : "Upload"}
+          </Button>
         </div>
-        <input
-          className="absolute h-[0.1px] w-[0.1px] p-2 opacity-0"
-          type="file"
-          id="upload"
-          {...register("upload")}
-        />
-        {/* Conditionally render button based on isSubmitting */}
-        <Button type={"submit"} disabled={isSubmitting || !isValid}>
-          {isSubmitting ? "Uploading..." : "Upload"}
-        </Button>
         {/* Render errors */}
         {errors.upload?.message && (
           <span className="text-red-500">{errors.upload.message}</span>
