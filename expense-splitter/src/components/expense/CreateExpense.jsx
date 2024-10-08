@@ -133,23 +133,36 @@ export default function CreateExpense() {
     return (
       <div
         key={friend.name}
-        className="mb-2 flex items-center justify-between gap-2"
+        className="mb-2 grid grid-cols-3 items-center justify-between gap-2"
       >
         <label className="mr-2">{friend.name}</label>
-        <input
-          className="ml-auto w-[60px] text-center"
-          name={friend.name}
-          required
-          placeholder="0"
-          defaultValue={0}
-          {...register(`${friend.name}`, {
-            pattern: {
-              value: /^[0-9]{1,2}$/i,
-              message: "invalid type, please enter a number between 1-100%",
-            },
-          })}
-        />
-        <div className="w-28 rounded-lg bg-accent/5 p-5 text-center">
+        <div className="relative ml-auto flex w-[68px] items-center">
+          <input
+            className="w-full pr-4"
+            name={friend.name}
+            required
+            placeholder="0"
+            defaultValue={0}
+            {...register(`${friend.name}`, {
+              pattern: {
+                value: /^\d{1,2}$/,
+                message:
+                  "Invalid input. Please enter a number between 0 and 99.",
+              },
+            })}
+            // restrict to a max of 2 digits
+            onInput={(e) => {
+              const input = e.target;
+              if (input.value.length > 2) {
+                input.value = input.value.slice(0, 2);
+              }
+            }}
+          />
+          <span className="absolute right-4 font-roboto font-light text-gray-800">
+            %
+          </span>
+        </div>
+        <div className="rounded-lg bg-accent/50 p-5 text-center font-semibold">
           {friend.dollar}
         </div>
       </div>
