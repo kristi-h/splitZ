@@ -85,7 +85,7 @@ export default function CreateExpense() {
         : {
             ...friend,
             weight: newZeroWeight,
-            dollar: `${((newZeroWeight * watchedValues["amount"]) / 100).toFixed(2)}`,
+            dollar: `$${((newZeroWeight * watchedValues["amount"]) / 100).toFixed(2)}`,
           };
     });
     setAllFriends(updatedFriends);
