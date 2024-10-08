@@ -113,12 +113,35 @@ export default function CreateExpense() {
   console.log("allFriends", allFriends);
 
   const onSubmit = (values) => {
-    console.log(values);
+    // all friends have zeros? boolean
+    // const allHaveZeros = allFriends.every((friend) => friend.weight === "0");
+
+    // get friends with non-zeros
+    const friendsWithNonZeros = allFriends.filter(
+      (friend) => friend.weight != "0" && friend.name,
+    );
+    // console.log(friendsWithNonZeros);
+
+    // calculate non-zero percentage
+    const nonZeroPercentage = friendsWithNonZeros.reduce(
+      (acc, curr) => acc + parseInt(curr.weight),
+      0,
+    );
+    // console.log(nonZeroPercentage);
+    // console.log(allFriends.length - friendsWithNonZeros.length);
     const id = nanoid();
-    const weightObj = allFriends.map((friend) => ({
-      friendId: friend.id,
-      percentage: parseInt(friend.weight),
-    }));
+    const weightObj = allFriends.map((friend) => {
+      const finalWeight =
+        friend.weight === "0"
+          ? // subtract non-zero percentage and divide by remaining friends
+            (
+              (100 - nonZeroPercentage) /
+              (allFriends.length - friendsWithNonZeros.length)
+            ).toFixed(2)
+          : parseInt(friend.weight);
+      return { friendId: friend.id, percentage: finalWeight };
+    });
+    console.log("weightObj", weightObj);
     const newExpense = {
       id,
       ...values,
