@@ -6,31 +6,21 @@ export const dummyFriends = [
   //   name: "Me",
   //   email: "me@email.com",
   // },
-  {
-    id: "xky170ms-srvb-fk5e-eprt-o5fazno3mq",
-    name: "Me",
-    email: "me@email.com",
-  },
-  {
-    id: "xky170ms-srvb-fk5e-eprt-o5fazno3mq",
-    name: "Me",
-    email: "me@email.com",
-  },
-  {
-    id: "9641947f-6b00-4db7-9c7e-9e479b438bd8",
-    name: "Lloyd Kneman",
-    email: "lloydk@email.com",
-  },
-  {
-    id: "d5923f14-bc79-44ea-8388-d354c72c2253",
-    name: "Joz Freedle",
-    email: "jfree@email.com",
-  },
-  {
-    id: "8217468b-ec4e-4340-9c90-665dff5d22d2",
-    name: "Nunya",
-    email: "buzzzz@email.com",
-  },
+  // {
+  //   id: "9641947f-6b00-4db7-9c7e-9e479b438bd8",
+  //   name: "Lloyd Kneman",
+  //   email: "lloydk@email.com",
+  // },
+  // {
+  //   id: "d5923f14-bc79-44ea-8388-d354c72c2253",
+  //   name: "Joz Freedle",
+  //   email: "jfree@email.com",
+  // },
+  // {
+  //   id: "8217468b-ec4e-4340-9c90-665dff5d22d2",
+  //   name: "Nunya",
+  //   email: "buzzzz@email.com",
+  // },
   // {
   //   id: "zwo2wpz6-uulb-uais-gsil-3uto1zfubf",
   //   name: "Drogo Beck",
@@ -84,6 +74,7 @@ export const dummyUser = [{ id: "1", name: "Cornelius", email: "c@c.com" }];
 export const expensesSchema = [
   "id",
   "name",
+  "date",
   "description",
   "category",
   "amount",
@@ -340,19 +331,19 @@ export const groupSchema = [
 ];
 
 export const dummyGroups = [
-  {
-    id: "fbkj3Bgb-jkw3t-23h9g-sKlfh43ntnMi",
-    name: "Test Group",
-    description: "Test Group",
-    budget: "5000",
-    friendIDs: [
-      "xky170ms-srvb-fk5e-eprt-o5fazno3mq",
-      "9641947f-6b00-4db7-9c7e-9e479b438bd8",
-      "d5923f14-bc79-44ea-8388-d354c72c2253",
-      "8217468b-ec4e-4340-9c90-665dff5d22d2",
-    ],
-    expenseIDs: ["testing1-0ff6-463a-zk0s-a5lke3nta91"],
-  },
+  // {
+  //   id: "fbkj3Bgb-jkw3t-23h9g-sKlfh43ntnMi",
+  //   name: "Test Group",
+  //   description: "Test Group",
+  //   budget: "5000",
+  //   friendIDs: [
+  //     "xky170ms-srvb-fk5e-eprt-o5fazno3mq",
+  //     "9641947f-6b00-4db7-9c7e-9e479b438bd8",
+  //     "d5923f14-bc79-44ea-8388-d354c72c2253",
+  //     "8217468b-ec4e-4340-9c90-665dff5d22d2",
+  //   ],
+  //   expenseIDs: ["testing1-0ff6-463a-zk0s-a5lke3nta91"],
+  // },
   // {
   //   id: "2d638ad6-2dde-44a9-b8d6-2e58a380b78c",
   //   name: "The Brat Pack",
