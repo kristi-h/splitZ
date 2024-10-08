@@ -5,6 +5,7 @@ import { storage } from "../../utils/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useState } from "react";
 import { nanoid } from "nanoid";
+import Button from "../ui/Button";
 
 const MAX_FILE_SIZE = 6000000; //6MB
 const ACCEPTED_TYPES = [
@@ -59,6 +60,7 @@ const ReceiptUpload = () => {
   return (
     <>
       <form className="flex flex-col py-1" onSubmit={handleSubmit(onUpload)}>
+        <h2>Upload Receipt</h2>
         <div className="flex items-center gap-4">
           <label
             htmlFor="upload"
@@ -77,9 +79,9 @@ const ReceiptUpload = () => {
           {...register("upload")}
         />
         {/* Conditionally render button based on isSubmitting */}
-        <button type="submit" disabled={isSubmitting || !isValid}>
+        <Button type={"submit"} disabled={isSubmitting || !isValid}>
           {isSubmitting ? "Uploading..." : "Upload"}
-        </button>
+        </Button>
         {/* Render errors */}
         {errors.upload?.message && (
           <span className="text-red-500">{errors.upload.message}</span>
