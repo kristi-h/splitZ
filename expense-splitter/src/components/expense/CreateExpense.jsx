@@ -137,7 +137,7 @@ export default function CreateExpense() {
             (
               (100 - nonZeroPercentage) /
               (allFriends.length - friendsWithNonZeros.length)
-            ).toFixed(2)
+            ).toFixed()
           : parseInt(friend.weight);
       return { friendId: friend.id, percentage: finalWeight };
     });
