@@ -7,22 +7,8 @@ import db from "../../utils/localstoragedb";
 import { categories } from "../../utils/dummyData";
 
 export default function CreateExpense() {
-  const {
-    groupData,
-    expenses,
-    setExpenses,
-    setGroupData,
-    handleSetModal,
-    friends,
-  } = UseDataContext();
-
-  // const initialFriend = {
-  //   // id: "1s2e8y-8w9y7h973s-mk5o8y47",
-  //   id: "xky170ms-srvb-fk5e-eprt-o5fazno3mq",
-  //   name: "Me",
-  //   weight: 0,
-  //   dollar: 0,
-  // };
+  const { groupData, setExpenses, setGroupData, handleSetModal, friends } =
+    UseDataContext();
 
   const [allFriends, setAllFriends] = useState([]);
 
