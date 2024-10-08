@@ -204,7 +204,7 @@ function GroupDetail() {
             <NoDataPlaceholder
               title="There are no expenses to display"
               subtitle="Get started by creating an expense."
-              btnText="Create a Expense"
+              btnText="Create Expense"
               onClick={() => handleSetModal("CreateExpense")}
             />
           )}
