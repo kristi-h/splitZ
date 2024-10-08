@@ -29,7 +29,7 @@ const DisplayReceipt = ({ expense, setExpenses }) => {
 
   return (
     <>
-      <div className="relative">
+      <div className="relative" data-html2canvas-ignore>
         <img src={expense.receipt_URL} alt={`Receipt for ${expense.name}`} />
         <button
           className="absolute right-1 top-1 rounded-full bg-slate-500 shadow-2xl shadow-cyan-700"
