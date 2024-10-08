@@ -136,6 +136,7 @@ export default function CreateExpense() {
         <input
           className="ml-auto w-[60px] text-center"
           name={friend.name}
+          required
           placeholder="0"
           defaultValue={0}
           {...register(`${friend.name}`, {
@@ -145,7 +146,9 @@ export default function CreateExpense() {
             },
           })}
         />
-        <div className="field w-28 text-center">{friend.dollar}</div>
+        <div className="w-28 rounded-lg bg-accent/5 p-5 text-center">
+          {friend.dollar}
+        </div>
       </div>
     );
   });
