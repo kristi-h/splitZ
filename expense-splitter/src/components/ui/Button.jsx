@@ -6,7 +6,7 @@ export default function Button({
   type,
   disabled,
 }) {
-  const baseStyles = "bg-accent whitespace-nowrap text-white ";
+  const baseStyles = "bg-accent whitespace-nowrap text-white cursor-pointer";
   const buttonStyles =
     variant === "small"
       ? "py-2 px-3 rounded-md hover:bg-secondary text-sm font-light"
