@@ -66,7 +66,9 @@ function ExpenseDetail() {
 
   // get date and format it
   const expenseDate = formatDate(expenseDetails.date);
-  console.log(expenseDate);
+
+  const expenseAmount = parseInt(expenseDetails.amount);
+  console.log(typeof expenseAmount);
 
   expenseDetails.weight.forEach((weight) => {
     const friendInfo = friends.find((friend) => friend.id === weight.friendId);
@@ -105,9 +107,9 @@ function ExpenseDetail() {
           <h1 className="mx-auto mb-0">{expenseDetails.name}</h1>
           <i className="fa-solid fa-chevron-right text-3xl text-accent opacity-0"></i>
         </div>
-        <div>
-          <h2 className="mb-2 p-2 text-center text-2xl">
-            ${expenseDetails.amount}
+        <div className="flex flex-col gap-2">
+          <h2 className="p-2 text-center text-[32px] font-medium">
+            ${expenseAmount.toFixed(2)}
           </h2>
           <p>{expenseDetails.description}</p>
           <p>
