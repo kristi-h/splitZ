@@ -7,7 +7,13 @@ import { useState } from "react";
 import { nanoid } from "nanoid";
 
 const MAX_FILE_SIZE = 6000000; //6MB
-const ACCEPTED_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+const ACCEPTED_TYPES = [
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp",
+  "application/pdf",
+];
 
 // Define validation schema
 const schema = z
