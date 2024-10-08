@@ -3,9 +3,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { storage } from "../../utils/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { useState } from "react";
-import { nanoid } from "nanoid";
 import Button from "../ui/Button";
+import db from "../../utils/localstoragedb";
 
 const MAX_FILE_SIZE = 6000000; //6MB
 const ACCEPTED_TYPES = [
@@ -16,29 +15,25 @@ const ACCEPTED_TYPES = [
   "application/pdf",
 ];
 
-// Define validation schema
-const schema = z
-  .object({
-    upload: z
-      .any()
-      .refine((file) => file[0]?.size < MAX_FILE_SIZE, {
-        message: "File size exceeded",
-      })
-      .refine((file) => ACCEPTED_TYPES.includes(file[0]?.type), {
-        message: "File type not supported",
-      }),
-  })
-  .passthrough();
-
 // Grab objects from useForm hook
-const ReceiptUpload = () => {
-  // Store url of uploaded image
-  const [imageUrl, setImageUrl] = useState("");
+const ReceiptUpload = ({ expenseDetails, setExpenses }) => {
+  // Define validation schema
+  const schema = z
+    .object({
+      upload: z
+        .any()
+        .refine((file) => file[0]?.size < MAX_FILE_SIZE, {
+          message: "File size exceeded",
+        })
+        .refine((file) => ACCEPTED_TYPES.includes(file[0]?.type), {
+          message: "File type not supported",
+        }),
+    })
+    .passthrough();
 
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors, isSubmitting, isValid },
   } = useForm({
     resolver: zodResolver(schema),
@@ -47,14 +42,22 @@ const ReceiptUpload = () => {
 
   const onUpload = async (data) => {
     // Define where to store with filepath
-    const uploadRef = ref(storage, `${nanoid()}-${data.upload[0].name}`);
+    const uploadRef = ref(
+      storage,
+      `${expenseDetails.id}-${data.upload[0].name}`,
+    );
     // Upload to storage
     const snapshot = await uploadBytes(uploadRef, data.upload[0]);
     // Get url
     const url = await getDownloadURL(snapshot.ref);
-    setImageUrl(url);
-
-    reset();
+    // save to DB
+    db.update("expenses", { id: expenseDetails.id }, (expense) => {
+      expense.receipt_URL = url;
+      return expense;
+    });
+    db.commit();
+    // Update state
+    setExpenses(db.queryAll("expenses"));
   };
 
   return (
@@ -93,13 +96,6 @@ const ReceiptUpload = () => {
           <span className="text-red-500">{errors.upload.message}</span>
         )}
       </form>
-      {/* Display uploaded img */}
-      <img src={imageUrl} alt="" />
-      {imageUrl && (
-        <a href={imageUrl} target="_blank">
-          Download
-        </a>
-      )}
     </>
   );
 };
