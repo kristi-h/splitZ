@@ -5,8 +5,9 @@ import { storage } from "../../utils/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Button from "../ui/Button";
 import db from "../../utils/localstoragedb";
+import { useState } from "react";
 
-const MAX_FILE_SIZE = 6000000; //6MB
+const MAX_FILE_SIZE = 6291456; // 1024 * 1024 * 6 = 6MB
 const ACCEPTED_TYPES = [
   "image/jpeg",
   "image/jpg",
@@ -17,14 +18,23 @@ const ACCEPTED_TYPES = [
 
 // Grab objects from useForm hook
 const ReceiptUpload = ({ expenseDetails, setExpenses }) => {
+  const [fileDetails, setFileDetails] = useState({});
+
   // Define validation schema
   const schema = z
     .object({
       upload: z
         .any()
-        .refine((file) => file[0]?.size < MAX_FILE_SIZE, {
-          message: "File size exceeded",
-        })
+        .refine(
+          (file) => {
+            // to display file details after selection
+            setFileDetails({ name: file[0]?.name, size: file[0]?.size });
+            return file[0]?.size < MAX_FILE_SIZE;
+          },
+          {
+            message: "File size exceeded",
+          },
+        )
         .refine((file) => ACCEPTED_TYPES.includes(file[0]?.type), {
           message: "File type not supported",
         }),
@@ -60,6 +70,21 @@ const ReceiptUpload = ({ expenseDetails, setExpenses }) => {
     setExpenses(db.queryAll("expenses"));
   };
 
+  const formatBytes = (bytes) => {
+    if (typeof bytes !== "number") {
+      return null;
+    }
+
+    if (bytes < 1024) {
+      return bytes + "bytes";
+    } else if (bytes < 1048576) {
+      // 1024 * 1024
+      return (bytes / 1024).toFixed(2) + "KB";
+    } else {
+      return (bytes / 1048576).toFixed(2) + "MB";
+    }
+  };
+
   return (
     <>
       <form
@@ -73,7 +98,7 @@ const ReceiptUpload = ({ expenseDetails, setExpenses }) => {
             (File size must be less than 6MB)
           </span>
         </p>
-        <div className="flex items-center gap-4 py-2">
+        <div className="flex flex-wrap items-center gap-4 py-2">
           <label
             htmlFor="upload"
             className="flex h-12 w-36 cursor-pointer items-center justify-center rounded-xl bg-accent transition-colors hover:bg-secondary hover:text-white"
@@ -81,7 +106,7 @@ const ReceiptUpload = ({ expenseDetails, setExpenses }) => {
             <i className="fa-solid fa-paperclip mr-2"></i>Select File
           </label>
           <input
-            className="absolute h-[0.1px] w-[0.1px] p-2 opacity-0"
+            className="absolute h-[0.1px] w-[0.1px] resize-none p-2 opacity-0"
             type="file"
             id="upload"
             {...register("upload")}
@@ -94,6 +119,9 @@ const ReceiptUpload = ({ expenseDetails, setExpenses }) => {
           >
             {isSubmitting ? "Uploading..." : "Upload"}
           </Button>
+          <p className="font-medium">
+            {fileDetails.name} ({formatBytes(fileDetails.size)})
+          </p>
         </div>
         {/* Render errors */}
         {errors.upload?.message && (
