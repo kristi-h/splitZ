@@ -58,16 +58,20 @@ const ReceiptUpload = () => {
 
   return (
     <>
-      <form className="flex flex-col" onSubmit={handleSubmit(onUpload)}>
-        <h1>Upload Receipt</h1>
+      <form className="flex flex-col py-1" onSubmit={handleSubmit(onUpload)}>
         <div className="flex items-center gap-4">
-          <label htmlFor="upload">Upload File</label>
+          <label
+            htmlFor="upload"
+            className="flex h-12 w-36 cursor-pointer items-center justify-center rounded-lg bg-accent"
+          >
+            Select File
+          </label>
           <p className="text-sm font-light">
             (File size must be less than 6MB)
           </p>
         </div>
         <input
-          className="p-2"
+          className="absolute h-[0.1px] w-[0.1px] p-2 opacity-0"
           type="file"
           id="upload"
           {...register("upload")}
