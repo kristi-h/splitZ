@@ -62,7 +62,11 @@ const ReceiptUpload = ({ expenseDetails, setExpenses }) => {
 
   return (
     <>
-      <form className="flex flex-col py-1" onSubmit={handleSubmit(onUpload)}>
+      <form
+        data-html2canvas-ignore
+        className="flex flex-col py-1"
+        onSubmit={handleSubmit(onUpload)}
+      >
         <p className="text-lg font-bold">
           Upload Receipt
           <span className="ml-2 text-sm font-light">
