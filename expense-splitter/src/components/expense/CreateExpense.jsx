@@ -11,6 +11,7 @@ export default function CreateExpense() {
     UseDataContext();
 
   const [allFriends, setAllFriends] = useState([]);
+  const [weightLimitExceeded, setWeightLimitExceeded] = useState(false);
 
   const {
     handleSubmit,
@@ -37,6 +38,7 @@ export default function CreateExpense() {
     setAllFriends((prev) => [...prev, ...friendsInGroup]);
   }, [watchedValues["group"]]);
 
+  // update weight/dollar on weight value/amount change
   useEffect(() => {
     // get friends with non-zeros
     const getFriendsWithNonZeros = () => {
@@ -74,20 +76,33 @@ export default function CreateExpense() {
       const newZeroWeight =
         (100 - nonZeroPercentage) /
         (allFriends.length - friendsWithNonZeros.length);
+      console.log(newWeight, nonZeroPercentage);
+      const weightLimit = nonZeroPercentage - parseInt(newWeight);
+      console.log("weightLimit", weightLimit);
+      const acceptedWeight =
+        parseInt(newWeight) <= weightLimit ? newWeight : "0";
+
       // if a new weight has been inputted
-      console.log(newWeight);
       return newWeight !== "0"
         ? {
             ...friend,
-            weight: newWeight,
+            weight: acceptedWeight.toString(),
             dollar: !newWeight ? 0 : `$${newDollar.toFixed(2)}`,
           }
         : {
             ...friend,
             weight: newZeroWeight,
-            dollar: `$${((newZeroWeight * watchedValues["amount"]) / 100).toFixed(2)}`,
+            dollar: !newZeroWeight
+              ? 0
+              : `$${((newZeroWeight * watchedValues["amount"]) / 100).toFixed(2)}`,
           };
     });
+    // check for exceeded weight
+    const exceededWeight = updatedFriends.some(
+      (friend) => parseInt(friend.weight) < 0,
+    );
+    console.log("exceededWeight", exceededWeight);
+    setWeightLimitExceeded(nonZeroPercentage > 100);
     setAllFriends(updatedFriends);
     // only update state when friend values change
   }, [
@@ -205,7 +220,7 @@ export default function CreateExpense() {
           </label>
           <input
             placeholder="Name of expense"
-            {...register("name", { required: "name is required" })}
+            {...register("name", { required: "A name is required" })}
           />
           <div className="error-text">{errors.name && errors.name.message}</div>
         </div>
@@ -217,7 +232,7 @@ export default function CreateExpense() {
           <input
             placeholder="Describe the expense"
             {...register("description", {
-              required: "description is required",
+              required: "A description is required",
             })}
           />
           <div className="error-text">
@@ -232,7 +247,7 @@ export default function CreateExpense() {
           <select
             name="category"
             {...register("category", {
-              required: "select a category",
+              required: "Please select a category",
             })}
           >
             <option value=""></option>
@@ -243,7 +258,7 @@ export default function CreateExpense() {
             ))}
           </select>
           {errors.category && (
-            <p style={{ color: "red" }}> {errors.category.message}</p>
+            <p className="error-text"> {errors.category.message}</p>
           )}
         </div>
 
@@ -254,7 +269,7 @@ export default function CreateExpense() {
           <input
             placeholder="Enter a value"
             {...register("amount", {
-              required: "amount required",
+              required: "Please enter an amount",
               pattern: {
                 value: /^[0-9]*(.[0-9]{2})?$/i,
                 message: "invalid type, please enter a number from 0-100",
@@ -262,7 +277,7 @@ export default function CreateExpense() {
             })}
           />
           {errors.amount && (
-            <p style={{ color: "red" }}> {errors.amount.message} </p>
+            <p className="error-text"> {errors.amount.message} </p>
           )}
         </div>
 
@@ -274,7 +289,7 @@ export default function CreateExpense() {
           <select
             name="group"
             {...register("group", {
-              required: "select a group to apply this expense to",
+              required: "Pleaes select a group to apply this expense to",
             })}
           >
             <option value=""></option>
@@ -285,7 +300,7 @@ export default function CreateExpense() {
             ))}
           </select>
           {errors.group && (
-            <p style={{ color: "red" }}> {errors.group.message}</p>
+            <p className="error-text"> {errors.group.message}</p>
           )}
         </div>
 
@@ -293,6 +308,11 @@ export default function CreateExpense() {
           {watchedValues["group"] && (
             <>
               <h2 className="mb-4">Weight Contribution:*</h2>
+              {weightLimitExceeded && (
+                <p className="error-text mb-2">
+                  Combined weights exceed 100%. Please adjust the amounts.
+                </p>
+              )}
               {friendContributionFields}
             </>
           )}
