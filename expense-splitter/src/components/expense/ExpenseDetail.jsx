@@ -8,6 +8,7 @@ import ButtonFooter from "../ui/ButtonFooter";
 import Button from "../ui/Button";
 import db from "../../utils/localstoragedb";
 import Dialog from "../ui/Dialog";
+import formatDate from "../../utils/formatDate";
 
 function ExpenseDetail() {
   const { expenses, groupData, friends, handleSetModal, setExpenses, modal } =
@@ -63,6 +64,10 @@ function ExpenseDetail() {
   // set data for pie chart to be array of contribution values
   const pieChartData = {};
 
+  // get date and format it
+  const expenseDate = formatDate(expenseDetails.date);
+  console.log(expenseDate);
+
   expenseDetails.weight.forEach((weight) => {
     const friendInfo = friends.find((friend) => friend.id === weight.friendId);
     pieChartData[friendInfo.name] = (
@@ -100,16 +105,21 @@ function ExpenseDetail() {
           <h1 className="mx-auto mb-0">{expenseDetails.name}</h1>
           <i className="fa-solid fa-chevron-right text-3xl text-accent opacity-0"></i>
         </div>
-        <h1 className="mb-2 p-2 text-center">${expenseDetails.amount}</h1>
-        <div className="mb-2 flex">
+        <div>
+          <h2 className="mb-2 p-2 text-center text-2xl">
+            ${expenseDetails.amount}
+          </h2>
           <p>{expenseDetails.description}</p>
-        </div>
-        <div className="flex">
           <p>
             <span className="mr-1 font-bold">Category:</span>
             {expenseDetails.category}
           </p>
+          <p>
+            <span className="mr-1 font-bold">Date:</span>
+            {expenseDate}
+          </p>
         </div>
+
         <PieChart label="Amount Owed" pieData={pieChartData} />
         <div className="flex justify-end">
           <button
