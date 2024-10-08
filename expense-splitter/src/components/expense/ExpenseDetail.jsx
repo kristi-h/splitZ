@@ -114,7 +114,9 @@ function ExpenseDetail() {
           <p>{expenseDetails.description}</p>
           <p>
             <span className="mr-1 font-bold">Category:</span>
-            {expenseDetails.category}
+            {expenseDetails.category.replace(/^\w/, (char) =>
+              char.toUpperCase(),
+            )}
           </p>
           <p>
             <span className="mr-1 font-bold">Date:</span>
