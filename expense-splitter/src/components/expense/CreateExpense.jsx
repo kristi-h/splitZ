@@ -5,10 +5,13 @@ import { UseDataContext } from "../context/SiteContext";
 import { nanoid } from "nanoid";
 import db from "../../utils/localstoragedb";
 import { categories } from "../../utils/dummyData";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateExpense() {
   const { groupData, setExpenses, setGroupData, handleSetModal, friends } =
     UseDataContext();
+
+  const navigate = useNavigate();
 
   const [allFriends, setAllFriends] = useState([]);
   const [weightLimitExceeded, setWeightLimitExceeded] = useState(false);
@@ -156,9 +159,6 @@ export default function CreateExpense() {
   console.log("allFriends", allFriends);
 
   const onSubmit = (values) => {
-    // all friends have zeros? boolean
-    // const allHaveZeros = allFriends.every((friend) => friend.weight === "0");
-
     // get friends with non-zeros
     const friendsWithNonZeros = allFriends.filter(
       (friend) => friend.weight != "0" && friend.name,
@@ -171,7 +171,6 @@ export default function CreateExpense() {
       0,
     );
     // console.log(nonZeroPercentage);
-    // console.log(allFriends.length - friendsWithNonZeros.length);
     const id = nanoid();
     const weightObj = allFriends.map((friend) => {
       const finalWeight =
@@ -211,6 +210,7 @@ export default function CreateExpense() {
     // update expenses state with new db values
     setExpenses(db.queryAll("expenses"));
     handleSetModal();
+    navigate(`/expenses/${id}`);
   };
 
   return (
