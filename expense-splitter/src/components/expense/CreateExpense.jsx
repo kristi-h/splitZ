@@ -32,7 +32,6 @@ export default function CreateExpense() {
 
   // watch all fields
   const watchedValues = watch();
-  console.log(watchedValues);
 
   useEffect(() => {
     // reset all friends in group
@@ -47,7 +46,6 @@ export default function CreateExpense() {
     const getFriendsWithNonZeros = () => {
       let results = [];
       allFriends.forEach((friend) => {
-        console.log("friend", friend);
         if (watchedValues[friend.name] != "0") {
           results.push({ ...friend, weight: watchedValues[friend.name] });
         }
@@ -55,21 +53,17 @@ export default function CreateExpense() {
       return results;
     };
     const friendsWithNonZeros = getFriendsWithNonZeros();
-    console.log("getFriendsWithNonZeros", friendsWithNonZeros);
     // calculate non-zero percentage
     const nonZeroPercentage = friendsWithNonZeros.reduce(
       (acc, curr) => acc + parseInt(curr.weight),
       0,
     );
-    console.log("nonZeroPercentage", nonZeroPercentage);
 
     // update weight/dollar on weight value change
     const updatedFriends = allFriends.map((friend) => {
       const newWeight = watchedValues[friend.name];
       const zeroDefault =
         watchedValues["amount"] / parseFloat(allFriends.length);
-      console.log("newWeight", newWeight);
-      // console.log(newWeight);
       // generate the dollar amount based on weight
       const newDollar =
         parseInt(newWeight) === 0
@@ -79,9 +73,7 @@ export default function CreateExpense() {
       const newZeroWeight =
         (100 - nonZeroPercentage) /
         (allFriends.length - friendsWithNonZeros.length);
-      console.log(newWeight, nonZeroPercentage);
       const weightLimit = nonZeroPercentage - parseInt(newWeight);
-      console.log("weightLimit", weightLimit);
       const acceptedWeight =
         parseInt(newWeight) <= weightLimit ? newWeight : "0";
 
@@ -104,7 +96,6 @@ export default function CreateExpense() {
     const exceededWeight = updatedFriends.some(
       (friend) => parseInt(friend.weight) < 0,
     );
-    console.log("exceededWeight", exceededWeight);
     setWeightLimitExceeded(nonZeroPercentage > 100);
     setAllFriends(updatedFriends);
     // only update state when friend values change
@@ -117,8 +108,6 @@ export default function CreateExpense() {
   const friendIdsArr = groupData.find(
     (group) => group.id === watchedValues["group"],
   )?.friendIDs;
-
-  console.log("friendIdsArr: ", friendIdsArr);
 
   const friendsInGroup = friends
     .filter((friends) => friendIdsArr?.includes(friends.id))
@@ -150,12 +139,10 @@ export default function CreateExpense() {
                   "Invalid input. Please enter a number between 0 and 99.",
               },
             })}
-            // restrict to a max of 2 digits
+            // restrict to a max of 2 digits, don't allow non-numeric characters
             onInput={(e) => {
               const input = e.target;
-              if (input.value.length > 2) {
-                input.value = input.value.slice(0, 2);
-              }
+              input.value = input.value.replace(/\D/g, "").slice(0, 2);
             }}
           />
           <span className="absolute right-4 font-roboto font-light text-gray-800">
@@ -169,7 +156,7 @@ export default function CreateExpense() {
     );
   });
 
-  console.log("allFriends", allFriends);
+  // console.log("allFriends", allFriends);
 
   const onSubmit = (values) => {
     // get friends with non-zeros
@@ -196,7 +183,7 @@ export default function CreateExpense() {
           : parseInt(friend.weight);
       return { friendId: friend.id, percentage: finalWeight };
     });
-    console.log("weightObj", weightObj);
+    // console.log("weightObj", weightObj);
     const newExpense = {
       id,
       ...values,
@@ -335,7 +322,11 @@ export default function CreateExpense() {
         </div>
 
         <div className="flex gap-8">
-          <Button onClick={handleSetModal} className="w-full md:w-auto">
+          <Button
+            type="button"
+            onClick={handleSetModal}
+            className="w-full md:w-auto"
+          >
             Cancel
           </Button>
           {weightLimitExceeded ? (

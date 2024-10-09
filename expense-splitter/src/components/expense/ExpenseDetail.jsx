@@ -69,7 +69,6 @@ function ExpenseDetail() {
   const expenseDate = formatDate(expenseDetails.date);
 
   const expenseAmount = parseInt(expenseDetails.amount);
-  console.log(typeof expenseAmount);
 
   expenseDetails.weight.forEach((weight) => {
     const friendInfo = friends.find((friend) => friend.id === weight.friendId);
