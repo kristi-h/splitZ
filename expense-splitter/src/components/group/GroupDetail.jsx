@@ -239,7 +239,7 @@ function GroupDetail() {
           cancelOnClick={() => toggleDialog(deleteDialogRef)}
           confirmOnClick={() => handleDelete(deleteID)}
         >
-          <p>
+          <p className="text-center">
             Deleting this group will also delete all associated expenses.
             <br />
             Are you sure you want to delete this group?
