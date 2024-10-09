@@ -18,7 +18,6 @@ export default function Button({
       className={`${baseStyles} ${buttonStyles} ${className} transition-colors`}
       onClick={onClick}
       type={type}
-      disabled={disabled}
     >
       {children}
     </button>
