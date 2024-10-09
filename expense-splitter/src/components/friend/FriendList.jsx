@@ -28,10 +28,10 @@ const FriendList = (props) => {
 
   // filter friends for search bar
   const filteredData = friends.filter((search) => {
-    if (props.input === '') {
+    if (props.input === "") {
       return search;
     } else {
-      return search.name.toLowerCase().includes(props.input)
+      return search.name.toLowerCase().includes(props.input);
     }
   });
 
@@ -49,7 +49,7 @@ const FriendList = (props) => {
         >
           <Button
             variant={"small"}
-            className="bg-red-700"
+            className="bg-red-700 px-3"
             // Put friend id in state and opens dialog
             onClick={() => {
               // Check if user if part of a group or expense
@@ -64,6 +64,7 @@ const FriendList = (props) => {
             <i className="fa-solid fa-trash"></i>
           </Button>
           <Button
+            className="px-3"
             variant={"small"}
             onClick={() => {
               handleSetModal("FriendForm", friend.id);
