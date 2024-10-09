@@ -10,7 +10,6 @@ import NoDataPlaceholder from "../ui/NoDataPlaceholder";
 import ButtonFooter from "../ui/ButtonFooter";
 
 function GroupDetail() {
-  const [deleteID, setDeleteID] = useState(null);
   const [seeMore, setSeeMore] = useState(false);
   const [progressBarStyle, setProgressBarStyle] = useState({
     width: 0,
@@ -101,7 +100,7 @@ function GroupDetail() {
 
   //delete a group
   const handleDelete = (id) => {
-    db.deleteRows("groups", { ID: id });
+    db.deleteRows("groups", { id: id });
     db.commit();
     //call setState to render the component
     setGroupData(db.queryAll("groups"));
@@ -214,7 +213,8 @@ function GroupDetail() {
           <Button
             className="bg-red-700"
             onClick={() => {
-              setDeleteID(singleGroup.ID);
+              console.log(groupData[0]);
+
               toggleDialog(deleteDialogRef);
             }}
           >
@@ -237,7 +237,7 @@ function GroupDetail() {
         <Dialog
           dialogRef={deleteDialogRef}
           cancelOnClick={() => toggleDialog(deleteDialogRef)}
-          confirmOnClick={() => handleDelete(deleteID)}
+          confirmOnClick={() => handleDelete(groupId)}
         >
           <p className="text-center">
             Deleting this group will also delete all associated expenses.
