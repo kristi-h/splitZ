@@ -98,7 +98,7 @@ function ExpenseDetail() {
 
   return (
     !modal.show && (
-      <div ref={downloadRef} className="mb-16">
+      <div ref={downloadRef} className="mb-8">
         <div className="mb-4 flex items-center">
           <i
             data-html2canvas-ignore
@@ -155,7 +155,7 @@ function ExpenseDetail() {
 
         <ButtonFooter>
           <Button
-            className="bg-red-700"
+            className="min-w-32 bg-red-700"
             onClick={() => {
               setDeleteID(expenseDetails.ID);
               toggleDialog(deleteDialogRef);
@@ -164,17 +164,10 @@ function ExpenseDetail() {
             Delete
           </Button>
           <Button
-            className="bg-primary"
-            // onClick={() => handleSetModal("EditGroup", singleGroup.ID)}
+            className="min-w-32 bg-primary"
             onClick={() => handleSetModal("EditExpense", expenseDetails.ID)}
           >
             Edit
-          </Button>
-          <Button
-            className="bg-primary"
-            onClick={() => handleSetModal("CreateExpense")}
-          >
-            Create Expense
           </Button>
         </ButtonFooter>
         <Dialog
