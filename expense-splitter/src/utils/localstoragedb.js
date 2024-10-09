@@ -32,9 +32,9 @@ if (db.isNew()) {
   dummyGroups.forEach((group) => {
     db.insert("groups", group);
   });
-  // dummyUser.forEach((user) => {
-  //   db.insert("user", user);
-  // });
+  dummyUser.forEach((user) => {
+    db.insert("user", user);
+  });
 
   // Write db to localstorage
   db.commit();
