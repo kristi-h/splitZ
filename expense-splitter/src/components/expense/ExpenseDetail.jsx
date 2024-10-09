@@ -126,21 +126,20 @@ function ExpenseDetail() {
         </div>
 
         <PieChart label="Amount Owed" pieData={pieChartData} />
-        <div className="flex justify-between">
+        <div className="mb-2 flex justify-between">
           <DownloadPDF
             filename={expenseDetails.name}
             contentRef={downloadRef}
           />
-          <button
-            className="text-xl underline"
+          <Button
             onClick={() => {
               navigate(`/groups/${expenseGroup.id}`);
             }}
           >
             {expenseGroup.name}
-          </button>
+          </Button>
         </div>
-        <p className="mb-2 mt-4 bg-primary p-2 text-white">Split Costs:</p>
+
         <div>
           <>{memberDisplay}</>
         </div>

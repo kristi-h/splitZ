@@ -16,9 +16,7 @@ const DownloadPDF = ({ filename, contentRef }) => {
 
   return (
     <div data-html2canvas-ignore>
-      <Button onClick={convertToPDF} variant={"small"} className={"my-2"}>
-        Download PDF
-      </Button>
+      <Button onClick={convertToPDF}>Download PDF</Button>
     </div>
   );
 };
