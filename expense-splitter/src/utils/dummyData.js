@@ -124,8 +124,7 @@ export const dummyExpenses = [
     category: "trip",
     amount: "343.11",
     groupId: "47dd1683-bcbf-4a20-9e10-d8596474bc5c",
-    receipt_URL:
-      "https://firebasestorage.googleapis.com/v0/b/expense-splitter-399e6.appspot.com/o/OdrXleNjeXec-tqmLuJcj-fake-receipt-expense-splitter.jpg?alt=media&token=9857d611-9a94-4c7e-b37b-0da78befdd3d",
+    receipt_URL: null,
     weight: [
       { friendId: "9641947f-6b00-4db7-9c7e-9e479b438bd8", percentage: 35 },
       { friendId: "d5923f14-bc79-44ea-8388-d354c72c2253", percentage: 30 },
