@@ -17,7 +17,6 @@ export default function CreateExpense() {
     reset,
     watch, // lets use this to track values
     formState: { errors },
-    reset,
   } = useForm({
     defaultValues: {
       name: currentExpense?.name,
