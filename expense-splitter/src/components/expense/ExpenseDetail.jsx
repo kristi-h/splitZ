@@ -8,6 +8,8 @@ import ButtonFooter from "../ui/ButtonFooter";
 import Button from "../ui/Button";
 import db from "../../utils/localstoragedb";
 import Dialog from "../ui/Dialog";
+import ReceiptUpload from "../upload/ReceiptUpload";
+import DisplayReceipt from "../upload/DisplayReceipt";
 
 function ExpenseDetail() {
   const { expenses, groupData, friends, handleSetModal, setExpenses, modal } =
@@ -23,7 +25,6 @@ function ExpenseDetail() {
 
   // get expense details
   const expenseDetails = expenses.find((expense) => expense.id === expenseId);
-  console.log("expenseDetails", expenseDetails);
 
   // Closes or opens the dialog
   const toggleDialog = (ref) => {
@@ -91,9 +92,10 @@ function ExpenseDetail() {
 
   return (
     !modal.show && (
-      <div ref={downloadRef}>
+      <div ref={downloadRef} className="mb-16">
         <div className="mb-4 flex items-center">
           <i
+            data-html2canvas-ignore
             onClick={() => navigate("/expenses")}
             className="fa-solid fa-chevron-left cursor-pointer text-3xl text-accent"
           ></i>
@@ -111,7 +113,11 @@ function ExpenseDetail() {
           </p>
         </div>
         <PieChart label="Amount Owed" pieData={pieChartData} />
-        <div className="flex justify-end">
+        <div className="flex justify-between">
+          <DownloadPDF
+            filename={expenseDetails.name}
+            contentRef={downloadRef}
+          />
           <button
             className="text-xl underline"
             onClick={() => {
@@ -125,21 +131,16 @@ function ExpenseDetail() {
         <div>
           <>{memberDisplay}</>
         </div>
-        <div className="text-center">
-          {expenseDetails.receipt_URL !== null ? (
-            <a
-              href={expenseDetails.receipt_URL}
-              className="text-blue-400 underline"
-            >
-              Receipt
-            </a>
-          ) : null}
-        </div>
-        <DownloadPDF
-          filename={expenseDetails.name}
-          contentRef={downloadRef}
-          data-html2canvas-ignore
-        />
+        {expenseDetails.receipt_URL ? (
+          <DisplayReceipt expense={expenseDetails} setExpenses={setExpenses} />
+        ) : (
+          <ReceiptUpload
+            expenseDetails={expenseDetails}
+            setExpenses={setExpenses}
+            expenses={expenses}
+          />
+        )}
+
         <ButtonFooter>
           <Button
             className="bg-red-700"
