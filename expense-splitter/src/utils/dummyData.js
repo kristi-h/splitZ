@@ -122,6 +122,7 @@ export const dummyExpenses = [
     name: "Road Trip",
     description: "Grand Canyon",
     category: "trip",
+    date: "2024-10-09T03:51:38.433Z",
     amount: "343.11",
     groupId: "47dd1683-bcbf-4a20-9e10-d8596474bc5c",
     receipt_URL: null,
