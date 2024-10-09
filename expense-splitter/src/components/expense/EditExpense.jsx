@@ -249,7 +249,7 @@ export default function CreateExpense() {
   };
 
   return (
-    <div className="mb-5">
+    <>
       <h1 className="text-center">Edit Expense </h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-5 flex flex-col">
@@ -348,19 +348,23 @@ export default function CreateExpense() {
         <div className="mb-8">
           {watchedValues["group"] && (
             <>
-              <div className="mb-4 flex items-center justify-between">
-                <h2 className="">Weight Contribution:*</h2>
-                <p
-                  className={`font-bold ${weightTotal === 100 ? "text-green-800" : "text-red-500"}`}
-                >
-                  {weightTotal}% <span className="font-normal">of</span> 100%
-                </p>
+              <h2 className="mb-4">Weight Contribution:*</h2>
+              <div className="bg-neutral/[2%] mb-4 flex items-center justify-between rounded-xl border border-primary/10 p-4">
+                <div>
+                  {weightTotal !== 100 ? (
+                    <p className="error-text">Combined weights must be 100%</p>
+                  ) : (
+                    <p>Combined weights:</p>
+                  )}
+                </div>
+                <div>
+                  <p
+                    className={`font-bold ${weightTotal === 100 ? "text-green-800" : "text-red-500"}`}
+                  >
+                    {weightTotal}% <span className="font-normal">of</span> 100%
+                  </p>
+                </div>
               </div>
-              {weightTotal !== 100 && (
-                <p className="error-text mb-2">
-                  Combined weights must be 100%. Please adjust the amounts.
-                </p>
-              )}
               {friendContributionFields}
             </>
           )}
@@ -386,6 +390,6 @@ export default function CreateExpense() {
           )}
         </div>
       </form>
-    </div>
+    </>
   );
 }
