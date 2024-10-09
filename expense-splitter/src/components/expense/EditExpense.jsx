@@ -10,7 +10,7 @@ export default function CreateExpense() {
     UseDataContext();
   const [currentExpense, setCurrentExpense] = useState({});
   const [allFriends, setAllFriends] = useState([]);
-  const [weightLimitExceeded, setWeightLimitExceeded] = useState(false);
+  const [weightTotal, setWeightTotal] = useState(0);
 
   const {
     handleSubmit,
@@ -80,7 +80,7 @@ export default function CreateExpense() {
 
   console.log("allFriends", allFriends);
 
-  // generate the dollar amount based on weight
+  // calculate weight data
   useEffect(() => {
     // get friends with non-zeros
     const getFriendsWithNonZeros = () => {
@@ -106,18 +106,42 @@ export default function CreateExpense() {
       const newWeight = watchedValues[friend.name];
       const zeroDefault =
         watchedValues["amount"] / parseFloat(allFriends.length);
+
       // generate the dollar amount based on weight
       const newDollar =
         parseInt(newWeight) === 0
           ? zeroDefault
           : (parseFloat(watchedValues[friend.name]) * watchedValues["amount"]) /
             100;
+
       const newZeroWeight =
         (100 - nonZeroPercentage) /
         (allFriends.length - friendsWithNonZeros.length);
+
+      console.log("newZeroWeight", newZeroWeight);
       const weightLimit = nonZeroPercentage - parseInt(newWeight);
-      // console.log("newWeight", newWeight);
-      // console.log("weightLimit", weightLimit);
+
+      // // try to factor in default 0 value weights: fail
+      // const getWeightTotal =
+      //   // parseInt(newWeight) === 0
+      //   friendsWithNonZeros.length !== allFriends.length
+      //     ? newZeroWeight + nonZeroPercentage
+      //     : nonZeroPercentage;
+
+      // console.log(
+      //   "newZeroWeight + nonZeroPercentage",
+      //   newZeroWeight,
+      //   nonZeroPercentage,
+      // );
+
+      // console.log(
+      //   "friendsWithNonZeros.length !== allFriends.length",
+      //   friendsWithNonZeros.length !== allFriends.length,
+      // );
+      // console.log("getWeightTotal", non);
+
+      setWeightTotal(nonZeroPercentage);
+
       const acceptedWeight =
         parseInt(newWeight) <= weightLimit ? newWeight : "0";
 
@@ -137,7 +161,6 @@ export default function CreateExpense() {
           };
     });
 
-    setWeightLimitExceeded(nonZeroPercentage > 100);
     console.log("updatedFriends", updatedFriends);
     setAllFriends(updatedFriends);
     // only update state when friend values change
@@ -146,13 +169,8 @@ export default function CreateExpense() {
     watchedValues["amount"],
   ]);
 
-  // if group is changed, get new friends
+  // load group values
   useEffect(() => {
-    // reset to initial friend
-    // setAllFriends([initialFriend]);
-    // spread in friends in group
-    // get the friends in the group
-
     const friendIdsArr = groupData.find(
       (group) => group.id === watchedValues["group"],
     )?.friendIDs;
@@ -330,10 +348,17 @@ export default function CreateExpense() {
         <div className="mb-8">
           {watchedValues["group"] && (
             <>
-              <h2 className="mb-4">Weight Contribution:*</h2>
-              {weightLimitExceeded && (
+              <div className="mb-4 flex items-center justify-between">
+                <h2 className="">Weight Contribution:*</h2>
+                <p
+                  className={`font-bold ${weightTotal === 100 ? "text-green-800" : "text-red-500"}`}
+                >
+                  {weightTotal}% <span className="font-normal">of</span> 100%
+                </p>
+              </div>
+              {weightTotal !== 100 && (
                 <p className="error-text mb-2">
-                  Combined weights exceed 100%. Please adjust the amounts.
+                  Combined weights must be 100%. Please adjust the amounts.
                 </p>
               )}
               {friendContributionFields}
@@ -349,7 +374,7 @@ export default function CreateExpense() {
           >
             Cancel
           </Button>
-          {weightLimitExceeded ? (
+          {weightTotal !== 100 ? (
             <Button
               disabled={true}
               className="w-full cursor-not-allowed bg-primary opacity-25 md:w-auto"
