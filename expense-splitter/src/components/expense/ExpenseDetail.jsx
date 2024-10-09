@@ -11,6 +11,7 @@ import Dialog from "../ui/Dialog";
 import formatDate from "../../utils/formatDate";
 import ReceiptUpload from "../upload/ReceiptUpload";
 import DisplayReceipt from "../upload/DisplayReceipt";
+import deleteReceiptFromStorage from "../../utils/deleteReceipt";
 
 function ExpenseDetail() {
   const { expenses, groupData, friends, handleSetModal, setExpenses, modal } =
@@ -37,14 +38,22 @@ function ExpenseDetail() {
       : ref.current.showModal();
   };
 
-  //delete a group
-  const handleDelete = (id) => {
-    db.deleteRows("expenses", { ID: id });
+  //delete an expense
+  const deleteExpense = () => {
+    db.deleteRows("expenses", { id: expenseDetails.id });
     db.commit();
     //call setState to render the component
     setExpenses(db.queryAll("expenses"));
     // after deleting, navigate to groups
     navigate("/expenses");
+  };
+
+  const handleDelete = () => {
+    if (expenseDetails.receipt_URL) {
+      deleteReceiptFromStorage(expenseDetails.receipt_URL, deleteExpense);
+    } else {
+      deleteExpense();
+    }
   };
 
   // Redirect to 404 page if expense not found
@@ -173,7 +182,7 @@ function ExpenseDetail() {
         <Dialog
           dialogRef={deleteDialogRef}
           cancelOnClick={() => toggleDialog(deleteDialogRef)}
-          confirmOnClick={() => handleDelete(deleteID)}
+          confirmOnClick={() => handleDelete()}
         >
           <p>Are you sure you want to delete this expense?</p>
         </Dialog>
