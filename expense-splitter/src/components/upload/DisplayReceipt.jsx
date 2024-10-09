@@ -32,12 +32,12 @@ const DisplayReceipt = ({ expense, setExpenses }) => {
       <div className="relative" data-html2canvas-ignore>
         <img src={expense.receipt_URL} alt={`Receipt for ${expense.name}`} />
         <button
-          className="absolute right-1 top-1 rounded-full bg-slate-500 shadow-2xl shadow-cyan-700"
+          className="absolute right-1 top-1"
           onClick={() => {
             deleteReceiptRef.current.showModal();
           }}
         >
-          <i className="fa-solid fa-circle-xmark fa-3x opacity-60 shadow-2xl shadow-red-950 transition-all hover:scale-110 hover:opacity-95"></i>
+          <i className="fa-solid fa-circle-xmark fa-3x text-secondary opacity-70 transition-all hover:scale-110 hover:opacity-95 hover:drop-shadow-2xl"></i>
         </button>
       </div>
 
