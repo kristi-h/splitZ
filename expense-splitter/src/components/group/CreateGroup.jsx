@@ -44,8 +44,7 @@ export default function CreateGroup() {
     //// console.log("This is form submit", values);
     //// setGroupData((prev) => [...prev, { ...values, id: nanoid() }]);
     //insert the new group data into the group database
-
-    db.insert("groups", { ...values, id: nanoid() });
+    db.insert("groups", { ...values, id: nanoid(), expenseIDs: [] });
     db.commit();
     //call setState to render the component
     setGroupData(db.queryAll("groups"));

@@ -158,7 +158,7 @@ function GroupDetail() {
 
   return (
     !modal.show && (
-      <>
+      <div className="mb-8">
         <div className="mb-4 flex items-center">
           <i
             onClick={() => navigate("/groups")}
@@ -190,7 +190,7 @@ function GroupDetail() {
               <div className="h-8 w-full rounded-lg bg-accent"></div>
             </div>
             <p className="text-center font-normal">
-              <span className="font-bold">Budget remaining this month:</span> $
+              <span className="font-bold">Budget Spending this month:</span> $
               {totalExpenseAmount} / ${singleGroup.budget}
             </p>
             <PieChart label={"Categories"} pieData={pieData()} />
@@ -204,7 +204,7 @@ function GroupDetail() {
             <NoDataPlaceholder
               title="There are no expenses to display"
               subtitle="Get started by creating an expense."
-              btnText="Create a Expense"
+              btnText="Create Expense"
               onClick={() => handleSetModal("CreateExpense")}
             />
           )}
@@ -241,7 +241,7 @@ function GroupDetail() {
         >
           <p>Are you sure you want to delete this group?</p>
         </Dialog>
-      </>
+      </div>
     )
   );
 }

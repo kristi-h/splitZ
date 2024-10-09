@@ -5,81 +5,96 @@ import { UseDataContext } from "../context/SiteContext";
 import { nanoid } from "nanoid";
 import db from "../../utils/localstoragedb";
 import { categories } from "../../utils/dummyData";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateExpense() {
-  const {
-    groupData,
-    expenses,
-    setExpenses,
-    setGroupData,
-    handleSetModal,
-    friends,
-  } = UseDataContext();
+  const { groupData, setExpenses, setGroupData, handleSetModal, friends } =
+    UseDataContext();
 
-  const initialFriend = {
-    id: "1",
-    name: "Me",
-    weight: 0,
-    dollar: 0,
-  };
+  const navigate = useNavigate();
 
   const [allFriends, setAllFriends] = useState([]);
+  const [weightLimitExceeded, setWeightLimitExceeded] = useState(false);
 
   const {
     handleSubmit,
     register,
-    formState: { errors },
     watch, // lets use this to track values
+    formState: { errors },
   } = useForm({
     defaultValues: {
       // default values for testing only
-      name: "Binocular shopping",
-      description: "Shopping for binocs",
+      name: "Munchies",
+      description: "Junky stuff for the trip in",
       amount: 500,
     },
   });
 
   // watch all fields
   const watchedValues = watch();
-  console.log(watchedValues);
-
-  // useEffect(() => {
-  //   // start with initialFriend aka app user
-  // }, [watchedValues["group"]]);
 
   useEffect(() => {
-    // add the friends in the group
-    setAllFriends([initialFriend]);
+    // reset all friends in group
+    setAllFriends([]);
+    // spread in friends in group
     setAllFriends((prev) => [...prev, ...friendsInGroup]);
   }, [watchedValues["group"]]);
 
+  // update weight/dollar on weight value/amount change
   useEffect(() => {
-    // only update when more than one friend to avoid 'Me' overwrite
-    if (allFriends.length > 1) {
-      const updatedFriends = allFriends.map((friend) => {
-        const newWeight = watchedValues[friend.name];
-        const zeroDefault =
-          watchedValues["amount"] / parseFloat(allFriends.length);
-        console.log("newWeight", newWeight);
-        // console.log(newWeight);
-        // generate the dollar amount based on weight
-        const newDollar =
-          parseInt(newWeight) === 0
-            ? zeroDefault
-            : (parseFloat(watchedValues[friend.name]) *
-                watchedValues["amount"]) /
-              100;
-
-        return newWeight !== undefined
-          ? {
-              ...friend,
-              weight: newWeight,
-              dollar: !newWeight ? 0 : `$${newDollar.toFixed(2)}`,
-            }
-          : friend;
+    // get friends with non-zeros
+    const getFriendsWithNonZeros = () => {
+      let results = [];
+      allFriends.forEach((friend) => {
+        if (watchedValues[friend.name] != "0") {
+          results.push({ ...friend, weight: watchedValues[friend.name] });
+        }
       });
-      setAllFriends(updatedFriends);
-    }
+      return results;
+    };
+    const friendsWithNonZeros = getFriendsWithNonZeros();
+    // calculate non-zero percentage
+    const nonZeroPercentage = friendsWithNonZeros.reduce(
+      (acc, curr) => acc + parseInt(curr.weight),
+      0,
+    );
+
+    // update weight/dollar on weight value change
+    const updatedFriends = allFriends.map((friend) => {
+      const newWeight = watchedValues[friend.name];
+      const zeroDefault =
+        watchedValues["amount"] / parseFloat(allFriends.length);
+      // generate the dollar amount based on weight
+      const newDollar =
+        parseInt(newWeight) === 0
+          ? zeroDefault
+          : (parseFloat(watchedValues[friend.name]) * watchedValues["amount"]) /
+            100;
+      const newZeroWeight =
+        (100 - nonZeroPercentage) /
+        (allFriends.length - friendsWithNonZeros.length);
+      const weightLimit = nonZeroPercentage - parseInt(newWeight);
+      const acceptedWeight =
+        parseInt(newWeight) <= weightLimit ? newWeight : "0";
+
+      // if a new weight has been inputted
+      return newWeight !== "0"
+        ? {
+            ...friend,
+            weight: acceptedWeight.toString(),
+            dollar: !newWeight ? 0 : `$${newDollar.toFixed(2)}`,
+          }
+        : {
+            ...friend,
+            weight: newZeroWeight,
+            dollar: !newZeroWeight
+              ? 0
+              : `$${((newZeroWeight * watchedValues["amount"]) / 100).toFixed(2)}`,
+          };
+    });
+
+    setWeightLimitExceeded(nonZeroPercentage > 100);
+    setAllFriends(updatedFriends);
     // only update state when friend values change
   }, [
     allFriends.map((friend) => watchedValues[friend.name]).join(),
@@ -90,8 +105,6 @@ export default function CreateExpense() {
   const friendIdsArr = groupData.find(
     (group) => group.id === watchedValues["group"],
   )?.friendIDs;
-
-  console.log("friendIdsArr: ", friendIdsArr);
 
   const friendsInGroup = friends
     .filter((friends) => friendIdsArr?.includes(friends.id))
@@ -106,59 +119,95 @@ export default function CreateExpense() {
     return (
       <div
         key={friend.name}
-        className="mb-2 flex items-center justify-between gap-2"
+        className="mb-2 grid grid-cols-3 items-center justify-between gap-2"
       >
         <label className="mr-2">{friend.name}</label>
-        <input
-          className="ml-auto w-[60px] text-center"
-          name={friend.name}
-          placeholder="0"
-          defaultValue={0}
-          {...register(`${friend.name}`, {
-            pattern: {
-              value: /^[0-9]{1,2}$/i,
-              message: "invalid type, please enter a number between 1-100%",
-            },
-          })}
-        />
-        <div className="field w-28 text-center">{friend.dollar}</div>
+        <div className="relative ml-auto flex w-[68px] items-center">
+          <input
+            className="w-full pr-4"
+            name={friend.name}
+            required
+            placeholder="0"
+            defaultValue={0}
+            {...register(`${friend.name}`, {
+              pattern: {
+                value: /^\d{1,2}$/,
+                message:
+                  "Invalid input. Please enter a number between 0 and 99.",
+              },
+            })}
+            // restrict to a max of 2 digits, don't allow non-numeric characters
+            onInput={(e) => {
+              const input = e.target;
+              input.value = input.value.replace(/\D/g, "").slice(0, 2);
+            }}
+          />
+          <span className="absolute right-4 font-roboto font-light text-gray-800">
+            %
+          </span>
+        </div>
+        <div className="rounded-lg bg-accent/50 p-5 text-center font-semibold">
+          {friend.dollar}
+        </div>
       </div>
     );
   });
 
-  console.log("allFriends", allFriends);
+  // console.log("allFriends", allFriends);
 
   const onSubmit = (values) => {
-    const weightObj = allFriends.map((friend) => ({
-      friendId: friend.id,
-      percentage: parseInt(friend.weight),
-    }));
+    // get friends with non-zeros
+    const friendsWithNonZeros = allFriends.filter(
+      (friend) => friend.weight != "0" && friend.name,
+    );
+    // console.log(friendsWithNonZeros);
+
+    // calculate non-zero percentage
+    const nonZeroPercentage = friendsWithNonZeros.reduce(
+      (acc, curr) => acc + parseInt(curr.weight),
+      0,
+    );
+    // console.log(nonZeroPercentage);
+    const id = nanoid();
+    const weightObj = allFriends.map((friend) => {
+      const finalWeight =
+        friend.weight === "0"
+          ? // subtract non-zero percentage and divide by remaining friends
+            (
+              (100 - nonZeroPercentage) /
+              (allFriends.length - friendsWithNonZeros.length)
+            ).toFixed()
+          : parseInt(friend.weight);
+      return { friendId: friend.id, percentage: finalWeight };
+    });
+    // console.log("weightObj", weightObj);
     const newExpense = {
-      id: nanoid(),
+      id,
       ...values,
       date: new Date(),
       weight: weightObj,
+      groupId: values.group,
     };
 
-    setExpenses([...expenses, newExpense]);
-    db.insert("expenses", { ...newExpense, groupId: values.group });
+    db.insert("expenses", { ...newExpense });
     // update groups state with new expense id
     setGroupData((prev) =>
       prev.map((group) =>
         group.id === values.group
-          ? { ...group, expenseIDs: [...group.expenseIDs] }
+          ? { ...group, expenseIDs: [...group.expenseIDs, id] }
           : group,
       ),
     );
     // update groups with new expense id
     db.update("groups", { id: values.group }, (row) => ({
       ...row,
-      expenseIDs: [...row.expenseIDs],
+      expenseIDs: [...row.expenseIDs, id],
     }));
     db.commit();
-    // console.log(values);
-    // console.log(allFriends);
+    // update expenses state with new db values
+    setExpenses(db.queryAll("expenses"));
     handleSetModal();
+    navigate(`/expenses/${id}`);
   };
 
   return (
@@ -171,7 +220,7 @@ export default function CreateExpense() {
           </label>
           <input
             placeholder="Name of expense"
-            {...register("name", { required: "name is required" })}
+            {...register("name", { required: "A name is required" })}
           />
           <div className="error-text">{errors.name && errors.name.message}</div>
         </div>
@@ -183,7 +232,7 @@ export default function CreateExpense() {
           <input
             placeholder="Describe the expense"
             {...register("description", {
-              required: "description is required",
+              required: "A description is required",
             })}
           />
           <div className="error-text">
@@ -198,19 +247,18 @@ export default function CreateExpense() {
           <select
             name="category"
             {...register("category", {
-              required: "select a category",
+              required: "Please select a category",
             })}
           >
             <option value=""></option>
             {categories.map((category) => (
               <option key={category} value={category}>
-                {category}
+                {category.replace(/^\w/, (char) => char.toUpperCase())}
               </option>
             ))}
           </select>
-
           {errors.category && (
-            <p style={{ color: "red" }}> {errors.category.message}</p>
+            <p className="error-text"> {errors.category.message}</p>
           )}
         </div>
 
@@ -221,7 +269,7 @@ export default function CreateExpense() {
           <input
             placeholder="Enter a value"
             {...register("amount", {
-              required: "amount required",
+              required: "Please enter an amount",
               pattern: {
                 value: /^[0-9]*(.[0-9]{2})?$/i,
                 message: "invalid type, please enter a number from 0-100",
@@ -229,7 +277,7 @@ export default function CreateExpense() {
             })}
           />
           {errors.amount && (
-            <p style={{ color: "red" }}> {errors.amount.message} </p>
+            <p className="error-text"> {errors.amount.message} </p>
           )}
         </div>
 
@@ -241,7 +289,7 @@ export default function CreateExpense() {
           <select
             name="group"
             {...register("group", {
-              required: "select a group to apply this expense to",
+              required: "Pleaes select a group to apply this expense to",
             })}
           >
             <option value=""></option>
@@ -251,9 +299,8 @@ export default function CreateExpense() {
               </option>
             ))}
           </select>
-
           {errors.group && (
-            <p style={{ color: "red" }}> {errors.group.message}</p>
+            <p className="error-text"> {errors.group.message}</p>
           )}
         </div>
 
@@ -261,16 +308,34 @@ export default function CreateExpense() {
           {watchedValues["group"] && (
             <>
               <h2 className="mb-4">Weight Contribution:*</h2>
+              {weightLimitExceeded && (
+                <p className="error-text mb-2">
+                  Combined weights exceed 100%. Please adjust the amounts.
+                </p>
+              )}
               {friendContributionFields}
             </>
           )}
         </div>
 
         <div className="flex gap-8">
-          <Button onClick={handleSetModal} className="w-full md:w-auto">
+          <Button
+            type="button"
+            onClick={handleSetModal}
+            className="w-full md:w-auto"
+          >
             Cancel
           </Button>
-          <Button className="w-full bg-primary md:w-auto">Submit</Button>
+          {weightLimitExceeded ? (
+            <Button
+              disabled={true}
+              className="w-full cursor-not-allowed bg-primary opacity-25 md:w-auto"
+            >
+              Submit
+            </Button>
+          ) : (
+            <Button className="w-full bg-primary md:w-auto">Submit</Button>
+          )}
         </div>
       </form>
     </div>

@@ -31,7 +31,7 @@ export default function ExpenseList(props) {
 
   const expenseItems = filteredData.map((expense) => (
     <div
-      key={expense.ID}
+      key={expense.id}
       className="mb-1 flex flex-col rounded-lg bg-slate-100 px-4 py-4"
     >
       <div className="flex items-center justify-between">
