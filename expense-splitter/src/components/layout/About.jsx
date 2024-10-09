@@ -7,13 +7,13 @@ const About = () => {
       name: "Kristi",
       role: "Role",
       gitHubUrl: "https://github.com/kristi-h",
-      linkedInUrl: "",
+      linkedInUrl: "https://www.linkedin.com/in/kristi-h-4542b38a/",
     },
     {
       name: "Carlos Cespedes",
       role: "Developer",
       gitHubUrl: "https://github.com/ccespedes",
-      linkedInUrl: "",
+      linkedInUrl: "https://www.linkedin.com/in/carlos-cespedes-054a847/",
     },
     {
       name: "Abel Sila",
@@ -67,10 +67,10 @@ const About = () => {
               <p className="text-sm text-gray-400">{item.role}</p>
             </h2>
             <div>
-              <a className="mr-4" href={item.gitHubUrl}>
+              <a className="mr-4" href={item.gitHubUrl} target="_blank">
                 <GitHubIcon />
               </a>
-              <a className="mr-2" href={item.linkedInUrl}>
+              <a className="mr-2" href={item.linkedInUrl} target="_blank">
                 <LinkedInIcon />
               </a>
             </div>
