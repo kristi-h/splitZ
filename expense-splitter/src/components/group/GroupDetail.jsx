@@ -239,7 +239,11 @@ function GroupDetail() {
           cancelOnClick={() => toggleDialog(deleteDialogRef)}
           confirmOnClick={() => handleDelete(deleteID)}
         >
-          <p>Are you sure you want to delete this group?</p>
+          <p>
+            Deleting this group will also delete all associated expenses.
+            <br />
+            Are you sure you want to delete this group?
+          </p>
         </Dialog>
       </div>
     )
