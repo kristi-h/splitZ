@@ -190,7 +190,7 @@ function GroupDetail() {
               <div className="h-8 w-full rounded-lg bg-accent"></div>
             </div>
             <p className="text-center font-normal">
-              <span className="font-bold">Budget remaining this month:</span> $
+              <span className="font-bold">Budget Spending this month:</span> $
               {totalExpenseAmount} / ${singleGroup.budget}
             </p>
             <PieChart label={"Categories"} pieData={pieData()} />
