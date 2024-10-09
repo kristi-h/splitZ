@@ -76,12 +76,12 @@ const ReceiptUpload = ({ expenseDetails, setExpenses }) => {
     }
 
     if (bytes < 1024) {
-      return bytes + "bytes";
+      return `(${bytes} bytes)`;
     } else if (bytes < 1048576) {
       // 1024 * 1024
-      return (bytes / 1024).toFixed(2) + "KB";
+      return `(${(bytes / 1024).toFixed(2)}KB)`;
     } else {
-      return (bytes / 1048576).toFixed(2) + "MB";
+      return `(${(bytes / 1048576).toFixed(2)}MB)`;
     }
   };
 
@@ -120,7 +120,7 @@ const ReceiptUpload = ({ expenseDetails, setExpenses }) => {
             {isSubmitting ? "Uploading..." : "Upload"}
           </Button>
           <p className="font-medium">
-            {fileDetails.name} ({formatBytes(fileDetails.size)})
+            {fileDetails.name} {formatBytes(fileDetails.size)}
           </p>
         </div>
         {/* Render errors */}
