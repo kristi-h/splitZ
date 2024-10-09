@@ -92,10 +92,7 @@ export default function CreateExpense() {
               : `$${((newZeroWeight * watchedValues["amount"]) / 100).toFixed(2)}`,
           };
     });
-    // check for exceeded weight
-    const exceededWeight = updatedFriends.some(
-      (friend) => parseInt(friend.weight) < 0,
-    );
+
     setWeightLimitExceeded(nonZeroPercentage > 100);
     setAllFriends(updatedFriends);
     // only update state when friend values change
