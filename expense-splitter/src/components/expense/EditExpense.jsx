@@ -1,29 +1,21 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
 import db from "../../utils/localstoragedb";
-// import PropTypes from "prop-types";
+import { categories } from "../../utils/dummyData";
 
 export default function CreateExpense() {
-  const { groupData, expenses, setExpenses, modal, handleSetModal } =
+  const { groupData, friends, expenses, setExpenses, modal, handleSetModal } =
     UseDataContext();
-  const currentExpense = expenses.find((expense) => expense.ID === modal.id);
-  const [groupFriendsList, setGroupFriendsList] = React.useState([]);
-  const [totalWeight, setTotalWeight] = React.useState(100);
-  const [customError, setCustomError] = React.useState("");
-
-  const weightTransformed = Object.keys(currentExpense.weight).map((key) => ({
-    // return an object instead
-    [currentExpense.groupId]: currentExpense.weight[key],
-  }));
-
-  // console.log("currentExpenseWeight", currentExpense.weight);
-  console.log("weightTransformed", weightTransformed);
+  const [currentExpense, setCurrentExpense] = useState({});
+  const [allFriends, setAllFriends] = useState([]);
 
   const {
     handleSubmit,
     register,
+    reset,
+    watch, // lets use this to track values
     formState: { errors },
     reset,
   } = useForm({
@@ -37,97 +29,210 @@ export default function CreateExpense() {
     },
   });
 
-  // console.log("currentExpense", currentExpense);
-  console.log("weightTransformed", weightTransformed);
+  // watch all fields
+  const watchedValues = watch();
+  console.log(watchedValues);
 
-  React.useEffect(() => {
-    if (currentExpense) {
-      reset({
-        name: currentExpense.name || "",
-        description: currentExpense.description || "",
-        category: currentExpense.category || "",
-        amount: currentExpense.amount || "",
-        groupId: currentExpense.groupId || "",
-        weight: currentExpense.weight || "",
-      });
-      handleSelectedGroup();
-    }
+  // load current expense and friends in state on initial render
+  useEffect(() => {
+    const initialExpense = expenses.find((expense) => expense.ID === modal.id);
+    setCurrentExpense(initialExpense);
+
+    const friendIdsArr = initialExpense.weight?.map(
+      (friend) => friend.friendId,
+    );
+
+    const friendsInGroup = friends.filter((friend) =>
+      friendIdsArr.includes(friend.id),
+    );
+    console.log("initialExpense", initialExpense);
+
+    const friendObjs = initialExpense.weight.map((item) => {
+      if (friendIdsArr.includes(item.friendId)) {
+        const friendName = friendsInGroup?.filter(
+          (friend) => friend.id === item.friendId,
+        );
+        console.log(item.percentage);
+        const dollarValue =
+          (parseFloat(item.percentage) * initialExpense.amount) / 100;
+        return {
+          id: item.friendId,
+          weight: item.percentage.toString(),
+          name: friendName[0]?.name,
+          dollar: dollarValue.toString(),
+        };
+      }
+    });
+
+    setAllFriends(friendObjs);
+
+    // get the friend values for weights
+    // populate the initial form values
+    const friendValues = friendObjs.reduce((acc, friend) => {
+      acc[friend.name] = friend.weight;
+      return acc;
+    }, {});
+    // console.log("friendValues", friendValues);
+
+    const valuesObj = {
+      name: currentExpense.name || "",
+      description: currentExpense.description || "",
+      category: currentExpense.category || "",
+      amount: currentExpense.amount || "",
+      group: currentExpense.groupId || "",
+      receipt_URL: currentExpense.receipt_URL || "",
+      ...friendValues,
+    };
+    // console.log("valuesObj", valuesObj);
+    reset(valuesObj);
+
+    // const friendIdsArr = groupData.find(
+    //   (group) => group.id === watchedValues["group"],
+    // )?.friendIDs;
+
+    // const friendsInGroup = friends
+    //   .filter((friends) => friendIdsArr?.includes(friends.id))
+    //   .map((friend, i) => {
+    //     console.log(friend);
+    //     return {
+    //       name: friend.name,
+    //       weight: "5",
+    //       id: friendIdsArr[i],
+    //       dollar: "0",
+    //     };
+    //   });
+    // setAllFriends(friendsInGroup);
   }, [currentExpense]);
 
-  const onSubmit = (values) => {
-    setTotalWeight(weightCalc());
-    console.log("These are the values submitted", values);
-    if (totalWeight !== 0) {
-      alert("weight contribution must total 100");
-      console.log("totalWeight", totalWeight);
-      return;
-    } else {
-      console.log("values", values);
-      weightCalc();
-      console.log("weightCalc", weightCalc());
-      // editExpense({ ...values });
-      db.update(
-        "expenses",
-        { groupId: currentExpense.groupId },
-        function (row) {
-          row.weight = { ...values.weight };
-          return row;
-        },
-      );
-      db.commit();
-      // console.log("viewAll", { ...values, ...values.weight });
-      setExpenses(db.queryAll("expenses"));
-      // console.log("These are the values: ", ...values);
-      handleSetModal();
+  console.log("allFriends", allFriends);
+  // populate the initial form values
+  // useEffect(() => {
+  //   if (currentExpense) {
+  //     // get the friend values for weights
+  //     const friendValues = allFriends.reduce((acc, friend) => {
+  //       acc[friend.name] = friend.weight;
+  //       return acc;
+  //     }, {});
+  //     console.log("friendValues", friendValues);
+
+  //     const valuesObj = {
+  //       name: currentExpense.name || "",
+  //       description: currentExpense.description || "",
+  //       category: currentExpense.category || "",
+  //       amount: currentExpense.amount || "",
+  //       group: currentExpense.groupId || "",
+  //       receipt_URL: currentExpense.receipt_URL || "",
+  //       ...friendValues,
+  //       // weight: currentExpense.weight || "",
+  //     };
+  //     console.log("valuesObj", valuesObj);
+  //     reset(valuesObj);
+  //   }
+  // }, [currentExpense]);
+
+  // generate the dollar amount based on weight
+  useEffect(() => {
+    // only update when more than one friend to avoid 'Me' overwrite
+    if (allFriends.length > 1) {
+      const updatedFriends = allFriends.map((friend) => {
+        const newWeight = watchedValues[friend.name];
+        const zeroDefault =
+          watchedValues["amount"] / parseFloat(allFriends.length);
+        // console.log("newWeight", newWeight);
+        // console.log(newWeight);
+        // generate the dollar amount based on weight
+        const newDollar =
+          parseInt(newWeight) === 0
+            ? zeroDefault
+            : (parseFloat(watchedValues[friend.name]) *
+                watchedValues["amount"]) /
+              100;
+
+        return newWeight !== undefined
+          ? {
+              ...friend,
+              weight: newWeight,
+              dollar: !newWeight ? 0 : `$${newDollar.toFixed(2)}`,
+            }
+          : friend;
+      });
+      setAllFriends(updatedFriends);
     }
+    // only update state when friend values change
+  }, [
+    allFriends.map((friend) => watchedValues[friend.name]).join(),
+    watchedValues["amount"],
+  ]);
+
+  // if group is changed, get new friends
+  useEffect(() => {
+    // reset to initial friend
+    // setAllFriends([initialFriend]);
+    // spread in friends in group
+    // get the friends in the group
+
+    const friendIdsArr = groupData.find(
+      (group) => group.id === watchedValues["group"],
+    )?.friendIDs;
+
+    const friendsInGroup = friends
+      .filter((friends) => friendIdsArr?.includes(friends.id))
+      .map((friend, i) => ({
+        name: friend.name,
+        weight: 0,
+        id: friendIdsArr[i],
+      }));
+    // console.log("friendsInGroup", friendsInGroup);
+    setAllFriends(friendsInGroup);
+    // setAllFriends((prev) => [...prev, ...friendsInGroup]);
+  }, [watchedValues["group"]]);
+
+  // generate friend contribution fields
+  const friendContributionFields = allFriends?.map((friend) => {
+    return (
+      <div
+        key={friend.name}
+        className="mb-2 flex items-center justify-between gap-2"
+      >
+        <label className="mr-2">{friend.name}</label>
+        <input
+          className="ml-auto w-[60px] text-center"
+          name={friend.name}
+          placeholder="0"
+          defaultValue={0}
+          {...register(friend.name, {
+            pattern: {
+              value: /^[0-9]{1,2}$/i,
+              message: "invalid type, please enter a number between 1-100%",
+            },
+          })}
+        />
+        <div className="field w-28 text-center">{friend.dollar}</div>
+      </div>
+    );
+  });
+
+  const onSubmit = (values) => {
+    const { ID } = expenses.find((expense) => expense.id === currentExpense.id);
+    const weightObj = allFriends.map((friend) => ({
+      friendId: friend.id,
+      percentage: parseInt(friend.weight),
+    }));
+    const updatedExpense = {
+      amount: values.amount,
+      category: values.category,
+      name: values.name,
+      description: values.description,
+      weight: weightObj,
+      groupId: values.group,
+    };
+    console.log("updatedExpense", updatedExpense);
+    db.insertOrUpdate("expenses", { ID: ID }, { ...updatedExpense });
+    db.commit();
+    // update expenses state with new db values
+    setExpenses(db.queryAll("expenses"));
+    handleSetModal();
   };
-
-  const weightCalc = () => {
-    return weightTransformed.reduce((acc, weightObj) => {
-      const key = Object.keys(weightObj)[0];
-      console.log("acc", Number(weightObj[key]));
-      acc += Number(weightObj[key]);
-      if (acc > 100) {
-        setCustomError("Total weights cannot be more than 100.");
-      } else if (acc < 100) {
-        setCustomError("Total weights cannot be less than 100.");
-      } else {
-        return;
-      }
-      return acc;
-    }, 0);
-  };
-
-  const adjustWeight = (e) => {
-    const adjusted = totalWeight - e.target.value;
-    console.log("adjusted", adjusted);
-
-    return setTotalWeight(adjusted);
-  };
-
-  const handleSelectedGroup = () => {
-    //clear slate of names every time new group is chosen
-    clearNames();
-    //query db for match with chosen id, grab nested friend objects
-    console.log("currentExpense.groupId", currentExpense.groupId);
-    const friendsArr = db.queryAll("groups", {
-      query: { id: currentExpense.groupId },
-    })[0].friendIDs;
-    //grab each friend obj and set state
-    friendsArr.map((f) => {
-      const friendObj = db.queryAll("friends", { query: { id: f } })[0];
-      setGroupFriendsList((groupFriendsList) => [
-        ...groupFriendsList,
-        friendObj,
-      ]);
-    });
-  };
-
-  const clearNames = () => {
-    setGroupFriendsList([]);
-  };
-
-  console.log("currentExpense", currentExpense);
 
   return (
     <div className="mb-5">
@@ -174,16 +279,12 @@ export default function CreateExpense() {
             })}
           >
             <option value=""></option>
-            <option value="entertainment">Entertainment</option>
-            <option value="gift">Gift</option>
-            <option value="groceries">Groceries</option>
-            <option value="restaurant">Restaurant</option>
-            <option value="shopping">Shopping</option>
-            <option value="trip">Trip</option>
-            <option value="utilities">Utilities</option>
-            <option value="other">Other</option>
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category.replace(/^\w/, (char) => char.toUpperCase())}
+              </option>
+            ))}
           </select>
-
           {errors.category && (
             <p style={{ color: "red" }}> {errors.category.message}</p>
           )}
@@ -215,10 +316,10 @@ export default function CreateExpense() {
           </label>
 
           <select
-            name="groupId"
-            autoComplete="groupId"
-            disabled
-            {...register("groupId", {
+            name="group"
+            disabled={true}
+            className="cursor-not-allowed opacity-50"
+            {...register("group", {
               required: "select a group to apply this expense",
             })}
           >
@@ -229,75 +330,57 @@ export default function CreateExpense() {
               </option>
             ))}
           </select>
-
           {errors.group && (
             <p style={{ color: "red" }}> {errors.group.message}</p>
           )}
         </div>
 
-        {currentExpense.groupId.length > 0 && (
-          <div className="mb-2">
-            <label className="mr-2">Weight Adjustment: </label>
-            <div>
-              <label className="mr-2">Me </label>
-              <input
-                autoComplete="me"
-                placeholder="0"
-                {...register(`weight.me`, {
-                  pattern: {
-                    value: /^[0-9]{1,2}$/i,
-                    message:
-                      "invalid type, please enter a number between 1-100%",
-                  },
-                  max: {
-                    value: { totalWeight },
-                    message: "Individual contributions must total 100",
-                  },
-                })}
-                onChange={(e) => {
-                  adjustWeight(e);
-                }}
-              />
-            </div>
-            {groupFriendsList.map((f) => (
-              <div key={f.id}>
-                <label className="mr-2">{f.name} </label>
-                <input
-                  autoComplete={`weight.${f.id}`}
-                  placeholder="0"
-                  {...register(`weight.${f.id}`, {
-                    pattern: {
-                      value: /^[0-9]{1,2}$/i,
-                      message:
-                        "invalid type, please enter a number between 1-100%",
-                    },
-                    max: {
-                      value: { totalWeight },
-                      message: "Individual contributions must total 100",
-                    },
-                  })}
-                  onChange={(e) => {
-                    adjustWeight(e);
-                  }}
-                />
-              </div>
-            ))}
-            {totalWeight && customError}
-            {totalWeight !== 0
-              ? ""
-              : errors.weight && (
-                  <p style={{ color: "red" }}> {errors.weight.message} </p>
-                )}
-          </div>
-        )}
+        <div className="mb-8">
+          {watchedValues["group"] && (
+            <>
+              <h2 className="mb-4">Weight Contribution:*</h2>
+              {friendContributionFields}
+            </>
+          )}
+        </div>
 
-        <div className="flex">
-          <Button className="w-full md:w-auto">Submit</Button>
-          <Button onClick={handleSetModal} className="ml-4 w-full md:w-auto">
+        <div className="flex gap-8">
+          <Button onClick={handleSetModal} className="w-full md:w-auto">
             Cancel
           </Button>
+          <Button className="w-full bg-primary md:w-auto">Submit</Button>
         </div>
       </form>
     </div>
   );
 }
+
+// const friendsInGroup = initialExpense?.weight
+//       .filter((friends) => friendIdsArr?.includes(friends.id))
+//       .map((friend, i) => ({
+//         name: friend.name,
+//         weight: 0,
+//         id: friendIdsArr[i],
+//       }));
+//     console.log("friendsInGroup", friendsInGroup);
+
+// useEffect(() => {
+//   const initialExpense = expenses.find((expense) => expense.ID === modal.id);
+//   setCurrentExpense(initialExpense);
+
+//   const friendIdsArr = initialExpense.weight?.map(
+//     (friend) => friend.friendId,
+//   );
+
+//   console.log("initialExpense", initialExpense);
+
+//   const friendsInGroup = friends
+//     .filter((friends) => friendIdsArr?.includes(friends.id))
+//     .map((friend, i) => ({
+//       name: friend.name,
+//       weight: 0,
+//       id: friendIdsArr[i],
+//     }));
+//   console.log("friendsInGroup", friendsInGroup);
+//   setAllFriends(friendsInGroup);
+// }, []);

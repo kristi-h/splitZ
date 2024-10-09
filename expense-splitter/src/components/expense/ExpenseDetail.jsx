@@ -8,6 +8,9 @@ import ButtonFooter from "../ui/ButtonFooter";
 import Button from "../ui/Button";
 import db from "../../utils/localstoragedb";
 import Dialog from "../ui/Dialog";
+import formatDate from "../../utils/formatDate";
+import ReceiptUpload from "../upload/ReceiptUpload";
+import DisplayReceipt from "../upload/DisplayReceipt";
 
 function ExpenseDetail() {
   const { expenses, groupData, friends, handleSetModal, setExpenses, modal } =
@@ -23,7 +26,6 @@ function ExpenseDetail() {
 
   // get expense details
   const expenseDetails = expenses.find((expense) => expense.id === expenseId);
-  console.log("expenseDetails", expenseDetails);
 
   // Closes or opens the dialog
   const toggleDialog = (ref) => {
@@ -63,6 +65,11 @@ function ExpenseDetail() {
   // set data for pie chart to be array of contribution values
   const pieChartData = {};
 
+  // get date and format it
+  const expenseDate = formatDate(expenseDetails.date);
+
+  const expenseAmount = parseInt(expenseDetails.amount);
+
   expenseDetails.weight.forEach((weight) => {
     const friendInfo = friends.find((friend) => friend.id === weight.friendId);
     pieChartData[friendInfo.name] = (
@@ -91,58 +98,64 @@ function ExpenseDetail() {
 
   return (
     !modal.show && (
-      <div ref={downloadRef}>
+      <div ref={downloadRef} className="mb-8">
         <div className="mb-4 flex items-center">
           <i
+            data-html2canvas-ignore
             onClick={() => navigate("/expenses")}
             className="fa-solid fa-chevron-left cursor-pointer text-3xl text-accent"
           ></i>
           <h1 className="mx-auto mb-0">{expenseDetails.name}</h1>
           <i className="fa-solid fa-chevron-right text-3xl text-accent opacity-0"></i>
         </div>
-        <h1 className="mb-2 p-2 text-center">${expenseDetails.amount}</h1>
-        <div className="mb-2 flex">
+        <div className="flex flex-col gap-2">
+          <h2 className="p-2 text-center text-[32px] font-medium">
+            ${expenseAmount.toFixed(2)}
+          </h2>
           <p>{expenseDetails.description}</p>
-        </div>
-        <div className="flex">
           <p>
             <span className="mr-1 font-bold">Category:</span>
-            {expenseDetails.category}
+            {expenseDetails.category.replace(/^\w/, (char) =>
+              char.toUpperCase(),
+            )}
+          </p>
+          <p>
+            <span className="mr-1 font-bold">Date:</span>
+            {expenseDate}
           </p>
         </div>
+
         <PieChart label="Amount Owed" pieData={pieChartData} />
-        <div className="flex justify-end">
-          <button
-            className="text-xl underline"
+        <div className="mb-2 flex justify-between">
+          <DownloadPDF
+            filename={expenseDetails.name}
+            contentRef={downloadRef}
+          />
+          <Button
             onClick={() => {
               navigate(`/groups/${expenseGroup.id}`);
             }}
           >
             {expenseGroup.name}
-          </button>
+          </Button>
         </div>
-        <p className="mb-2 mt-4 bg-primary p-2 text-white">Split Costs:</p>
+
         <div>
           <>{memberDisplay}</>
         </div>
-        <div className="text-center">
-          {expenseDetails.receipt_URL !== null ? (
-            <a
-              href={expenseDetails.receipt_URL}
-              className="text-blue-400 underline"
-            >
-              Receipt
-            </a>
-          ) : null}
-        </div>
-        <DownloadPDF
-          filename={expenseDetails.name}
-          contentRef={downloadRef}
-          data-html2canvas-ignore
-        />
+        {expenseDetails.receipt_URL ? (
+          <DisplayReceipt expense={expenseDetails} setExpenses={setExpenses} />
+        ) : (
+          <ReceiptUpload
+            expenseDetails={expenseDetails}
+            setExpenses={setExpenses}
+            expenses={expenses}
+          />
+        )}
+
         <ButtonFooter>
           <Button
-            className="bg-red-700"
+            className="min-w-32 bg-red-700"
             onClick={() => {
               setDeleteID(expenseDetails.ID);
               toggleDialog(deleteDialogRef);
@@ -151,17 +164,10 @@ function ExpenseDetail() {
             Delete
           </Button>
           <Button
-            className="bg-primary"
-            // onClick={() => handleSetModal("EditGroup", singleGroup.ID)}
+            className="min-w-32 bg-primary"
             onClick={() => handleSetModal("EditExpense", expenseDetails.ID)}
           >
             Edit
-          </Button>
-          <Button
-            className="bg-primary"
-            onClick={() => handleSetModal("CreateExpense")}
-          >
-            Create Expense
           </Button>
         </ButtonFooter>
         <Dialog
