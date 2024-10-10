@@ -10,7 +10,7 @@ export default function MultiSelectDropdown({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   //this is to store friends list to display after added to group
-  const [displayFriendName, setDisplayFriendName] = useState(() =>
+  const [displayFriendNameIds, setDisplayFriendNameIds] = useState(() =>
     editFriends ? editFriends : null,
   );
 
@@ -26,7 +26,7 @@ export default function MultiSelectDropdown({
 
   //handle adding selected friend to the list to be displayed
   const handleDisplaySelectedFriends = (arr) => {
-    setDisplayFriendName([...arr]);
+    setDisplayFriendNameIds([...arr]);
   };
 
   return (
@@ -39,7 +39,7 @@ export default function MultiSelectDropdown({
         <i className="fa-solid fa-chevron-down text-3xl text-accent"></i>
       </div>
       {isOpen && (
-        <div className="z-10 mt-1 max-h-60 w-full cursor-pointer rounded-md border bg-white">
+        <div className="z-10 mt-1 w-full cursor-pointer rounded-md border bg-white">
           {friends.map((friend) => (
             <label key={friend.id} className="flex items-center p-2">
               <Controller
@@ -69,14 +69,15 @@ export default function MultiSelectDropdown({
           ))}
         </div>
       )}
-      {displayFriendName && (
-        <p className="text-sm font-bold">
-          Friends:
+      {displayFriendNameIds && (
+        <p className="mt-2 text-sm opacity-80">
+          <span className="font-bold">Friends: </span>
           {friends.map(
             (friend, i) =>
-              displayFriendName.includes(friend.id) && (
+              displayFriendNameIds.includes(friend.id) && (
                 <span key={friend.id} className="pl-[2px]">
-                  {friend.name} {displayFriendName.length > i + 1 && `,`}
+                  {friend.name.split(" ")[0]}
+                  {displayFriendNameIds.length > i + 1 && `, `}
                 </span>
               ),
           )}

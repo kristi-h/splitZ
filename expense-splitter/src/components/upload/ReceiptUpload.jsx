@@ -116,7 +116,7 @@ const ReceiptUpload = ({ expenseDetails, setExpenses }) => {
             variant={"small"}
             type={"submit"}
             disabled={isSubmitting || !isValid}
-            className={`bg-primary ${isValid ? "" : "cursor-auto bg-slate-400 hover:bg-slate-400"}`}
+            className={`bg-primary px-8 ${isValid ? "" : "cursor-auto bg-slate-400 hover:bg-slate-400"}`}
           >
             {isSubmitting ? "Uploading..." : "Upload"}
           </Button>

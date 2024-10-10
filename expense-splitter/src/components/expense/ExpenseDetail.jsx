@@ -99,7 +99,7 @@ function ExpenseDetail() {
         icon={"fa-user"}
         hasButtons={true}
         title={friendNames.find((i) => i.id === friend.friendId).name}
-        subtitle={friend.percentage + "%"}
+        subtitle={parseFloat(friend.percentage).toFixed(2) + "%"}
         price={((friend.percentage / 100) * expenseDetails.amount).toFixed(2)}
       />
     );

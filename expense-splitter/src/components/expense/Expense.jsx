@@ -35,7 +35,8 @@ export default function Expense() {
         type={"expense"}
         icon={"fa-money-check-dollar"}
         title={expense.name}
-        subtitle={"$" + expense.amount}
+        subtitle={expense.description}
+        price={expense.amount}
       />
     ));
 
@@ -54,6 +55,7 @@ export default function Expense() {
     // if modal is not showing then display the following
     !modal.show && (
       <>
+        <h1 className="text-center">Expenses</h1>
         <div className="mb-2">
           <SearchBar input={inputText} inputHandler={inputHandler} />
         </div>

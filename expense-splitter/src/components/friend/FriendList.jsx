@@ -28,10 +28,10 @@ const FriendList = (props) => {
 
   // filter friends for search bar
   const filteredData = friends.filter((search) => {
-    if (props.input === '') {
+    if (props.input === "") {
       return search;
     } else {
-      return search.name.toLowerCase().includes(props.input)
+      return search.name.toLowerCase().includes(props.input);
     }
   });
 
