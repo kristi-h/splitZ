@@ -1,13 +1,21 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { UseDataContext } from "./context/SiteContext";
 import Card from "./ui/Card";
 import FooterHome from "./layout/FooterHome";
 import NoDataPlaceholder from "./ui/NoDataPlaceholder";
+import Dialog from "./ui/Dialog";
+import Button from "./ui/Button";
 
 export default function Home() {
   const navigate = useNavigate();
-  const { user, groupData, expenses, modal, handleSetModal } = UseDataContext();
+  const { user, friends, groupData, expenses, modal, handleSetModal } =
+    UseDataContext();
+
+  // Create reference to dom elements
+  const deleteDialogRef = useRef(null);
+
+  console.log("friends", friends);
 
   useEffect(() => {
     // if user is not "logged in", go to login
@@ -15,6 +23,23 @@ export default function Home() {
       navigate("/");
     }
   }, [user]);
+
+  useEffect(() => {
+    if (friends.length < 2) {
+      console.log("Get started by adding a friend to split expenses with.");
+      toggleDialog(deleteDialogRef);
+    }
+  }, []);
+
+  // Closes or opens the dialog
+  const toggleDialog = (ref) => {
+    if (!ref.current) {
+      return;
+    }
+    ref.current.hasAttribute("open")
+      ? ref.current.close()
+      : ref.current.showModal();
+  };
 
   const groupDisplay = groupData
     .sort((a, b) => b.ID - a.ID) // show latest expense up top
@@ -92,6 +117,20 @@ export default function Home() {
             />
           )}
         </>
+        <Dialog isCustom={true} dialogRef={deleteDialogRef}>
+          <div className="flex flex-col items-center justify-center">
+            <p className="mb-6 text-center">
+              Get started by adding a friend to split expenses with.
+            </p>
+            <Button
+              className="w-full sm:w-48"
+              onClick={() => handleSetModal("FriendForm")}
+              // className={"grow"}
+            >
+              Add Friend
+            </Button>
+          </div>
+        </Dialog>
         {/* <FooterHome /> // remove footer from home until we establish outlets*/}
       </div>
     )
