@@ -8,6 +8,8 @@ import Dialog from "../ui/Dialog";
 import PieChart from "../widgets/PieChart";
 import NoDataPlaceholder from "../ui/NoDataPlaceholder";
 import ButtonFooter from "../ui/ButtonFooter";
+import { ref, deleteObject } from "firebase/storage";
+import { storage } from "../../utils/firebase";
 
 function GroupDetail() {
   const [seeMore, setSeeMore] = useState(false);
@@ -15,8 +17,15 @@ function GroupDetail() {
     width: 0,
     color: "#05299e",
   });
-  const { groupData, setGroupData, friends, expenses, handleSetModal, modal } =
-    UseDataContext();
+  const {
+    groupData,
+    setGroupData,
+    friends,
+    expenses,
+    setExpenses,
+    handleSetModal,
+    modal,
+  } = UseDataContext();
 
   // Create reference to dom elements
   const deleteDialogRef = useRef(null);
@@ -100,12 +109,39 @@ function GroupDetail() {
 
   //delete a group
   const handleDelete = (id) => {
-    db.deleteRows("groups", { id: id });
-    db.commit();
-    //call setState to render the component
-    setGroupData(db.queryAll("groups"));
-    // after deleting, navigate to groups
-    navigate("/groups");
+    // Create an array of promises
+    const deleteReceiptPromises = groupExpenses.map((expense) => {
+      if (expense.receipt_URL) {
+        const receiptRef = ref(storage, expense.receipt_URL);
+        return deleteObject(receiptRef);
+      }
+    });
+
+    // Delete all receipts from firebase
+    Promise.all(deleteReceiptPromises)
+      .then(() => {
+        // Get array of expense IDs
+        const groupExpenseIds = groupData.find(
+          (group) => group.id === groupId,
+        ).expenseIDs;
+
+        // Delete data from localstorage
+        groupExpenseIds.forEach((expenseId) => {
+          db.deleteRows("expenses", { id: expenseId });
+        });
+        db.deleteRows("groups", { id: id });
+        db.commit();
+
+        //call setState to render the component
+        setGroupData(db.queryAll("groups"));
+        setExpenses(db.queryAll("expenses"));
+
+        // after deleting, navigate to groups
+        navigate("/groups");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const friendsList = friends
@@ -213,8 +249,6 @@ function GroupDetail() {
           <Button
             className="bg-red-700"
             onClick={() => {
-              console.log(groupData[0]);
-
               toggleDialog(deleteDialogRef);
             }}
           >
