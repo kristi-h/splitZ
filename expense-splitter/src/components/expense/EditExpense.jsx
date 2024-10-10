@@ -22,7 +22,6 @@ export default function CreateExpense() {
 
   // watch all fields
   const watchedValues = watch();
-  console.log(watchedValues);
 
   // load current expense and friends in state on initial render
   useEffect(() => {
@@ -36,14 +35,12 @@ export default function CreateExpense() {
     const friendsInGroup = friends.filter((friend) =>
       friendIdsArr.includes(friend.id),
     );
-    console.log("initialExpense", initialExpense);
 
     const friendObjs = initialExpense.weight.map((item) => {
       if (friendIdsArr.includes(item.friendId)) {
         const friendName = friendsInGroup?.filter(
           (friend) => friend.id === item.friendId,
         );
-        console.log(item.percentage);
         const dollarValue =
           (parseFloat(item.percentage) * initialExpense.amount) / 100;
         return {
@@ -63,7 +60,6 @@ export default function CreateExpense() {
       acc[friend.name] = friend.weight;
       return acc;
     }, {});
-    // console.log("friendValues", friendValues);
 
     const valuesObj = {
       name: currentExpense.name || "",
@@ -74,11 +70,8 @@ export default function CreateExpense() {
       receipt_URL: currentExpense.receipt_URL || "",
       ...friendValues,
     };
-    // console.log("valuesObj", valuesObj);
     reset(valuesObj);
   }, [currentExpense]);
-
-  console.log("allFriends", allFriends);
 
   // calculate weight data
   useEffect(() => {
@@ -111,8 +104,6 @@ export default function CreateExpense() {
           0,
         )
       : friendsWithWeight.reduce((acc, curr) => acc + parseInt(curr.weight), 0);
-
-    console.log("friendsWithNonZeros", friendsWithNonZeros);
 
     // update weight/dollar on weight value change
     const updatedFriends = allFriends.map((friend) => {
@@ -152,7 +143,6 @@ export default function CreateExpense() {
           };
     });
 
-    console.log("updatedFriends", updatedFriends);
     setAllFriends(updatedFriends);
     // only update state when friend values change
   }, [
@@ -173,9 +163,7 @@ export default function CreateExpense() {
         weight: 0,
         id: friendIdsArr[i],
       }));
-    // console.log("friendsInGroup", friendsInGroup);
     setAllFriends(friendsInGroup);
-    // setAllFriends((prev) => [...prev, ...friendsInGroup]);
   }, [watchedValues["group"]]);
 
   // generate friend contribution fields
@@ -231,7 +219,6 @@ export default function CreateExpense() {
       weight: weightObj,
       groupId: values.group,
     };
-    console.log("updatedExpense", updatedExpense);
     db.insertOrUpdate("expenses", { ID: ID }, { ...updatedExpense });
     db.commit();
     // update expenses state with new db values
