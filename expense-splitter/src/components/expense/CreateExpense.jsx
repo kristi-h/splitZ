@@ -67,10 +67,13 @@ export default function CreateExpense() {
     // calculate non-zero percentage
     const totalPercentages = !hasEmptyWeights
       ? friendsWithNonZeros.reduce(
-          (acc, curr) => acc + parseInt(curr.weight),
+          (acc, curr) => acc + parseFloat(curr.weight),
           0,
         )
-      : friendsWithWeight.reduce((acc, curr) => acc + parseInt(curr.weight), 0);
+      : friendsWithWeight.reduce(
+          (acc, curr) => acc + parseFloat(curr.weight),
+          0,
+        );
 
     // update weight/dollar on weight value change
     const updatedFriends = allFriends.map((friend) => {
@@ -79,7 +82,7 @@ export default function CreateExpense() {
         watchedValues["amount"] / parseFloat(allFriends.length);
       // generate the dollar amount based on weight
       const newDollar =
-        parseInt(newWeight) === 0
+        parseFloat(newWeight) === 0
           ? zeroDefault
           : (parseFloat(watchedValues[friend.name]) * watchedValues["amount"]) /
             100;
@@ -88,11 +91,7 @@ export default function CreateExpense() {
         (100 - totalPercentages) /
         (allFriends.length - friendsWithNonZeros.length);
 
-      const weightLimit = totalPercentages - parseInt(newWeight);
-
-      console.log("allFriends", allFriends);
-
-      console.log("totalPercentages", totalPercentages);
+      const weightLimit = totalPercentages - parseFloat(newWeight);
 
       const calculateTotal = () => {
         if (totalPercentages > 100) {
@@ -100,7 +99,7 @@ export default function CreateExpense() {
         }
         if (totalPercentages === 0) {
           return 100;
-        } else if (parseInt(newWeight) === 0) {
+        } else if (parseFloat(newWeight) === 0) {
           return 100;
         }
         return totalPercentages;
@@ -109,10 +108,8 @@ export default function CreateExpense() {
       setWeightTotal(calculateTotal());
 
       const acceptedWeight =
-        parseInt(newWeight) <= weightLimit ? newWeight : "0";
+        parseFloat(newWeight) <= weightLimit ? newWeight : "0";
 
-      console.log("newWeight", newWeight);
-      console.log("friend.weight", parseInt(friend.weight));
       // if a new weight has been inputted
       return newWeight !== "0"
         ? {
@@ -157,7 +154,7 @@ export default function CreateExpense() {
         className="mb-2 grid grid-cols-3 items-center justify-between gap-2"
       >
         <label className="mr-2">{friend.name}</label>
-        <div className="relative ml-auto flex w-[68px] items-center">
+        <div className="relative ml-auto flex w-[98px] items-center">
           <input
             className="w-full pr-4"
             name={friend.name}
@@ -171,10 +168,14 @@ export default function CreateExpense() {
                   "Invalid input. Please enter a number between 0 and 99.",
               },
             })}
-            // restrict to a max of 2 digits, don't allow non-numeric characters
+            // Allow only numbers with up to 2 whole numbers, a period, and 2 decimal places
             onInput={(e) => {
               const input = e.target;
-              input.value = input.value.replace(/\D/g, "").slice(0, 2);
+              input.value = input.value
+                .replace(/[^0-9.]/g, "") // Remove non-numeric and non-period characters
+                .replace(/^(\d{1,2})\.(\d{2}).*/, "$1.$2") // Limit to 2 decimal places
+                .replace(/^(\d{3,})/, "$1") // Prevents more than 2 whole numbers
+                .slice(0, 5); // Ensure the input length is capped (2 whole, period, 2 decimal)
             }}
           />
           <span className="absolute right-4 font-roboto font-light text-gray-800">
@@ -188,21 +189,17 @@ export default function CreateExpense() {
     );
   });
 
-  // console.log("allFriends", allFriends);
-
   const onSubmit = (values) => {
     // get friends with non-zeros
     const friendsWithNonZeros = allFriends.filter(
       (friend) => friend.weight != "0" && friend.name,
     );
-    // console.log(friendsWithNonZeros);
 
     // calculate non-zero percentage
     const nonZeroPercentage = friendsWithNonZeros.reduce(
-      (acc, curr) => acc + parseInt(curr.weight),
+      (acc, curr) => acc + parseFloat(curr.weight),
       0,
     );
-    // console.log(nonZeroPercentage);
     const id = nanoid();
     const weightObj = allFriends.map((friend) => {
       const finalWeight =
@@ -212,10 +209,9 @@ export default function CreateExpense() {
               (100 - nonZeroPercentage) /
               (allFriends.length - friendsWithNonZeros.length)
             ).toFixed()
-          : parseInt(friend.weight);
+          : parseFloat(friend.weight);
       return { friendId: friend.id, percentage: finalWeight };
     });
-    // console.log("weightObj", weightObj);
     const newExpense = {
       id,
       ...values,
