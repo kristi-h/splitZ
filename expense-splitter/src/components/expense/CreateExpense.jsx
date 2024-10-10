@@ -8,8 +8,14 @@ import { categories } from "../../utils/dummyData";
 import { useNavigate } from "react-router-dom";
 
 export default function CreateExpense() {
-  const { groupData, setExpenses, setGroupData, handleSetModal, friends } =
-    UseDataContext();
+  const {
+    groupData,
+    setExpenses,
+    setGroupData,
+    handleSetModal,
+    friends,
+    modal,
+  } = UseDataContext();
 
   const navigate = useNavigate();
 
@@ -19,6 +25,7 @@ export default function CreateExpense() {
   const {
     handleSubmit,
     register,
+    setValue,
     watch, // lets use this to track values
     formState: { errors },
   } = useForm({
@@ -27,11 +34,21 @@ export default function CreateExpense() {
       name: "Munchies",
       description: "Junky stuff for the trip in",
       amount: 500,
+      // group: modal.id,
     },
   });
 
   // watch all fields
   const watchedValues = watch();
+  console.log("These are watched value", watchedValues);
+
+  useEffect(() => {
+    console.log("this us modal inside the useeffect", modal.id);
+    if (modal.id) {
+      console.log("lets see");
+      setValue("group", modal.id);
+    }
+  }, []);
 
   useEffect(() => {
     // reset all friends in group

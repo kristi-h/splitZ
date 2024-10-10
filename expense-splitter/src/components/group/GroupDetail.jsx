@@ -257,7 +257,7 @@ function GroupDetail() {
           </Button>
           <Button
             className="bg-primary"
-            onClick={() => handleSetModal("CreateExpense")}
+            onClick={() => handleSetModal("CreateExpense", singleGroup.id)}
           >
             Create Expense
           </Button>
