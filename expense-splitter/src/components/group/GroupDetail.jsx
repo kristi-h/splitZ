@@ -120,14 +120,9 @@ function GroupDetail() {
     // Delete all receipts from firebase
     Promise.all(deleteReceiptPromises)
       .then(() => {
-        // Get array of expense IDs
-        const groupExpenseIds = groupData.find(
-          (group) => group.id === groupId,
-        ).expenseIDs;
-
-        // Delete data from localstorage
-        groupExpenseIds.forEach((expenseId) => {
-          db.deleteRows("expenses", { id: expenseId });
+        // Delete from local storage
+        groupExpenses.forEach((expense) => {
+          db.deleteRows("expenses", { id: expense.id });
         });
         db.deleteRows("groups", { id: id });
         db.commit();
