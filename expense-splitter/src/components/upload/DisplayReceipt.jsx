@@ -1,30 +1,21 @@
 import db from "../../utils/localstoragedb";
 import Dialog from "../ui/Dialog";
 import { useRef } from "react";
-import { ref, deleteObject } from "firebase/storage";
-import { storage } from "../../utils/firebase";
+import deleteReceiptFromStorage from "../../utils/deleteReceipt";
 
 const DisplayReceipt = ({ expense, setExpenses }) => {
   const deleteReceiptRef = useRef(null);
 
-  const receiptRef = ref(storage, expense.receipt_URL);
-  const handleDeleteReceipt = () => {
-    // Delete file from firebase
-    deleteObject(receiptRef)
-      .then(() => {
-        // Remove url form local storage
-        db.update("expenses", { id: expense.id }, (expense) => {
-          expense.receipt_URL = null;
-          return expense;
-        });
-        db.commit();
+  const deleteReceiptURL = () => {
+    // Remove url form local storage
+    db.update("expenses", { id: expense.id }, (expense) => {
+      expense.receipt_URL = null;
+      return expense;
+    });
+    db.commit();
 
-        // Update state
-        setExpenses(db.queryAll("expenses"));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // Update state
+    setExpenses(db.queryAll("expenses"));
   };
 
   return (
@@ -44,8 +35,7 @@ const DisplayReceipt = ({ expense, setExpenses }) => {
       <Dialog
         dialogRef={deleteReceiptRef}
         confirmOnClick={() => {
-          console.log("DELETED!");
-          handleDeleteReceipt();
+          deleteReceiptFromStorage(expense.receipt_URL, deleteReceiptURL);
         }}
       >
         <p>Are you sure you want to delete this receipt?</p>
