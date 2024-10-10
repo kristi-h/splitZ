@@ -67,10 +67,20 @@ const About = () => {
               <p className="text-sm text-gray-400">{item.role}</p>
             </h2>
             <div>
-              <a className="mr-4" href={item.gitHubUrl} target="_blank">
+              <a
+                className="mr-4"
+                href={item.gitHubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <GitHubIcon />
               </a>
-              <a className="mr-2" href={item.linkedInUrl} target="_blank">
+              <a
+                className="mr-2"
+                href={item.linkedInUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <LinkedInIcon />
               </a>
             </div>

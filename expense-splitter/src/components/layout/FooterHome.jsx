@@ -12,6 +12,7 @@ const FooterHome = () => {
             <a
               className="ml-1"
               target="_blank"
+              rel="noopener noreferrer"
               href="https://github.com/kristi-h"
             >
               <GitHubIcon />
@@ -19,6 +20,7 @@ const FooterHome = () => {
             /
             <a
               target="_blank"
+              rel="noopener noreferrer"
               href="https://www.linkedin.com/in/kristi-h-4542b38a/"
             >
               <LinkedInIcon />
@@ -29,6 +31,7 @@ const FooterHome = () => {
             <a
               className="ml-1"
               target="_blank"
+              rel="noopener noreferrer"
               href="https://github.com/ccespedes"
             >
               <GitHubIcon />
@@ -36,6 +39,7 @@ const FooterHome = () => {
             /
             <a
               target="_blank"
+              rel="noopener noreferrer"
               href="https://www.linkedin.com/in/carlos-cespedes-054a847/"
             >
               <LinkedInIcon />
@@ -46,6 +50,7 @@ const FooterHome = () => {
             <a
               className="ml-1"
               target="_blank"
+              rel="noopener noreferrer"
               href="https://github.com/belunatic"
             >
               <GitHubIcon />
@@ -60,6 +65,7 @@ const FooterHome = () => {
             <a
               className="ml-1"
               target="_blank"
+              rel="noopener noreferrer"
               href="https://github.com/MatthewNeie"
             >
               <GitHubIcon />
@@ -76,6 +82,7 @@ const FooterHome = () => {
             <a
               className="ml-1"
               target="_blank"
+              rel="noopener noreferrer"
               href="https://github.com/singhalex"
             >
               <GitHubIcon />
@@ -90,6 +97,7 @@ const FooterHome = () => {
             <a
               className="ml-1"
               target="_blank"
+              rel="noopener noreferrer"
               href="https://github.com/Anuoluwatobi"
             >
               <GitHubIcon />
@@ -104,6 +112,7 @@ const FooterHome = () => {
             <a
               className="ml-1"
               target="_blank"
+              rel="noopener noreferrer"
               href="https://github.com/SM171906"
             >
               <GitHubIcon />
@@ -118,6 +127,7 @@ const FooterHome = () => {
             <a
               className="ml-1"
               target="_blank"
+              rel="noopener noreferrer"
               href="https://github.com/abbynyhof"
             >
               <GitHubIcon />
@@ -134,6 +144,7 @@ const FooterHome = () => {
         <a
           className="cursor-pointer font-bold"
           target="_blank"
+          rel="noopener noreferrer"
           href="https://github.com/chingu-voyages/v51-tier2-team-28"
         >
           {" "}
