@@ -93,11 +93,24 @@ export default function CreateExpense() {
       return results;
     };
     const friendsWithNonZeros = getFriendsWithNonZeros();
-    // calculate non-zero percentage
-    const nonZeroPercentage = friendsWithNonZeros.reduce(
-      (acc, curr) => acc + parseInt(curr.weight),
-      0,
+
+    // get friends with empty weights
+    const hasEmptyWeights = friendsWithNonZeros.some(
+      (friend) => friend.weight === "",
     );
+
+    // filter out friends with empty weights
+    const friendsWithWeight = friendsWithNonZeros.filter(
+      (friend) => friend.weight !== "",
+    );
+
+    // calculate percentages
+    const totalPercentages = !hasEmptyWeights
+      ? friendsWithNonZeros.reduce(
+          (acc, curr) => acc + parseInt(curr.weight),
+          0,
+        )
+      : friendsWithWeight.reduce((acc, curr) => acc + parseInt(curr.weight), 0);
 
     console.log("friendsWithNonZeros", friendsWithNonZeros);
 
@@ -115,23 +128,22 @@ export default function CreateExpense() {
             100;
 
       const newZeroWeight =
-        (100 - nonZeroPercentage) /
+        (100 - parseInt(totalPercentages)) /
         (allFriends.length - friendsWithNonZeros.length);
 
-      console.log("newZeroWeight", newZeroWeight);
-      const weightLimit = nonZeroPercentage - parseInt(newWeight);
+      const weightLimit = totalPercentages - parseInt(newWeight);
 
       // // try to factor in default 0 value weights: fail
       // const getWeightTotal =
       //   // parseInt(newWeight) === 0
       //   friendsWithNonZeros.length !== allFriends.length
-      //     ? newZeroWeight + nonZeroPercentage
-      //     : nonZeroPercentage;
+      //     ? newZeroWeight + totalPercentages
+      //     : totalPercentages;
 
       // console.log(
-      //   "newZeroWeight + nonZeroPercentage",
+      //   "newZeroWeight + totalPercentages",
       //   newZeroWeight,
-      //   nonZeroPercentage,
+      //   totalPercentages,
       // );
 
       // console.log(
@@ -140,7 +152,7 @@ export default function CreateExpense() {
       // );
       // console.log("getWeightTotal", non);
 
-      setWeightTotal(nonZeroPercentage);
+      setWeightTotal(totalPercentages);
 
       const acceptedWeight =
         parseInt(newWeight) <= weightLimit ? newWeight : "0";
