@@ -88,7 +88,6 @@ function ExpenseDetail() {
   });
 
   const memberDisplay = sortedContributions.map((friend) => {
-    console.log(friend);
     return (
       <Card
         key={friend.friendId}
@@ -100,8 +99,6 @@ function ExpenseDetail() {
       />
     );
   });
-
-  console.log(memberDisplay);
 
   return (
     !modal.show && (
