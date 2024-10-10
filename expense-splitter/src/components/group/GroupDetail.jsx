@@ -235,7 +235,7 @@ function GroupDetail() {
               title="There are no expenses to display"
               subtitle="Get started by creating an expense."
               btnText="Create Expense"
-              onClick={() => handleSetModal("CreateExpense")}
+              onClick={() => handleSetModal("CreateExpense", singleGroup.id)}
             />
           )}
         </div>
