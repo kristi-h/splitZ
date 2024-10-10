@@ -14,7 +14,7 @@ export default function CreateExpense() {
   const navigate = useNavigate();
 
   const [allFriends, setAllFriends] = useState([]);
-  const [weightLimitExceeded, setWeightLimitExceeded] = useState(false);
+  const [weightTotal, setWeightTotal] = useState(0);
 
   const {
     handleSubmit,
@@ -53,11 +53,27 @@ export default function CreateExpense() {
       return results;
     };
     const friendsWithNonZeros = getFriendsWithNonZeros();
-    // calculate non-zero percentage
-    const nonZeroPercentage = friendsWithNonZeros.reduce(
-      (acc, curr) => acc + parseInt(curr.weight),
-      0,
+
+    // get friends with empty weights
+    const hasEmptyWeights = friendsWithNonZeros.some(
+      (friend) => friend.weight === "",
     );
+
+    // filter out friends with empty weights
+    const friendsWithWeight = friendsWithNonZeros.filter(
+      (friend) => friend.weight !== "",
+    );
+
+    // calculate non-zero percentage
+    const totalPercentages = !hasEmptyWeights
+      ? friendsWithNonZeros.reduce(
+          (acc, curr) => acc + parseFloat(curr.weight),
+          0,
+        )
+      : friendsWithWeight.reduce(
+          (acc, curr) => acc + parseFloat(curr.weight),
+          0,
+        );
 
     // update weight/dollar on weight value change
     const updatedFriends = allFriends.map((friend) => {
@@ -66,16 +82,33 @@ export default function CreateExpense() {
         watchedValues["amount"] / parseFloat(allFriends.length);
       // generate the dollar amount based on weight
       const newDollar =
-        parseInt(newWeight) === 0
+        parseFloat(newWeight) === 0
           ? zeroDefault
           : (parseFloat(watchedValues[friend.name]) * watchedValues["amount"]) /
             100;
+
       const newZeroWeight =
-        (100 - nonZeroPercentage) /
+        (100 - totalPercentages) /
         (allFriends.length - friendsWithNonZeros.length);
-      const weightLimit = nonZeroPercentage - parseInt(newWeight);
+
+      const weightLimit = totalPercentages - parseFloat(newWeight);
+
+      const calculateTotal = () => {
+        if (totalPercentages > 100) {
+          return totalPercentages;
+        }
+        if (totalPercentages === 0) {
+          return 100;
+        } else if (parseFloat(newWeight) === 0) {
+          return 100;
+        }
+        return totalPercentages;
+      };
+
+      setWeightTotal(calculateTotal());
+
       const acceptedWeight =
-        parseInt(newWeight) <= weightLimit ? newWeight : "0";
+        parseFloat(newWeight) <= weightLimit ? newWeight : "0";
 
       // if a new weight has been inputted
       return newWeight !== "0"
@@ -86,14 +119,13 @@ export default function CreateExpense() {
           }
         : {
             ...friend,
-            weight: newZeroWeight,
+            weight: newZeroWeight.toString(),
             dollar: !newZeroWeight
               ? 0
               : `$${((newZeroWeight * watchedValues["amount"]) / 100).toFixed(2)}`,
           };
     });
 
-    setWeightLimitExceeded(nonZeroPercentage > 100);
     setAllFriends(updatedFriends);
     // only update state when friend values change
   }, [
@@ -122,7 +154,7 @@ export default function CreateExpense() {
         className="mb-2 grid grid-cols-3 items-center justify-between gap-2"
       >
         <label className="mr-2">{friend.name}</label>
-        <div className="relative ml-auto flex w-[68px] items-center">
+        <div className="relative ml-auto flex w-[98px] items-center">
           <input
             className="w-full pr-4"
             name={friend.name}
@@ -136,10 +168,14 @@ export default function CreateExpense() {
                   "Invalid input. Please enter a number between 0 and 99.",
               },
             })}
-            // restrict to a max of 2 digits, don't allow non-numeric characters
+            // Allow only numbers with up to 2 whole numbers, a period, and 2 decimal places
             onInput={(e) => {
               const input = e.target;
-              input.value = input.value.replace(/\D/g, "").slice(0, 2);
+              input.value = input.value
+                .replace(/[^0-9.]/g, "") // Remove non-numeric and non-period characters
+                .replace(/^(\d{1,2})\.(\d{2}).*/, "$1.$2") // Limit to 2 decimal places
+                .replace(/^(\d{3,})/, "$1") // Prevents more than 2 whole numbers
+                .slice(0, 5); // Ensure the input length is capped (2 whole, period, 2 decimal)
             }}
           />
           <span className="absolute right-4 font-roboto font-light text-gray-800">
@@ -153,21 +189,17 @@ export default function CreateExpense() {
     );
   });
 
-  // console.log("allFriends", allFriends);
-
   const onSubmit = (values) => {
     // get friends with non-zeros
     const friendsWithNonZeros = allFriends.filter(
       (friend) => friend.weight != "0" && friend.name,
     );
-    // console.log(friendsWithNonZeros);
 
     // calculate non-zero percentage
     const nonZeroPercentage = friendsWithNonZeros.reduce(
-      (acc, curr) => acc + parseInt(curr.weight),
+      (acc, curr) => acc + parseFloat(curr.weight),
       0,
     );
-    // console.log(nonZeroPercentage);
     const id = nanoid();
     const weightObj = allFriends.map((friend) => {
       const finalWeight =
@@ -177,10 +209,9 @@ export default function CreateExpense() {
               (100 - nonZeroPercentage) /
               (allFriends.length - friendsWithNonZeros.length)
             ).toFixed()
-          : parseInt(friend.weight);
+          : parseFloat(friend.weight);
       return { friendId: friend.id, percentage: finalWeight };
     });
-    // console.log("weightObj", weightObj);
     const newExpense = {
       id,
       ...values,
@@ -211,7 +242,7 @@ export default function CreateExpense() {
   };
 
   return (
-    <div className="mb-5">
+    <>
       <h1 className="text-center">Create an Expense </h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-5 flex flex-col">
@@ -245,6 +276,7 @@ export default function CreateExpense() {
             Category:*
           </label>
           <select
+            className="h-16"
             name="category"
             {...register("category", {
               required: "Please select a category",
@@ -287,6 +319,7 @@ export default function CreateExpense() {
           </label>
 
           <select
+            className="h-16"
             name="group"
             {...register("group", {
               required: "Pleaes select a group to apply this expense to",
@@ -307,12 +340,23 @@ export default function CreateExpense() {
         <div className="mb-8">
           {watchedValues["group"] && (
             <>
-              <h2 className="mb-4">Weight Contribution:*</h2>
-              {weightLimitExceeded && (
-                <p className="error-text mb-2">
-                  Combined weights exceed 100%. Please adjust the amounts.
-                </p>
-              )}
+              <h2 className="mb-4">Weight Contributions:*</h2>
+              <div className="bg-neutral/[2%] mb-4 flex items-center justify-between rounded-xl border border-primary/10 p-4">
+                <div>
+                  {weightTotal !== 100 ? (
+                    <p className="error-text">Combined weights must be 100%</p>
+                  ) : (
+                    <p>Combined weights:</p>
+                  )}
+                </div>
+                <div>
+                  <p
+                    className={`font-bold ${weightTotal === 100 ? "text-green-800" : "text-red-500"}`}
+                  >
+                    {weightTotal}% <span className="font-normal">of</span> 100%
+                  </p>
+                </div>
+              </div>
               {friendContributionFields}
             </>
           )}
@@ -326,7 +370,7 @@ export default function CreateExpense() {
           >
             Cancel
           </Button>
-          {weightLimitExceeded ? (
+          {weightTotal !== 100 ? (
             <Button
               disabled={true}
               className="w-full cursor-not-allowed bg-primary opacity-25 md:w-auto"
@@ -338,6 +382,6 @@ export default function CreateExpense() {
           )}
         </div>
       </form>
-    </div>
+    </>
   );
 }
