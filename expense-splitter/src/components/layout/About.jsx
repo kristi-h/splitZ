@@ -4,8 +4,8 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 const About = () => {
   const team = [
     {
-      name: "Kristi",
-      role: "Role",
+      name: "Krist Hwang",
+      role: "Developer",
       gitHubUrl: "https://github.com/kristi-h",
       linkedInUrl: "https://www.linkedin.com/in/kristi-h-4542b38a/",
     },
