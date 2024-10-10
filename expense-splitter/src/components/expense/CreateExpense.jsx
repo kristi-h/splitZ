@@ -15,6 +15,7 @@ export default function CreateExpense() {
 
   const [allFriends, setAllFriends] = useState([]);
   const [weightLimitExceeded, setWeightLimitExceeded] = useState(false);
+  const [weightTotal, setWeightTotal] = useState(0);
 
   const {
     handleSubmit,
@@ -53,11 +54,24 @@ export default function CreateExpense() {
       return results;
     };
     const friendsWithNonZeros = getFriendsWithNonZeros();
-    // calculate non-zero percentage
-    const nonZeroPercentage = friendsWithNonZeros.reduce(
-      (acc, curr) => acc + parseInt(curr.weight),
-      0,
+
+    // get friends with empty weights
+    const hasEmptyWeights = friendsWithNonZeros.some(
+      (friend) => friend.weight === "",
     );
+
+    // filter out friends with empty weights
+    const friendsWithWeight = friendsWithNonZeros.filter(
+      (friend) => friend.weight !== "",
+    );
+
+    // calculate non-zero percentage
+    const totalPercentages = !hasEmptyWeights
+      ? friendsWithNonZeros.reduce(
+          (acc, curr) => acc + parseInt(curr.weight),
+          0,
+        )
+      : friendsWithWeight.reduce((acc, curr) => acc + parseInt(curr.weight), 0);
 
     // update weight/dollar on weight value change
     const updatedFriends = allFriends.map((friend) => {
@@ -70,10 +84,19 @@ export default function CreateExpense() {
           ? zeroDefault
           : (parseFloat(watchedValues[friend.name]) * watchedValues["amount"]) /
             100;
+
       const newZeroWeight =
-        (100 - nonZeroPercentage) /
+        (100 - totalPercentages) /
         (allFriends.length - friendsWithNonZeros.length);
-      const weightLimit = nonZeroPercentage - parseInt(newWeight);
+
+      const weightLimit = totalPercentages - parseInt(newWeight);
+
+      console.log("allFriends", allFriends);
+
+      console.log("totalPercentages", totalPercentages);
+
+      setWeightTotal(totalPercentages === 0 ? 100 : totalPercentages);
+
       const acceptedWeight =
         parseInt(newWeight) <= weightLimit ? newWeight : "0";
 
@@ -86,14 +109,14 @@ export default function CreateExpense() {
           }
         : {
             ...friend,
-            weight: newZeroWeight,
+            weight: newZeroWeight.toString(),
             dollar: !newZeroWeight
               ? 0
               : `$${((newZeroWeight * watchedValues["amount"]) / 100).toFixed(2)}`,
           };
     });
 
-    setWeightLimitExceeded(nonZeroPercentage > 100);
+    setWeightLimitExceeded(totalPercentages > 100);
     setAllFriends(updatedFriends);
     // only update state when friend values change
   }, [
@@ -307,12 +330,23 @@ export default function CreateExpense() {
         <div className="mb-8">
           {watchedValues["group"] && (
             <>
-              <h2 className="mb-4">Weight Contribution:*</h2>
-              {weightLimitExceeded && (
-                <p className="error-text mb-2">
-                  Combined weights exceed 100%. Please adjust the amounts.
-                </p>
-              )}
+              <h2 className="mb-4">Weight Contributions:*</h2>
+              <div className="bg-neutral/[2%] mb-4 flex items-center justify-between rounded-xl border border-primary/10 p-4">
+                <div>
+                  {weightTotal !== 100 ? (
+                    <p className="error-text">Combined weights must be 100%</p>
+                  ) : (
+                    <p>Combined weights:</p>
+                  )}
+                </div>
+                <div>
+                  <p
+                    className={`font-bold ${weightTotal === 100 ? "text-green-800" : "text-red-500"}`}
+                  >
+                    {weightTotal}% <span className="font-normal">of</span> 100%
+                  </p>
+                </div>
+              </div>
               {friendContributionFields}
             </>
           )}
@@ -326,7 +360,7 @@ export default function CreateExpense() {
           >
             Cancel
           </Button>
-          {weightLimitExceeded ? (
+          {weightTotal !== 100 ? (
             <Button
               disabled={true}
               className="w-full cursor-not-allowed bg-primary opacity-25 md:w-auto"
