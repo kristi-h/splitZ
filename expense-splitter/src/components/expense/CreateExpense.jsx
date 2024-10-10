@@ -14,7 +14,6 @@ export default function CreateExpense() {
   const navigate = useNavigate();
 
   const [allFriends, setAllFriends] = useState([]);
-  const [weightLimitExceeded, setWeightLimitExceeded] = useState(false);
   const [weightTotal, setWeightTotal] = useState(0);
 
   const {
@@ -116,7 +115,6 @@ export default function CreateExpense() {
           };
     });
 
-    setWeightLimitExceeded(totalPercentages > 100);
     setAllFriends(updatedFriends);
     // only update state when friend values change
   }, [
