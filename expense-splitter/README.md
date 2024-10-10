@@ -6,43 +6,43 @@ This app was created to have a convenient way to split the bill between a group 
 
 ## Features:
 
-**Analytics**
+**<u>Analytics:</u>**
 Our pie charts provide a visual breakdown of expenses by _Friend_ in the _Expense_ view and by _Category_ in the _Group_ view. The progress bar makes it easy to see at first glance, how close everyone is to balance out their accounts.
 
-**Edit**
+**<u>Edit:</u>**
 Don't have all the info at once? Feel free to _Create Your Expense_ and go back to _Edit_ it anytime. Your saved expense information will dynamically update, including the new total amounts each friend owes.
 
-**Receipt Upload**
+**<u>Receipt Upload:</u>**
 For easier reference, share the receipt in your group with our _Upload_ feature.
 
-**Filtered Views**
+**<u>Filtered View Tabs:</u>**
 View relevant information by tab for: _Group_, _Friend_, and _Expense_ to focus on what you specifically want access to.
 
-**Summary**
+**<u>Summary:</u>**
 Our homepage offers a consolidated view of the top three recent activities for _Groups_ and \*Expenses.
 
-**Search**
+**<u>Search:</u>**
 An easy to use search bar is accessible on each tab to search for your group, friend, and/or individual expense.
 
 ## Running the Project:
 
 <ol>
-<li>1. Clone this project locally</li>
-<li>2. cd into the project directory</li>
-<li>3. cd into Expense Splitter</li>
-<li>4. To run the app on your local device, make sure to install the appropriate packages and run using the following command:</li>
+<li> Clone this project locally</li>
+<li> cd into the project directory</li>
+<li> cd into Expense Splitter</li>
+<li> To run the app on your local device, make sure to install the appropriate packages and run using the following command:</li>
 
 > npm install
+> ...
 > npm run dev
+> ...
 
-...
-
-<li>5. Get started adding your *Friend*, creating your *Group*, and creating your *Expense*</li>
+<li> Get started adding your *Friend*, creating your *Group*, and creating your *Expense*</li>
 </ol>
 
 ## Dependencies:
 
-React, Tailwind
+React, Tailwind, React Hook Forms, Firebase, html2pdf, Local Storage DB, Zod, Nanoid, MUI, Font Awesome.
 
 ## Deployed:
 
