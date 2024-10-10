@@ -49,7 +49,7 @@ const FriendList = (props) => {
         >
           <Button
             variant={"small"}
-            className="bg-red-700 px-3"
+            className="bg-red-700"
             // Put friend id in state and opens dialog
             onClick={() => {
               // Check if user if part of a group or expense
@@ -64,7 +64,6 @@ const FriendList = (props) => {
             <i className="fa-solid fa-trash"></i>
           </Button>
           <Button
-            className="px-3"
             variant={"small"}
             onClick={() => {
               handleSetModal("FriendForm", friend.id);
