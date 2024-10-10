@@ -15,7 +15,7 @@ function GroupDetail() {
   const [seeMore, setSeeMore] = useState(false);
   const [progressBarStyle, setProgressBarStyle] = useState({
     width: 0,
-    color: "#05299e",
+    color: "#D4E2F7",
   });
   const {
     groupData,
@@ -62,7 +62,7 @@ function GroupDetail() {
         barColor = "#1d9e05"; //green
         break;
       case expensePercentage > 25 && expensePercentage <= 50:
-        barColor = "#e6d900"; //yellow
+        barColor = "#FFA600"; //yellow
         break;
       case expensePercentage > 50 && expensePercentage <= 75:
         barColor = "#de8200"; //orange
@@ -220,7 +220,7 @@ function GroupDetail() {
               <div className="h-8 w-full rounded-lg bg-accent"></div>
             </div>
             <p className="text-center font-normal">
-              <span className="font-bold">Budget Spending this month:</span> $
+              <span className="font-bold">Budget spending this month:</span> $
               {totalExpenseAmount} / ${singleGroup.budget}
             </p>
             <PieChart label={"Categories"} pieData={pieData()} />

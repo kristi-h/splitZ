@@ -54,7 +54,7 @@ export default function Login() {
 
         <div className="mb-8 flex flex-col">
           <input
-            placeholder="email"
+            placeholder="Email"
             {...register("email", { required: "email is required" })}
           />
           <div className="error-text">
