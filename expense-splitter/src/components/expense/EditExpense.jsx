@@ -133,25 +133,6 @@ export default function CreateExpense() {
 
       const weightLimit = totalPercentages - parseInt(newWeight);
 
-      // // try to factor in default 0 value weights: fail
-      // const getWeightTotal =
-      //   // parseInt(newWeight) === 0
-      //   friendsWithNonZeros.length !== allFriends.length
-      //     ? newZeroWeight + totalPercentages
-      //     : totalPercentages;
-
-      // console.log(
-      //   "newZeroWeight + totalPercentages",
-      //   newZeroWeight,
-      //   totalPercentages,
-      // );
-
-      // console.log(
-      //   "friendsWithNonZeros.length !== allFriends.length",
-      //   friendsWithNonZeros.length !== allFriends.length,
-      // );
-      // console.log("getWeightTotal", non);
-
       setWeightTotal(totalPercentages);
 
       const acceptedWeight =
@@ -167,9 +148,7 @@ export default function CreateExpense() {
         : {
             ...friend,
             weight: newZeroWeight.toString(),
-            dollar: !newZeroWeight
-              ? 0
-              : `$${((newZeroWeight * watchedValues["amount"]) / 100).toFixed(2)}`,
+            dollar: 0,
           };
     });
 
