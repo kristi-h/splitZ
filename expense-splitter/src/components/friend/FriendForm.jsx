@@ -70,60 +70,63 @@ const FriendForm = ({ id }) => {
 
   return (
     // Pass onSubmit function to useForm submit handler
-    <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
-      <label htmlFor="name">
-        Name*
-        {/* Render errors if name validation does not pass */}
-        {errors.name && (
-          <span className="ml-2 text-sm text-red-400">
-            {errors.name.message}
-          </span>
-        )}
-      </label>
-      <input
-        id="name"
-        autoComplete="name"
-        placeholder="Min 2 characters"
-        className={`border ${errors.name ? "border-red-500 outline-red-500" : "border-transparent"} `}
-        // Associate name input with useForm
-        {...register("name")}
-      />
+    <>
+      <h1 className="text-center">Add Friend</h1>
+      <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
+        <label htmlFor="name">
+          Name*
+          {/* Render errors if name validation does not pass */}
+          {errors.name && (
+            <span className="ml-2 text-sm text-red-400">
+              {errors.name.message}
+            </span>
+          )}
+        </label>
+        <input
+          id="name"
+          autoComplete="name"
+          placeholder="Min 2 characters"
+          className={`border ${errors.name ? "border-red-500 outline-red-500" : "border-transparent"} `}
+          // Associate name input with useForm
+          {...register("name")}
+        />
 
-      <label htmlFor="email">
-        Email
-        {/* Render errors if email validation does not pass */}
-        {errors.email && (
-          <span className="ml-2 text-sm text-red-400">
-            {errors.email.message}
-          </span>
-        )}
-      </label>
-      <input
-        id="email"
-        autoComplete="email"
-        placeholder="Optional"
-        className={`border ${errors.email ? "border-red-500 outline-red-500" : "border-transparent"} `}
-        // Associate email imput with useForm
-        {...register("email")}
-      />
-      {/* Disable button if waiting on async funciton */}
-      <div className="mt-3 flex gap-8">
-        <Button
-          type="button"
-          onClick={handleSetModal}
-          className="w-full md:w-auto"
-        >
-          Cancel
-        </Button>
-        <Button
-          type="submit"
-          disabled={isSubmitting}
-          className="w-full bg-primary md:w-auto"
-        >
-          {isSubmitting ? "Submitting..." : "Submit"}
-        </Button>
-      </div>
-    </form>
+        <label htmlFor="email">
+          Email
+          {/* Render errors if email validation does not pass */}
+          {errors.email && (
+            <span className="ml-2 text-sm text-red-400">
+              {errors.email.message}
+            </span>
+          )}
+        </label>
+        <input
+          id="email"
+          autoComplete="email"
+          placeholder="Optional"
+          className={`border ${errors.email ? "border-red-500 outline-red-500" : "border-transparent"} `}
+          // Associate email imput with useForm
+          {...register("email")}
+        />
+        {/* Disable button if waiting on async funciton */}
+        <div className="mt-3 flex gap-8">
+          <Button
+            type="button"
+            onClick={handleSetModal}
+            className="w-full md:w-auto"
+          >
+            Cancel
+          </Button>
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full bg-primary md:w-auto"
+          >
+            {isSubmitting ? "Submitting..." : "Submit"}
+          </Button>
+        </div>
+      </form>
+    </>
   );
 };
 
