@@ -94,11 +94,25 @@ export default function CreateExpense() {
 
       console.log("totalPercentages", totalPercentages);
 
-      setWeightTotal(totalPercentages === 0 ? 100 : totalPercentages);
+      const calculateTotal = () => {
+        if (totalPercentages > 100) {
+          return totalPercentages;
+        }
+        if (totalPercentages === 0) {
+          return 100;
+        } else if (parseInt(newWeight) === 0) {
+          return 100;
+        }
+        return totalPercentages;
+      };
+
+      setWeightTotal(calculateTotal());
 
       const acceptedWeight =
         parseInt(newWeight) <= weightLimit ? newWeight : "0";
 
+      console.log("newWeight", newWeight);
+      console.log("friend.weight", parseInt(friend.weight));
       // if a new weight has been inputted
       return newWeight !== "0"
         ? {
