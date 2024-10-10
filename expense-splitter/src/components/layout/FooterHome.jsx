@@ -9,21 +9,50 @@ const FooterHome = () => {
         <div className="mb-2 mt-2">
           <p className="mt-1 text-sm font-bold">
             Kristi
-            <a className="ml-1" href="https://github.com/kristi-h">
+            <a
+              className="ml-1"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://github.com/kristi-h"
+            >
               <GitHubIcon />
             </a>{" "}
-            /{/* <a href=""><LinkedInIcon /></a> */}
+            /
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://www.linkedin.com/in/kristi-h-4542b38a/"
+            >
+              <LinkedInIcon />
+            </a>
           </p>
           <p className="mt-1 text-sm font-bold">
             Carlos Cespedes
-            <a className="ml-1" href="https://github.com/ccespedes">
+            <a
+              className="ml-1"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://github.com/ccespedes"
+            >
               <GitHubIcon />
             </a>{" "}
-            /{/* <a href=""><LinkedInIcon /></a> */}
+            /
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://www.linkedin.com/in/carlos-cespedes-054a847/"
+            >
+              <LinkedInIcon />
+            </a>
           </p>
           <p className="mt-1 text-sm font-bold">
             Abel Sila
-            <a className="ml-1" href="https://github.com/belunatic">
+            <a
+              className="ml-1"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://github.com/belunatic"
+            >
               <GitHubIcon />
             </a>{" "}
             /
@@ -33,7 +62,12 @@ const FooterHome = () => {
           </p>
           <p className="mt-1 text-sm font-bold">
             Matthew Neie
-            <a className="ml-1" href="https://github.com/MatthewNeie">
+            <a
+              className="ml-1"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://github.com/MatthewNeie"
+            >
               <GitHubIcon />
             </a>{" "}
             /
@@ -45,7 +79,12 @@ const FooterHome = () => {
         <div className="mb-2 ml-10 mt-2">
           <p className="mt-1 text-sm font-bold">
             Alex Singh
-            <a className="ml-1" href="https://github.com/singhalex">
+            <a
+              className="ml-1"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://github.com/singhalex"
+            >
               <GitHubIcon />
             </a>{" "}
             /
@@ -55,7 +94,12 @@ const FooterHome = () => {
           </p>
           <p className="mt-1 text-sm font-bold">
             Bolaji
-            <a className="ml-1" href="https://github.com/Anuoluwatobi">
+            <a
+              className="ml-1"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://github.com/Anuoluwatobi"
+            >
               <GitHubIcon />
             </a>{" "}
             /
@@ -65,7 +109,12 @@ const FooterHome = () => {
           </p>
           <p className="mt-1 text-sm font-bold">
             Smiti Mishra
-            <a className="ml-1" href="https://github.com/SM171906">
+            <a
+              className="ml-1"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://github.com/SM171906"
+            >
               <GitHubIcon />
             </a>{" "}
             /
@@ -75,7 +124,12 @@ const FooterHome = () => {
           </p>
           <p className="mt-1 text-sm font-bold">
             Abby Nyhof
-            <a className="ml-1" href="https://github.com/abbynyhof">
+            <a
+              className="ml-1"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://github.com/abbynyhof"
+            >
               <GitHubIcon />
             </a>{" "}
             /
@@ -89,6 +143,8 @@ const FooterHome = () => {
         see GitHub repository
         <a
           className="cursor-pointer font-bold"
+          target="_blank"
+          rel="noopener noreferrer"
           href="https://github.com/chingu-voyages/v51-tier2-team-28"
         >
           {" "}
