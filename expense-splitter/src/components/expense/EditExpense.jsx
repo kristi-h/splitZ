@@ -17,16 +17,7 @@ export default function CreateExpense() {
     reset,
     watch, // lets use this to track values
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      name: currentExpense?.name,
-      description: currentExpense?.description,
-      category: currentExpense?.category,
-      amount: currentExpense?.amount,
-      groupId: currentExpense?.groupId,
-      weight: currentExpense?.weight,
-    },
-  });
+  } = useForm();
 
   // watch all fields
   const watchedValues = watch();
@@ -242,7 +233,6 @@ export default function CreateExpense() {
             Name:*{" "}
           </label>
           <input
-            autoComplete="name"
             placeholder="Name of expense"
             {...register("name", { required: "name is required" })}
           />
@@ -254,7 +244,6 @@ export default function CreateExpense() {
             Description:*{" "}
           </label>
           <input
-            autoComplete="description"
             placeholder="Describe the expense"
             defaultValue={currentExpense.description}
             {...register("description", {
@@ -272,7 +261,6 @@ export default function CreateExpense() {
           </label>
           <select
             name="category"
-            autoComplete="category"
             {...register("category", {
               required: "select a category",
             })}
@@ -294,7 +282,6 @@ export default function CreateExpense() {
             Amount:*{" "}
           </label>
           <input
-            autoComplete="amount"
             placeholder="Enter a value"
             {...register("amount", {
               required: "amount required",
@@ -310,7 +297,7 @@ export default function CreateExpense() {
         </div>
 
         <div className="mb-5 flex flex-col" aria-required="true">
-          <label htmlFor="groupId" className="mb-2">
+          <label htmlFor="group" className="mb-2">
             Group Name:*
           </label>
 
@@ -353,33 +340,3 @@ export default function CreateExpense() {
     </div>
   );
 }
-
-// const friendsInGroup = initialExpense?.weight
-//       .filter((friends) => friendIdsArr?.includes(friends.id))
-//       .map((friend, i) => ({
-//         name: friend.name,
-//         weight: 0,
-//         id: friendIdsArr[i],
-//       }));
-//     console.log("friendsInGroup", friendsInGroup);
-
-// useEffect(() => {
-//   const initialExpense = expenses.find((expense) => expense.ID === modal.id);
-//   setCurrentExpense(initialExpense);
-
-//   const friendIdsArr = initialExpense.weight?.map(
-//     (friend) => friend.friendId,
-//   );
-
-//   console.log("initialExpense", initialExpense);
-
-//   const friendsInGroup = friends
-//     .filter((friends) => friendIdsArr?.includes(friends.id))
-//     .map((friend, i) => ({
-//       name: friend.name,
-//       weight: 0,
-//       id: friendIdsArr[i],
-//     }));
-//   console.log("friendsInGroup", friendsInGroup);
-//   setAllFriends(friendsInGroup);
-// }, []);
