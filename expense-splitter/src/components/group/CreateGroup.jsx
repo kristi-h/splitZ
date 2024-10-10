@@ -6,9 +6,11 @@ import Button from "../ui/Button";
 import { UseDataContext } from "../context/SiteContext";
 import MultiSelectDropdown from "../ui/MultiSelectDropdown";
 import db from "../../utils/localstoragedb";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateGroup() {
   const { friends, setGroupData, handleSetModal } = UseDataContext();
+  const navigate = useNavigate();
 
   // Define validation schema and error messages
   const schema = z.object({
@@ -41,15 +43,15 @@ export default function CreateGroup() {
 
   //onSubmit
   const onSubmit = (values) => {
-    //// console.log("This is form submit", values);
-    //// setGroupData((prev) => [...prev, { ...values, id: nanoid() }]);
+    const id = nanoid();
     //insert the new group data into the group database
-    db.insert("groups", { ...values, id: nanoid(), expenseIDs: [] });
+    db.insert("groups", { ...values, id, expenseIDs: [] });
     db.commit();
     //call setState to render the component
     setGroupData(db.queryAll("groups"));
     //close form after submit
     handleSetModal();
+    navigate(`/groups/${id}`);
   };
 
   return (
