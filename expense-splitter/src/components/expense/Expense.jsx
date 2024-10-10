@@ -35,7 +35,8 @@ export default function Expense() {
         type={"expense"}
         icon={"fa-money-check-dollar"}
         title={expense.name}
-        subtitle={"$" + expense.amount}
+        subtitle={expense.description}
+        price={expense.amount}
       />
     ));
 
