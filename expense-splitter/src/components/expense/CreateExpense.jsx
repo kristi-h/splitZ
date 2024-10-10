@@ -234,7 +234,7 @@ export default function CreateExpense() {
   };
 
   return (
-    <div className="mb-5">
+    <>
       <h1 className="text-center">Create an Expense </h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-5 flex flex-col">
@@ -374,6 +374,6 @@ export default function CreateExpense() {
           )}
         </div>
       </form>
-    </div>
+    </>
   );
 }
