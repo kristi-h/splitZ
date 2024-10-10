@@ -296,6 +296,7 @@ export default function CreateExpense() {
             Category:*
           </label>
           <select
+            className="h-16"
             name="category"
             {...register("category", {
               required: "select a category",
@@ -340,7 +341,7 @@ export default function CreateExpense() {
           <select
             name="group"
             disabled={true}
-            className="cursor-not-allowed opacity-50"
+            className="h-16 cursor-not-allowed opacity-50"
             {...register("group", {
               required: "select a group to apply this expense",
             })}

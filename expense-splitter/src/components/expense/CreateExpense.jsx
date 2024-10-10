@@ -268,6 +268,7 @@ export default function CreateExpense() {
             Category:*
           </label>
           <select
+            className="h-16"
             name="category"
             {...register("category", {
               required: "Please select a category",
@@ -310,6 +311,7 @@ export default function CreateExpense() {
           </label>
 
           <select
+            className="h-16"
             name="group"
             {...register("group", {
               required: "Pleaes select a group to apply this expense to",
