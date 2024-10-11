@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { UseDataContext } from "../context/SiteContext";
 import Button from "../ui/Button";
 import Dialog from "../ui/Dialog";
