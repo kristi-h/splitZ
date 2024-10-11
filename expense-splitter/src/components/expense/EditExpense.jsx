@@ -246,7 +246,7 @@ export default function CreateExpense() {
           </label>
           <input
             id="name"
-            autoComplete="name"
+            autoComplete="expensename"
             placeholder="Name of expense"
             {...register("name", { required: "name is required" })}
           />

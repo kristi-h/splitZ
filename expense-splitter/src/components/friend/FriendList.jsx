@@ -47,22 +47,24 @@ const FriendList = (props) => {
           subtitle={friend?.email}
           hasButtons={true}
         >
-          <Button
-            variant={"small"}
-            className="bg-red-700"
-            // Put friend id in state and opens dialog
-            onClick={() => {
-              // Check if user if part of a group or expense
-              if (existsInGroup(groupData, "friendIDs", friend.id)) {
-                cantDeleteDialogRef.current.showModal();
-                return;
-              }
-              setDeleteID(friend.id);
-              deleteDialogRef.current.showModal();
-            }}
-          >
-            <i className="fa-solid fa-trash"></i>
-          </Button>
+          {friend.ID === 1 ? null : (
+            <Button
+              variant={"small"}
+              className="bg-red-700"
+              // Put friend id in state and opens dialog
+              onClick={() => {
+                // Check if user if part of a group or expense
+                if (existsInGroup(groupData, "friendIDs", friend.id)) {
+                  cantDeleteDialogRef.current.showModal();
+                  return;
+                }
+                setDeleteID(friend.id);
+                deleteDialogRef.current.showModal();
+              }}
+            >
+              <i className="fa-solid fa-trash"></i>
+            </Button>
+          )}
           <Button
             variant={"small"}
             onClick={() => {
