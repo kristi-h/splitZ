@@ -336,7 +336,7 @@ export default function CreateExpense() {
           </label>
 
           <select
-            className="h-16"
+            className={`h-16 ${modal.id ? `cursor-not-allowed opacity-50` : ``}`}
             disabled={modal.id ? true : false} //created within the group detail page
             name="group"
             {...register("group", {
