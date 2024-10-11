@@ -337,6 +337,7 @@ export default function CreateExpense() {
 
           <select
             className="h-16"
+            disabled={modal.id ? true : false} //created within the group detail page
             name="group"
             {...register("group", {
               required: "Pleaes select a group to apply this expense to",
