@@ -40,12 +40,11 @@ export default function CreateExpense() {
 
   // watch all fields
   const watchedValues = watch();
-  console.log("These are watched value", watchedValues);
 
+  //run when expense is created inside a group
   useEffect(() => {
-    console.log("this us modal inside the useeffect", modal.id);
     if (modal.id) {
-      console.log("lets see");
+      //set the default value for group to set up the initial values of friends cotribution
       setValue("group", modal.id);
     }
   }, []);
@@ -321,7 +320,8 @@ export default function CreateExpense() {
               required: "Please enter an amount",
               pattern: {
                 value: /^[0-9]*(.[0-9]{2})?$/i,
-                message: "invalid type, please enter a number from 0-100",
+                message:
+                  "Please enter a valid dollar amount (e.g., 10, 10.50).",
               },
             })}
           />

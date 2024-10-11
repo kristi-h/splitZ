@@ -297,7 +297,8 @@ export default function CreateExpense() {
               required: "amount required",
               pattern: {
                 value: /^[0-9]*(.[0-9]{2})?$/i,
-                message: "invalid type, please enter a number from 0-100",
+                message:
+                  "Please enter a valid dollar amount (e.g., 10, 10.50).",
               },
             })}
           />

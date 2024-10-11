@@ -24,7 +24,7 @@ export default function CreateGroup() {
       .string()
       .min(1, { message: "Enter the amount please" })
       .regex(new RegExp(/^[0-9]*(.[0-9]{2})?$/, "i"), {
-        message: "Please enter an valid amount (100, 100.99)",
+        message: "Please enter a valid dollar amount (e.g., 10, 10.50).",
       }),
     friendIDs: z.array(z.string()).optional(),
   });
