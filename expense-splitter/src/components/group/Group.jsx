@@ -2,11 +2,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SearchBar from "../ui/SearchBar";
 import Button from "../ui/Button";
-import GroupList from "./GroupList";
 import { UseDataContext } from "../context/SiteContext";
 import Card from "../ui/Card";
 import NoDataPlaceholder from "../ui/NoDataPlaceholder";
 import ButtonFooter from "../ui/ButtonFooter";
+import GetStarted from "../widgets/GetStarted";
 
 export default function Group() {
   const navigate = useNavigate();
@@ -14,9 +14,9 @@ export default function Group() {
 
   const [inputText, setInputText] = useState("");
 
-  let inputHandler = (e) => {
-      var lowerCase = e.target.value.toLowerCase();
-      setInputText(lowerCase);
+  const inputHandler = (e) => {
+    const lowerCase = e.target.value.toLowerCase();
+    setInputText(lowerCase);
   };
 
   useEffect(() => {
@@ -39,12 +39,12 @@ export default function Group() {
       />
     ));
 
-     // filter groupDisplay for search bar
-   const filteredData = groupDisplay.filter((search) => {
-    if (inputText === '') {
+  // filter groupDisplay for search bar
+  const filteredData = groupDisplay.filter((search) => {
+    if (inputText === "") {
       return search;
     } else {
-      return search.props.title.toLowerCase().includes(inputText)
+      return search.props.title.toLowerCase().includes(inputText);
     }
   });
 
@@ -54,7 +54,7 @@ export default function Group() {
       <>
         <h1 className="text-center">Groups</h1>
         <div className="mb-2">
-          <SearchBar input={inputText} inputHandler={inputHandler}/>
+          <SearchBar input={inputText} inputHandler={inputHandler} />
         </div>
         <div>
           {filteredData.length > 0 ? (
@@ -80,50 +80,8 @@ export default function Group() {
             Create Group
           </Button>
         </ButtonFooter>
+        <GetStarted />
       </>
     )
   );
 }
-
-// Group page with expand
-
-// export default function Group() {
-//   const navigate = useNavigate();
-//   const { user, handleSetModal, modal } = UseDataContext();
-
-//   // const [inputText, setInputText] = useState("");
-
-//   // let inputHandler = (e) => {
-//   //     var lowerCase = e.target.value.toLowerCase();
-//   //     setInputText(lowerCase);
-//   // };
-
-//   useEffect(() => {
-//     // if user is not "logged in", go to login
-//     if (!user) {
-//       navigate("/");
-//     }
-//   }, [user]);
-
-//   return (
-//     // if modal is not showing then display the following
-//     !modal.show && (
-//       <>
-//         <h1 className="text-center">Groups</h1>
-//         {/* <SearchBar input={inputText} inputHandler={inputHandler}/> */}
-//         <div>
-//           {/* <GroupList input={inputText} /> */}
-//           <GroupList />
-//         </div>
-//         <Button
-//           className="over absolute bottom-6 left-1/2 z-10 h-14 w-[200px] -translate-x-1/2 rounded-md bg-primary"
-//           onClick={() => {
-//             handleSetModal("CreateGroup");
-//           }}
-//         >
-//           Create Group
-//         </Button>
-//       </>
-//     )
-//   );
-// }

@@ -6,6 +6,7 @@ import Button from "../ui/Button";
 import ButtonFooter from "../ui/ButtonFooter";
 import Card from "../ui/Card";
 import NoDataPlaceholder from "../ui/NoDataPlaceholder";
+import GetStarted from "../widgets/GetStarted";
 
 export default function Expense() {
   const navigate = useNavigate();
@@ -86,6 +87,7 @@ export default function Expense() {
             Create Expense
           </Button>
         </ButtonFooter>
+        <GetStarted />
       </>
     )
   );
