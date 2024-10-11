@@ -8,10 +8,9 @@ const GetStarted = () => {
 
   useEffect(() => {
     if (friends.length < 2) {
-      console.log("Get started by adding a friend to split expenses with.");
       toggleDialog(deleteDialogRef);
     }
-  }, []);
+  });
 
   const toggleDialog = (ref) => {
     if (!ref.current) {

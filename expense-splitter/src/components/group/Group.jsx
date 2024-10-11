@@ -14,8 +14,8 @@ export default function Group() {
 
   const [inputText, setInputText] = useState("");
 
-  let inputHandler = (e) => {
-    var lowerCase = e.target.value.toLowerCase();
+  const inputHandler = (e) => {
+    const lowerCase = e.target.value.toLowerCase();
     setInputText(lowerCase);
   };
 
