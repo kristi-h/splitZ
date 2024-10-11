@@ -144,6 +144,8 @@ function ExpenseDetail() {
           </Button>
         </div>
 
+        <div className={"html2pdf__page-break"}></div>
+
         <div>
           <>{memberDisplay}</>
         </div>
