@@ -336,8 +336,7 @@ export default function CreateExpense() {
           </label>
 
           <select
-            className={`h-16 ${modal.id ? `cursor-not-allowed opacity-50` : ``}`}
-            disabled={modal.id ? true : false} //created within the group detail page
+            className="h-16"
             name="group"
             {...register("group", {
               required: "Pleaes select a group to apply this expense to",
