@@ -69,9 +69,7 @@ export default function CreateGroup() {
             })}
           />
           {errors.name && (
-            <span className="ml-2 text-sm text-red-400">
-              {errors.name.message}
-            </span>
+            <span className="error-text">{errors.name.message}</span>
           )}
           {/* <div className="error-text">{errors.name && errors.name.message}</div> */}
         </div>
@@ -87,9 +85,7 @@ export default function CreateGroup() {
             {...register("description")}
           />
           {errors.description && (
-            <span className="ml-2 text-sm text-red-400">
-              {errors.description.message}
-            </span>
+            <span className="error-text">{errors.description.message}</span>
           )}
         </div>
 
@@ -104,9 +100,7 @@ export default function CreateGroup() {
             {...register("budget")}
           />
           {errors.budget && (
-            <span className="ml-2 text-sm text-red-400">
-              {errors.budget.message}
-            </span>
+            <span className="error-text">{errors.budget.message}</span>
           )}
         </div>
 

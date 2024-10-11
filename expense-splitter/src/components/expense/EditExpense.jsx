@@ -272,7 +272,7 @@ export default function CreateExpense() {
             className="h-16"
             name="category"
             {...register("category", {
-              required: "select a category",
+              required: "Please select a category",
             })}
           >
             <option value=""></option>
@@ -283,7 +283,7 @@ export default function CreateExpense() {
             ))}
           </select>
           {errors.category && (
-            <p style={{ color: "red" }}> {errors.category.message}</p>
+            <p className="error-text"> {errors.category.message}</p>
           )}
         </div>
 
@@ -303,7 +303,7 @@ export default function CreateExpense() {
             })}
           />
           {errors.amount && (
-            <p style={{ color: "red" }}> {errors.amount.message} </p>
+            <p className="error-text"> {errors.amount.message} </p>
           )}
         </div>
 
@@ -328,7 +328,7 @@ export default function CreateExpense() {
             ))}
           </select>
           {errors.group && (
-            <p style={{ color: "red" }}> {errors.group.message}</p>
+            <p className="error-text"> {errors.group.message}</p>
           )}
         </div>
 
