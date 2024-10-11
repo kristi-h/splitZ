@@ -6,6 +6,7 @@ import { nanoid } from "nanoid";
 import db from "../../utils/localstoragedb";
 import { categories } from "../../utils/dummyData";
 import { useNavigate } from "react-router-dom";
+import { Icon, IconButton, Tooltip } from "@mui/material";
 
 export default function CreateExpense() {
   const { groupData, setExpenses, setGroupData, handleSetModal, friends } =
@@ -153,9 +154,13 @@ export default function CreateExpense() {
         key={friend.name}
         className="mb-2 grid grid-cols-3 items-center justify-between gap-2"
       >
-        <label className="mr-2">{friend.name}</label>
+        <label className="mr-2" htmlFor={friend.name}>
+          {friend.name}
+        </label>
         <div className="relative ml-auto flex w-[98px] items-center">
           <input
+            id={friend.name}
+            type="number"
             className="w-full pr-4"
             name={friend.name}
             required
@@ -241,6 +246,9 @@ export default function CreateExpense() {
     navigate(`/expenses/${id}`);
   };
 
+  const weightInfo =
+    "Expenses are split evenly by default. Assign a percentage and the remaining 0's will divided evenly from the remaning balance.";
+
   return (
     <>
       <h1 className="text-center">Create an Expense </h1>
@@ -303,6 +311,7 @@ export default function CreateExpense() {
             Amount:*{" "}
           </label>
           <input
+            type="number"
             id="amount"
             placeholder="Enter a value"
             {...register("amount", {
@@ -346,7 +355,19 @@ export default function CreateExpense() {
         <div className="mb-8">
           {watchedValues["group"] && (
             <>
-              <h2 className="mb-4">Weight Contributions:*</h2>
+              <h2 className="mb-4">
+                Weight Contributions:*
+                <Tooltip
+                  title={weightInfo}
+                  placement="top-end"
+                  enterTouchDelay={0}
+                  leaveTouchDelay={5000}
+                >
+                  <IconButton className="ml-1">
+                    <Icon className="fa-solid fa-circle-info rounded-full text-accent" />
+                  </IconButton>
+                </Tooltip>
+              </h2>
               <div className="bg-neutral/[2%] mb-4 flex items-center justify-between rounded-xl border border-primary/10 p-4">
                 <div>
                   {weightTotal !== 100 ? (
