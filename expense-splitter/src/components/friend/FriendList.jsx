@@ -13,8 +13,8 @@ const FriendList = (props) => {
   const cantDeleteDialogRef = useRef(null);
   const [deleteID, setDeleteID] = useState(null);
 
-  // Checks group data for user id
-  const existsInGroup = (array, nestedArray, element) => {
+  // Checks data for user id
+  const existsIn = (array, nestedArray, element) => {
     return array.some((obj) => obj[nestedArray].includes(element));
   };
 
@@ -54,7 +54,7 @@ const FriendList = (props) => {
               // Put friend id in state and opens dialog
               onClick={() => {
                 // Check if user if part of a group or expense
-                if (existsInGroup(groupData, "friendIDs", friend.id)) {
+                if (existsIn(groupData, "friendIDs", friend.id)) {
                   cantDeleteDialogRef.current.showModal();
                   return;
                 }
