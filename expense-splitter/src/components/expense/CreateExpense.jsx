@@ -6,7 +6,7 @@ import { nanoid } from "nanoid";
 import db from "../../utils/localstoragedb";
 import { categories } from "../../utils/dummyData";
 import { useNavigate } from "react-router-dom";
-import { Tooltip } from "@mui/material";
+import { Icon, IconButton, Tooltip } from "@mui/material";
 
 export default function CreateExpense() {
   const { groupData, setExpenses, setGroupData, handleSetModal, friends } =
@@ -157,6 +157,7 @@ export default function CreateExpense() {
         <label className="mr-2">{friend.name}</label>
         <div className="relative ml-auto flex w-[98px] items-center">
           <input
+            type="number"
             className="w-full pr-4"
             name={friend.name}
             required
@@ -307,6 +308,7 @@ export default function CreateExpense() {
             Amount:*{" "}
           </label>
           <input
+            type="number"
             id="amount"
             placeholder="Enter a value"
             {...register("amount", {
@@ -352,11 +354,15 @@ export default function CreateExpense() {
             <>
               <h2 className="mb-4">
                 Weight Contributions:*
-                <Tooltip title={weightInfo} placement="right">
-                  <i
-                    className="fa-solid fa-circle-info ml-1"
-                    style={{ color: "#72a1e5" }}
-                  ></i>
+                <Tooltip
+                  title={weightInfo}
+                  placement="top-end"
+                  enterTouchDelay={0}
+                  leaveTouchDelay={5000}
+                >
+                  <IconButton className="ml-1">
+                    <Icon className="fa-solid fa-circle-info rounded-full text-accent" />
+                  </IconButton>
                 </Tooltip>
               </h2>
               <div className="bg-neutral/[2%] mb-4 flex items-center justify-between rounded-xl border border-primary/10 p-4">
