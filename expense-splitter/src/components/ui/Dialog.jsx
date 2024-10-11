@@ -15,7 +15,7 @@ const Dialog = ({ dialogRef, confirmOnClick, children, isCustom }) => {
   return (
     <dialog
       ref={dialogRef}
-      className="rounded-md px-6 py-10 backdrop:bg-black backdrop:opacity-60"
+      className="rounded-xl px-6 py-10 backdrop:bg-black backdrop:opacity-60"
     >
       {isCustom ? (
         <>{children}</>
