@@ -154,9 +154,12 @@ export default function CreateExpense() {
         key={friend.name}
         className="mb-2 grid grid-cols-3 items-center justify-between gap-2"
       >
-        <label className="mr-2">{friend.name}</label>
+        <label className="mr-2" htmlFor={friend.name}>
+          {friend.name}
+        </label>
         <div className="relative ml-auto flex w-[98px] items-center">
           <input
+            id={friend.name}
             type="number"
             className="w-full pr-4"
             name={friend.name}
