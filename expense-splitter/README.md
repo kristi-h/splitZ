@@ -1,10 +1,10 @@
 # Expense Splitter
 
-## Overview:
+## Overview
 
 This app was created to have a convenient way to split the bill between a group of friends. With a focus on smooth UX, we've designed our app to feel intuitive for the user to use and understand.
 
-## Features:
+## Features
 
 **<u>Analytics:</u>**
 Our pie charts provide a visual breakdown of expenses by _Friend_ in the _Expense_ view and by _Category_ in the _Group_ view. The progress bar makes it easy to see at first glance, how close everyone is to balance out their accounts.
@@ -24,31 +24,33 @@ Our homepage offers a consolidated view of the top three recent activities for _
 **<u>Search:</u>**
 An easy to use search bar is accessible on each tab to search for your group, friend, and/or individual expense.
 
-## Running the Project:
+## Running the Project
 
-<ol>
-<li> Clone this project locally</li>
-<li> cd into the project directory</li>
-<li> cd into Expense Splitter</li>
-<li> To run the app on your local device, make sure to install the appropriate packages and run using the following command:</li>
+1. Clone this project locally
+2. cd into the project directory
+3. cd into Expense Splitter
+4. To run the app on your local device, make sure to install the appropriate packages and run using the following command:
 
-> npm install
-> ...
-> npm run dev
-> ...
+```sh
+npm install
+npm run dev
+```
 
-<li> Get started adding your *Friend*, creating your *Group*, and creating your *Expense*</li>
-</ol>
+5. Get started adding your **Friend**, creating your _Group_, and creating your **Expense**
 
-## Dependencies:
+## Built With
+
+- [![React][React.js]][React-url]
+
+## Dependencies
 
 React, Tailwind, React Hook Forms, Firebase, html2pdf, Local Storage DB, Zod, Nanoid, MUI, Font Awesome.
 
-## Deployed:
+## Deployed
 
 [https://expensesplitterdev.netlify.app/](https://expensesplitterdev.netlify.app/)
 
-## Meet the Creators:
+## Meet the Creators
 
 - Kristi Hwang (Developer): [GitHub](https://github.com/kristi-h) / [LinkedIn](https://www.linkedin.com/in/kristi-h-4542b38a/)
 - Carlos Cespedes (Developer): [GitHub](https://github.com/ccespedes) / [LinkedIn](https://linkedin.com/in/account)
