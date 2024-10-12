@@ -6,10 +6,17 @@ import { nanoid } from "nanoid";
 import db from "../../utils/localstoragedb";
 import { categories } from "../../utils/dummyData";
 import { useNavigate } from "react-router-dom";
+import { Icon, IconButton, Tooltip } from "@mui/material";
 
 export default function CreateExpense() {
-  const { groupData, setExpenses, setGroupData, handleSetModal, friends } =
-    UseDataContext();
+  const {
+    groupData,
+    setExpenses,
+    setGroupData,
+    handleSetModal,
+    friends,
+    modal,
+  } = UseDataContext();
 
   const navigate = useNavigate();
 
@@ -19,6 +26,7 @@ export default function CreateExpense() {
   const {
     handleSubmit,
     register,
+    setValue,
     watch, // lets use this to track values
     formState: { errors },
   } = useForm({
@@ -27,11 +35,20 @@ export default function CreateExpense() {
       name: "Munchies",
       description: "Junky stuff for the trip in",
       amount: 500,
+      // group: modal.id,
     },
   });
 
   // watch all fields
   const watchedValues = watch();
+
+  //run when expense is created inside a group
+  useEffect(() => {
+    if (modal.id) {
+      //set the default value for group to set up the initial values of friends cotribution
+      setValue("group", modal.id);
+    }
+  }, []);
 
   useEffect(() => {
     // reset all friends in group
@@ -153,9 +170,13 @@ export default function CreateExpense() {
         key={friend.name}
         className="mb-2 grid grid-cols-3 items-center justify-between gap-2"
       >
-        <label className="mr-2">{friend.name}</label>
+        <label className="mr-2" htmlFor={friend.name}>
+          {friend.name}
+        </label>
         <div className="relative ml-auto flex w-[98px] items-center">
           <input
+            id={friend.name}
+            type="number"
             className="w-full pr-4"
             name={friend.name}
             required
@@ -241,15 +262,20 @@ export default function CreateExpense() {
     navigate(`/expenses/${id}`);
   };
 
+  const weightInfo =
+    "Expenses are split evenly by default. Assign a percentage and the remaining 0's will divided evenly from the remaning balance.";
+
   return (
     <>
       <h1 className="text-center">Create an Expense </h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-5 flex flex-col">
-          <label className="mb-1" aria-required="true">
+          <label className="mb-1" aria-required="true" htmlFor="name">
             Name:*{" "}
           </label>
           <input
+            id="name"
+            autoComplete="name"
             placeholder="Name of expense"
             {...register("name", { required: "A name is required" })}
           />
@@ -257,10 +283,11 @@ export default function CreateExpense() {
         </div>
 
         <div className="mb-5 flex flex-col">
-          <label className="mb-1" aria-required="true">
+          <label className="mb-1" aria-required="true" htmlFor="description">
             Description:*{" "}
           </label>
           <input
+            id="description"
             placeholder="Describe the expense"
             {...register("description", {
               required: "A description is required",
@@ -276,6 +303,7 @@ export default function CreateExpense() {
             Category:*
           </label>
           <select
+            id="category"
             className="h-16"
             name="category"
             {...register("category", {
@@ -295,16 +323,19 @@ export default function CreateExpense() {
         </div>
 
         <div className="mb-5 flex flex-col">
-          <label className="mb-1" aria-required="true">
+          <label className="mb-1" aria-required="true" htmlFor="amount">
             Amount:*{" "}
           </label>
           <input
+            type="number"
+            id="amount"
             placeholder="Enter a value"
             {...register("amount", {
               required: "Please enter an amount",
               pattern: {
                 value: /^[0-9]*(.[0-9]{2})?$/i,
-                message: "invalid type, please enter a number from 0-100",
+                message:
+                  "Please enter a valid dollar amount (e.g., 10, 10.50).",
               },
             })}
           />
@@ -319,6 +350,7 @@ export default function CreateExpense() {
           </label>
 
           <select
+            id="group"
             className="h-16"
             name="group"
             {...register("group", {
@@ -340,7 +372,19 @@ export default function CreateExpense() {
         <div className="mb-8">
           {watchedValues["group"] && (
             <>
-              <h2 className="mb-4">Weight Contributions:*</h2>
+              <h2 className="mb-4">
+                Weight Contributions:*
+                <Tooltip
+                  title={weightInfo}
+                  placement="top-end"
+                  enterTouchDelay={0}
+                  leaveTouchDelay={5000}
+                >
+                  <IconButton className="ml-1">
+                    <Icon className="fa-solid fa-circle-info rounded-full text-accent" />
+                  </IconButton>
+                </Tooltip>
+              </h2>
               <div className="bg-neutral/[2%] mb-4 flex items-center justify-between rounded-xl border border-primary/10 p-4">
                 <div>
                   {weightTotal !== 100 ? (

@@ -5,16 +5,17 @@ import SearchBar from "../ui/SearchBar";
 import Button from "../ui/Button";
 import FriendList from "./FriendList";
 import ButtonFooter from "../ui/ButtonFooter";
+import GetStarted from "../widgets/GetStarted";
 
 const Friend = () => {
   const navigate = useNavigate();
-  const { user, handleSetModal, modal } = UseDataContext();
+  const { user, handleSetModal, modal, friends } = UseDataContext();
 
   const [inputText, setInputText] = useState("");
 
-  let inputHandler = (e) => {
-      var lowerCase = e.target.value.toLowerCase();
-      setInputText(lowerCase);
+  const inputHandler = (e) => {
+    const lowerCase = e.target.value.toLowerCase();
+    setInputText(lowerCase);
   };
 
   useEffect(() => {
@@ -29,9 +30,11 @@ const Friend = () => {
       <>
         <h1 className="text-center">Friends</h1>
         <div className="mb-2">
-          <SearchBar input={inputText} inputHandler={inputHandler}/>
+          {friends.length > 3 && (
+            <SearchBar input={inputText} inputHandler={inputHandler} />
+          )}
         </div>
-        <FriendList input={inputText}/>
+        <FriendList input={inputText} />
         <ButtonFooter>
           <Button
             className="bg-primary"
@@ -42,6 +45,7 @@ const Friend = () => {
             Add Friend
           </Button>
         </ButtonFooter>
+        <GetStarted />
       </>
     )
   );

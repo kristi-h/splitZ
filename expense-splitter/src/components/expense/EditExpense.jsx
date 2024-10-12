@@ -176,9 +176,12 @@ export default function CreateExpense() {
         key={friend.name}
         className="mb-2 grid grid-cols-3 items-center justify-between gap-2"
       >
-        <label className="mr-2">{friend.name}</label>
+        <label className="mr-2" htmlFor={friend.name}>
+          {friend.name}
+        </label>
         <div className="relative ml-auto flex w-[98px] items-center">
           <input
+            id={friend.name}
             className="w-full pr-4"
             name={friend.name}
             required
@@ -238,10 +241,12 @@ export default function CreateExpense() {
       <h1 className="text-center">Edit Expense </h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-5 flex flex-col">
-          <label className="mb-1" aria-required="true">
+          <label className="mb-1" aria-required="true" htmlFor="name">
             Name:*{" "}
           </label>
           <input
+            id="name"
+            autoComplete="expensename"
             placeholder="Name of expense"
             {...register("name", { required: "name is required" })}
           />
@@ -249,10 +254,11 @@ export default function CreateExpense() {
         </div>
 
         <div className="mb-5 flex flex-col">
-          <label className="mb-1" aria-required="true">
+          <label className="mb-1" aria-required="true" htmlFor="description">
             Description:*{" "}
           </label>
           <input
+            id="description"
             placeholder="Describe the expense"
             defaultValue={currentExpense.description}
             {...register("description", {
@@ -269,10 +275,11 @@ export default function CreateExpense() {
             Category:*
           </label>
           <select
+            id="category"
             className="h-16"
             name="category"
             {...register("category", {
-              required: "select a category",
+              required: "Please select a category",
             })}
           >
             <option value=""></option>
@@ -283,26 +290,28 @@ export default function CreateExpense() {
             ))}
           </select>
           {errors.category && (
-            <p style={{ color: "red" }}> {errors.category.message}</p>
+            <p className="error-text"> {errors.category.message}</p>
           )}
         </div>
 
         <div className="mb-5 flex flex-col">
-          <label className="mb-1" aria-required="true">
+          <label className="mb-1" aria-required="true" htmlFor="amount">
             Amount:*{" "}
           </label>
           <input
+            id="amount"
             placeholder="Enter a value"
             {...register("amount", {
               required: "amount required",
               pattern: {
                 value: /^[0-9]*(.[0-9]{2})?$/i,
-                message: "invalid type, please enter a number from 0-100",
+                message:
+                  "Please enter a valid dollar amount (e.g., 10, 10.50).",
               },
             })}
           />
           {errors.amount && (
-            <p style={{ color: "red" }}> {errors.amount.message} </p>
+            <p className="error-text"> {errors.amount.message} </p>
           )}
         </div>
 
@@ -312,6 +321,7 @@ export default function CreateExpense() {
           </label>
 
           <select
+            id="group"
             name="group"
             disabled={true}
             className="h-16 cursor-not-allowed opacity-50"
@@ -327,7 +337,7 @@ export default function CreateExpense() {
             ))}
           </select>
           {errors.group && (
-            <p style={{ color: "red" }}> {errors.group.message}</p>
+            <p className="error-text"> {errors.group.message}</p>
           )}
         </div>
 

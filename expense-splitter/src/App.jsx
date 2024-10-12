@@ -18,7 +18,7 @@ function App() {
   return (
     <Router>
       <DataProvider>
-        <div className="flex h-[100vh] flex-col">
+        <>
           <Header />
           <div className="flex flex-col">
             <Modal />
@@ -42,7 +42,7 @@ function App() {
             </section>
             <Footer />
           </div>
-        </div>
+        </>
       </DataProvider>
     </Router>
   );

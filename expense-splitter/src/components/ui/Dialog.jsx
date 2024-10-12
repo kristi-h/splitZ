@@ -1,7 +1,7 @@
 import Button from "./Button";
 import PropTypes from "prop-types";
 
-const Dialog = ({ dialogRef, confirmOnClick, children }) => {
+const Dialog = ({ dialogRef, confirmOnClick, children, isCustom }) => {
   // Add or remove the open attribute as needed
   const toggleDialog = () => {
     if (!dialogRef.current) {
@@ -15,26 +15,32 @@ const Dialog = ({ dialogRef, confirmOnClick, children }) => {
   return (
     <dialog
       ref={dialogRef}
-      className="rounded-md px-6 py-10 backdrop:bg-black backdrop:opacity-60"
+      className="rounded-xl px-6 py-10 backdrop:bg-black backdrop:opacity-60"
     >
-      <div className="mb-6">{children}</div>
-      <div className="flex gap-2">
-        <Button onClick={toggleDialog} className={"grow"}>
-          Cancel
-        </Button>
+      {isCustom ? (
+        <>{children}</>
+      ) : (
+        <>
+          <div className="mb-6">{children}</div>
+          <div className="flex gap-2">
+            <Button onClick={toggleDialog} className={"grow"}>
+              Cancel
+            </Button>
 
-        {confirmOnClick && ( //Render 2nd button if 2nd onClick is provided
-          <Button
-            className={"grow bg-primary"}
-            onClick={() => {
-              confirmOnClick();
-              toggleDialog();
-            }}
-          >
-            Confirm
-          </Button>
-        )}
-      </div>
+            {confirmOnClick && ( //Render 2nd button if 2nd onClick is provided
+              <Button
+                className={"grow bg-primary"}
+                onClick={() => {
+                  confirmOnClick();
+                  toggleDialog();
+                }}
+              >
+                Confirm
+              </Button>
+            )}
+          </div>
+        </>
+      )}
     </dialog>
   );
 };

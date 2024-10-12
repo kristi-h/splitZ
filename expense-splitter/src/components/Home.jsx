@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { UseDataContext } from "./context/SiteContext";
 import Card from "./ui/Card";
-import FooterHome from "./layout/FooterHome";
 import NoDataPlaceholder from "./ui/NoDataPlaceholder";
+import GetStarted from "./widgets/GetStarted";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -92,6 +92,7 @@ export default function Home() {
             />
           )}
         </>
+        <GetStarted />
         {/* <FooterHome /> // remove footer from home until we establish outlets*/}
       </div>
     )

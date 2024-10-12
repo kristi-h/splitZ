@@ -1,3 +1,7 @@
+# Expense Splitter
+
+![Screenshot](expense-splitter/expense-splitter.png)
+
 [https://expensesplitterdev.netlify.app/](https://expensesplitterdev.netlify.app/)
 
 # voyage-tasks

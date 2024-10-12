@@ -6,26 +6,26 @@ export const dummyFriends = [
   //   name: "Me",
   //   email: "me@email.com",
   // },
-  {
-    id: "9641947f-6b00-4db7-9c7e-9e479b438bd8",
-    name: "Lloyd Kneman",
-    email: "lloydk@email.com",
-  },
-  {
-    id: "d5923f14-bc79-44ea-8388-d354c72c2253",
-    name: "Joz Freedle",
-    email: "jfree@email.com",
-  },
-  {
-    id: "8217468b-ec4e-4340-9c90-665dff5d22d2",
-    name: "Nunya",
-    email: "buzzzz@email.com",
-  },
-  {
-    id: "zwo2wpz6-uulb-uais-gsil-3uto1zfubf",
-    name: "Drogo Beck",
-    email: "dbeck@email.com",
-  },
+  // {
+  //   id: "9641947f-6b00-4db7-9c7e-9e479b438bd8",
+  //   name: "Lloyd Kneman",
+  //   email: "lloydk@email.com",
+  // },
+  // {
+  //   id: "d5923f14-bc79-44ea-8388-d354c72c2253",
+  //   name: "Joz Freedle",
+  //   email: "jfree@email.com",
+  // },
+  // {
+  //   id: "8217468b-ec4e-4340-9c90-665dff5d22d2",
+  //   name: "Nunya",
+  //   email: "buzzzz@email.com",
+  // },
+  // {
+  //   id: "zwo2wpz6-uulb-uais-gsil-3uto1zfubf",
+  //   name: "Drogo Beck",
+  //   email: "dbeck@email.com",
+  // },
   // {
   //   id: "cknxcdjq-m7iv-9mib-x332-6vqvgpp024",
   //   name: "Harmony Chance",
@@ -70,11 +70,11 @@ export const dummyFriends = [
 
 export const userSchema = ["name", "email", "id"];
 export const dummyUser = [
-  {
-    id: "9641947f-6b00-4db7-9c7e-9e479b438bd8",
-    name: "Lloyd Kneman",
-    email: "lloydk@email.com",
-  },
+  // {
+  //   id: "9641947f-6b00-4db7-9c7e-9e479b438bd8",
+  //   name: "Lloyd Kneman",
+  //   email: "lloydk@email.com",
+  // },
 ];
 
 export const expensesSchema = [
@@ -117,22 +117,22 @@ export const dummyExpenses = [
   //     { friendId: "9641947f-6b00-4db7-9c7e-9e479b438bd8", percentage: 35 },
   //   ],
   // },
-  {
-    id: "2c0ce368-7a0c-4b72-ad30-8c03a8d7318a",
-    name: "Road Trip",
-    description: "Grand Canyon",
-    category: "trip",
-    date: "2024-10-09T03:51:38.433Z",
-    amount: "343.11",
-    groupId: "47dd1683-bcbf-4a20-9e10-d8596474bc5c",
-    receipt_URL: null,
-    weight: [
-      { friendId: "9641947f-6b00-4db7-9c7e-9e479b438bd8", percentage: 35 },
-      { friendId: "d5923f14-bc79-44ea-8388-d354c72c2253", percentage: 30 },
-      { friendId: "zwo2wpz6-uulb-uais-gsil-3uto1zfubf", percentage: 15 },
-      { friendId: "8217468b-ec4e-4340-9c90-665dff5d22d2", percentage: 20 },
-    ],
-  },
+  // {
+  //   id: "2c0ce368-7a0c-4b72-ad30-8c03a8d7318a",
+  //   name: "Road Trip",
+  //   description: "Grand Canyon",
+  //   category: "trip",
+  //   date: "2024-10-09T03:51:38.433Z",
+  //   amount: "343.11",
+  //   groupId: "47dd1683-bcbf-4a20-9e10-d8596474bc5c",
+  //   receipt_URL: null,
+  //   weight: [
+  //     { friendId: "9641947f-6b00-4db7-9c7e-9e479b438bd8", percentage: 35 },
+  //     { friendId: "d5923f14-bc79-44ea-8388-d354c72c2253", percentage: 30 },
+  //     { friendId: "zwo2wpz6-uulb-uais-gsil-3uto1zfubf", percentage: 15 },
+  //     { friendId: "8217468b-ec4e-4340-9c90-665dff5d22d2", percentage: 20 },
+  //   ],
+  // },
   // {
   //   id: "ecd43989-b611-49d1-9093-0f8bc2378a11",
   //   name: "Imported Peruvian Peanuts",
@@ -365,19 +365,19 @@ export const dummyGroups = [
   //     "kw5xvr31-h6dh-fnyz-efl2-p9k6boum85",
   //   ],
   // },
-  {
-    id: "47dd1683-bcbf-4a20-9e10-d8596474bc5c",
-    name: "CoWorkers",
-    description: "Work gift exchange",
-    budget: "800",
-    friendIDs: [
-      "9641947f-6b00-4db7-9c7e-9e479b438bd8",
-      "d5923f14-bc79-44ea-8388-d354c72c2253",
-      "8217468b-ec4e-4340-9c90-665dff5d22d2",
-      "zwo2wpz6-uulb-uais-gsil-3uto1zfubf",
-    ],
-    expenseIDs: ["2c0ce368-7a0c-4b72-ad30-8c03a8d7318a"],
-  },
+  // {
+  //   id: "47dd1683-bcbf-4a20-9e10-d8596474bc5c",
+  //   name: "CoWorkers",
+  //   description: "Work gift exchange",
+  //   budget: "800",
+  //   friendIDs: [
+  //     "9641947f-6b00-4db7-9c7e-9e479b438bd8",
+  //     "d5923f14-bc79-44ea-8388-d354c72c2253",
+  //     "8217468b-ec4e-4340-9c90-665dff5d22d2",
+  //     "zwo2wpz6-uulb-uais-gsil-3uto1zfubf",
+  //   ],
+  //   expenseIDs: ["2c0ce368-7a0c-4b72-ad30-8c03a8d7318a"],
+  // },
   // {
   //   id: "pazwo2wp-z6uu-lbua-isgs-il3uto1zfu",
   //   name: "Roomates",

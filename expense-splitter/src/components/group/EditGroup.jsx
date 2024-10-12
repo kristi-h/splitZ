@@ -25,7 +25,7 @@ export default function EditGroup() {
       .string()
       .min(1, { message: "Enter the amount please" })
       .regex(new RegExp(/^[0-9]*(.[0-9]{2})?$/, "i"), {
-        message: "Please enter an valid amount (100, 100.99)",
+        message: "Please enter a valid dollar amount (e.g., 10, 10.50).",
       }),
     friendIDs: z
       .array(z.string())
@@ -87,9 +87,7 @@ export default function EditGroup() {
             {...register("name")}
           />
           {errors.name && (
-            <span className="ml-2 text-sm text-red-400">
-              {errors.name.message}
-            </span>
+            <span className="error-text">{errors.name.message}</span>
           )}
         </div>
 
@@ -104,9 +102,7 @@ export default function EditGroup() {
             {...register("description")}
           />
           {errors.description && (
-            <span className="ml-2 text-sm text-red-400">
-              {errors.description.message}
-            </span>
+            <span className="error-text">{errors.description.message}</span>
           )}
         </div>
 
@@ -121,9 +117,7 @@ export default function EditGroup() {
             {...register("budget")}
           />
           {errors.budget && (
-            <span className="ml-2 text-sm text-red-400">
-              {errors.budget.message}
-            </span>
+            <span className="error-text">{errors.budget.message}</span>
           )}
         </div>
 
