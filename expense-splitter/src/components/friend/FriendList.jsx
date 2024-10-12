@@ -57,7 +57,7 @@ const FriendList = (props) => {
               onClick={() => {
                 // Check if friend is part of a group
                 if (existsIn(groupData, "friendIDs", friend.id)) {
-                  setCantDeleteMsg("a group");
+                  setCantDeleteMsg("a group.");
                   cantDeleteDialogRef.current.showModal();
                   return;
                 }
@@ -70,7 +70,7 @@ const FriendList = (props) => {
                     );
                   })
                 ) {
-                  setCantDeleteMsg("an expense");
+                  setCantDeleteMsg("an expense.");
                   cantDeleteDialogRef.current.showModal();
                   return;
                 }
