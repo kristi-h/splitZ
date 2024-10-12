@@ -9,7 +9,7 @@ import GetStarted from "../widgets/GetStarted";
 
 const Friend = () => {
   const navigate = useNavigate();
-  const { user, handleSetModal, modal } = UseDataContext();
+  const { user, handleSetModal, modal, friends } = UseDataContext();
 
   const [inputText, setInputText] = useState("");
 
@@ -30,7 +30,9 @@ const Friend = () => {
       <>
         <h1 className="text-center">Friends</h1>
         <div className="mb-2">
-          <SearchBar input={inputText} inputHandler={inputHandler} />
+          {friends.length > 3 && (
+            <SearchBar input={inputText} inputHandler={inputHandler} />
+          )}
         </div>
         <FriendList input={inputText} />
         <ButtonFooter>

@@ -25,6 +25,7 @@ export default function Group() {
       navigate("/");
     }
   }, [user]);
+  console.log("groupData", groupData);
 
   const groupDisplay = groupData
     .sort((a, b) => b.ID - a.ID)
@@ -54,7 +55,9 @@ export default function Group() {
       <>
         <h1 className="text-center">Groups</h1>
         <div className="mb-2">
-          <SearchBar input={inputText} inputHandler={inputHandler} />
+          {groupData.length > 3 && (
+            <SearchBar input={inputText} inputHandler={inputHandler} />
+          )}
         </div>
         <div>
           {filteredData.length > 0 ? (

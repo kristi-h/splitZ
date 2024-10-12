@@ -58,7 +58,9 @@ export default function Expense() {
       <>
         <h1 className="text-center">Expenses</h1>
         <div className="mb-2">
-          <SearchBar input={inputText} inputHandler={inputHandler} />
+          {expenses.length > 3 && (
+            <SearchBar input={inputText} inputHandler={inputHandler} />
+          )}
         </div>
         {expenseDisplay.length < 1 ? (
           <NoDataPlaceholder
