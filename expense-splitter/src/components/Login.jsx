@@ -7,15 +7,13 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 export default function Login() {
-  const { user, handleSetUser, friends, setFriends } = UseDataContext();
+  const { user, handleSetUser, setFriends } = UseDataContext();
   const navigate = useNavigate();
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm();
-
-  console.log(friends);
 
   const onSubmit = (values) => {
     const id = nanoid();
@@ -25,7 +23,7 @@ export default function Login() {
     // add new user into friends
     db.insertOrUpdate("friends", { id }, newUser);
     db.commit();
-    setFriends((prev) => [...prev, newUser]);
+    setFriends(db.queryAll("friends"));
     // then set it into the context state
     handleSetUser(db.queryAll("user")[0].name);
   };
