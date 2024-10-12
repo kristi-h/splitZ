@@ -9,8 +9,14 @@ import { useNavigate } from "react-router-dom";
 import { Icon, IconButton, Tooltip } from "@mui/material";
 
 export default function CreateExpense() {
-  const { groupData, setExpenses, setGroupData, handleSetModal, friends } =
-    UseDataContext();
+  const {
+    groupData,
+    setExpenses,
+    setGroupData,
+    handleSetModal,
+    friends,
+    modal,
+  } = UseDataContext();
 
   const navigate = useNavigate();
 
@@ -20,6 +26,7 @@ export default function CreateExpense() {
   const {
     handleSubmit,
     register,
+    setValue,
     watch, // lets use this to track values
     formState: { errors },
   } = useForm({
@@ -28,11 +35,20 @@ export default function CreateExpense() {
       name: "Munchies",
       description: "Junky stuff for the trip in",
       amount: 500,
+      // group: modal.id,
     },
   });
 
   // watch all fields
   const watchedValues = watch();
+
+  //run when expense is created inside a group
+  useEffect(() => {
+    if (modal.id) {
+      //set the default value for group to set up the initial values of friends cotribution
+      setValue("group", modal.id);
+    }
+  }, []);
 
   useEffect(() => {
     // reset all friends in group
@@ -318,7 +334,8 @@ export default function CreateExpense() {
               required: "Please enter an amount",
               pattern: {
                 value: /^[0-9]*(.[0-9]{2})?$/i,
-                message: "invalid type, please enter a number from 0-100",
+                message:
+                  "Please enter a valid dollar amount (e.g., 10, 10.50).",
               },
             })}
           />
