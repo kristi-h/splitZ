@@ -6,11 +6,13 @@ import Dialog from "../ui/Dialog";
 import Card from "../ui/Card";
 
 const FriendList = (props) => {
-  const { friends, groupData, setFriends, handleSetModal } = UseDataContext();
+  const { friends, groupData, expenses, setFriends, handleSetModal } =
+    UseDataContext();
 
   // Create reference to dom element
   const deleteDialogRef = useRef(null);
   const cantDeleteDialogRef = useRef(null);
+  const [cantDeleteMsg, setCantDeleteMsg] = useState("");
   const [deleteID, setDeleteID] = useState(null);
 
   // Checks data for user id
@@ -53,8 +55,22 @@ const FriendList = (props) => {
               className="bg-red-700"
               // Put friend id in state and opens dialog
               onClick={() => {
-                // Check if user if part of a group or expense
+                // Check if friend is part of a group
                 if (existsIn(groupData, "friendIDs", friend.id)) {
+                  setCantDeleteMsg("a group");
+                  cantDeleteDialogRef.current.showModal();
+                  return;
+                }
+
+                //   Check if friend is part of an expense
+                if (
+                  expenses.some((expense) => {
+                    return expense.weight.find(
+                      (friendId) => friendId.friendId === friend.id,
+                    );
+                  })
+                ) {
+                  setCantDeleteMsg("an expense");
                   cantDeleteDialogRef.current.showModal();
                   return;
                 }
@@ -84,7 +100,7 @@ const FriendList = (props) => {
       </Dialog>
 
       <Dialog dialogRef={cantDeleteDialogRef}>
-        Cannot delete a friend that is part of a group.
+        Cannot delete a friend that is part of {cantDeleteMsg}.
       </Dialog>
     </>
   );
