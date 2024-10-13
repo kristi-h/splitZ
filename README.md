@@ -2,48 +2,59 @@
 
 ![Screenshot](expense-splitter/expense-splitter.png)
 
+## Overview:
+
+This app was created to have a convenient way to split the bill between a group of friends. With a focus on smooth UX, we've designed our app to feel intuitive for the user to use and understand.
+
+## Features
+
+**<u>Analytics:</u>**
+Our pie charts provide a visual breakdown of expenses by _Friend_ in the _Expense_ view and by _Category_ in the _Group_ view. The progress bar makes it easy to see at first glance, how close everyone is to balance out their accounts.
+
+**<u>Edit:</u>**
+Don't have all the info at once? Feel free to _Create Your Expense_ and go back to _Edit_ it anytime. Your saved expense information will dynamically update, including the new total amounts each friend owes.
+
+**<u>Receipt Upload:</u>**
+For easier reference, share the receipt in your group with our _Upload_ feature.
+
+**<u>Filtered View Tabs:</u>**
+View relevant information by tab for: _Group_, _Friend_, and _Expense_ to focus on what you specifically want access to.
+
+**<u>Summary:</u>**
+Our homepage offers a consolidated view of the top three recent activities for _Groups_ and \*Expenses.
+
+**<u>Search:</u>**
+An easy to use search bar is accessible on each tab to search for your group, friend, and/or individual expense.
+
+## Running the Project
+
+1. Clone this project locally
+2. cd into the project directory
+3. cd into Expense Splitter
+4. To run the app on your local device, make sure to install the appropriate packages and run using the following command:
+
+```sh
+npm install
+npm run dev
+```
+
+5. Get started adding your **Friend**, creating your _Group_, and creating your **Expense**
+
+## Built With
+
+- [![React][React.js]][React-url]
+
+## Dependencies
+
+React, Tailwind, React Hook Forms, Firebase, html2pdf, Local Storage DB, Zod, Nanoid, MUI, Font Awesome.
+
+## Deployed
+
 [https://expensesplitterdev.netlify.app/](https://expensesplitterdev.netlify.app/)
 
-# voyage-tasks
+## Meet the Creators
 
-Your project's `readme` is as important to success as your code. For
-Your project's `readme` is as important to success as your code. For
-this reason you should put as much care into its creation and maintenance
-as you would any other component of the application.
-
-If you are unsure of what should go into the `readme` let this article,
-written by an experienced Chingu, be your starting point -
-written by an experienced Chingu, be your starting point -
-[Keys to a well written README](https://tinyurl.com/yk3wubft).
-
-And before we go there's "one more thing"! Once you decide what to include
-in your `readme` feel free to replace the text we've provided here.
-
-> Own it & Make it your Own!
-
-## Team Documents
-
-You may find these helpful as you work together to organize your project.
-
-- [Team Project Ideas](./docs/team_project_ideas.md)
-- [Team Decision Log](./docs/team_decision_log.md)
-
-Meeting Agenda templates (located in the `/docs` directory in this repo):
-
-- Meeting - Voyage Kickoff --> ./docs/meeting-voyage_kickoff.docx
-- Meeting - App Vision & Feature Planning --> ./docs/meeting-vision_and_feature_planning.docx
-- Meeting - Sprint Retrospective, Review, and Planning --> ./docs/meeting-sprint_retrospective_review_and_planning.docx
-- Meeting - Sprint Open Topic Session --> ./docs/meeting-sprint_open_topic_session.docx
-
-## Our Team
-
-Everyone on your team should add their name along with a link to their GitHub
-& optionally their LinkedIn profiles below. Do this in Sprint #1 to validate
-your repo access and to practice PR'ing with your team _before_ you start
-your repo access and to practice PR'ing with your team _before_ you start
-coding!
-
-- Kristi : [GitHub](https://github.com/kristi-h) / [LinkedIn](https://linkedin.com/in/liaccountname)
+- Kristi Hwang (Developer): [GitHub](https://github.com/kristi-h) / [LinkedIn](https://www.linkedin.com/in/kristi-h-4542b38a/)
 - Carlos Cespedes (Developer): [GitHub](https://github.com/ccespedes) / [LinkedIn](https://linkedin.com/in/account)
 - Abel Sila (Developer): [GitHub](https://github.com/belunatic) / [LinkedIn](https://www.linkedin.com/in/abel-sila-24b4a97a/)
 - Matthew Neie (Developer): [GitHub](https://github.com/MatthewNeie) / [LinkedIn](https://linkedin.com/in/matthew-neie)
@@ -51,3 +62,4 @@ coding!
 - Bolaji (Product Owner): [GitHub](https://github.com/Anuoluwatobi) / [LinkedIn](https://www.linkedin.com/in/anuoluwatobi-majesty-bolaji-734583237/)
 - Smiti Mishra (Scrum Master): [GitHub](https://github.com/SM171906) / [LinkedIn](https://www.linkedin.com/in/smitimishra/)
 - Abby Nyhof (UX Designer): [GitHub](https://github.com/abbynyhof) / [LinkedIn](https://www.linkedin.com/in/abbynyhof/)
+
