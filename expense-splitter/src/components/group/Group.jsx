@@ -25,7 +25,6 @@ export default function Group() {
       navigate("/");
     }
   }, [user]);
-  console.log("groupData", groupData);
 
   const groupDisplay = groupData
     .sort((a, b) => b.ID - a.ID)

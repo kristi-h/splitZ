@@ -10,8 +10,6 @@ export default function ExpenseList(props) {
 
   // Filter out id match, delete from local storage
   const handleDeleteExpense = (id) => {
-    const updatedExpense = expenses.filter((exp) => exp.id !== id);
-    console.log("expenses", updatedExpense);
     db.deleteRows("expenses", { id });
     db.commit();
     setExpenses(db.queryAll("expenses"));
