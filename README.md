@@ -40,10 +40,6 @@ npm run dev
 
 5. Get started adding your **Friend**, creating your _Group_, and creating your **Expense**
 
-## Built With
-
-- [![React][React.js]][React-url]
-
 ## Dependencies
 
 React, Tailwind, React Hook Forms, Firebase, html2pdf, Local Storage DB, Zod, Nanoid, MUI, Font Awesome.
