@@ -46,7 +46,7 @@ React, Tailwind, React Hook Forms, Firebase, html2pdf, Local Storage DB, Zod, Na
 
 ## Deployed
 
-[https://expensesplitterdev.netlify.app/](https://expensesplitterdev.netlify.app/)
+[https://expensesplittermain.netlify.app/](https://expensesplittermain.netlify.app/)
 
 ## Meet the Creators
 
