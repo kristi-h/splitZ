@@ -11,14 +11,17 @@ export default function Card({
   children,
 }) {
   const navigate = useNavigate();
-  const handleClick = () => {
-    navigate(`/${type}s/${id}`);
+  const handleInteract = (e) => {
+    if (e.code === "Space" || e.code === "Enter" || e.type === "click") {
+      navigate(`/${type}s/${id}`);
+    }
   };
 
   return (
     <div
-      tabIndex={0}
-      onClick={hasButtons ? null : handleClick}
+      tabIndex={hasButtons ? -1 : 0}
+      onClick={hasButtons ? null : handleInteract}
+      onKeyDown={hasButtons ? null : handleInteract}
       className={`mb-2 flex ${hasButtons ? "" : "cursor-pointer"} items-center rounded-2xl bg-card-bg p-4`}
     >
       <div className="relative flex w-full items-center justify-between">
