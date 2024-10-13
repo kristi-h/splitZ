@@ -43,7 +43,7 @@ export default function PieChart({ label, pieData }) {
   });
 
   return (
-    <div className="mx-auto max-w-sm overflow-hidden lg:max-w-lg">
+    <div className="mx-auto aspect-square max-w-sm overflow-hidden lg:max-w-lg">
       <canvas className="p-4" ref={chartRef}></canvas>
     </div>
   );
