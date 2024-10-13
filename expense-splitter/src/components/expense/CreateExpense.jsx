@@ -29,15 +29,7 @@ export default function CreateExpense() {
     setValue,
     watch, // lets use this to track values
     formState: { errors },
-  } = useForm({
-    defaultValues: {
-      // default values for testing only
-      name: "Munchies",
-      description: "Junky stuff for the trip in",
-      amount: 500,
-      // group: modal.id,
-    },
-  });
+  } = useForm();
 
   // watch all fields
   const watchedValues = watch();
@@ -59,92 +51,95 @@ export default function CreateExpense() {
 
   // update weight/dollar on weight value/amount change
   useEffect(() => {
-    // get friends with non-zeros
-    const getFriendsWithNonZeros = () => {
-      let results = [];
-      allFriends.forEach((friend) => {
-        if (watchedValues[friend.name] != "0") {
-          results.push({ ...friend, weight: watchedValues[friend.name] });
-        }
-      });
-      return results;
-    };
-    const friendsWithNonZeros = getFriendsWithNonZeros();
-
-    // get friends with empty weights
-    const hasEmptyWeights = friendsWithNonZeros.some(
-      (friend) => friend.weight === "",
-    );
-
-    // filter out friends with empty weights
-    const friendsWithWeight = friendsWithNonZeros.filter(
-      (friend) => friend.weight !== "",
-    );
-
-    // calculate non-zero percentage
-    const totalPercentages = !hasEmptyWeights
-      ? friendsWithNonZeros.reduce(
-          (acc, curr) => acc + parseFloat(curr.weight),
-          0,
-        )
-      : friendsWithWeight.reduce(
-          (acc, curr) => acc + parseFloat(curr.weight),
-          0,
-        );
-
-    // update weight/dollar on weight value change
-    const updatedFriends = allFriends.map((friend) => {
-      const newWeight = watchedValues[friend.name];
-      const zeroDefault =
-        watchedValues["amount"] / parseFloat(allFriends.length);
-      // generate the dollar amount based on weight
-      const newDollar =
-        parseFloat(newWeight) === 0
-          ? zeroDefault
-          : (parseFloat(watchedValues[friend.name]) * watchedValues["amount"]) /
-            100;
-
-      const newZeroWeight =
-        (100 - totalPercentages) /
-        (allFriends.length - friendsWithNonZeros.length);
-
-      const weightLimit = totalPercentages - parseFloat(newWeight);
-
-      const calculateTotal = () => {
-        if (totalPercentages > 100) {
-          return totalPercentages;
-        }
-        if (totalPercentages === 0) {
-          return 100;
-        } else if (parseFloat(newWeight) === 0) {
-          return 100;
-        }
-        return totalPercentages;
-      };
-
-      setWeightTotal(calculateTotal());
-
-      const acceptedWeight =
-        parseFloat(newWeight) <= weightLimit ? newWeight : "0";
-
-      // if a new weight has been inputted
-      return newWeight !== "0"
-        ? {
-            ...friend,
-            weight: acceptedWeight.toString(),
-            dollar: !newWeight ? 0 : `$${newDollar.toFixed(2)}`,
+    if (watchedValues["amount"]) {
+      // get friends with non-zeros
+      const getFriendsWithNonZeros = () => {
+        let results = [];
+        allFriends.forEach((friend) => {
+          if (watchedValues[friend.name] != "0") {
+            results.push({ ...friend, weight: watchedValues[friend.name] });
           }
-        : {
-            ...friend,
-            weight: newZeroWeight.toString(),
-            dollar: !newZeroWeight
-              ? 0
-              : `$${((newZeroWeight * watchedValues["amount"]) / 100).toFixed(2)}`,
-          };
-    });
+        });
+        return results;
+      };
+      const friendsWithNonZeros = getFriendsWithNonZeros();
 
-    setAllFriends(updatedFriends);
-    // only update state when friend values change
+      // get friends with empty weights
+      const hasEmptyWeights = friendsWithNonZeros.some(
+        (friend) => friend.weight === "",
+      );
+
+      // filter out friends with empty weights
+      const friendsWithWeight = friendsWithNonZeros.filter(
+        (friend) => friend.weight !== "",
+      );
+
+      // calculate non-zero percentage
+      const totalPercentages = !hasEmptyWeights
+        ? friendsWithNonZeros.reduce(
+            (acc, curr) => acc + parseFloat(curr.weight),
+            0,
+          )
+        : friendsWithWeight.reduce(
+            (acc, curr) => acc + parseFloat(curr.weight),
+            0,
+          );
+
+      // update weight/dollar on weight value change
+      const updatedFriends = allFriends.map((friend) => {
+        const newWeight = watchedValues[friend.name];
+        const zeroDefault =
+          watchedValues["amount"] / parseFloat(allFriends.length);
+        // generate the dollar amount based on weight
+        const newDollar =
+          parseFloat(newWeight) === 0
+            ? zeroDefault
+            : (parseFloat(watchedValues[friend.name]) *
+                watchedValues["amount"]) /
+              100;
+
+        const newZeroWeight =
+          (100 - totalPercentages) /
+          (allFriends.length - friendsWithNonZeros.length);
+
+        const weightLimit = totalPercentages - parseFloat(newWeight);
+
+        const calculateTotal = () => {
+          if (totalPercentages > 100) {
+            return totalPercentages;
+          }
+          if (totalPercentages === 0) {
+            return 100;
+          } else if (parseFloat(newWeight) === 0) {
+            return 100;
+          }
+          return totalPercentages;
+        };
+
+        setWeightTotal(calculateTotal());
+
+        const acceptedWeight =
+          parseFloat(newWeight) <= weightLimit ? newWeight : "0";
+
+        // if a new weight has been inputted
+        return newWeight !== "0"
+          ? {
+              ...friend,
+              weight: acceptedWeight.toString(),
+              dollar: !newWeight ? 0 : `$${newDollar.toFixed(2)}`,
+            }
+          : {
+              ...friend,
+              weight: newZeroWeight.toString(),
+              dollar: !newZeroWeight
+                ? 0
+                : `$${((newZeroWeight * watchedValues["amount"]) / 100).toFixed(2)}`,
+            };
+      });
+
+      setAllFriends(updatedFriends);
+      // only update state when friend values change
+    }
   }, [
     allFriends.map((friend) => watchedValues[friend.name]).join(),
     watchedValues["amount"],
