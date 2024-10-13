@@ -1,9 +1,7 @@
 import { NavLink } from "react-router-dom";
-import IconButton from "../ui/IconButton";
-import { UseDataContext } from "../context/SiteContext";
+import Icon from "../ui/IconButton";
 
 export default function Header() {
-  const { handleSetModal } = UseDataContext();
   return (
     <div className="flex h-[180px] flex-col bg-primary pb-1 pt-[40px] text-white">
       <div className="text-center text-[40px] font-extrabold uppercase">
@@ -12,24 +10,16 @@ export default function Header() {
       <nav className="m-auto w-full max-w-4xl px-4">
         <div className="flex justify-between gap-2">
           <NavLink to="/home">
-            <IconButton onClick={() => handleSetModal()} icon={"house"}>
-              Home
-            </IconButton>
+            <Icon icon={"house"}>Home</Icon>
           </NavLink>
           <NavLink to="/groups">
-            <IconButton onClick={() => handleSetModal()} icon={"user-group"}>
-              Groups
-            </IconButton>
+            <Icon icon={"user-group"}>Groups</Icon>
           </NavLink>
           <NavLink to="/friends">
-            <IconButton onClick={() => handleSetModal()} icon={"address-book"}>
-              Friends
-            </IconButton>
+            <Icon icon={"address-book"}>Friends</Icon>
           </NavLink>
           <NavLink to="/expenses">
-            <IconButton onClick={() => handleSetModal()} icon={"credit-card"}>
-              Expenses
-            </IconButton>
+            <Icon icon={"credit-card"}>Expenses</Icon>
           </NavLink>
         </div>
       </nav>
