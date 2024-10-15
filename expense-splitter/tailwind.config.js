@@ -2,24 +2,25 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    gradientColorStops: (theme) => ({
-      ...theme("colors"),
-      primary: "#FFC4DA",
-      secondary: "#070d0d",
-      accent: "#51434a",
-      "card-bg": "#D4E2F7",
-    }),
     extend: {
       backgroundImage: (theme) => ({
-        "gradient-primary": `linear-gradient(to right, ${theme("colors.pink")}, ${theme("colors.orange")})`,
+        "gradient-primary": `linear-gradient(to right, ${theme("colors.primary")}, ${theme("colors.secondary")})`,
+        "gradient2": `linear-gradient(to right, ${theme("colors.tertiary")}, ${theme("colors.quaternary")})`,
+        "gradient3": `linear-gradient(to right, ${theme("colors.quinary")}, ${theme("colors.senary")})`,
+        "gradient4": `linear-gradient(to right, ${theme("colors.septenary")}, ${theme("colors.octonary")})`,
       }),
-      colors: {
-        primary: "#FFC4DA",
-        secondary: "#070d0d",
+      colors:  {
+        primary: "#FFF0F0",
+        secondary: "f4ebfe",
+        tertiary: "#FFC4DA",
+        quaternary: "#d6b4fc",
+        quinary: "#FFD6E4",
+        senary: "#8E4585",
+        septenary: "#FCE0E8", 
+        octonary: "#9A758E",
         accent: "#51434a",
         "card-bg": "#D4E2F7",
       },
-      gradientColorStops: ["active", "group-hover"],
       fontFamily: {
         sans: ["Outfit", "sans-serif"],
         roboto: ["Roboto", "sans-serif"],
@@ -27,10 +28,6 @@ export default {
     },
   },
   plugins: [],
-  // corePlugins: {
-  //   // ...
-  //  gradientColorStops: false,
-  // }
 };
 
 /*
