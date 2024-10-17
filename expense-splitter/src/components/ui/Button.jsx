@@ -6,7 +6,8 @@ export default function Button({
   type,
   disabled,
 }) {
-  const baseStyles = "bg-gradient4 whitespace-nowrap text-white";
+  const baseStyles =
+    "bg-gradientDark saturate-150 brightness-100 whitespace-nowrap text-accent";
   const buttonStyles =
     variant === "small"
       ? "py-2 px-3 rounded-md hover:bg-secondary text-sm font-light"
