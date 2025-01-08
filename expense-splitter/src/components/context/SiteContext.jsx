@@ -10,7 +10,7 @@ export const UseDataContext = () => useContext(SiteContext);
 export const DataProvider = ({ children }) => {
   // initialize data from localStorageDB
   const initialFriends = db.queryAll("friends");
-  const initalGroup = db.queryAll("groups");
+  const initialGroup = db.queryAll("groups");
   const initialExpenses = db.queryAll("expenses");
 
   const [user, setUser] = useState(db.queryAll("user")[0]?.name || "");
@@ -31,17 +31,19 @@ export const DataProvider = ({ children }) => {
   };
 
   const handleSetModal = (type, id, image_url, image_alt) => {
-    if (!type) {
-      setModal({ show: false });
-    } else {
-      setModal((prev) => ({
-        show: !prev.show,
-        type,
-        id,
-        image_url,
-        image_alt,
-      }));
-    }
+      setModal((prev) => {
+          if (!type) {
+              return { show: false, type: "", id: "", image_url: "", image_alt: "" };
+          }
+          return {
+              ...prev,
+              show: prev.type !== type || !prev.show,
+              type: prev.type === type ? "" : type,
+              id,
+              image_url,
+              image_alt,
+          };
+      });
   };
 
   const handleCreateGroupForm = () => {
