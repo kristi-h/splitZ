@@ -20,7 +20,7 @@ function App() {
       <DataProvider>
         <>
           <Header />
-          <div className="bg-gradientDark flex flex-col">
+          <div className="bg-gradientDark flex flex-col min-h-screen">
             <Modal />
             <section className="mx-auto mb-[80px] w-full max-w-4xl px-4 py-6 font-semibold">
               <Routes>
