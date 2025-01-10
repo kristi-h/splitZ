@@ -10,7 +10,7 @@ export default {
       }),
       colors: {
         lightPink: "#FFE8E8",
-        lightPurple: "f4ebfe",
+        lightPurple: "#DCC6E0",
         darkPink: "#FFD6E4",
         darkPurple: "#8E4585",
         accent: "#371a13",

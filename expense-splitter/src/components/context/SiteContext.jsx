@@ -15,7 +15,7 @@ export const DataProvider = ({ children }) => {
 
   const [user, setUser] = useState(db.queryAll("user")[0]?.name || "");
   const [expenses, setExpenses] = useState(initialExpenses);
-  const [groupData, setGroupData] = useState(initalGroup);
+  const [groupData, setGroupData] = useState(initialGroup);
   const [friends, setFriends] = useState(initialFriends);
   const [showCreateGroupForm, setShowCreateGroupForm] = useState(false);
   const [modal, setModal] = useState({
@@ -38,7 +38,7 @@ export const DataProvider = ({ children }) => {
           return {
               ...prev,
               show: prev.type !== type || !prev.show,
-              type: prev.type === type ? "" : type,
+              type,
               id,
               image_url,
               image_alt,
